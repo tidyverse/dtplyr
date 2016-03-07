@@ -1,0 +1,14 @@
+Package: dtplyr
+Title: Data table backend for dplyr
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("aut", "cre")),
+    person("RStudio", role = "cph")
+  )
+Description: This implements the data table backend for dplyr so that you
+    can seemlessly use data table and dplyr together.
+License: GPL (>= 2)
+Imports:
+    data.table
+LazyData: true
+RoxygenNote: 5.0.1
