@@ -18,3 +18,11 @@ test_that("distinct removes duplicates (tbl_dt)", {
   expect_equal(nrow(res), 1)
 })
 
+
+test_that("distinct works when key is set", {
+  dt <- copy(dt)
+  setkey(dt, x)
+
+  res <- distinct(dt, x)
+  expect_equal(nrow(res), 1)
+})
