@@ -6,6 +6,10 @@
 \usage{
 src_dt(pkg = NULL, env = NULL)
 }
+\arguments{
+\item{pkg, env}{Either the name of a package or an environment object in
+which to look for objects.}
+}
 \description{
 This is mainly useful for testing, since makes it possible to refer to
 local and remote tables using exactly the same syntax.
