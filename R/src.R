@@ -5,6 +5,8 @@
 #'
 #' @rdname src_local
 #' @export
+#' @param pkg,env Either the name of a package or an environment object in
+#'   which to look for objects.
 src_dt <- function(pkg = NULL, env = NULL) {
   dplyr::src_local("tbl_dt", pkg, env)
 }
