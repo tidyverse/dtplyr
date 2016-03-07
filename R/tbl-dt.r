@@ -7,14 +7,12 @@
 #' @param copy If the input is a data.table, copy it?
 #' @aliases .datatable.aware
 #' @examples
-#' if (require("data.table")) {
 #' ds <- tbl_dt(mtcars)
 #' ds
-#' as.data.table(ds)
-#' as.tbl(mtcars)
-#' }
+#' data.table::as.data.table(ds)
 #'
-#' if (require("data.table") && require("nycflights13")) {
+#' library(dplyr)
+#' if (require("nycflights13")) {
 #' flights2 <- tbl_dt(flights)
 #' flights2 %>% filter(month == 1, day == 1, dest == "DFW")
 #' flights2 %>% select(year:day)
@@ -55,9 +53,6 @@
 #' ungroup(by_day)
 #' }
 tbl_dt <- function(data, copy = TRUE) {
-  if (!requireNamespace("data.table")) {
-    stop("data.table package required to use data tables", call. = FALSE)
-  }
   if (is.grouped_dt(data)) return(ungroup(data))
 
   if (data.table::is.data.table(data)) {
@@ -71,29 +66,35 @@ tbl_dt <- function(data, copy = TRUE) {
 }
 
 #' @export
+#' @importFrom dplyr as.tbl
 as.tbl.data.table <- function(x, ...) {
   tbl_dt(x)
 }
 
+#' @importFrom dplyr tbl_vars
 #' @export
 tbl_vars.tbl_dt <- function(x) data.table::copy(names(x))
 
+#' @importFrom dplyr groups
 #' @export
 groups.tbl_dt <- function(x) {
   NULL
 }
 
+#' @importFrom dplyr ungroup
 #' @export
 ungroup.tbl_dt <- function(x, ...) x
 
 #' @export
 ungroup.data.table <- function(x, ...) x
 
+#' @importFrom dplyr same_src
 #' @export
 same_src.tbl_dt <- function(x, y) {
   data.table::is.data.table(y)
 }
 
+#' @importFrom dplyr auto_copy
 #' @export
 auto_copy.tbl_dt <- function(x, y, copy = FALSE, ...) {
   data.table::as.data.table(as.data.frame(y))
@@ -103,17 +104,14 @@ auto_copy.tbl_dt <- function(x, y, copy = FALSE, ...) {
 
 #' @export
 as.data.frame.tbl_dt <- function(x, row.names = NULL, optional = FALSE, ...) {
-#   if (!is.null(row.names)) warning("row.names argument ignored", call. = FALSE)
-#   if (!identical(optional, FALSE)) warning("optional argument ignored", call. = FALSE)
   NextMethod()
 }
 
 #' @export
-#' @rdname dplyr-formatting
 print.tbl_dt <- function(x, ..., n = NULL, width = NULL) {
-  cat("Source: local data table ", dim_desc(x), "\n", sep = "")
+  cat("Source: local data table ", dplyr::dim_desc(x), "\n", sep = "")
   cat("\n")
-  print(trunc_mat(x, n = n, width = width))
+  print(dplyr::trunc_mat(x, n = n, width = width))
 
   invisible(x)
 }
@@ -121,11 +119,13 @@ print.tbl_dt <- function(x, ..., n = NULL, width = NULL) {
 #' @export
 dimnames.tbl_dt <- function(x) data.table::copy(NextMethod())
 
+#' @importFrom utils head
 #' @export
-head.tbl_dt <- function(x, ...) as.data.frame(NextMethod())
+head.tbl_dt <- function(x, ...) tbl_dt(NextMethod())
 
+#' @importFrom utils tail
 #' @export
-tail.tbl_dt <- function(x, ...) tbl_df(as.data.frame(NextMethod()))
+tail.tbl_dt <- function(x, ...) tbl_dt(NextMethod())
 
 #' @export
 .datatable.aware <- TRUE
@@ -133,7 +133,7 @@ tail.tbl_dt <- function(x, ...) tbl_df(as.data.frame(NextMethod()))
 # Filter -----------------------------------------------------------------------
 
 and_expr <- function(exprs) {
-  assert_that(is.list(exprs))
+  stopifnot(is.list(exprs))
   if (length(exprs) == 0) return(TRUE)
   if (length(exprs) == 1) return(exprs[[1]])
 
@@ -144,6 +144,7 @@ and_expr <- function(exprs) {
   left
 }
 
+#' @importFrom dplyr filter_
 #' @export
 filter_.grouped_dt <- function(.data, ..., .dots) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
@@ -169,6 +170,7 @@ filter_.data.table <- function(.data, ..., .dots) {
 
 # Summarise --------------------------------------------------------------------
 
+#' @importFrom dplyr summarise_
 #' @export
 summarise_.grouped_dt <- function(.data, ..., .dots) {
   grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
@@ -189,6 +191,7 @@ summarise_.data.table <- function(.data, ..., .dots) {
 
 # Mutate -----------------------------------------------------------------------
 
+#' @importFrom dplyr mutate_
 #' @export
 mutate_.grouped_dt <- function(.data, ..., .dots) {
   grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
@@ -218,6 +221,7 @@ mutate_.data.table <- function(.data, ..., .dots) {
 
 # Arrange ----------------------------------------------------------------------
 
+#' @importFrom dplyr arrange_
 #' @export
 arrange_.grouped_dt <- function(.data, ..., .dots) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
@@ -241,10 +245,11 @@ arrange_.data.table <- function(.data, ..., .dots) {
 
 # Select -----------------------------------------------------------------------
 
+#' @importFrom dplyr select_
 #' @export
 select_.grouped_dt <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ...)
-  vars <- select_vars_(names(.data), dots,
+  vars <- dplyr::select_vars_(names(.data), dots,
     include = as.character(groups(.data)))
   out <- .data[, vars, drop = FALSE, with = FALSE]
   data.table::setnames(out, names(vars))
@@ -255,7 +260,7 @@ select_.grouped_dt <- function(.data, ..., .dots) {
 #' @export
 select_.data.table <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ...)
-  vars <- select_vars_(names(.data), dots)
+  vars <- dplyr::select_vars_(names(.data), dots)
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
   data.table::setnames(out, names(vars))
@@ -269,10 +274,11 @@ select_.tbl_dt <- function(.data, ..., .dots) {
 
 # Rename -----------------------------------------------------------------------
 
+#' @importFrom dplyr rename_
 #' @export
 rename_.grouped_dt <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ...)
-  vars <- rename_vars_(names(.data), dots)
+  vars <- dplyr::rename_vars_(names(.data), dots)
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
   data.table::setnames(out, names(vars))
@@ -283,7 +289,7 @@ rename_.grouped_dt <- function(.data, ..., .dots) {
 #' @export
 rename_.data.table <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ...)
-  vars <- rename_vars_(names(.data), dots)
+  vars <- dplyr::rename_vars_(names(.data), dots)
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
   data.table::setnames(out, names(vars))
@@ -298,6 +304,7 @@ rename_.tbl_dt <- function(.data, ..., .dots) {
 
 # Slice -------------------------------------------------------------------
 
+#' @importFrom dplyr slice_
 #' @export
 slice_.grouped_dt <- function(.data, ..., .dots) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
@@ -316,112 +323,3 @@ slice_.data.table <- function(.data, ..., .dots) {
   j <- substitute(.SD[rows], list(rows = dots[[1]]$expr))
   dt_subset(.data, , j, env)
 }
-
-# Do ---------------------------------------------------------------------------
-
-#' @export
-do_.data.table <- function(.data, ..., .dots) {
-  out <- do_.data.frame(.data, ..., .dots = .dots)
-  data.table::as.data.table(out)
-}
-
-#' @export
-do_.tbl_dt <- function(.data, ..., .dots) {
-  out <- do_.data.frame(.data, ..., .dots = .dots)
-  tbl_dt(out)
-}
-
-
-# Joins ------------------------------------------------------------------------
-
-#' Join data table tbls.
-#'
-#' See \code{\link{join}} for a description of the general purpose of the
-#' functions.
-#'
-#' @inheritParams join
-#' @param x,y tbls to join
-#' @param ... Included for compatibility with generic; otherwise ignored.
-#' @examples
-#' if (require("data.table") && require("Lahman")) {
-#' batting_dt <- tbl_dt(Batting)
-#' person_dt <- tbl_dt(Master)
-#'
-#' # Inner join: match batting and person data
-#' inner_join(batting_dt, person_dt)
-#'
-#' # Left join: keep batting data even if person missing
-#' left_join(batting_dt, person_dt)
-#'
-#' # Semi-join: find batting data for top 4 teams, 2010:2012
-#' grid <- expand.grid(
-#'   teamID = c("WAS", "ATL", "PHI", "NYA"),
-#'   yearID = 2010:2012)
-#' top4 <- semi_join(batting_dt, grid, copy = TRUE)
-#'
-#' # Anti-join: find batting data with out player data
-#' anti_join(batting_dt, person_dt)
-#' }
-#' @name join.tbl_dt
-NULL
-
-join_dt <- function(op) {
-  template <- substitute(function(x, y, by = NULL, copy = FALSE, ...) {
-    by <- common_by(by, x, y)
-    if (!identical(by$x, by$y)) {
-      stop("Data table joins must be on same key", call. = FALSE)
-    }
-    y <- auto_copy(x, y, copy = copy)
-
-    x <- data.table::copy(x)
-    y <- data.table::copy(y)
-    data.table::setkeyv(x, by$x)
-    data.table::setkeyv(y, by$x)
-    out <- op
-    grouped_dt(out, groups(x))
-  })
-
-  f <- eval(template, parent.frame())
-  attr(f, "srcref") <- NULL # fix so prints correctly
-  f
-}
-
-#' @export
-#' @rdname join.tbl_dt
-inner_join.data.table <- join_dt(merge(x, y, by = by$x, allow.cartesian = TRUE))
-
-#' @export
-#' @rdname join.tbl_dt
-left_join.data.table  <- join_dt(merge(x, y, by = by$x, all.x = TRUE, allow.cartesian = TRUE))
-
-#' @export
-#' @rdname join.tbl_dt
-semi_join.data.table  <- join_dt({
-  # http://stackoverflow.com/questions/18969420/perform-a-semi-join-with-data-table
-  w <- unique(x[y, which = TRUE, allow.cartesian = TRUE])
-  w <- w[!is.na(w)]
-  x[w]
-})
-
-#' @export
-#' @rdname join.tbl_dt
-anti_join.data.table <- join_dt(x[!y, allow.cartesian = TRUE])
-
-# Set operations ---------------------------------------------------------------
-
-#' @export
-distinct_.data.table <- function(.data, ..., .dots) {
-  dist <- distinct_vars(.data, ..., .dots = .dots)
-
-  if (length(dist$vars) == 0) {
-    unique(dist$data, by = NULL)
-  } else {
-    unique(dist$data, by = dist$vars)
-  }
-}
-
-#' @export
-distinct_.tbl_dt <- function(.data, ..., .dots) {
-  tbl_dt(NextMethod(), copy = FALSE)
-}
-

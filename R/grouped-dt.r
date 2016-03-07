@@ -9,7 +9,8 @@
 #' @param copy If \code{TRUE}, will make copy of input.
 #' @export
 #' @examples
-#' if (require("data.table") && require("nycflights13")) {
+#' library(dplyr)
+#' if (require("nycflights13")) {
 #' flights_dt <- tbl_dt(flights)
 #' group_size(group_by(flights_dt, year, month, day))
 #' group_size(group_by(flights_dt, dest))
@@ -48,30 +49,34 @@ is.grouped_dt <- function(x) inherits(x, "grouped_dt")
 
 #' @export
 print.grouped_dt <- function(x, ..., n = NULL, width = NULL) {
-  cat("Source: local data table ", dim_desc(x), "\n", sep = "")
-  cat("Groups: ", commas(deparse_all(groups(x))), "\n", sep = "")
+  cat("Source: local data table ", dplyr::dim_desc(x), "\n", sep = "")
+  cat("Groups: ", commas(deparse_all(dplyr::groups(x))), "\n", sep = "")
   cat("\n")
-  print(trunc_mat(x, n = n, width = width))
+  print(dplyr::trunc_mat(x, n = n, width = width))
   invisible(x)
 }
 
+#' @importFrom dplyr group_size
 #' @export
 group_size.grouped_dt <- function(x) {
-  summarise(x, n = n())$n
+  dplyr::summarise_(x, n = ~n())$n
 }
 
+#' @importFrom dplyr n_groups
 #' @export
 n_groups.grouped_dt <- function(x) {
   nrow(dt_subset(x, , quote(list(1))))
 }
 
 #' @export
+#' @importFrom dplyr group_by_
 group_by_.data.table <- function(.data, ..., .dots, add = FALSE) {
-  groups <- group_by_prepare(.data, ..., .dots = .dots, add = add)
+  groups <- dplyr::group_by_prepare(.data, ..., .dots = .dots, add = add)
   grouped_dt(groups$data, groups$groups)
 }
 
 #' @export
+#' @importFrom dplyr ungroup
 ungroup.grouped_dt <- function(x, ...) {
   data.table::setattr(x, "vars", NULL)
   data.table::setattr(x, "class", setdiff(class(x), "grouped_dt"))
@@ -103,6 +108,26 @@ do_.grouped_dt <- function(.data, ..., .dots) {
   }
 }
 
+named_args <- function(args) {
+  # Arguments must either be all named or all unnamed.
+  named <- sum(names2(args) != "")
+  if (!(named == 0 || named == length(args))) {
+    stop("Arguments to do() must either be all named or all unnamed",
+      call. = FALSE)
+  }
+  if (named == 0 && length(args) > 1) {
+    stop("Can only supply single unnamed argument to do()", call. = FALSE)
+  }
+
+  # Check for old syntax
+  if (named == 1 && names(args) == ".f") {
+    stop("do syntax changed in dplyr 0.2. Please see documentation for details",
+      call. = FALSE)
+  }
+
+  named != 0
+}
+
 # Set operations ---------------------------------------------------------------
 
 #' @export
@@ -116,6 +141,7 @@ distinct_.grouped_dt <- function(.data, ..., .dots) {
 
 # Random samples ---------------------------------------------------------------
 
+#' @importFrom dplyr sample_n
 #' @export
 sample_n.grouped_dt <- function(tbl, size, replace = FALSE, weight = NULL,
   .env = parent.frame()) {
@@ -129,6 +155,7 @@ sample_n.grouped_dt <- function(tbl, size, replace = FALSE, weight = NULL,
   grouped_dt(tbl[idx], groups(tbl))
 }
 
+#' @importFrom dplyr sample_frac
 #' @export
 sample_frac.grouped_dt <- function(tbl, size = 1, replace = FALSE, weight = NULL,
   .env = parent.frame()) {

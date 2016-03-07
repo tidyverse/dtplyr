@@ -1,118 +1,20 @@
-Package: dplyr
-Type: Package
-Version: 0.4.3.9000
-Title: A Grammar of Data Manipulation
-Description: A fast, consistent tool for working with data frame like objects,
-    both in memory and out of memory.
+Package: dtplyr
+Title: Data table backend for dplyr
+Version: 0.0.0.9000
 Authors@R: c(
-    person("Hadley", "Wickham", , "hadley@rstudio.com", c("aut", "cre")),
-    person("Romain", "Francois", , "romain@r-enthusiasts.com", role = "aut"),
+    person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("aut", "cre")),
     person("RStudio", role = "cph")
-    )
-URL: https://github.com/hadley/dplyr
-BugReports: https://github.com/hadley/dplyr/issues
-Depends:
-    R (>= 3.1.2)
+  )
+Description: This implements the data table backend for dplyr so that you
+    can seamlessly use data table and dplyr together.
+License: GPL (>= 2)
 Imports:
-    assertthat,
-    utils,
-    R6,
-    Rcpp (>= 0.12.3),
-    magrittr,
-    lazyeval (>= 0.1.10),
-    DBI (>= 0.3)
-Suggests:
-    RSQLite (>= 1.0.0),
-    RMySQL,
-    RPostgreSQL,
+    dplyr (>= 0.4.3.9001),
     data.table,
-    testthat,
-    knitr,
-    microbenchmark,
-    ggplot2,
-    mgcv,
-    Lahman (>= 3.0-1),
+    lazyeval
+Suggests:
+    Lahman,
     nycflights13,
-    methods,
-    rmarkdown,
-    covr
-VignetteBuilder: knitr
-LazyData: yes
-LinkingTo: Rcpp (>= 0.12.0),
-    BH (>= 1.58.0-1)
-License: MIT + file LICENSE
-Collate:
-    'RcppExports.R'
-    'all-equal.r'
-    'bench-compare.r'
-    'bind.r'
-    'coalesce.R'
-    'colwise.R'
-    'compute-collect.r'
-    'copy-to.r'
-    'data-lahman.r'
-    'data-nasa.r'
-    'data-nycflights13.r'
-    'data-temp.r'
-    'data.r'
-    'dataframe.R'
-    'dbi-s3.r'
-    'desc.r'
-    'distinct.R'
-    'do.r'
-    'dplyr.r'
-    'explain.r'
-    'failwith.r'
-    'frame-data.R'
-    'funs.R'
-    'glimpse.R'
-    'group-by.r'
-    'group-indices.R'
-    'group-size.r'
-    'grouped-df.r'
-    'grouped-dt.r'
-    'id.r'
-    'inline.r'
-    'join.r'
-    'lead-lag.R'
-    'location.R'
-    'manip.r'
-    'near.R'
-    'nth-value.R'
-    'order-by.R'
-    'over.R'
-    'partial-eval.r'
-    'progress.R'
-    'query.r'
-    'rank.R'
-    'rowwise.r'
-    'sample.R'
-    'select-utils.R'
-    'select-vars.R'
-    'sets.r'
-    'sql-escape.r'
-    'sql-star.r'
-    'src-local.r'
-    'src-mysql.r'
-    'src-postgres.r'
-    'src-sql.r'
-    'src-sqlite.r'
-    'src.r'
-    'tally.R'
-    'tbl-cube.r'
-    'tbl-df.r'
-    'tbl-dt.r'
-    'tbl-sql.r'
-    'tbl.r'
-    'top-n.R'
-    'translate-sql-helpers.r'
-    'translate-sql-base.r'
-    'translate-sql-window.r'
-    'translate-sql.r'
-    'type-sum.r'
-    'utils-dt.R'
-    'utils-format.r'
-    'utils.r'
-    'view.r'
-    'zzz.r'
+    testthat
+LazyData: true
 RoxygenNote: 5.0.1

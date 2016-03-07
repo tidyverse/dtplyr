@@ -16,14 +16,12 @@ tbl_dt(data, copy = TRUE)
 A data table tbl wraps a local data table.
 }
 \examples{
-if (require("data.table")) {
 ds <- tbl_dt(mtcars)
 ds
-as.data.table(ds)
-as.tbl(mtcars)
-}
+data.table::as.data.table(ds)
 
-if (require("data.table") && require("nycflights13")) {
+library(dplyr)
+if (require("nycflights13")) {
 flights2 <- tbl_dt(flights)
 flights2 \%>\% filter(month == 1, day == 1, dest == "DFW")
 flights2 \%>\% select(year:day)
