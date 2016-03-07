@@ -128,6 +128,14 @@ head.tbl_dt <- function(x, ...) tbl_dt(NextMethod())
 tail.tbl_dt <- function(x, ...) tbl_dt(NextMethod())
 
 #' @export
+#' @method all.equal tbl_dt
+all.equal.tbl_dt <- function(target, current, ignore_col_order = TRUE,
+                             ignore_row_order = TRUE, convert = FALSE, ...) {
+  dplyr::all_equal(target, current, ignore_col_order = ignore_col_order,
+    ignore_row_order = ignore_row_order, convert = convert, ...)
+}
+
+#' @export
 .datatable.aware <- TRUE
 
 # Filter -----------------------------------------------------------------------
