@@ -18,6 +18,13 @@ test_that("distinct removes duplicates (tbl_dt)", {
   expect_equal(nrow(res), 1)
 })
 
+test_that("grouped_by uses grouping vars & preserves groups", {
+  res <- dt %>% group_by(x) %>% distinct(y)
+
+  expect_s3_class(res, "grouped_dt")
+  expect_equal(res$x, c(1, 1))
+  expect_equal(res$y, c(1, 2))
+})
 
 test_that("distinct works when key is set", {
   dt <- copy(dt)
