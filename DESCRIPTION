@@ -6,9 +6,15 @@ Authors@R: c(
     person("RStudio", role = "cph")
   )
 Description: This implements the data table backend for dplyr so that you
-    can seemlessly use data table and dplyr together.
+    can seamlessly use data table and dplyr together.
 License: GPL (>= 2)
 Imports:
-    data.table
+    dplyr (>= 0.4.3.9001),
+    data.table,
+    lazyeval
+Suggests:
+    Lahman,
+    nycflights13,
+    testthat
 LazyData: true
 RoxygenNote: 5.0.1
