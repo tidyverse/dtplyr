@@ -15,7 +15,8 @@ Imports:
 Suggests:
     Lahman,
     nycflights13,
-    testthat
+    testthat,
+    covr
 LazyData: true
 RoxygenNote: 5.0.1
 URL: https://github.com/hadley/dtplyr
