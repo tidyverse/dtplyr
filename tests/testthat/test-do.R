@@ -3,14 +3,29 @@ context("do")
 # Ungrouped ---------------------------------------------------------------
 
 test_that("ungrouped data table with unnamed argument returns data table", {
-  out <- tbl_dt(mtcars) %>% do(head(.))
-  expect_is(out, c("tbl_dt", "data.table"))
+  out <- data.table(mtcars) %>% do(head(.))
+  expect_is(out, "data.table")
   expect_equal(dim(out), c(6, 11))
 })
 
-test_that("ungrouped data frame with named argument returns list data frame", {
+test_that("ungrouped tbl_dt with unnamed argument returns tbl_dt", {
+  out <- tbl_dt(mtcars) %>% do(head(.))
+  expect_is(out, "tbl_dt", "data.table")
+  expect_is(out, "daata.table")
+  expect_equal(dim(out), c(6, 11))
+})
+
+test_that("ungrouped tbl_dt with named argument returns tbl_dt", {
+  out <- data.table(mtcars) %>% do(x = 1, y = 2:10)
+  expect_is(out, "data.table")
+  expect_equal(out$x, list(1))
+  expect_equal(out$y, list(2:10))
+})
+
+test_that("ungrouped data table with named argument returns data table", {
   out <- tbl_dt(mtcars) %>% do(x = 1, y = 2:10)
-  expect_is(out, c("tbl_dt", "data.table"))
+  expect_is(out, "tbl_dt")
+  expect_is(out, "data.table")
   expect_equal(out$x, list(1))
   expect_equal(out$y, list(2:10))
 })
