@@ -11,7 +11,7 @@
 #' ds
 #' data.table::as.data.table(ds)
 #'
-#' library(dplyr)
+#' library(dplyr, warn.conflicts = FALSE)
 #' if (require("nycflights13")) {
 #' flights2 <- tbl_dt(flights)
 #' flights2 %>% filter(month == 1, day == 1, dest == "DFW")

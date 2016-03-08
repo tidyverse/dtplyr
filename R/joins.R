@@ -7,7 +7,7 @@
 #' @param x,y tbls to join
 #' @param ... Included for compatibility with generic; otherwise ignored.
 #' @examples
-#' library(dplyr)
+#' library(dplyr, warn.conflicts = FALSE)
 #'
 #' if (require("Lahman")) {
 #' batting_dt <- tbl_dt(Batting)

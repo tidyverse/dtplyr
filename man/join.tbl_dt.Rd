@@ -41,7 +41,7 @@ See \code{\link{join}} for a description of the general purpose of the
 functions.
 }
 \examples{
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 
 if (require("Lahman")) {
 batting_dt <- tbl_dt(Batting)

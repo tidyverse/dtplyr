@@ -24,7 +24,7 @@ method on a data table or tbl: this will take care of capturing
 the unevalated expressions for you.
 }
 \examples{
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 if (require("nycflights13")) {
 flights_dt <- tbl_dt(flights)
 group_size(group_by(flights_dt, year, month, day))

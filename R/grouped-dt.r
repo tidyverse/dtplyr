@@ -9,7 +9,7 @@
 #' @param copy If \code{TRUE}, will make copy of input.
 #' @export
 #' @examples
-#' library(dplyr)
+#' library(dplyr, warn.conflicts = FALSE)
 #' if (require("nycflights13")) {
 #' flights_dt <- tbl_dt(flights)
 #' group_size(group_by(flights_dt, year, month, day))
