@@ -1,3 +1,3 @@
 context("zzz-dplyr")
 
-testthat::test_package("dplyr", reporter = NULL)
+testthat::test_package("dplyr", reporter = get_reporter())
