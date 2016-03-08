@@ -1,6 +1,7 @@
 # dtplyr
 
 [![Travis-CI Build Status](https://travis-ci.org/hadley/dtplyr.svg?branch=master)](https://travis-ci.org/hadley/dtplyr)
+[![Coverage Status](https://img.shields.io/codecov/c/github/hadley/dtplyr/master.svg)](https://codecov.io/github/hadley/dtplyr?branch=master)
 
 dtplyr is the data.table backend for dplyr. It is provides S3 methods for data.table objects so that dplyr works the way you expect. 
 
