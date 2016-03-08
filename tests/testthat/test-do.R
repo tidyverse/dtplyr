@@ -4,7 +4,7 @@ context("do")
 
 test_that("ungrouped data table with unnamed argument returns data table", {
   out <- tbl_dt(mtcars) %>% do(head(.))
-  expect_s3_class(out, c("tbl_dt", "data.table"))
+  expect_is(out, c("tbl_dt", "data.table"))
   expect_equal(dim(out), c(6, 11))
 })
 

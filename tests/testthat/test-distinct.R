@@ -8,20 +8,20 @@ dt <- data.table(
 
 test_that("distinct removes duplicates (data.table)", {
   res <- distinct(dt, x)
-  expect_s3_class(res, "data.table")
+  expect_is(res, "data.table")
   expect_equal(nrow(res), 1)
 })
 
 test_that("distinct removes duplicates (tbl_dt)", {
   res <- distinct(tbl_dt(dt), x)
-  expect_s3_class(res, c("tbl_dt", "data.table"))
+  expect_is(res, c("tbl_dt", "data.table"))
   expect_equal(nrow(res), 1)
 })
 
 test_that("grouped_by uses grouping vars & preserves groups", {
   res <- dt %>% group_by(x) %>% distinct(y)
 
-  expect_s3_class(res, "grouped_dt")
+  expect_is(res, "grouped_dt")
   expect_equal(res$x, c(1, 1))
   expect_equal(res$y, c(1, 2))
 })
