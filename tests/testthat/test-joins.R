@@ -1,7 +1,7 @@
 context("joins")
 
 
-test_that("joining data tables does not modify them (#470, #659)", {
+test_that("joining data tables returns data tables (#470) and does not modify them (#659)", {
   a <- data.table(x = c(1, 1, 2, 3), y = 4:1)
   b <- data.table(x = c(1, 2, 2, 4), z = 1:4)
 
