@@ -2,9 +2,11 @@
 % Please edit documentation in R/joins.R
 \name{join.tbl_dt}
 \alias{anti_join.data.table}
+\alias{full_join.data.table}
 \alias{inner_join.data.table}
 \alias{join.tbl_dt}
 \alias{left_join.data.table}
+\alias{right_join.data.table}
 \alias{semi_join.data.table}
 \title{Join data table tbls.}
 \usage{
@@ -12,9 +14,13 @@
 
 \method{left_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
 
+\method{right_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
+
 \method{semi_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
 
 \method{anti_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
+
+\method{full_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
 }
 \arguments{
 \item{x, y}{tbls to join}
