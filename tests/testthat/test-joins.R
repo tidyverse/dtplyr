@@ -1,17 +1,7 @@
 context("joins")
 
 
-test_that("joining data tables yields a data table (#470)", {
-  a <- data.table(x = c(1, 1, 2, 3), y = 1:4)
-  b <- data.table(x = c(1, 2, 2, 4), z = 1:4)
-
-  out <- left_join(a, b, "x")
-  expect_is(out, "data.table")
-  out <- semi_join(a, b, "x")
-  expect_is(out, "data.table")
-})
-
-test_that("joining data tables does not modify them (#659)", {
+test_that("joining data tables does not modify them (#470, #659)", {
   a <- data.table(x = c(1, 1, 2, 3), y = 4:1)
   b <- data.table(x = c(1, 2, 2, 4), z = 1:4)
 
@@ -21,7 +11,8 @@ test_that("joining data tables does not modify them (#659)", {
     ac <- data.table::copy(a)
     bc <- data.table::copy(b)
 
-    join_fun(a, b, "x")
+    out <- join_fun(a, b, "x")
+    expect_is(out, "data.table")
     expect_equal(a, ac)
     expect_equal(b, bc)
   }
