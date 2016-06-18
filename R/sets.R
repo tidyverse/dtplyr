@@ -3,14 +3,20 @@
 
 #' @export
 #' @importFrom dplyr distinct_
-distinct_.data.table <- function(.data, ..., .dots) {
+distinct_.data.table <- function(.data, ..., .dots, .keep_all = FALSE) {
   dist <- distinct_vars(.data, ..., .dots = .dots)
 
   if (length(dist$vars) == 0) {
-    unique(dist$data, by = NULL)
+    res <- unique(dist$data, by = NULL)
   } else {
-    unique(dist$data, by = dist$vars)
+    res <- unique(dist$data, by = dist$vars)
   }
+
+  if (length(dist$vars) > 0 && !.keep_all) {
+    res <- res[, dist$vars, with = FALSE]
+  }
+
+  res
 }
 
 #' @export
