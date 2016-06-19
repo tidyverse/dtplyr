@@ -11,7 +11,7 @@ test_that("ungrouped data table with unnamed argument returns data table", {
 test_that("ungrouped tbl_dt with unnamed argument returns tbl_dt", {
   out <- tbl_dt(mtcars) %>% do(head(.))
   expect_is(out, "tbl_dt", "data.table")
-  expect_is(out, "daata.table")
+  expect_is(out, "data.table")
   expect_equal(dim(out), c(6, 11))
 })
 
