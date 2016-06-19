@@ -18,4 +18,4 @@ r_github_packages:
   - hadley/devtools
 
 after_success:
-  - Rscript -e 'covr::codecov()'
+  - R -e 'covr::codecov()'
