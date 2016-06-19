@@ -32,6 +32,7 @@
 NULL
 
 join_dt <- function(op) {
+  # nocov start
   template <- substitute(function(x, y, by = NULL, copy = FALSE, ...) {
     by <- dplyr::common_by(by, x, y)
     if (!identical(by$x, by$y)) {
@@ -50,17 +51,18 @@ join_dt <- function(op) {
   f <- eval(template, parent.frame())
   attr(f, "srcref") <- NULL # fix so prints correctly
   f
+  # nocov end
 }
 
 #' @export
 #' @rdname join.tbl_dt
 #' @importFrom dplyr inner_join
-inner_join.data.table <- join_dt(merge(x, y, by = by$x, allow.cartesian = TRUE))
+inner_join.data.table <- join_dt({merge(x, y, by = by$x, allow.cartesian = TRUE)})
 
 #' @export
 #' @importFrom dplyr left_join
 #' @rdname join.tbl_dt
-left_join.data.table  <- join_dt(merge(x, y, by = by$x, all.x = TRUE, allow.cartesian = TRUE))
+left_join.data.table  <- join_dt({merge(x, y, by = by$x, all.x = TRUE, allow.cartesian = TRUE)})
 
 #' @export
 #' @importFrom dplyr right_join
@@ -80,7 +82,7 @@ semi_join.data.table  <- join_dt({
 #' @export
 #' @importFrom dplyr anti_join
 #' @rdname join.tbl_dt
-anti_join.data.table <- join_dt(x[!y, allow.cartesian = TRUE])
+anti_join.data.table <- join_dt({x[!y, allow.cartesian = TRUE]})
 
 #' @export
 #' @importFrom dplyr full_join
