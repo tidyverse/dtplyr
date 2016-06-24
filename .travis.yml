@@ -8,14 +8,10 @@ r:
   - release
   - devel
 
-warnings_are_errors: false
 env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_=false
     - MAKEFLAGS="-j 2"
-
-r_github_packages:
-  - hadley/devtools
 
 after_success:
   - R -e 'covr::codecov()'
