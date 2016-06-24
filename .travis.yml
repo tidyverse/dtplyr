@@ -16,6 +16,7 @@ env:
 
 r_github_packages:
   - hadley/devtools
+  - hadley/dplyr
 
 after_success:
   - R -e 'covr::codecov()'
