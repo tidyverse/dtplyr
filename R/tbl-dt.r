@@ -224,7 +224,8 @@ mutate_.data.table <- function(.data, ..., .dots) {
     .data <- dt_subset(.data, , j, dots[[i]]$env)
   }
 
-  .data
+  # Need to use this syntax to make the output visible (#11).
+  .data[]
 }
 
 # Arrange ----------------------------------------------------------------------
