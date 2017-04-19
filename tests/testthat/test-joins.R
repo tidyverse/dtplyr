@@ -28,3 +28,16 @@ test_that("joining data tables returns data tables (#470) and does not modify th
     }
   }
 })
+
+test_that("merge.data.table parameters", {
+  a <- data.table(x = c(1, 1, 2, 3), dupname = 4:1)
+  b <- data.table(x = c(1, 2, 2, 4), dupname = 1:4)
+
+  lj <- left_join(a, b, by = "x")
+  expect_true("dupname.x" %in% names(lj))
+  expect_false("dupname.a" %in% names(lj))
+
+  lj <- left_join(a, b, by = "x", suffix = c(".a", ".b"))
+  expect_true("dupname.a" %in% names(lj))
+  expect_false("dupname.x" %in% names(lj))
+})
