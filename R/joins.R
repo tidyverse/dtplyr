@@ -57,17 +57,17 @@ join_dt <- function(op) {
 #' @export
 #' @rdname join.tbl_dt
 #' @importFrom dplyr inner_join
-inner_join.data.table <- join_dt({merge(x, y, by = by$x, allow.cartesian = TRUE)})
+inner_join.data.table <- join_dt({merge(x, y, by = by$x, allow.cartesian = TRUE, ...)})
 
 #' @export
 #' @importFrom dplyr left_join
 #' @rdname join.tbl_dt
-left_join.data.table  <- join_dt({merge(x, y, by = by$x, all.x = TRUE, allow.cartesian = TRUE)})
+left_join.data.table  <- join_dt({merge(x, y, by = by$x, all.x = TRUE, allow.cartesian = TRUE, ...)})
 
 #' @export
 #' @importFrom dplyr right_join
 #' @rdname join.tbl_dt
-right_join.data.table  <- join_dt(merge(x, y, by = by$x, all.y = TRUE, allow.cartesian = TRUE))
+right_join.data.table  <- join_dt(merge(x, y, by = by$x, all.y = TRUE, allow.cartesian = TRUE, ...))
 
 #' @export
 #' @importFrom dplyr semi_join
@@ -88,4 +88,4 @@ anti_join.data.table <- join_dt({x[!y, allow.cartesian = TRUE]})
 #' @importFrom dplyr full_join
 #' @rdname join.tbl_dt
 # http://stackoverflow.com/a/15170956/946850
-full_join.data.table <- join_dt({merge(x, y, by = by$x, all = TRUE, allow.cartesian = TRUE)})
+full_join.data.table <- join_dt({merge(x, y, by = by$x, all = TRUE, allow.cartesian = TRUE, ...)})
