@@ -155,26 +155,17 @@ and_expr <- function(exprs) {
 # The S3 method is registered manually in .onLoad() to avoid an R CMD
 # check warning
 
-#' @rawNamespace
-#' if (utils::packageVersion("dplyr") > "0.5.0") {
-#'   importFrom(dplyr,filter)
-#' }
 filter.data.table <- function(.data, ...) {
   filter_(.data, .dots = lazyeval::lazy_dots(...))
 }
 
 #' @importFrom dplyr filter_
-#' @export
 filter_.grouped_dt <- function(.data, ..., .dots) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
-
-#' @export
 filter_.tbl_dt <- function(.data, ..., .dots) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-
-#' @export
 filter_.data.table <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ...)
   env <- lazyeval::common_env(dots)
@@ -189,27 +180,17 @@ filter_.data.table <- function(.data, ..., .dots) {
 
 # Summarise --------------------------------------------------------------------
 
-#' @rawNamespace
-#' if (utils::packageVersion("dplyr") > "0.5.0") {
-#'   importFrom(dplyr,summarise)
-#'   S3method(summarise,data.table)
-#' }
 summarise.data.table <- function(.data, ...) {
   summarise_(.data, .dots = lazyeval::lazy_dots(...))
 }
 
 #' @importFrom dplyr summarise_
-#' @export
 summarise_.grouped_dt <- function(.data, ..., .dots) {
   grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
 }
-
-#' @export
 summarise_.tbl_dt <- function(.data, ..., .dots) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-
-#' @export
 summarise_.data.table <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
 
@@ -219,27 +200,17 @@ summarise_.data.table <- function(.data, ..., .dots) {
 
 # Mutate -----------------------------------------------------------------------
 
-#' @rawNamespace
-#' if (utils::packageVersion("dplyr") > "0.5.0") {
-#'   importFrom(dplyr,mutate)
-#'   S3method(mutate,data.table)
-#' }
 mutate.data.table <- function(.data, ...) {
   mutate_(.data, .dots = lazyeval::lazy_dots(...))
 }
 
 #' @importFrom dplyr mutate_
-#' @export
 mutate_.grouped_dt <- function(.data, ..., .dots) {
   grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
 }
-
-#' @export
 mutate_.tbl_dt <- function(.data, ..., .dots) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-
-#' @export
 mutate_.data.table <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
   names <- lapply(names(dots), as.name)
@@ -259,27 +230,17 @@ mutate_.data.table <- function(.data, ..., .dots) {
 
 # Arrange ----------------------------------------------------------------------
 
-#' @rawNamespace
-#' if (utils::packageVersion("dplyr") > "0.5.0") {
-#'   importFrom(dplyr,arrange)
-#'   S3method(arrange,data.table)
-#' }
 arrange.data.table <- function(.data, ...) {
   arrange_(.data, .dots = lazyeval::lazy_dots(...))
 }
 
 #' @importFrom dplyr arrange_
-#' @export
 arrange_.grouped_dt <- function(.data, ..., .dots) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
-
-#' @export
 arrange_.tbl_dt <- function(.data, ..., .dots) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-
-#' @export
 arrange_.data.table <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ...)
 
@@ -292,17 +253,11 @@ arrange_.data.table <- function(.data, ..., .dots) {
 
 # Select -----------------------------------------------------------------------
 
-#' @rawNamespace
-#' if (utils::packageVersion("dplyr") > "0.5.0") {
-#'   importFrom(dplyr,select)
-#'   S3method(select,data.table)
-#' }
 select.data.table <- function(.data, ...) {
   select_(.data, .dots = lazyeval::lazy_dots(...))
 }
 
 #' @importFrom dplyr select_
-#' @export
 select_.grouped_dt <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ...)
   vars <- dplyr::select_vars_(names(.data), dots,
@@ -312,8 +267,6 @@ select_.grouped_dt <- function(.data, ..., .dots) {
 
   grouped_dt(out, groups(.data), copy = FALSE)
 }
-
-#' @export
 select_.data.table <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ...)
   vars <- dplyr::select_vars_(names(.data), dots)
@@ -322,25 +275,17 @@ select_.data.table <- function(.data, ..., .dots) {
   data.table::setnames(out, names(vars))
   out
 }
-
-#' @export
 select_.tbl_dt <- function(.data, ..., .dots) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
 
 # Rename -----------------------------------------------------------------------
 
-#' @rawNamespace
-#' if (utils::packageVersion("dplyr") > "0.5.0") {
-#'   importFrom(dplyr,rename)
-#'   S3method(rename,data.table)
-#' }
 rename.data.table <- function(.data, ...) {
   rename_(.data, .dots = lazyeval::lazy_dots(...))
 }
 
 #' @importFrom dplyr rename_
-#' @export
 rename_.grouped_dt <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ...)
   vars <- dplyr::rename_vars_(names(.data), dots)
@@ -350,8 +295,6 @@ rename_.grouped_dt <- function(.data, ..., .dots) {
 
   grouped_dt(out, groups(.data), copy = FALSE)
 }
-
-#' @export
 rename_.data.table <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ...)
   vars <- dplyr::rename_vars_(names(.data), dots)
@@ -360,8 +303,6 @@ rename_.data.table <- function(.data, ..., .dots) {
   data.table::setnames(out, names(vars))
   out
 }
-
-#' @export
 rename_.tbl_dt <- function(.data, ..., .dots) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
@@ -369,27 +310,17 @@ rename_.tbl_dt <- function(.data, ..., .dots) {
 
 # Slice -------------------------------------------------------------------
 
-#' @rawNamespace
-#' if (utils::packageVersion("dplyr") > "0.5.0") {
-#'   importFrom(dplyr,slice)
-#'   S3method(slice,data.table)
-#' }
 slice.data.table <- function(.data, ...) {
   slice_(.data, .dots = lazyeval::lazy_dots(...))
 }
 
 #' @importFrom dplyr slice_
-#' @export
 slice_.grouped_dt <- function(.data, ..., .dots) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
-
-#' @export
 slice_.tbl_dt <- function(.data, ..., .dots) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-
-#' @export
 slice_.data.table <- function(.data, ..., .dots) {
   dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
   env <- lazyeval::common_env(dots)
