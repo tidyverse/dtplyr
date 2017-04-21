@@ -14,4 +14,3 @@ which to look for objects.}
 This is mainly useful for testing, since makes it possible to refer to
 local and remote tables using exactly the same syntax.
 }
-

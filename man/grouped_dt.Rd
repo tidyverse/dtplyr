@@ -34,4 +34,3 @@ monthly <- group_by(flights_dt, month)
 summarise(monthly, n = n(), delay = mean(arr_delay))
 }
 }
-
