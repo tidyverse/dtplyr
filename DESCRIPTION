@@ -1,8 +1,9 @@
 Package: dtplyr
 Title: Data Table Back-End for 'dplyr'
-Version: 0.0.1.9000
+Version: 0.0.2
 Authors@R: c(
-    person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("aut", "cre")),
+    person("Lionel", "Henry", , "lionel@rstudio.com", role = "cre"),
+    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
     person("RStudio", role = "cph")
   )
 Description: This implements the data table back-end for 'dplyr' so that you
@@ -18,6 +19,6 @@ Suggests:
     testthat,
     covr
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 URL: https://github.com/hadley/dtplyr
 BugReports: https://github.com/hadley/dtplyr/issues
