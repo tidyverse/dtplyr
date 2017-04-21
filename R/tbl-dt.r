@@ -152,10 +152,12 @@ and_expr <- function(exprs) {
   left
 }
 
+# The S3 method is registered manually in .onLoad() to avoid an R CMD
+# check warning
+
 #' @rawNamespace
 #' if (utils::packageVersion("dplyr") > "0.5.0") {
 #'   importFrom(dplyr,filter)
-#'   S3method(filter,data.table)
 #' }
 filter.data.table <- function(.data, ...) {
   filter_(.data, .dots = lazyeval::lazy_dots(...))
