@@ -68,6 +68,15 @@ n_groups.grouped_dt <- function(x) {
   nrow(dt_subset(x, , quote(list(1))))
 }
 
+#' @rawNamespace
+#' if (utils::packageVersion("dplyr") > "0.5.0") {
+#'   importFrom(dplyr,group_by)
+#'   S3method(group_by,data.table)
+#' }
+group_by.data.table <- function(.data, ..., add = FALSE) {
+  group_by_(.data, .dots = lazyeval::lazy_dots(...), add = add)
+}
+
 #' @export
 #' @importFrom dplyr group_by_
 group_by_.data.table <- function(.data, ..., .dots, add = FALSE) {

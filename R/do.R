@@ -1,3 +1,12 @@
+#' @rawNamespace
+#' if (utils::packageVersion("dplyr") > "0.5.0") {
+#'   importFrom(dplyr,do)
+#'   S3method(do,data.table)
+#' }
+do.data.table <- function(.data, ...) {
+  do_(.data, .dots = lazyeval::lazy_dots(...))
+}
+
 #' @importFrom dplyr do_
 #' @export
 do_.data.table <- function(.data, ..., .dots) {

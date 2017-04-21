@@ -152,6 +152,15 @@ and_expr <- function(exprs) {
   left
 }
 
+#' @rawNamespace
+#' if (utils::packageVersion("dplyr") > "0.5.0") {
+#'   importFrom(dplyr,filter)
+#'   S3method(filter,data.table)
+#' }
+filter.data.table <- function(.data, ...) {
+  filter_(.data, .dots = lazyeval::lazy_dots(...))
+}
+
 #' @importFrom dplyr filter_
 #' @export
 filter_.grouped_dt <- function(.data, ..., .dots) {
@@ -178,6 +187,15 @@ filter_.data.table <- function(.data, ..., .dots) {
 
 # Summarise --------------------------------------------------------------------
 
+#' @rawNamespace
+#' if (utils::packageVersion("dplyr") > "0.5.0") {
+#'   importFrom(dplyr,summarise)
+#'   S3method(summarise,data.table)
+#' }
+summarise.data.table <- function(.data, ...) {
+  summarise_(.data, .dots = lazyeval::lazy_dots(...))
+}
+
 #' @importFrom dplyr summarise_
 #' @export
 summarise_.grouped_dt <- function(.data, ..., .dots) {
@@ -198,6 +216,15 @@ summarise_.data.table <- function(.data, ..., .dots) {
 }
 
 # Mutate -----------------------------------------------------------------------
+
+#' @rawNamespace
+#' if (utils::packageVersion("dplyr") > "0.5.0") {
+#'   importFrom(dplyr,mutate)
+#'   S3method(mutate,data.table)
+#' }
+mutate.data.table <- function(.data, ...) {
+  mutate_(.data, .dots = lazyeval::lazy_dots(...))
+}
 
 #' @importFrom dplyr mutate_
 #' @export
@@ -230,6 +257,15 @@ mutate_.data.table <- function(.data, ..., .dots) {
 
 # Arrange ----------------------------------------------------------------------
 
+#' @rawNamespace
+#' if (utils::packageVersion("dplyr") > "0.5.0") {
+#'   importFrom(dplyr,arrange)
+#'   S3method(arrange,data.table)
+#' }
+arrange.data.table <- function(.data, ...) {
+  arrange_(.data, .dots = lazyeval::lazy_dots(...))
+}
+
 #' @importFrom dplyr arrange_
 #' @export
 arrange_.grouped_dt <- function(.data, ..., .dots) {
@@ -253,6 +289,15 @@ arrange_.data.table <- function(.data, ..., .dots) {
 }
 
 # Select -----------------------------------------------------------------------
+
+#' @rawNamespace
+#' if (utils::packageVersion("dplyr") > "0.5.0") {
+#'   importFrom(dplyr,select)
+#'   S3method(select,data.table)
+#' }
+select.data.table <- function(.data, ...) {
+  select_(.data, .dots = lazyeval::lazy_dots(...))
+}
 
 #' @importFrom dplyr select_
 #' @export
@@ -283,6 +328,15 @@ select_.tbl_dt <- function(.data, ..., .dots) {
 
 # Rename -----------------------------------------------------------------------
 
+#' @rawNamespace
+#' if (utils::packageVersion("dplyr") > "0.5.0") {
+#'   importFrom(dplyr,rename)
+#'   S3method(rename,data.table)
+#' }
+rename.data.table <- function(.data, ...) {
+  rename_(.data, .dots = lazyeval::lazy_dots(...))
+}
+
 #' @importFrom dplyr rename_
 #' @export
 rename_.grouped_dt <- function(.data, ..., .dots) {
@@ -312,6 +366,15 @@ rename_.tbl_dt <- function(.data, ..., .dots) {
 
 
 # Slice -------------------------------------------------------------------
+
+#' @rawNamespace
+#' if (utils::packageVersion("dplyr") > "0.5.0") {
+#'   importFrom(dplyr,slice)
+#'   S3method(slice,data.table)
+#' }
+slice.data.table <- function(.data, ...) {
+  slice_(.data, .dots = lazyeval::lazy_dots(...))
+}
 
 #' @importFrom dplyr slice_
 #' @export
