@@ -31,60 +31,61 @@
 #' @name join.tbl_dt
 NULL
 
-merge_join_dt <- function(op) {
-  # nocov start
-  template <- substitute(function(x, y, by = NULL, copy = FALSE, ...) {
-    by <- dplyr::common_by(by, x, y)
-    y <- dplyr::auto_copy(x, y, copy = copy)
-    out <- op
-    grouped_dt(out, groups(x))
-  })
-
-  f <- eval(template, parent.frame())
-  attr(f, "srcref") <- NULL # fix so prints correctly
-  f
-  # nocov end
+#' @rdname join.tbl_dt
+inner_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+  by <- dplyr::common_by(by, x, y)
+  y <- dplyr::auto_copy(x, y, copy = copy)
+  out <- merge(x, y, by.x = by$x, by.y = by$y, all = FALSE, allow.cartesian = TRUE)
+  grouped_dt(out, groups(x)) 
 }
 
 #' @rdname join.tbl_dt
-inner_join.data.table <- merge_join_dt({merge(x, y, by.x = by$x, by.y = by$y, all = FALSE, allow.cartesian = TRUE)})
-
-#' @rdname join.tbl_dt
-left_join.data.table <- merge_join_dt({merge(x, y, by.x = by$x, by.y = by$y, all.x = TRUE, allow.cartesian = TRUE)})
-
-#' @rdname join.tbl_dt
-right_join.data.table <- merge_join_dt({merge(x, y, by.x = by$x, by.y = by$y, all.y = TRUE, allow.cartesian = TRUE)})
-
-#' @rdname join.tbl_dt
-# http://stackoverflow.com/a/15170956/946850
-full_join.data.table <- merge_join_dt({merge(x, y, by.x = by$x, by.y = by$y, all = TRUE, allow.cartesian = TRUE)})
-
-
-non_merge_join_dt <- function(op) {
-  # nocov start
-  template <- substitute(function(x, y, by = NULL, copy = FALSE, ...) {
-    by <- dplyr::common_by(by, x, y)
-    y <- dplyr::auto_copy(x, y, copy = copy)
-    y <- as.data.table(y)
-    by_x <- by$x
-    by_y <- by$y
-    y_filter <- y[, by_y, with = FALSE]
-    names(y_filter) <- by_x
-    w <- op
-    out <- x[sort(unique(w))]
-    grouped_dt(out, groups(x))
-  })
-
-  f <- eval(template, parent.frame())
-  attr(f, "srcref") <- NULL # fix so prints correctly
-  f
-  # nocov end
+left_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+  by <- dplyr::common_by(by, x, y)
+  y <- dplyr::auto_copy(x, y, copy = copy)
+  out <- merge(x, y, by.x = by$x, by.y = by$y, all.x = TRUE, allow.cartesian = TRUE)
+  grouped_dt(out, groups(x)) 
 }
 
+#' @rdname join.tbl_dt
+right_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+  by <- dplyr::common_by(by, x, y)
+  y <- dplyr::auto_copy(x, y, copy = copy)
+  out <- merge(x, y, by.x = by$x, by.y = by$y, all.y = TRUE, allow.cartesian = TRUE)
+  grouped_dt(out, groups(x)) 
+}
 
 #' @rdname join.tbl_dt
-semi_join.data.table  <- non_merge_join_dt({x[y_filter, which = TRUE, on = by_x, nomatch = 0L]})
+semi_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
+  by <- dplyr::common_by(by, x, y)
+  y <- dplyr::auto_copy(x, y, copy = copy)
+  by_x <- by$x
+  by_y <- by$y
+  y_filter <- y[, by_y, with = FALSE]
+  names(y_filter) <- by_x
+  w <- x[y_filter, which = TRUE, on = by_x, nomatch = 0L]
+  out <- x[sort(unique(w))]
+  grouped_dt(out, groups(x))
+}
 
 #' @rdname join.tbl_dt
-anti_join.data.table <- non_merge_join_dt({x[!y_filter, which = TRUE, on = by_x]})
+anti_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
+  by <- dplyr::common_by(by, x, y)
+  y <- dplyr::auto_copy(x, y, copy = copy)
+  by_x <- by$x
+  by_y <- by$y
+  y_filter <- y[, by_y, with = FALSE]
+  names(y_filter) <- by_x
+  w <- x[!y_filter, which = TRUE, on = by_x]
+  out <- x[sort(unique(w))]
+  grouped_dt(out, groups(x))
+}
+
+#' @rdname join.tbl_dt
+full_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+  by <- dplyr::common_by(by, x, y)
+  y <- dplyr::auto_copy(x, y, copy = copy)
+  out <- merge(x, y, by.x = by$x, by.y = by$y, all = TRUE, allow.cartesian = TRUE)
+  grouped_dt(out, groups(x)) 
+}
 
