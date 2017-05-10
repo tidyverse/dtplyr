@@ -35,12 +35,12 @@ test_that("joining data tables returns same result as dplyr", {
   a_dt <- data.table(x = c(1, 1, 2, 3), y = 4:1)
   b_dt <- data.table(x = c(1, 2, 2, 4), z = 1:4)
 
-  a_df <- as_data_frame(a)
-  b_df <- as_data_frame(b)
+  a_df <- as_data_frame(a_dt)
+  b_df <- as_data_frame(b_dt)
 
   test_join <- function(join_fun) {
-    out <- join_fun(a_df, b_df, "x")
-    out_dplyr <- tbl_dt(join_fun(a, b, "x"))
+    out <- join_fun(a_dt, b_dt, "x")
+    out_dplyr <- tbl_dt(join_fun(a_df, b_df, "x"))
     expect_equal(out, out_dplyr)
   }
 
@@ -58,12 +58,12 @@ test_that("changing suffixes works as in dplyr", {
   a_dt <- data.table(x = c(1, 1, 2, 3), y = 4:1)
   b_dt <- data.table(x = c(1, 2, 2, 4), z = 1:4)
 
-  a_df <- as_data_frame(a)
-  b_df <- as_data_frame(b)
+  a_df <- as_data_frame(a_dt)
+  b_df <- as_data_frame(b_dt)
 
   test_join <- function(join_fun) {
-    out <- join_fun(a_df, b_df, "x", suffix = c("left", "right"))
-    out_dplyr <- tbl_dt(join_fun(a, b, "x", suffix = c("left", "right")))
+    out <- join_fun(a_dt, b_dt, "x", suffix = c("left", "right"))
+    out_dplyr <- tbl_dt(join_fun(a_df, b_df, "x", suffix = c("left", "right")))
     expect_equal(out, out_dplyr)
   }
   
