@@ -56,14 +56,29 @@ right_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
 }
 
 #' @rdname join.tbl_dt
+full_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+  by <- dplyr::common_by(by, x, y)
+  y <- dplyr::auto_copy(x, y, copy = copy)
+  out <- merge(x, y, by.x = by$x, by.y = by$y, all = TRUE, allow.cartesian = TRUE)
+  grouped_dt(out, groups(x)) 
+}
+
+
+trim_y_for_semi_join <- function(y, by){
+  by_x <- by$x
+  by_y <- by$y
+  y_trimmed <- y[, by_y, with = FALSE]
+  names(y_trimmed) <- by_x
+  y_trimmed
+}
+
+#' @rdname join.tbl_dt
 semi_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
   by_x <- by$x
-  by_y <- by$y
-  y_filter <- y[, by_y, with = FALSE]
-  names(y_filter) <- by_x
-  w <- x[y_filter, which = TRUE, on = by_x, nomatch = 0L]
+  y_trimmed <- trim_y_for_semi_join(y, by)
+  w <- x[y_trimmed, which = TRUE, on = by_x, nomatch = 0L]
   out <- x[sort(unique(w))]
   grouped_dt(out, groups(x))
 }
@@ -73,19 +88,9 @@ anti_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
   by_x <- by$x
-  by_y <- by$y
-  y_filter <- y[, by_y, with = FALSE]
-  names(y_filter) <- by_x
-  w <- x[!y_filter, which = TRUE, on = by_x]
+  by_x <- by$x
+  y_trimmed <- trim_y_for_semi_join(y, by)
+  w <- x[!y_trimmed, which = TRUE, on = by_x]
   out <- x[sort(unique(w))]
   grouped_dt(out, groups(x))
 }
-
-#' @rdname join.tbl_dt
-full_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
-  by <- dplyr::common_by(by, x, y)
-  y <- dplyr::auto_copy(x, y, copy = copy)
-  out <- merge(x, y, by.x = by$x, by.y = by$y, all = TRUE, allow.cartesian = TRUE)
-  grouped_dt(out, groups(x)) 
-}
-
