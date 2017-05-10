@@ -35,15 +35,6 @@ join_dt <- function(op) {
   # nocov start
   template <- substitute(function(x, y, by = NULL, copy = FALSE, ...) {
     by <- dplyr::common_by(by, x, y)
-    if (!identical(by$x, by$y)) {
-      stop("Data table joins must be on same key", call. = FALSE)
-    }
-    y <- dplyr::auto_copy(x, y, copy = copy)
-
-    x <- data.table::copy(x)
-    y <- data.table::copy(y)
-    data.table::setkeyv(x, by$x)
-    data.table::setkeyv(y, by$x)
     out <- op
     grouped_dt(out, groups(x))
   })
@@ -55,25 +46,36 @@ join_dt <- function(op) {
 }
 
 #' @rdname join.tbl_dt
-inner_join.data.table <- join_dt({merge(x, y, by = by$x, allow.cartesian = TRUE)})
+inner_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all = FALSE, allow.cartesian = TRUE)})
 
 #' @rdname join.tbl_dt
-left_join.data.table  <- join_dt({merge(x, y, by = by$x, all.x = TRUE, allow.cartesian = TRUE)})
+left_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all.x = TRUE, allow.cartesian = TRUE)})
 
 #' @rdname join.tbl_dt
-right_join.data.table  <- join_dt(merge(x, y, by = by$x, all.y = TRUE, allow.cartesian = TRUE))
+right_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all.y = TRUE, allow.cartesian = TRUE)})
 
 #' @rdname join.tbl_dt
 semi_join.data.table  <- join_dt({
-  # http://stackoverflow.com/questions/18969420/perform-a-semi-join-with-data-table
-  w <- unique(x[y, which = TRUE, allow.cartesian = TRUE])
-  w <- w[!is.na(w)]
-  x[w]
+   y <- as.data.table(y)
+   by_x <- by$x
+   by_y <- by$y
+   y_filter <- y[, by_y, with = FALSE]
+   names(y_filter) <- by_x
+   w <- x[y_filter, which = TRUE, on = by_x, nomatch = 0L]
+   x[sort(unique(w))]
 })
 
 #' @rdname join.tbl_dt
-anti_join.data.table <- join_dt({x[!y, allow.cartesian = TRUE]})
+anti_join.data.table <- join_dt({
+  y <- as.data.table(y)
+  by_x <- by$x
+  by_y <- by$y
+  y_filter <- y[, by_y, with = FALSE]
+  names(y_filter) <- by_x
+  w <- x[!y_filter, which = TRUE, on = by_x]
+  x[sort(unique(w))]
+})
 
 #' @rdname join.tbl_dt
 # http://stackoverflow.com/a/15170956/946850
-full_join.data.table <- join_dt({merge(x, y, by = by$x, all = TRUE, allow.cartesian = TRUE)})
+full_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all = TRUE, allow.cartesian = TRUE)})
