@@ -10,17 +10,21 @@
 \alias{full_join.data.table}
 \title{Join data table tbls.}
 \usage{
-\method{inner_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
+\method{inner_join}{data.table}(x, y, by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"), ...)
 
-\method{left_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
+\method{left_join}{data.table}(x, y, by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"), ...)
 
-\method{right_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
+\method{right_join}{data.table}(x, y, by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"), ...)
 
 \method{semi_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
 
 \method{anti_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
 
-\method{full_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
+\method{full_join}{data.table}(x, y, by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"), ...)
 }
 \arguments{
 \item{x, y}{tbls to join}
@@ -39,6 +43,10 @@ For example, \code{by = c("a" = "b")} will match \code{x.a} to
 and \code{copy} is \code{TRUE}, then \code{y} will be copied into the
 same src as \code{x}.  This allows you to join tables across srcs, but
 it is a potentially expensive operation so you must opt into it.}
+
+\item{suffix}{If there are non-joined duplicate variables in \code{x} and
+\code{y}, these suffixes will be added to the output to diambiguate them.
+Should be a character vector of length 2.}
 
 \item{...}{Included for compatibility with generic; otherwise ignored.}
 }

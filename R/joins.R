@@ -33,7 +33,7 @@ NULL
 
 join_dt <- function(op) {
   # nocov start
-  template <- substitute(function(x, y, by = NULL, copy = FALSE, ...) {
+  template <- substitute(function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
     by <- dplyr::common_by(by, x, y)
     out <- op
     grouped_dt(out, groups(x))
@@ -46,36 +46,40 @@ join_dt <- function(op) {
 }
 
 #' @rdname join.tbl_dt
-inner_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all = FALSE, allow.cartesian = TRUE)})
+inner_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all = FALSE, suffixes = suffix, allow.cartesian = TRUE)})
 
 #' @rdname join.tbl_dt
-left_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all.x = TRUE, allow.cartesian = TRUE)})
+left_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all.x = TRUE, suffixes = suffix, allow.cartesian = TRUE)})
 
 #' @rdname join.tbl_dt
-right_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all.y = TRUE, allow.cartesian = TRUE)})
+right_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all.y = TRUE, suffixes = suffix, allow.cartesian = TRUE)})
 
 #' @rdname join.tbl_dt
-semi_join.data.table  <- join_dt({
-   y <- as.data.table(y)
-   by_x <- by$x
-   by_y <- by$y
-   y_filter <- y[, by_y, with = FALSE]
-   names(y_filter) <- by_x
-   w <- x[y_filter, which = TRUE, on = by_x, nomatch = 0L]
-   x[sort(unique(w))]
-})
+semi_join.data.table  <- function(x, y, by = NULL, copy = FALSE, ...){
+  by <- dplyr::common_by(by, x, y)
+  y <- as.data.table(y)
+  by_x <- by$x
+  by_y <- by$y
+  y_filter <- y[, by_y, with = FALSE]
+  names(y_filter) <- by_x
+  w <- x[y_filter, which = TRUE, on = by_x, nomatch = 0L]
+  out <- x[sort(unique(w))]
+  grouped_dt(out, groups(x))
+}
 
 #' @rdname join.tbl_dt
-anti_join.data.table <- join_dt({
+anti_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+  by <- dplyr::common_by(by, x, y)
   y <- as.data.table(y)
   by_x <- by$x
   by_y <- by$y
   y_filter <- y[, by_y, with = FALSE]
   names(y_filter) <- by_x
   w <- x[!y_filter, which = TRUE, on = by_x]
-  x[sort(unique(w))]
-})
+  out <- x[sort(unique(w))]
+  grouped_dt(out, groups(x))
+}
 
 #' @rdname join.tbl_dt
 # http://stackoverflow.com/a/15170956/946850
-full_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all = TRUE, allow.cartesian = TRUE)})
+full_join.data.table <- join_dt({merge(x, y, by.x = by$x, by.y = by$y, all = TRUE, suffixes = suffix, allow.cartesian = TRUE)})
