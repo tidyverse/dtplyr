@@ -35,6 +35,7 @@ join_dt <- function(op) {
   # nocov start
   template <- substitute(function(x, y, by = NULL, copy = FALSE, ...) {
     by <- dplyr::common_by(by, x, y)
+    y <- dplyr::auto_copy(x, y, copy = copy)
     out <- op
     grouped_dt(out, groups(x))
   })
