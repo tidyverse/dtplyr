@@ -32,34 +32,42 @@
 NULL
 
 #' @rdname join.tbl_dt
-inner_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+inner_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
+                                  suffix = c(".x", ".y"), ...){
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
-  out <- merge(x, y, by.x = by$x, by.y = by$y, all = FALSE, allow.cartesian = TRUE)
+  out <- merge(x, y, by.x = by$x, by.y = by$y, all = FALSE, suffixes = suffix, 
+               allow.cartesian = TRUE)
   grouped_dt(out, groups(x)) 
 }
 
 #' @rdname join.tbl_dt
-left_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+left_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
+                                 suffix = c(".x", ".y"), ...){
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
-  out <- merge(x, y, by.x = by$x, by.y = by$y, all.x = TRUE, allow.cartesian = TRUE)
+  out <- merge(x, y, by.x = by$x, by.y = by$y, all.x = TRUE, suffixes = suffix, 
+               allow.cartesian = TRUE)
   grouped_dt(out, groups(x)) 
 }
 
 #' @rdname join.tbl_dt
-right_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+right_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
+                                  suffix = c(".x", ".y"), ...){
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
-  out <- merge(x, y, by.x = by$x, by.y = by$y, all.y = TRUE, allow.cartesian = TRUE)
+  out <- merge(x, y, by.x = by$x, by.y = by$y, all.y = TRUE, suffixes = suffix, 
+               allow.cartesian = TRUE)
   grouped_dt(out, groups(x)) 
 }
 
 #' @rdname join.tbl_dt
-full_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+full_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
+                                 suffix = c(".x", ".y"), ...){
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
-  out <- merge(x, y, by.x = by$x, by.y = by$y, all = TRUE, allow.cartesian = TRUE)
+  out <- merge(x, y, by.x = by$x, by.y = by$y, all = TRUE, suffixes = suffix, 
+               allow.cartesian = TRUE)
   grouped_dt(out, groups(x)) 
 }
 
