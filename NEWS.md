@@ -1,3 +1,9 @@
+# dtplyr 0.0.2.9000
+
+- joins use extended `merge.data.table` and the `on=` argument, introduced in
+  data.table 1.9.6. Avoids copy and allows joins by different keys (#20, #21).
+
+
 # dtplyr 0.0.2
 
 - This is a compatibility release. It makes dtplyr compatible with
