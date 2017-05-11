@@ -11,8 +11,9 @@ Description: This implements the data table back-end for 'dplyr' so that you
 License: GPL (>= 2)
 Imports:
     dplyr (>= 0.5.0),
-    data.table,
-    lazyeval
+    data.table (>= 1.9.6),
+    lazyeval,
+    rlang
 Suggests:
     Lahman,
     nycflights13,
