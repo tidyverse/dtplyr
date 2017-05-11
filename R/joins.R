@@ -63,34 +63,26 @@ full_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
   grouped_dt(out, groups(x)) 
 }
 
-
-trim_y_for_semi_join <- function(y, by){
-  by_x <- by$x
-  by_y <- by$y
-  y_trimmed <- y[, by_y, with = FALSE]
-  names(y_trimmed) <- by_x
-  y_trimmed
-}
-
 #' @rdname join.tbl_dt
+#' @import rlang
 semi_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
-  by_x <- by$x
-  y_trimmed <- trim_y_for_semi_join(y, by)
-  w <- x[y_trimmed, which = TRUE, on = by_x, nomatch = 0L]
+  on <- set_names(by$y, by$x)
+  y_trimmed <- y[, by$y, with = FALSE]
+  w <- x[y_trimmed, which = TRUE, on = on, nomatch = 0L]
   out <- x[sort(unique(w))]
   grouped_dt(out, groups(x))
 }
 
 #' @rdname join.tbl_dt
+#' @import rlang
 anti_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
-  by_x <- by$x
-  by_x <- by$x
-  y_trimmed <- trim_y_for_semi_join(y, by)
-  w <- x[!y_trimmed, which = TRUE, on = by_x]
+  on <- set_names(by$y, by$x)
+  y_trimmed <- y[, by$y, with = FALSE]
+  w <- x[!y_trimmed, which = TRUE, on = on]
   out <- x[sort(unique(w))]
   grouped_dt(out, groups(x))
 }
