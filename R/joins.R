@@ -31,36 +31,47 @@
 #' @name join.tbl_dt
 NULL
 
-#' @rdname join.tbl_dt
-inner_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
+join_using_merge <- function(x, y, by, copy, suffix, 
+                             all.x = FALSE, all.y = FALSE){
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
-  out <- merge(x, y, by.x = by$x, by.y = by$y, all = FALSE, allow.cartesian = TRUE)
+  out <- merge(
+    x, y, 
+    by.x = by$x, by.y = by$y, 
+    all.x = all.x, all.y = all.y,
+    suffixes = suffix, 
+    allow.cartesian = TRUE
+  )
   grouped_dt(out, groups(x)) 
 }
 
 #' @rdname join.tbl_dt
-left_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
-  by <- dplyr::common_by(by, x, y)
-  y <- dplyr::auto_copy(x, y, copy = copy)
-  out <- merge(x, y, by.x = by$x, by.y = by$y, all.x = TRUE, allow.cartesian = TRUE)
-  grouped_dt(out, groups(x)) 
+inner_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
+                                  suffix = c(".x", ".y"), ...){
+  join_using_merge(x, y, by = by, copy = copy, suffix = suffix)
 }
 
 #' @rdname join.tbl_dt
-right_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
-  by <- dplyr::common_by(by, x, y)
-  y <- dplyr::auto_copy(x, y, copy = copy)
-  out <- merge(x, y, by.x = by$x, by.y = by$y, all.y = TRUE, allow.cartesian = TRUE)
-  grouped_dt(out, groups(x)) 
+left_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
+                                 suffix = c(".x", ".y"), ...){
+  join_using_merge(x, y, by = by, copy = copy, suffix = suffix, all.x = TRUE)
 }
 
 #' @rdname join.tbl_dt
-full_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...){
-  by <- dplyr::common_by(by, x, y)
-  y <- dplyr::auto_copy(x, y, copy = copy)
-  out <- merge(x, y, by.x = by$x, by.y = by$y, all = TRUE, allow.cartesian = TRUE)
-  grouped_dt(out, groups(x)) 
+right_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
+                                  suffix = c(".x", ".y"), ...){
+  join_using_merge(x, y, by = by, copy = copy, suffix = suffix, all.y = TRUE)
+}
+
+#' @rdname join.tbl_dt
+full_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
+                                 suffix = c(".x", ".y"), ...){
+  join_using_merge(x, y, 
+    by = by, 
+    copy = copy, 
+    suffix = suffix, 
+    all.x = TRUE, all.y = TRUE
+  )
 }
 
 #' @rdname join.tbl_dt
