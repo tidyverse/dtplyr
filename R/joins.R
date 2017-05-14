@@ -53,7 +53,7 @@ inner_join.data.table <- function(x, y, by = NULL, copy = FALSE,
 
 #' @rdname join.tbl_dt
 left_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
-                                  suffix = c(".x", ".y"), ...){
+                                 suffix = c(".x", ".y"), ...){
   join_using_merge(x, y, by = by, copy = copy, suffix = suffix, all.x = TRUE)
 }
 
@@ -65,7 +65,7 @@ right_join.data.table <- function(x, y, by = NULL, copy = FALSE,
 
 #' @rdname join.tbl_dt
 full_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
-                                  suffix = c(".x", ".y"), ...){
+                                 suffix = c(".x", ".y"), ...){
   join_using_merge(x, y, 
     by = by, 
     copy = copy, 

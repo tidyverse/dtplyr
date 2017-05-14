@@ -1,6 +1,8 @@
 # dtplyr 0.0.2.9000
 
-- Joins with custom suffixes (#40).
+- `inner_join()`, `left_join()`, `right_join()`, and `full_join()`: new `suffix` 
+  argument which allows you to control what suffix duplicated variable names 
+  receive, as introduced in dplyr 0.5 (#40, @christophsax).
 
 - Joins use extended `merge.data.table()` and the `on` argument, introduced in
   data.table 1.9.6. Avoids copy and allows joins by different keys (#20, #21,
