@@ -206,7 +206,7 @@ mutate.data.table <- function(.data, ...) {
 
 #' @importFrom dplyr mutate_
 mutate_.grouped_dt <- function(.data, ..., .dots) {
-  grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
+  grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
 mutate_.tbl_dt <- function(.data, ..., .dots) {
   tbl_dt(NextMethod(), copy = FALSE)
