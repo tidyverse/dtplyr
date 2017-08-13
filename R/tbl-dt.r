@@ -200,28 +200,37 @@ summarise_.data.table <- function(.data, ..., .dots) {
 
 # Mutate -----------------------------------------------------------------------
 
-mutate.data.table <- function(.data, ...) {
-  mutate_(.data, .dots = lazyeval::lazy_dots(...))
+mutate.grouped_dt <- function(.data, ...) {
+  grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
-
-#' @importFrom dplyr mutate_
-mutate_.grouped_dt <- function(.data, ..., .dots) {
-  grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
-}
-mutate_.tbl_dt <- function(.data, ..., .dots) {
+mutate.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-mutate_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
-  names <- lapply(names(dots), as.name)
+
+#' @importFrom dplyr mutate
+mutate.data.table <- function(.data, ...) {
+  dots <- quos(..., .named = TRUE)
+  names <- names(dots)
 
   # Never want to modify in place
   .data <- data.table::copy(.data)
 
   for(i in seq_along(dots)) {
     # For each new variable, generate a call of the form df[, new := expr]
-    j <- substitute(lhs := rhs, list(lhs = names[[i]], rhs = dots[[i]]$expr))
-    .data <- dt_subset(.data, , j, dots[[i]]$env)
+    j <- substitute(lhs := rhs, list(lhs = names[[i]], rhs = get_expr(dots[[i]])))
+
+    # from ?quosure: 
+    #   Literals are enquosed with the empty environment because they can
+    #   be evaluated anywhere.
+    # But we don't have `[` in emptyenv, which we need in the data.table call. 
+    # Changing to baseenv which was also returned in old lazyeval::all_dots()
+    if (identical(get_env(dots[[i]]), emptyenv())){
+      env <- baseenv()
+    } else {
+      env <- get_env(dots[[i]])
+    }
+
+    .data <- dt_subset(.data, , j,  env)
   }
 
   # Need to use this syntax to make the output visible (#11).
