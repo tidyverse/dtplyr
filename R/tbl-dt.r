@@ -155,23 +155,59 @@ and_expr <- function(exprs) {
 # The S3 method is registered manually in .onLoad() to avoid an R CMD
 # check warning
 
-filter.data.table <- function(.data, ...) {
-  filter_(.data, .dots = lazyeval::lazy_dots(...))
+# Is there something similar in rlang?
+
+# first version, adapted from lazyeval
+# common_env <- function (dots){
+#   if (length(dots) == 0) 
+#       return(baseenv())
+#   env <- get_env(dots[[1]])
+#   if (length(dots) == 1) 
+#       return(env)
+#   for (i in 2:length(dots)) {
+#       if (!identical(env, get_env(dots[[i]]))) {
+#           return(baseenv())
+#       }
+#   }
+#   env
+# }
+
+# but this still does not take care of literals. Basically, we want to fall back
+# to baseenv() if we dont have a unique env that is not emptyenv(). (But I
+# am not sure if the case of emptyenv is relevant here.)
+
+# second version
+common_env <- function (dots){
+  if (length(dots) == 0) return(baseenv())
+  env <- get_env(dots[[1]])
+  if (identical(env, emptyenv())){
+    env <- baseenv()
+  }
+  if (length(dots) == 1){
+    return(env)
+  }
+  for (i in 2:length(dots)) {
+    if (!identical(env, get_env(dots[[i]]))) {
+      return(baseenv())
+    }
+  }
+  env
 }
 
-#' @importFrom dplyr filter_
-filter_.grouped_dt <- function(.data, ..., .dots) {
+#' @importFrom dplyr filter
+filter.grouped_dt <- function(.data, ...) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
-filter_.tbl_dt <- function(.data, ..., .dots) {
+filter.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-filter_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
-  env <- lazyeval::common_env(dots)
+filter.data.table <- function(.data, ...) {
+  dots <- quos(...)
+  env <- common_env(dots)
 
   # http://stackoverflow.com/questions/16573995/subset-by-group-with-data-table
-  expr <- lapply(dots, `[[`, "expr")
+  # expr <- lapply(dots, `[[`, "expr")
+  expr <- lapply(dots, get_expr)
   j <- substitute(list(`_row` = .I[expr]), list(expr = and_expr(expr)))
   indices <- dt_subset(.data, , j, env)$`_row`
 
