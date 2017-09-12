@@ -65,9 +65,9 @@
   register_s3_method("dplyr", "rename_", "tbl_dt")
   register_s3_method("dplyr", "rename_", "data.table")
 
-  register_s3_method("dplyr", "slice_", "grouped_dt")
-  register_s3_method("dplyr", "slice_", "tbl_dt")
-  register_s3_method("dplyr", "slice_", "data.table")
+  register_s3_method("dplyr", "slice", "grouped_dt")
+  register_s3_method("dplyr", "slice", "tbl_dt")
+  register_s3_method("dplyr", "slice", "data.table")
 
   invisible()
 }

@@ -363,23 +363,24 @@ rename_.tbl_dt <- function(.data, ..., .dots) {
 }
 
 
-# Slice -------------------------------------------------------------------
+# Slice ------------------------------------------------------------------------
 
-slice.data.table <- function(.data, ...) {
-  slice_(.data, .dots = lazyeval::lazy_dots(...))
-}
-
-#' @importFrom dplyr slice_
-slice_.grouped_dt <- function(.data, ..., .dots) {
+#' @importFrom dplyr slice
+slice.grouped_dt <- function(.data, ...) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
-slice_.tbl_dt <- function(.data, ..., .dots) {
+slice.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-slice_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
-  env <- lazyeval::common_env(dots)
+slice.data.table <- function(.data, ...) {
 
-  j <- substitute(.SD[rows], list(rows = dots[[1]]$expr))
+  dots <- quos(...)
+  env <- common_env(dots)
+
+  exprs <- lapply(dots, get_expr)
+
+  i <- as.call(c(quote(c), exprs))
+
+  j <- substitute(.SD[rows], list(rows = i))
   dt_subset(.data, , j, env)
 }
