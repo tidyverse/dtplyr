@@ -278,25 +278,32 @@ mutate.data.table <- function(.data, ...) {
 
 # Arrange ----------------------------------------------------------------------
 
-arrange.data.table <- function(.data, ...) {
-  arrange_(.data, .dots = lazyeval::lazy_dots(...))
-}
+#' @importFrom dplyr arrange
+arrange.grouped_dt <- function(.data, ..., .by_group = FALSE) {
+  if (.by_group) {
+    dots <- quos(!!!groups(.data), ...)
+  } else {
+    dots <- quos(...)
+  }
 
-#' @importFrom dplyr arrange_
-arrange_.grouped_dt <- function(.data, ..., .dots) {
-  grouped_dt(NextMethod(), groups(.data), copy = FALSE)
+  arrange_impl(.data, dots)
 }
-arrange_.tbl_dt <- function(.data, ..., .dots) {
+arrange.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-arrange_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
+arrange.data.table <- function(.data, ...) {
+  dots <- quos(...)
 
-  groups <- lazyeval::as.lazy_dots(groups(.data),
-    env = lazyeval::common_env(dots))
-  i <- lazyeval::make_call(quote(order), c(groups, dots))
+  arrange_impl(.data, dots)
+}
 
-  dt_subset(.data, i$expr, , env = i$env)
+arrange_impl <- function(.data, dots) {
+  exprs <- lapply(dots, get_expr) 
+  env <- common_env(dots)
+
+  i <- as.call(c(quote(order), exprs))
+
+  dt_subset(.data, i, , env = env)
 }
 
 # Select -----------------------------------------------------------------------
