@@ -308,29 +308,51 @@ arrange_impl <- function(.data, dots) {
 
 # Select -----------------------------------------------------------------------
 
-select.data.table <- function(.data, ...) {
-  select_(.data, .dots = lazyeval::lazy_dots(...))
+# select.data.table <- function(.data, ...) {
+#   select_(.data, .dots = lazyeval::lazy_dots(...))
+# }
+
+
+# not exported from dplyr
+ensure_group_vars <- function(vars, data, notify = TRUE) {
+  group_names <- group_vars(data)
+  missing <- setdiff(group_names, vars)
+
+  if (length(missing) > 0) {
+    if (notify) {
+      inform(paste0("Adding missing grouping variables: ", 
+                    "`", missing, "`", collapse = ", ")
+             )
+    }
+    vars <- c(set_names(missing, missing), vars)
+  }
+
+  vars
 }
+
 
 #' @importFrom dplyr select_
-select_.grouped_dt <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
-  vars <- dplyr::select_vars_(names(.data), dots,
-    include = as.character(groups(.data)))
+select.grouped_dt <- function(.data, ...) {
+  vars <- dplyr::select_vars(names(.data), !!! quos(...))
+  vars <- ensure_group_vars(vars, .data)
+
   out <- .data[, vars, drop = FALSE, with = FALSE]
-  data.table::setnames(out, names(vars))
+
+  if (nrow(out) > 0) data.table::setnames(out, names(vars))
 
   grouped_dt(out, groups(.data), copy = FALSE)
+
 }
-select_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
-  vars <- dplyr::select_vars_(names(.data), dots)
+select.data.table <- function(.data, ...) {
+  vars <- dplyr::select_vars(names(.data), !!! quos(...))
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
-  data.table::setnames(out, names(vars))
+
+  if (nrow(out) > 0) data.table::setnames(out, names(vars))
+  
   out
 }
-select_.tbl_dt <- function(.data, ..., .dots) {
+select.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
 

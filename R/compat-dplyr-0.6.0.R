@@ -57,9 +57,9 @@
   register_s3_method("dplyr", "arrange", "tbl_dt")
   register_s3_method("dplyr", "arrange", "data.table")
 
-  register_s3_method("dplyr", "select_", "grouped_dt")
-  register_s3_method("dplyr", "select_", "tbl_dt")
-  register_s3_method("dplyr", "select_", "data.table")
+  register_s3_method("dplyr", "select", "grouped_dt")
+  register_s3_method("dplyr", "select", "tbl_dt")
+  register_s3_method("dplyr", "select", "data.table")
 
   register_s3_method("dplyr", "rename_", "grouped_dt")
   register_s3_method("dplyr", "rename_", "tbl_dt")
