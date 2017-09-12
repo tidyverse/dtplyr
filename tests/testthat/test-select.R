@@ -224,13 +224,13 @@ test_that("arguments to select() don't match select_vars() arguments", {
   # expect_identical(select(group_by(df, a), include = a), group_by(data.table(include = 1), include))
 })
 
-# test_that("arguments to rename() don't match rename_vars() arguments (#2861)", {
-#   df <- data.table(a = 1)
-#   expect_identical(rename(df, var = a), data.table(var = 1))
-#   expect_identical(rename(group_by(df, a), var = a), group_by(data.table(var = 1), var))
-#   expect_identical(rename(df, strict = a), data.table(strict = 1))
-#   expect_identical(rename(group_by(df, a), strict = a), group_by(data.table(strict = 1), strict))
-# })
+test_that("arguments to rename() don't match rename_vars() arguments (#2861)", {
+  df <- data.table(a = 1)
+  expect_identical(rename(df, var = a), data.table(var = 1))
+  # expect_identical(rename(group_by(df, a), var = a), group_by(data.table(var = 1), var))
+  expect_identical(rename(df, strict = a), data.table(strict = 1))
+  # expect_identical(rename(group_by(df, a), strict = a), group_by(data.table(strict = 1), strict))
+})
 
 test_that("can select() with .data pronoun (#2715)", {
   expect_identical(select(mtcars_dt, .data$cyl), select(mtcars_dt, cyl))

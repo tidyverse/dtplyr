@@ -331,7 +331,7 @@ ensure_group_vars <- function(vars, data, notify = TRUE) {
 }
 
 
-#' @importFrom dplyr select_
+#' @importFrom dplyr select
 select.grouped_dt <- function(.data, ...) {
   vars <- dplyr::select_vars(names(.data), !!! quos(...))
   vars <- ensure_group_vars(vars, .data)
@@ -349,7 +349,7 @@ select.data.table <- function(.data, ...) {
   out <- .data[, vars, drop = FALSE, with = FALSE]
 
   if (nrow(out) > 0) data.table::setnames(out, names(vars))
-  
+
   out
 }
 select.tbl_dt <- function(.data, ...) {
@@ -358,29 +358,26 @@ select.tbl_dt <- function(.data, ...) {
 
 # Rename -----------------------------------------------------------------------
 
-rename.data.table <- function(.data, ...) {
-  rename_(.data, .dots = lazyeval::lazy_dots(...))
-}
-
-#' @importFrom dplyr rename_
-rename_.grouped_dt <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
-  vars <- dplyr::rename_vars_(names(.data), dots)
+#' @importFrom dplyr rename
+rename.grouped_dt <- function(.data, ...) {
+  vars <- dplyr::rename_vars(names(.data), !!! quos(...))
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
-  data.table::setnames(out, names(vars))
+
+  if (nrow(out) > 0) data.table::setnames(out, names(vars))
 
   grouped_dt(out, groups(.data), copy = FALSE)
 }
-rename_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
-  vars <- dplyr::rename_vars_(names(.data), dots)
+rename.data.table <- function(.data, ...) {
+  vars <- dplyr::rename_vars(names(.data), !!! quos(...))
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
-  data.table::setnames(out, names(vars))
+
+  if (nrow(out) > 0) data.table::setnames(out, names(vars))
+
   out
 }
-rename_.tbl_dt <- function(.data, ..., .dots) {
+rename.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
 
