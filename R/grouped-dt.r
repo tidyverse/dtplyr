@@ -124,9 +124,9 @@ named_args <- function(args) {
 
 # Set operations ---------------------------------------------------------------
 
-distinct_.grouped_dt <- function(.data, ..., .dots) {
-  groups <- lazyeval::as.lazy_dots(groups(.data))
-  dist <- distinct_vars(.data, ..., .dots = c(.dots, groups))
+distinct.grouped_dt <- function(.data, ...) {
+
+  dist <- distinct_vars(.data, quos(!!!groups(.data), ..., .named = TRUE))
 
   grouped_dt(unique(dist$data, by = dist$vars), groups(.data), copy = FALSE)
 }

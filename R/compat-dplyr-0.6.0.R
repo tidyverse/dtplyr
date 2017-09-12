@@ -24,7 +24,7 @@
 
   register_s3_method("dplyr", "group_by_", "data.table")
   register_s3_method("dplyr", "do", "grouped_dt")
-  register_s3_method("dplyr", "distinct_", "grouped_dt")
+  register_s3_method("dplyr", "distinct", "grouped_dt")
 
   register_s3_method("dplyr", "inner_join", "data.table")
   register_s3_method("dplyr", "left_join", "data.table")
@@ -38,8 +38,8 @@
   register_s3_method("dplyr", "sample_frac", "tbl_dt")
   register_s3_method("dplyr", "sample_frac", "grouped_dt")
 
-  register_s3_method("dplyr", "distinct_", "data.table")
-  register_s3_method("dplyr", "distinct_", "tbl_dt")
+  register_s3_method("dplyr", "distinct", "data.table")
+  register_s3_method("dplyr", "distinct", "tbl_dt")
 
   register_s3_method("dplyr", "filter", "grouped_dt")
   register_s3_method("dplyr", "filter", "tbl_dt")
