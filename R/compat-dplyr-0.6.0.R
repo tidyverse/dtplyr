@@ -45,9 +45,9 @@
   register_s3_method("dplyr", "filter", "tbl_dt")
   register_s3_method("dplyr", "filter", "data.table")
 
-  register_s3_method("dplyr", "summarise_", "grouped_dt")
-  register_s3_method("dplyr", "summarise_", "tbl_dt")
-  register_s3_method("dplyr", "summarise_", "data.table")
+  register_s3_method("dplyr", "summarise", "grouped_dt")
+  register_s3_method("dplyr", "summarise", "tbl_dt")
+  register_s3_method("dplyr", "summarise", "data.table")
 
   register_s3_method("dplyr", "mutate", "grouped_dt")
   register_s3_method("dplyr", "mutate", "tbl_dt")

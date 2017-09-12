@@ -216,22 +216,25 @@ filter.data.table <- function(.data, ...) {
 
 # Summarise --------------------------------------------------------------------
 
-summarise.data.table <- function(.data, ...) {
-  summarise_(.data, .dots = lazyeval::lazy_dots(...))
-}
-
-#' @importFrom dplyr summarise_
-summarise_.grouped_dt <- function(.data, ..., .dots) {
+#' @importFrom dplyr summarise
+summarise.grouped_dt <- function(.data, ...) {
   grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
 }
-summarise_.tbl_dt <- function(.data, ..., .dots) {
+summarise.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-summarise_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
+summarise.data.table <- function(.data, ...) {
+  dots <- quos(..., .named = TRUE)
 
-  j <- lazyeval::make_call(quote(list), dots)
-  dt_subset(.data, , j$expr, env = j$env)
+  envs <- lapply(dots, get_env)
+  exprs <- lapply(dots, get_expr)  
+
+  # use (first) deepest env as common env
+  env <- envs[[which.max(vapply(envs, env_depth, 0L))]]
+
+  j <- as.call(c(quote(list), exprs))
+
+  dt_subset(.data, , j, env = env)
 }
 
 # Mutate -----------------------------------------------------------------------
