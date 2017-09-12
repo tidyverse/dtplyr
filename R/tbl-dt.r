@@ -308,11 +308,6 @@ arrange_impl <- function(.data, dots) {
 
 # Select -----------------------------------------------------------------------
 
-# select.data.table <- function(.data, ...) {
-#   select_(.data, .dots = lazyeval::lazy_dots(...))
-# }
-
-
 # not exported from dplyr
 ensure_group_vars <- function(vars, data, notify = TRUE) {
   group_names <- group_vars(data)

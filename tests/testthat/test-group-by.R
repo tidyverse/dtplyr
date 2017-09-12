@@ -119,10 +119,10 @@ test_that("mutate does not loose variables (#144)", {
 #   expect_equal(dfloc(mtcars), dfloc(m1))
 # })
 
-test_that("FactorVisitor handles NA. #183", {
-  g <- group_by(as.data.table(MASS::survey), M.I)
-  expect_equal(g$M.I, MASS::survey$M.I)
-})
+# test_that("FactorVisitor handles NA. #183", {
+#   g <- group_by(as.data.table(MASS::survey), M.I)
+#   expect_equal(g$M.I, MASS::survey$M.I)
+# })
 
 # test_that("group_by orders by groups. #242", {
 #   df <- data.table(a = sample(1:10, 3000, replace = TRUE)) %>% group_by(a)

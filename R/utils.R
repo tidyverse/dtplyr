@@ -1,5 +1,3 @@
-# j <- lazyeval::interp(~ .I[rows], rows = args[[1]]$expr)
-# dt_subset(dt, , j, env)
 
 dt_subset <- function(dt, i, j, env = parent.frame(), sd_cols = NULL) {
   env <- new.env(parent = env, size = 2L)

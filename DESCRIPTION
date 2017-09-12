@@ -12,7 +12,6 @@ License: GPL (>= 2)
 Imports:
     dplyr (>= 0.5.0),
     data.table (>= 1.9.6),
-    lazyeval,
     rlang
 Suggests:
     Lahman,
