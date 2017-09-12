@@ -22,7 +22,7 @@
   register_s3_method("dplyr", "n_groups", "grouped_dt")
   register_s3_method("dplyr", "ungroup", "grouped_dt")
 
-  register_s3_method("dplyr", "group_by_", "data.table")
+  register_s3_method("dplyr", "group_by", "data.table")
   register_s3_method("dplyr", "do", "grouped_dt")
   register_s3_method("dplyr", "distinct", "grouped_dt")
 

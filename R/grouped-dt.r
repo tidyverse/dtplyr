@@ -62,19 +62,19 @@ n_groups.grouped_dt <- function(x) {
   nrow(dt_subset(x, , quote(list(1))))
 }
 
-#' @importFrom dplyr group_by_
+#' @importFrom dplyr group_by
 group_by.data.table <- function(.data, ..., add = FALSE) {
-  group_by_(.data, .dots = lazyeval::lazy_dots(...), add = add)
-}
-group_by_.data.table <- function(.data, ..., .dots, add = FALSE) {
-  groups <- dplyr::group_by_prepare(.data, ..., .dots = .dots, add = add)
+  groups <- group_by_prepare(.data, ..., add = add)
   grouped_dt(groups$data, groups$groups)
+  # groups <- dplyr::group_by_prepare(.data, ..., .dots = .dots, add = add)
+  # grouped_dt(groups$data, groups$groups)
 }
 
 ungroup.grouped_dt <- function(x, ...) {
-  data.table::setattr(x, "vars", NULL)
-  data.table::setattr(x, "class", setdiff(class(x), "grouped_dt"))
-  x
+  z <- data.table::copy(x)
+  data.table::setattr(z, "vars", NULL)
+  data.table::setattr(z, "class", setdiff(class(z), "grouped_dt"))
+  z
 }
 
 
