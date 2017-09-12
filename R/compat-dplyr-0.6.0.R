@@ -13,8 +13,8 @@
     register_s3_method("dplyr", "slice", "data.table")
   }
 
-  register_s3_method("dplyr", "do_", "data.table")
-  register_s3_method("dplyr", "do_", "tbl_dt")
+  register_s3_method("dplyr", "do", "data.table")
+  register_s3_method("dplyr", "do", "tbl_dt")
 
   register_s3_method("base", "print", "grouped_dt")
   register_s3_method("dplyr", "groups", "grouped_dt")
@@ -23,7 +23,7 @@
   register_s3_method("dplyr", "ungroup", "grouped_dt")
 
   register_s3_method("dplyr", "group_by_", "data.table")
-  register_s3_method("dplyr", "do_", "grouped_dt")
+  register_s3_method("dplyr", "do", "grouped_dt")
   register_s3_method("dplyr", "distinct_", "grouped_dt")
 
   register_s3_method("dplyr", "inner_join", "data.table")

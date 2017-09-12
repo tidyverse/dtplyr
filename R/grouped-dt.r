@@ -80,16 +80,17 @@ ungroup.grouped_dt <- function(x, ...) {
 
 # Do ---------------------------------------------------------------------------
 
-do_.grouped_dt <- function(.data, ..., .dots) {
-  args <- lazyeval::all_dots(.dots, ...)
-  env <- lazyeval::common_env(args)
-  named <- named_args(args)
+do.grouped_dt <- function(.data, ...) {
+
+  dots <- quos(...)
+  env <- common_env(dots)
+  named <- named_args(dots)
 
   if (!named) {
-    j <- args[[1]]$expr
+    j <- get_expr(dots[[1]])
   } else {
-    args <- lapply(args, function(x) call("list", x$expr))
-    j <- as.call(c(quote(list), args))
+    exprs <- lapply(dots, function(x) call("list", get_expr(x)))
+    j <- as.call(c(quote(list), exprs))
   }
 
   out <- dt_subset(.data, , j, env = env, sd_cols = names(.data))

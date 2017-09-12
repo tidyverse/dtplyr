@@ -3,16 +3,12 @@
 #'   importFrom(dplyr,do)
 #'   S3method(do,data.table)
 #' }
+#' @importFrom dplyr do
 do.data.table <- function(.data, ...) {
-  do_(.data, .dots = lazyeval::lazy_dots(...))
-}
-
-#' @importFrom dplyr do_
-do_.data.table <- function(.data, ..., .dots) {
-  out <- do_(as.data.frame(.data), ..., .dots = .dots)
+  out <- do(as.data.frame(.data), !!! quos(...))
   data.table::as.data.table(out)
 }
-do_.tbl_dt <- function(.data, ..., .dots) {
-  out <- do_(as.data.frame(.data), ..., .dots = .dots)
+do.tbl_dt <- function(.data, ...) {
+  out <- do(as.data.frame(.data), !!! quos(...))
   tbl_dt(out)
 }
