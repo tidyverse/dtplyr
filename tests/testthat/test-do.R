@@ -92,16 +92,16 @@ test_that("can't use both named and unnamed args", {
   )
 })
 
-# problem: ungroup does not copy!
+test_that("unnamed elements must return data frames", {
+  skip_if_dtplyr()
 
-# test_that("unnamed elements must return data frames", {
-#   expect_error(
-#     df %>% ungroup %>% do(1), "Result must be a data frame, not numeric")
-#   expect_error(
-#     df %>% do(1), "Results 1, 2, 3 must be data frames, not numeric")
-#   expect_error(
-#     df %>% do("a"), "Results 1, 2, 3 must be data frames, not character")
-# })
+  expect_error(
+    df %>% ungroup %>% do(1), "Result must be a data frame, not numeric")
+  expect_error(
+    df %>% do(1), "Results 1, 2, 3 must be data frames, not numeric")
+  expect_error(
+    df %>% do("a"), "Results 1, 2, 3 must be data frames, not character")
+})
 
 test_that("unnamed results bound together by row", {
   first <- df %>% do(head(., 1))
@@ -125,11 +125,13 @@ test_that("named argument become list columns", {
   expect_equal(out$ncol, list(3, 3, 3))
 })
 
-# test_that("colums in output override columns in input", {
-#   out <- df %>% do(data.table(g = 1))
-#   expect_equal(names(out), "g")
-#   expect_equal(out$g, c(1, 1, 1))
-# })
+test_that("colums in output override columns in input", {
+  skip_if_dtplyr()
+  
+  out <- df %>% do(data.table(g = 1))
+  expect_equal(names(out), "g")
+  expect_equal(out$g, c(1, 1, 1))
+})
 
 test_that("empty results preserved (#597)", {
   blankdf <- function(x) data.table(blank = numeric(0))

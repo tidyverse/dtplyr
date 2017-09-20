@@ -16,18 +16,20 @@ test_that("filter_ works (#906)", {
 
 context("filter (copied from dplyr")
 
-# test_that("filter fails if inputs incorrect length (#156)", {
-#   expect_error(
-#     filter(tbl_dt(mtcars), c(F, T)),
-#     "Result must have length 32, not 2",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     filter(group_by(mtcars, am), c(F, T)),
-#     "Result must have length 19, not 2",
-#     fixed = TRUE
-#   )
-# })
+test_that("filter fails if inputs incorrect length (#156)", {
+  skip_if_dtplyr()
+
+  expect_error(
+    filter(tbl_dt(mtcars), c(F, T)),
+    "Result must have length 32, not 2",
+    fixed = TRUE
+  )
+  expect_error(
+    filter(group_by(mtcars, am), c(F, T)),
+    "Result must have length 19, not 2",
+    fixed = TRUE
+  )
+})
 
 test_that("filter gives useful error message when given incorrect input", {
   # error message by rlang
@@ -51,25 +53,27 @@ test_that("filter complains in inputs are named", {
 })
 
 
-# test_that("filter handles passing ...", {
-#   df <- data.table(x = 1:4)
+test_that("filter handles passing ...", {
+  skip_if_dtplyr()
 
-#   f <- function(...) {
-#     x1 <- 4
-#     f1 <- function(y) y
-#     filter(df, ..., f1(x1) > x)
-#   }
-#   g <- function(...) {
-#     x2 <- 2
-#     f(x > x2, ...)
-#   }
-#   res <- g()
-#   expect_equal(res$x, 3L)
+  df <- data.table(x = 1:4)
 
-#   df <- group_by(df, x)
-#   res <- g()
-#   expect_equal(res$x, 3L)
-# })
+  f <- function(...) {
+    x1 <- 4
+    f1 <- function(y) y
+    filter(df, ..., f1(x1) > x)
+  }
+  g <- function(...) {
+    x2 <- 2
+    f(x > x2, ...)
+  }
+  res <- g()
+  expect_equal(res$x, 3L)
+
+  df <- group_by(df, x)
+  res <- g()
+  expect_equal(res$x, 3L)
+})
 
 test_that("filter handles simple symbols", {
   df <- data.table(x = 1:4, test = rep(c(T, F), each = 2))
@@ -84,21 +88,23 @@ test_that("filter handles simple symbols", {
   }
   expect_equal(h(df), df[1:2, ])
 
-  # f <- function(data, ...) {
-  #   one <- 1
-  #   filter(data, test, x > one, ...)
-  # }
-  # g <- function(data, ...) {
-  #   four <- 4
-  #   f(data, x < four, ...)
-  # }
-  # res <- g(df)
-  # expect_equal(res$x, 2L)
-  # expect_equal(res$test, TRUE)
+  skip_if_dtplyr()
 
-  # res <- g(gdf)
-  # expect_equal(res$x, 2L)
-  # expect_equal(res$test, TRUE)
+  f <- function(data, ...) {
+    one <- 1
+    filter(data, test, x > one, ...)
+  }
+  g <- function(data, ...) {
+    four <- 4
+    f(data, x < four, ...)
+  }
+  res <- g(df)
+  expect_equal(res$x, 2L)
+  expect_equal(res$test, TRUE)
+
+  res <- g(gdf)
+  expect_equal(res$x, 2L)
+  expect_equal(res$test, TRUE)
 
 })
 
@@ -260,33 +266,35 @@ test_that("filter(.,TRUE,TRUE) works (#1210)", {
   expect_equal(res, df)
 })
 
-# test_that("filter, slice and arrange preserves attributes (#1064)", {
-#   df <- structure(
-#       data.table(x = 1:10, g1 = rep(1:2, each = 5), g2 = rep(1:5, 2)),
-#       meta = "this is important"
-#   )
-#   res <- filter(df, x < 5) %>% attr("meta")
-#   expect_equal(res, "this is important")
+test_that("filter, slice and arrange preserves attributes (#1064)", {
+  skip_if_dtplyr()
 
-#   res <- filter(df, x < 5, x > 4) %>% attr("meta")
-#   expect_equal(res, "this is important")
+  df <- structure(
+      data.table(x = 1:10, g1 = rep(1:2, each = 5), g2 = rep(1:5, 2)),
+      meta = "this is important"
+  )
+  res <- filter(df, x < 5) %>% attr("meta")
+  expect_equal(res, "this is important")
 
-#   res <- df %>% slice(1:50) %>% attr("meta")
-#   expect_equal(res, "this is important")
+  res <- filter(df, x < 5, x > 4) %>% attr("meta")
+  expect_equal(res, "this is important")
 
-#   res <- df %>% arrange(x) %>% attr("meta")
-#   expect_equal(res, "this is important")
+  res <- df %>% slice(1:50) %>% attr("meta")
+  expect_equal(res, "this is important")
 
-#   res <- df %>% summarise(n()) %>% attr("meta")
-#   expect_equal(res, "this is important")
+  res <- df %>% arrange(x) %>% attr("meta")
+  expect_equal(res, "this is important")
 
-#   res <- df %>% group_by(g1) %>% summarise(n()) %>% attr("meta")
-#   expect_equal(res, "this is important")
+  res <- df %>% summarise(n()) %>% attr("meta")
+  expect_equal(res, "this is important")
 
-#   res <- df %>% group_by(g1, g2) %>% summarise(n()) %>% attr("meta")
-#   expect_equal(res, "this is important")
+  res <- df %>% group_by(g1) %>% summarise(n()) %>% attr("meta")
+  expect_equal(res, "this is important")
 
-# })
+  res <- df %>% group_by(g1, g2) %>% summarise(n()) %>% attr("meta")
+  expect_equal(res, "this is important")
+
+})
 
 test_that("filter works with rowwise data (#1099)", {
   df <- data_frame(First = c("string1", "string2"), Second = c("Sentence with string1", "something"))

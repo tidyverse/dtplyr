@@ -62,191 +62,207 @@ test_that("mutate can rename variables (#137)", {
   expect_equal(res$cyl2, res$cyl)
 })
 
-# test_that("mutate refuses to modify grouping vars (#143)", {
-#   expect_error(
-#     mutate(group_by(tbl_dt(mtcars), am), am = am + 2),
-#     "Column `am` can't be modified because it's a grouping variable",
-#     fixed = TRUE
-#   )
-# })
+test_that("mutate refuses to modify grouping vars (#143)", {
+  skip_if_dtplyr()
+
+  expect_error(
+    mutate(group_by(tbl_dt(mtcars), am), am = am + 2),
+    "Column `am` can't be modified because it's a grouping variable",
+    fixed = TRUE
+  )
+})
 
 test_that("mutate handles constants (#152)", {
   res <- mutate(tbl_dt(mtcars), zz = 1)
   expect_equal(res$zz, rep(1, nrow(mtcars)))
 })
 
-# test_that("mutate fails with wrong result size (#152)", {
-#   df <- group_by(data.table(x = c(2, 2, 3, 3)), x)
-#   expect_equal(mutate(df, y = 1:2)$y, rep(1:2, 2))
-#   expect_error(
-#     mutate(data.table(mtcars), zz = 1:2),
-#     "Column `zz` must be length 32 (the number of rows) or one, not 2",
-#     fixed = TRUE
-#   )
+test_that("mutate fails with wrong result size (#152)", {
+  skip_if_dtplyr()
 
-#   df <- group_by(data.table(x = c(2, 2, 3, 3, 3)), x)
-#   expect_error(
-#     mutate(df, y = 1:2),
-#     "Column `y` must be length 3 (the group size) or one, not 2",
-#     fixed = TRUE
-#   )
-# })
+  df <- group_by(data.table(x = c(2, 2, 3, 3)), x)
+  expect_equal(mutate(df, y = 1:2)$y, rep(1:2, 2))
+  expect_error(
+    mutate(data.table(mtcars), zz = 1:2),
+    "Column `zz` must be length 32 (the number of rows) or one, not 2",
+    fixed = TRUE
+  )
 
-# test_that("mutate refuses to use symbols not from the data", {
-#   y <- 1:6
-#   df <- group_by(data.table(x = c(1, 2, 2, 3, 3, 3)), x)
-#   expect_error(
-#     mutate(df, z = y),
-#     "Column `z` must be length 1 (the group size), not 6",
-#     fixed = TRUE
-#   )
-# })
+  df <- group_by(data.table(x = c(2, 2, 3, 3, 3)), x)
+  expect_error(
+    mutate(df, y = 1:2),
+    "Column `y` must be length 3 (the group size) or one, not 2",
+    fixed = TRUE
+  )
+})
 
-# test_that("mutate recycles results of length 1", {
-#   df <- data.table(x = c(2, 2, 3, 3))
-#   expect_equal(mutate(tbl_dt(df), z = length(x))$z, rep(4, 4))
-#   expect_equal(mutate(group_by(df, x), z = length(x))$z, rep(2, 4))
+test_that("mutate refuses to use symbols not from the data", {
+  skip_if_dtplyr()
 
-#   int  <- 1L
-#   str  <- "foo"
-#   num  <- 1
-#   bool <- TRUE
-#   list <- list(NULL)
+  y <- 1:6
+  df <- group_by(data.table(x = c(1, 2, 2, 3, 3, 3)), x)
+  expect_error(
+    mutate(df, z = y),
+    "Column `z` must be length 1 (the group size), not 6",
+    fixed = TRUE
+  )
+})
 
-#   res <- mutate(group_by(df, x), int = int, str = str, num = num, bool = bool, list = list)
-#   expect_equal(res$int , rep(int , 4))
-#   expect_equal(res$str , rep(str , 4))
-#   expect_equal(res$num , rep(num , 4))
-#   expect_equal(res$bool, rep(bool, 4))
-#   expect_equal(res$list, rep(list, 4))
-# })
+test_that("mutate recycles results of length 1", {
+  skip_if_dtplyr()
+
+  df <- data.table(x = c(2, 2, 3, 3))
+  expect_equal(mutate(tbl_dt(df), z = length(x))$z, rep(4, 4))
+  expect_equal(mutate(group_by(df, x), z = length(x))$z, rep(2, 4))
+
+  int  <- 1L
+  str  <- "foo"
+  num  <- 1
+  bool <- TRUE
+  list <- list(NULL)
+
+  res <- mutate(group_by(df, x), int = int, str = str, num = num, bool = bool, list = list)
+  expect_equal(res$int , rep(int , 4))
+  expect_equal(res$str , rep(str , 4))
+  expect_equal(res$num , rep(num , 4))
+  expect_equal(res$bool, rep(bool, 4))
+  expect_equal(res$list, rep(list, 4))
+})
 
 
-# test_that("mutate handles out of data variables", {
-#   today <- Sys.Date()
-#   now <- Sys.time()
-#   df  <- data.table(x = c(2, 2, 3, 3))
-#   gdf <- group_by(df, x)
+test_that("mutate handles out of data variables", {
+  skip_if_dtplyr()
 
-#   int  <- c(1L, 2L)
-#   str  <- c("foo", "bar")
-#   num  <- c(1, 2)
-#   bool <- c(TRUE, FALSE)
-#   dat  <- rep(today, 2)
-#   tim  <- rep(now, 2)
+  today <- Sys.Date()
+  now <- Sys.time()
+  df  <- data.table(x = c(2, 2, 3, 3))
+  gdf <- group_by(df, x)
 
-#   res <- mutate(
-#     gdf,
-#     int = int, str = str, num = num, bool = bool, dat = dat, tim = tim
-#   )
-#   expect_equal(res$int , rep(int , 2))
-#   expect_equal(res$str , rep(str , 2))
-#   expect_equal(res$num , rep(num , 2))
-#   expect_equal(res$bool, rep(bool, 2))
-#   expect_equal(res$dat , rep(dat , 2))
-#   expect_equal(res$tim , rep(tim , 2))
+  int  <- c(1L, 2L)
+  str  <- c("foo", "bar")
+  num  <- c(1, 2)
+  bool <- c(TRUE, FALSE)
+  dat  <- rep(today, 2)
+  tim  <- rep(now, 2)
 
-#   int <- 1:6
-#   expect_error(
-#     mutate(gdf, int = int),
-#     "Column `int` must be length 2 (the group size) or one, not 6",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     mutate(tbl_dt(df), int = int),
-#     "Column `int` must be length 4 (the number of rows) or one, not 6",
-#     fixed = TRUE
-#   )
+  res <- mutate(
+    gdf,
+    int = int, str = str, num = num, bool = bool, dat = dat, tim = tim
+  )
+  expect_equal(res$int , rep(int , 2))
+  expect_equal(res$str , rep(str , 2))
+  expect_equal(res$num , rep(num , 2))
+  expect_equal(res$bool, rep(bool, 2))
+  expect_equal(res$dat , rep(dat , 2))
+  expect_equal(res$tim , rep(tim , 2))
 
-#   int  <- 1:4
-#   str  <- rep(c("foo", "bar"), 2)
-#   num  <- c(1, 2, 3, 4)
-#   bool <- c(TRUE, FALSE, FALSE, TRUE)
-#   dat  <- rep(today, 4)
-#   tim  <- rep(now, 4)
+  int <- 1:6
+  expect_error(
+    mutate(gdf, int = int),
+    "Column `int` must be length 2 (the group size) or one, not 6",
+    fixed = TRUE
+  )
+  expect_error(
+    mutate(tbl_dt(df), int = int),
+    "Column `int` must be length 4 (the number of rows) or one, not 6",
+    fixed = TRUE
+  )
 
-#   res <- mutate(
-#     tbl_dt(df),
-#     int = int, str = str, num = num, bool = bool, tim = tim, dat = dat
-#   )
-#   expect_equal(res$int , int)
-#   expect_equal(res$str , str)
-#   expect_equal(res$num , num)
-#   expect_equal(res$bool, bool)
-#   expect_equal(res$dat , dat)
-#   expect_equal(res$tim , tim)
-# })
+  int  <- 1:4
+  str  <- rep(c("foo", "bar"), 2)
+  num  <- c(1, 2, 3, 4)
+  bool <- c(TRUE, FALSE, FALSE, TRUE)
+  dat  <- rep(today, 4)
+  tim  <- rep(now, 4)
 
-# test_that("mutate handles passing ...", {
-#   df <- data.table(x = 1:4)
+  res <- mutate(
+    tbl_dt(df),
+    int = int, str = str, num = num, bool = bool, tim = tim, dat = dat
+  )
+  expect_equal(res$int , int)
+  expect_equal(res$str , str)
+  expect_equal(res$num , num)
+  expect_equal(res$bool, bool)
+  expect_equal(res$dat , dat)
+  expect_equal(res$tim , tim)
+})
 
-#   f <- function(...) {
-#     x1 <- 1
-#     f1 <- function(x) x
-#     mutate(df, ..., x1 = f1(x1))
-#   }
-#   g <- function(...) {
-#     x2 <- 2
-#     f(x2 = x2, ...)
-#   }
-#   h <- function(before = "before", ..., after = "after") {
-#     g(before = before, ..., after = after)
-#   }
+test_that("mutate handles passing ...", {
+  skip_if_dtplyr()
 
-#   res <- h(x3 = 3)
-#   expect_equal(res$x1, rep(1, 4))
-#   expect_equal(res$x2, rep(2, 4))
-#   expect_equal(res$before, rep("before", 4))
-#   expect_equal(res$after, rep("after", 4))
+  df <- data.table(x = 1:4)
 
-#   df <- tbl_dt(df)
-#   res <- h(x3 = 3)
-#   expect_equal(res$x1, rep(1, 4))
-#   expect_equal(res$x2, rep(2, 4))
-#   expect_equal(res$before, rep("before", 4))
-#   expect_equal(res$after, rep("after", 4))
+  f <- function(...) {
+    x1 <- 1
+    f1 <- function(x) x
+    mutate(df, ..., x1 = f1(x1))
+  }
+  g <- function(...) {
+    x2 <- 2
+    f(x2 = x2, ...)
+  }
+  h <- function(before = "before", ..., after = "after") {
+    g(before = before, ..., after = after)
+  }
 
-#   df <- group_by(df, x)
-#   res <- h(x3 = 3)
-#   expect_equal(res$x1, rep(1, 4))
-#   expect_equal(res$x2, rep(2, 4))
-#   expect_equal(res$before, rep("before", 4))
-#   expect_equal(res$after, rep("after", 4))
+  res <- h(x3 = 3)
+  expect_equal(res$x1, rep(1, 4))
+  expect_equal(res$x2, rep(2, 4))
+  expect_equal(res$before, rep("before", 4))
+  expect_equal(res$after, rep("after", 4))
 
-# })
+  df <- tbl_dt(df)
+  res <- h(x3 = 3)
+  expect_equal(res$x1, rep(1, 4))
+  expect_equal(res$x2, rep(2, 4))
+  expect_equal(res$before, rep("before", 4))
+  expect_equal(res$after, rep("after", 4))
 
-# test_that("mutate fails on unsupported column type", {
-#   df <- data.table(created = c("2014/1/1", "2014/1/2", "2014/1/2"))
-#   expect_error(
-#     mutate(df, date = strptime(created, "%Y/%m/%d")),
-#     "Column `date` is of unsupported class POSIXlt",
-#     fixed = TRUE
-#   )
+  df <- group_by(df, x)
+  res <- h(x3 = 3)
+  expect_equal(res$x1, rep(1, 4))
+  expect_equal(res$x2, rep(2, 4))
+  expect_equal(res$before, rep("before", 4))
+  expect_equal(res$after, rep("after", 4))
 
-#   df <- data.table(
-#     created = c("2014/1/1", "2014/1/2", "2014/1/2"),
-#     g = c(1, 1, 2)
-#   )
-#   expect_error(
-#     mutate(group_by(df, g), date = strptime(created, "%Y/%m/%d")),
-#     "Column `date` is of unsupported class POSIXlt",
-#     fixed = TRUE
-#   )
-# })
+})
+
+test_that("mutate fails on unsupported column type", {
+  skip_if_dtplyr()
+
+  df <- data.table(created = c("2014/1/1", "2014/1/2", "2014/1/2"))
+  expect_error(
+    mutate(df, date = strptime(created, "%Y/%m/%d")),
+    "Column `date` is of unsupported class POSIXlt",
+    fixed = TRUE
+  )
+
+  df <- data.table(
+    created = c("2014/1/1", "2014/1/2", "2014/1/2"),
+    g = c(1, 1, 2)
+  )
+  expect_error(
+    mutate(group_by(df, g), date = strptime(created, "%Y/%m/%d")),
+    "Column `date` is of unsupported class POSIXlt",
+    fixed = TRUE
+  )
+})
 
 test_that("mutate modifies same column repeatedly (#243)", {
   df <- data.table(x = 1)
   expect_equal(mutate(df, x = x + 1, x = x + 1)$x, 3)
 })
 
-# test_that("mutate errors when results are not compatible accross groups (#299)", {
-#   d <- data.table(x = rep(1:5, each = 3))
-#   expect_error(
-#     mutate(group_by(d, x), val = ifelse(x < 3, "foo", 2)),
-#     "Column `val` can't be converted from character to numeric",
-#     fixed = TRUE
-#   )
-# })
+test_that("mutate errors when results are not compatible accross groups (#299)", {
+  skip_if_dtplyr()
+
+  d <- data.table(x = rep(1:5, each = 3))
+  expect_error(
+    mutate(group_by(d, x), val = ifelse(x < 3, "foo", 2)),
+    "Column `val` can't be converted from character to numeric",
+    fixed = TRUE
+  )
+})
 
 test_that("assignments don't overwrite variables (#315)", {
    expect_equal(
@@ -272,63 +288,70 @@ test_that("mutate remove variables with = NULL syntax (#462)", {
   expect_false("cyl" %in% names(data))
 })
 
-# test_that("mutate strips names, but only if grouped (#1689, #2675)", {
-#   data <- data.table(a = 1:3) %>% mutate(b = setNames(nm = a))
-#   expect_equal(names(data$b), as.character(1:3))
+test_that("mutate strips names, but only if grouped (#1689, #2675)", {
+  skip_if_dtplyr()
 
-#   data <- data.table(a = 1:3) %>% rowwise %>% mutate(b = setNames(nm = a))
-#   expect_null(names(data$b))
+  data <- data.table(a = 1:3) %>% mutate(b = setNames(nm = a))
+  expect_equal(names(data$b), as.character(1:3))
 
-#   data <- data.table(a = c(1, 1, 2)) %>% group_by(a) %>% mutate(b = setNames(nm = a))
-#   expect_null(names(data$b))
-# })
+  data <- data.table(a = 1:3) %>% rowwise %>% mutate(b = setNames(nm = a))
+  expect_null(names(data$b))
 
-# test_that("mutate does not strip names of list-columns (#2675)", {
-#   vec <- list(a = 1, b = 2)
-#   data <- data.table(x = vec)
-#   data <- mutate(data, x)
-#   expect_identical(names(vec), c("a", "b"))
-#   expect_identical(names(data$x), c("a", "b"))
-# })
+  data <- data.table(a = c(1, 1, 2)) %>% group_by(a) %>% mutate(b = setNames(nm = a))
+  expect_null(names(data$b))
+})
 
-# test_that("mutate gives a nice error message if an expression evaluates to NULL (#2187)", {
-#   df <- data.table(a = 1:3)
-#   gf <- group_by(df, a)
-#   rf <- rowwise(df)
+test_that("mutate does not strip names of list-columns (#2675)", {
+  skip_if_dtplyr()
 
-#   expect_error(
-#     mutate(df, b = identity(NULL)),
-#     "Column `b` is of unsupported type NULL",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     mutate(gf, b = identity(NULL)),
-#     "Column `b` is of unsupported type NULL",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     mutate(rf, b = identity(NULL)),
-#     "Column `b` is of unsupported type NULL",
-#     fixed = TRUE
-#   )
-# })
+  vec <- list(a = 1, b = 2)
+  data <- data.table(x = vec)
+  data <- mutate(data, x)
+  expect_identical(names(vec), c("a", "b"))
+  expect_identical(names(data$x), c("a", "b"))
+})
 
-# test_that("mutate(rowwise_df) makes a rowwise_df (#463)", {
-#   one_mod <- data.table(grp = "a", x = runif(5, 0, 1)) %>%
-#     tbl_dt %>%
-#     mutate(y = rnorm(x, x * 2, 1)) %>%
-#     group_by(grp) %>%
-#     do(mod = lm(y~x, data = .))
+test_that("mutate gives a nice error message if an expression evaluates to NULL (#2187)", {
+  skip_if_dtplyr()
 
-#   out <- one_mod %>%
-#     mutate(rsq = summary(mod)$r.squared) %>%
-#     mutate(aic = AIC(mod))
+  df <- data.table(a = 1:3)
+  gf <- group_by(df, a)
+  rf <- rowwise(df)
 
-#   expect_is(out, "rowwise_df")
-#   expect_equal(nrow(out), 1L)
-#   expect_is(out$mod, "list")
-#   expect_is(out$mod[[1L]], "lm")
-# })
+  expect_error(
+    mutate(df, b = identity(NULL)),
+    "Column `b` is of unsupported type NULL",
+    fixed = TRUE
+  )
+  expect_error(
+    mutate(gf, b = identity(NULL)),
+    "Column `b` is of unsupported type NULL",
+    fixed = TRUE
+  )
+  expect_error(
+    mutate(rf, b = identity(NULL)),
+    "Column `b` is of unsupported type NULL",
+    fixed = TRUE
+  )
+})
+
+test_that("mutate(rowwise_df) makes a rowwise_df (#463)", {
+  skip_if_dtplyr()
+  one_mod <- data.table(grp = "a", x = runif(5, 0, 1)) %>%
+    tbl_dt %>%
+    mutate(y = rnorm(x, x * 2, 1)) %>%
+    group_by(grp) %>%
+    do(mod = lm(y~x, data = .))
+
+  out <- one_mod %>%
+    mutate(rsq = summary(mod)$r.squared) %>%
+    mutate(aic = AIC(mod))
+
+  expect_is(out, "rowwise_df")
+  expect_equal(nrow(out), 1L)
+  expect_is(out$mod, "list")
+  expect_is(out$mod[[1L]], "lm")
+})
 
 test_that("mutate allows list columns (#555)", {
   df  <- data.table(x = c("a;b", "c;d;e"), stringsAsFactors = FALSE)
@@ -366,37 +389,41 @@ test_that("hybrid not get in the way of order_by (#169)", {
   expect_equal(res$z, rev(cumsum(10:1)))
 })
 
-# test_that("mutate supports difftime objects (#390)", {
-#   df <- data.table(
-#     grp =   c(1, 1,  2, 2),
-#     val =   c(1, 3,  4, 6),
-#     date1 = c(rep(Sys.Date() - 10, 2), rep(Sys.Date() - 20, 2)),
-#     date2 = Sys.Date() + c(1, 2, 1, 2),
-#     diffdate = difftime(date2, date1, unit = "days")
-#   )
+test_that("mutate supports difftime objects (#390)", {
+  skip_if_dtplyr()
 
-#   res <- df %>%
-#     group_by(grp) %>%
-#     mutate(mean_val = mean(val), mean_diffdate = mean(diffdate))
-#   expect_is(res$mean_diffdate, "difftime")
-#   expect_equal(as.numeric(res$mean_diffdate), c(11.5, 11.5, 21.5, 21.5))
+  df <- data.table(
+    grp =   c(1, 1,  2, 2),
+    val =   c(1, 3,  4, 6),
+    date1 = c(rep(Sys.Date() - 10, 2), rep(Sys.Date() - 20, 2)),
+    date2 = Sys.Date() + c(1, 2, 1, 2),
+    diffdate = difftime(date2, date1, unit = "days")
+  )
 
-#   res <- df %>% group_by(grp) %>% summarise(dt = mean(diffdate))
-#   expect_is(res$dt, "difftime")
-#   expect_equal(as.numeric(res$dt), c(11.5, 21.5))
-# })
+  res <- df %>%
+    group_by(grp) %>%
+    mutate(mean_val = mean(val), mean_diffdate = mean(diffdate))
+  expect_is(res$mean_diffdate, "difftime")
+  expect_equal(as.numeric(res$mean_diffdate), c(11.5, 11.5, 21.5, 21.5))
 
-# test_that("mutate works on zero-row grouped data frame (#596)", {
-#   dat <- data.table(a = numeric(0), b = character(0))
-#   res <- dat %>% group_by(b) %>% mutate(a2 = a * 2)
-#   expect_is(res$a2, "numeric")
-#   expect_is(res, "grouped_dt")
-#   expect_equal(res$a2, numeric(0))
-#   expect_equal(attr(res, "indices"), list())
-#   expect_equal(attr(res, "vars"), "b")
-#   expect_equal(attr(res, "group_sizes"), integer(0))
-#   expect_equal(attr(res, "biggest_group_size"), 0L)
-# })
+  res <- df %>% group_by(grp) %>% summarise(dt = mean(diffdate))
+  expect_is(res$dt, "difftime")
+  expect_equal(as.numeric(res$dt), c(11.5, 21.5))
+})
+
+test_that("mutate works on zero-row grouped data frame (#596)", {
+  skip_if_dtplyr()
+
+  dat <- data.table(a = numeric(0), b = character(0))
+  res <- dat %>% group_by(b) %>% mutate(a2 = a * 2)
+  expect_is(res$a2, "numeric")
+  expect_is(res, "grouped_dt")
+  expect_equal(res$a2, numeric(0))
+  expect_equal(attr(res, "indices"), list())
+  expect_equal(attr(res, "vars"), "b")
+  expect_equal(attr(res, "group_sizes"), integer(0))
+  expect_equal(attr(res, "biggest_group_size"), 0L)
+})
 
 test_that("Non-ascii column names in version 0.3 are not duplicated (#636)", {
   df <- data.table(a = "1", b = "2")
@@ -411,33 +438,37 @@ test_that("nested hybrid functions do the right thing (#637)", {
   expect_true(all(res[["mean(1)"]] == 1L))
 })
 
-# test_that("mutate handles using and gathering complex data (#436)", {
-#   d <- data.table(x = 1:10, y = 1:10 + 2i)
-#   res <- mutate(d, real = Re(y), imag = Im(y), z = 2 * y, constant = 2 + 2i)
-#   expect_equal(names(res), c("x", "y", "real", "imag", "z", "constant"))
-#   expect_equal(res$real, Re(d$y))
-#   expect_equal(res$imag, Im(d$y))
-#   expect_equal(res$z, d$y * 2)
-#   expect_true(all(res$constant == 2 + 2i))
-# })
+test_that("mutate handles using and gathering complex data (#436)", {
+  skip_if_dtplyr()
 
-# test_that("mutate forbids POSIXlt results (#670)", {
-#   expect_error(
-#     data.table(time = "2014/01/01 10:10:10") %>%
-#       mutate(time = as.POSIXlt(time)),
-#     "Column `time` is of unsupported class POSIXlt",
-#     fixed = TRUE
-#   )
+  d <- data.table(x = 1:10, y = 1:10 + 2i)
+  res <- mutate(d, real = Re(y), imag = Im(y), z = 2 * y, constant = 2 + 2i)
+  expect_equal(names(res), c("x", "y", "real", "imag", "z", "constant"))
+  expect_equal(res$real, Re(d$y))
+  expect_equal(res$imag, Im(d$y))
+  expect_equal(res$z, d$y * 2)
+  expect_true(all(res$constant == 2 + 2i))
+})
 
-#   expect_error(
-#     data.table(time = "2014/01/01 10:10:10", a = 2) %>%
-#       group_by(a) %>%
-#       mutate(time = as.POSIXlt(time)),
-#     "Column `time` is of unsupported class POSIXlt",
-#     fixed = TRUE
-#   )
+test_that("mutate forbids POSIXlt results (#670)", {
+  skip_if_dtplyr()
 
-# })
+  expect_error(
+    data.table(time = "2014/01/01 10:10:10") %>%
+      mutate(time = as.POSIXlt(time)),
+    "Column `time` is of unsupported class POSIXlt",
+    fixed = TRUE
+  )
+
+  expect_error(
+    data.table(time = "2014/01/01 10:10:10", a = 2) %>%
+      group_by(a) %>%
+      mutate(time = as.POSIXlt(time)),
+    "Column `time` is of unsupported class POSIXlt",
+    fixed = TRUE
+  )
+
+})
 
 test_that("constant factor can be handled by mutate (#715)", {
   d <- data.table(x = 1:2) %>% mutate(y = factor("A"))
@@ -445,67 +476,73 @@ test_that("constant factor can be handled by mutate (#715)", {
   expect_equal(d$y, factor(c("A", "A")))
 })
 
-# test_that("row_number handles empty data frames (#762)", {
-#   df <- data.table(a = numeric(0))
-#   res <- df %>% mutate(
-#     row_number_0 = row_number(),
-#     row_number_a = row_number(a),
-#     ntile = ntile(a, 2),
-#     min_rank = min_rank(a),
-#     percent_rank = percent_rank(a),
-#     dense_rank = dense_rank(a),
-#     cume_dist = cume_dist(a)
-#   )
-#   expect_equal(
-#     names(res),
-#      c("a", "row_number_0", "row_number_a", "ntile", "min_rank", "percent_rank", "dense_rank", "cume_dist")
-#    )
-#   expect_equal(nrow(res), 0L)
-# })
+test_that("row_number handles empty data frames (#762)", {
+  skip_if_dtplyr()
 
-# test_that("no utf8 invasion (#722)", {
-#   skip_on_os("windows")
+  df <- data.table(a = numeric(0))
+  res <- df %>% mutate(
+    row_number_0 = row_number(),
+    row_number_a = row_number(a),
+    ntile = ntile(a, 2),
+    min_rank = min_rank(a),
+    percent_rank = percent_rank(a),
+    dense_rank = dense_rank(a),
+    cume_dist = cume_dist(a)
+  )
+  expect_equal(
+    names(res),
+     c("a", "row_number_0", "row_number_a", "ntile", "min_rank", "percent_rank", "dense_rank", "cume_dist")
+   )
+  expect_equal(nrow(res), 0L)
+})
 
-#   source("utf-8.R", local = TRUE, encoding = "UTF-8")
-# })
+test_that("no utf8 invasion (#722)", {
+  skip_if_dtplyr()
+  skip_on_os("windows")
 
-# test_that("mutate works on empty data frames (#1142)", {
-#   df <- data.table()
-#   res <- df %>% mutate
-#   expect_equal(nrow(res), 0L)
-#   expect_equal(length(res), 0L)
+  source("utf-8.R", local = TRUE, encoding = "UTF-8")
+})
 
-#   res <- df %>% mutate(x = numeric())
-#   expect_equal(names(res), "x")
-#   expect_equal(nrow(res), 0L)
-#   expect_equal(length(res), 1L)
-# })
+test_that("mutate works on empty data frames (#1142)", {
+  skip_if_dtplyr()
+  df <- data.table()
+  res <- df %>% mutate
+  expect_equal(nrow(res), 0L)
+  expect_equal(length(res), 0L)
 
-# test_that("mutate handles 0 rows rowwise (#1300)", {
-#   a <- data.table(x = 1)
-#   b <- data.table(y = character())
+  res <- df %>% mutate(x = numeric())
+  expect_equal(names(res), "x")
+  expect_equal(nrow(res), 0L)
+  expect_equal(length(res), 1L)
+})
 
-#   g <- function(y) {
-#     1
-#   }
-#   f <- function() {
-#     b %>% rowwise() %>% mutate(z = g(y))
-#   }
+test_that("mutate handles 0 rows rowwise (#1300)", {
+  skip_if_dtplyr()
 
-#   res <- f()
-#   expect_equal(nrow(res), 0L)
+  a <- data.table(x = 1)
+  b <- data.table(y = character())
 
-#   expect_error(
-#     a %>% mutate(b = f()),
-#     "Column `b` must be length 1 (the number of rows), not 2",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     a %>% rowwise() %>% mutate(b = f()),
-#     "Column `b` must be length 1 (the group size), not 2",
-#     fixed = TRUE
-#   )
-# })
+  g <- function(y) {
+    1
+  }
+  f <- function() {
+    b %>% rowwise() %>% mutate(z = g(y))
+  }
+
+  res <- f()
+  expect_equal(nrow(res), 0L)
+
+  expect_error(
+    a %>% mutate(b = f()),
+    "Column `b` must be length 1 (the number of rows), not 2",
+    fixed = TRUE
+  )
+  expect_error(
+    a %>% rowwise() %>% mutate(b = f()),
+    "Column `b` must be length 1 (the group size), not 2",
+    fixed = TRUE
+  )
+})
 
 test_that("regression test for #637", {
   res <- mtcars %>% mutate(xx = mean(1))
@@ -522,14 +559,16 @@ test_that("mutate.rowwise handles factors (#886)", {
   expect_equal(res$processed_trafo, c("test foo", "test bar"))
 })
 
-# test_that("setting first column to NULL with mutate works (#1329)", {
-#   df <- data.table(x = 1:10, y = 1:10)
-#   expect_equal(mutate(df, x = NULL), select(df, -x))
-#   expect_equal(mutate(df, y = NULL), select(df, -y))
+test_that("setting first column to NULL with mutate works (#1329)", {
+  skip_if_dtplyr()
 
-#   gdf <- group_by(df, y)
-#   expect_equal(select(gdf, -x), mutate(gdf, x = NULL))
-# })
+  df <- data.table(x = 1:10, y = 1:10)
+  expect_equal(mutate(df, x = NULL), select(df, -x))
+  expect_equal(mutate(df, y = NULL), select(df, -y))
+
+  gdf <- group_by(df, y)
+  expect_equal(select(gdf, -x), mutate(gdf, x = NULL))
+})
 
 test_that("mutate handles the all NA case (#958)", {
   x <- rep(c("Bob", "Jane"), each = 36)
@@ -562,12 +601,14 @@ test_that("mutate handles factors (#1414)", {
   expect_equal(as.character(res$f2), res$f)
 })
 
-# test_that("mutate handles results from one group with all NA values (#1463) ", {
-#   df <- data.table(x = c(1, 2), y = c(1, NA))
-#   res <- df %>% group_by(x) %>% mutate(z = ifelse(y > 1, 1, 2))
-#   expect_true(is.na(res$z[2]))
-#   expect_is(res$z, "numeric")
-# })
+test_that("mutate handles results from one group with all NA values (#1463) ", {
+  skip_if_dtplyr()
+
+  df <- data.table(x = c(1, 2), y = c(1, NA))
+  res <- df %>% group_by(x) %>% mutate(z = ifelse(y > 1, 1, 2))
+  expect_true(is.na(res$z[2]))
+  expect_is(res$z, "numeric")
+})
 
 test_that("rowwise mutate handles the NA special case (#1448)", {
   res <- data.table(k = c(-1, 1, 1)) %>%
@@ -614,16 +655,18 @@ test_that("mutate disambiguates NA and NaN (#1448)", {
   expect_true(is.nan(res$pass_rate2[1]))
 })
 
-# test_that("hybrid evaluator leaves formulas untouched (#1447)", {
-#   d <- data.table(g = 1:2, training = list(mtcars, mtcars * 2))
-#   mpg <- data.table(x = 1:10, y = 1:10)
-#   res <- d %>%
-#     group_by(g) %>%
-#     mutate(lm_result = list(lm(mpg ~ wt, data = training[[1]])))
-#   expect_is(res$lm_result, "list")
-#   expect_is(res$lm_result[[1]], "lm")
-#   expect_is(res$lm_result[[2]], "lm")
-# })
+test_that("hybrid evaluator leaves formulas untouched (#1447)", {
+  skip_if_dtplyr()
+
+  d <- data.table(g = 1:2, training = list(mtcars, mtcars * 2))
+  mpg <- data.table(x = 1:10, y = 1:10)
+  res <- d %>%
+    group_by(g) %>%
+    mutate(lm_result = list(lm(mpg ~ wt, data = training[[1]])))
+  expect_is(res$lm_result, "list")
+  expect_is(res$lm_result[[1]], "lm")
+  expect_is(res$lm_result[[2]], "lm")
+})
 
 test_that("lead/lag inside mutate handles expressions as value for default (#1411) ", {
   df <- data.table(x = 1:3)
@@ -643,39 +686,43 @@ test_that("grouped mutate does not drop grouping attributes (#1020)", {
   expect_equal(setdiff(a1, a2), character(0))
 })
 
-# test_that("grouped mutate coerces integer + double -> double (#1892)", {
-#   df <- data.table(
-#     id = c(1, 4),
-#     value = c(1L, NA),
-#     group = c("A", "B")
-#   ) %>%
-#     group_by(group) %>%
-#     mutate(value = ifelse(is.na(value), 0, value))
-#   expect_type(df$value, "double")
-#   expect_identical(df$value, c(1, 0))
-# })
+test_that("grouped mutate coerces integer + double -> double (#1892)", {
+  skip_if_dtplyr()
 
-# test_that("grouped mutate coerces factor + character -> character (WARN) (#1892)", {
-#   factor_or_character <- function(x)  {
-#     if (x > 3) {
-#       return(factor("hello"))
-#     } else {
-#       return("world")
-#     }
-#   }
+  df <- data.table(
+    id = c(1, 4),
+    value = c(1L, NA),
+    group = c("A", "B")
+  ) %>%
+    group_by(group) %>%
+    mutate(value = ifelse(is.na(value), 0, value))
+  expect_type(df$value, "double")
+  expect_identical(df$value, c(1, 0))
+})
 
-#   df <- data.table(
-#     id = c(1, 4),
-#     group = c("A", "B")
-#   ) %>%
-#     group_by(group)
-#   expect_warning(
-#     df <- df %>%
-#       mutate(value = factor_or_character(id))
-#   )
-#   expect_type(df$value, "character")
-#   expect_identical(df$value, c("world", "hello"))
-# })
+test_that("grouped mutate coerces factor + character -> character (WARN) (#1892)", {
+  skip_if_dtplyr()
+
+  factor_or_character <- function(x)  {
+    if (x > 3) {
+      return(factor("hello"))
+    } else {
+      return("world")
+    }
+  }
+
+  df <- data.table(
+    id = c(1, 4),
+    group = c("A", "B")
+  ) %>%
+    group_by(group)
+  expect_warning(
+    df <- df %>%
+      mutate(value = factor_or_character(id))
+  )
+  expect_type(df$value, "character")
+  expect_identical(df$value, c("world", "hello"))
+})
 
 test_that("lead/lag works on more complex expressions (#1588)", {
   df <- data.table(x = rep(1:5, 2), g = rep(1:2, each = 5)) %>% group_by(g)
@@ -691,79 +738,89 @@ test_that("Adding a Column of NA to a Grouped Table gives expected results (#164
   expect_equal(levels(res$prediction), character())
 })
 
-# test_that("Deep copies are performed when needed (#1463)", {
-#   res <- data.table(prob = c(F, T)) %>%
-#     rowwise %>%
-#     mutate(model = list(x = prob))
-#   expect_equal(unlist(res$model), c(FALSE, TRUE))
+test_that("Deep copies are performed when needed (#1463)", {
+  skip_if_dtplyr()
 
-#   res <- data.table(x = 1:4, g = c(1, 1, 1, 2)) %>%
-#     group_by(g) %>%
-#     mutate(model = list(y = x))
-#   expect_equal(res$model[[1]], 1:3)
-#   expect_equal(res$model[[4]], 4)
-# })
+  res <- data.table(prob = c(F, T)) %>%
+    rowwise %>%
+    mutate(model = list(x = prob))
+  expect_equal(unlist(res$model), c(FALSE, TRUE))
+
+  res <- data.table(x = 1:4, g = c(1, 1, 1, 2)) %>%
+    group_by(g) %>%
+    mutate(model = list(y = x))
+  expect_equal(res$model[[1]], 1:3)
+  expect_equal(res$model[[4]], 4)
+})
 
 test_that("ntile falls back to R (#1750)", {
   res <- mutate(iris, a = ntile("Sepal.Length", 3))
   expect_equal(res$a, rep(1, 150))
 })
 
-# test_that("mutate() names pronouns correctly (#2686)", {
-#   expect_named(mutate(data.table(x = 1), .data$x), "x")
-#   expect_named(mutate(data.table(x = 1), .data[["x"]]), "x")
-# })
+test_that("mutate() names pronouns correctly (#2686)", {
+  skip_if_dtplyr()
+  
+  expect_named(mutate(data.table(x = 1), .data$x), "x")
+  expect_named(mutate(data.table(x = 1), .data[["x"]]), "x")
+})
 
-# test_that("mutate() supports unquoted values", {
-#   df <- data.table(g = c(1, 1, 2, 2, 2), x = 1:5)
-#   expect_identical(mutate(df, out = !! 1), mutate(df, out = 1))
-#   expect_identical(mutate(df, out = !! 1:5), mutate(df, out = 1:5))
-#   expect_identical(mutate(df, out = !! quote(1:5)), mutate(df, out = 1:5))
-#   expect_error(mutate(df, out = !! 1:2), "must be length 5 (the number of rows)", fixed = TRUE)
-#   expect_error(mutate(df, out = !! get_env()), "unsupported type")
+test_that("mutate() supports unquoted values", {
+  skip_if_dtplyr()
 
-#   gdf <- group_by(df, g)
-#   expect_identical(mutate(gdf, out = !! 1), mutate(gdf, out = 1))
-#   expect_identical(mutate(gdf, out = !! 1:5), group_by(mutate(df, out = 1:5), g))
-#   expect_error(mutate(gdf, out = !! quote(1:5)), "must be length 2 (the group size)", fixed = TRUE)
-#   expect_error(mutate(gdf, out = !! 1:2), "must be length 5 (the number of rows)", fixed = TRUE)
-#   expect_error(mutate(gdf, out = !! get_env()), "unsupported type")
-# })
+  df <- data.table(g = c(1, 1, 2, 2, 2), x = 1:5)
+  expect_identical(mutate(df, out = !! 1), mutate(df, out = 1))
+  expect_identical(mutate(df, out = !! 1:5), mutate(df, out = 1:5))
+  expect_identical(mutate(df, out = !! quote(1:5)), mutate(df, out = 1:5))
+  expect_error(mutate(df, out = !! 1:2), "must be length 5 (the number of rows)", fixed = TRUE)
+  expect_error(mutate(df, out = !! get_env()), "unsupported type")
+
+  gdf <- group_by(df, g)
+  expect_identical(mutate(gdf, out = !! 1), mutate(gdf, out = 1))
+  expect_identical(mutate(gdf, out = !! 1:5), group_by(mutate(df, out = 1:5), g))
+  expect_error(mutate(gdf, out = !! quote(1:5)), "must be length 2 (the group size)", fixed = TRUE)
+  expect_error(mutate(gdf, out = !! 1:2), "must be length 5 (the number of rows)", fixed = TRUE)
+  expect_error(mutate(gdf, out = !! get_env()), "unsupported type")
+})
 
 
 # Error messages ----------------------------------------------------------
 
-# test_that("mutate fails gracefully on non-vector columns (#1803)", {
-#   df <- data.table(a = 1:3, b = as.raw(1:3))
-#   expect_error(
-#     mutate(df, a = 1),
-#     "Column `b` is of unsupported type raw vector",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     mutate(df, b = 1),
-#     "Column `b` is of unsupported type raw vector",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     mutate(df, c = 1),
-#     "Column `b` is of unsupported type raw vector",
-#     fixed = TRUE
-#   )
-# })
+test_that("mutate fails gracefully on non-vector columns (#1803)", {
+  skip_if_dtplyr()
 
-# test_that("grouped mutate errors on incompatible column type (#1641)", {
-#   expect_error(
-#     data.table(x = 1) %>% mutate(y = mean),
-#     "Column `y` is of unsupported type function",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     data.table(x = 1) %>% mutate(y = quote(a)),
-#     "Column `y` is of unsupported type symbol",
-#     fixed = TRUE
-#   )
-# })
+  df <- data.table(a = 1:3, b = as.raw(1:3))
+  expect_error(
+    mutate(df, a = 1),
+    "Column `b` is of unsupported type raw vector",
+    fixed = TRUE
+  )
+  expect_error(
+    mutate(df, b = 1),
+    "Column `b` is of unsupported type raw vector",
+    fixed = TRUE
+  )
+  expect_error(
+    mutate(df, c = 1),
+    "Column `b` is of unsupported type raw vector",
+    fixed = TRUE
+  )
+})
+
+test_that("grouped mutate errors on incompatible column type (#1641)", {
+  skip_if_dtplyr()
+
+  expect_error(
+    data.table(x = 1) %>% mutate(y = mean),
+    "Column `y` is of unsupported type function",
+    fixed = TRUE
+  )
+  expect_error(
+    data.table(x = 1) %>% mutate(y = quote(a)),
+    "Column `y` is of unsupported type symbol",
+    fixed = TRUE
+  )
+})
 
 test_that("can reuse new variables", {
   expect_equal(

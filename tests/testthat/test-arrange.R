@@ -122,24 +122,26 @@ test_that("arrange keeps the grouping structure (#605)", {
   expect_equal(attr(res, "indices"), list(c(1, 3), c(0, 2)))
 })
 
-# test_that("arrange handles complex vectors", {
-#   d <- data.table(x = 1:10, y = 10:1 + 2i)
-#   res <- arrange(d, y)
-#   expect_equal(res$y, rev(d$y))
-#   expect_equal(res$x, rev(d$x))
+test_that("arrange handles complex vectors", {
+  skip_if_dtplyr()
 
-#   res <- arrange(res, desc(y))
-#   expect_equal(res$y, d$y)
-#   expect_equal(res$x, d$x)
+  d <- data.table(x = 1:10, y = 10:1 + 2i)
+  res <- arrange(d, y)
+  expect_equal(res$y, rev(d$y))
+  expect_equal(res$x, rev(d$x))
 
-#   d$y[c(3, 6)] <- NA
-#   res <- arrange(d, y)
-#   expect_true(all(is.na(res$y[9:10])))
+  res <- arrange(res, desc(y))
+  expect_equal(res$y, d$y)
+  expect_equal(res$x, d$x)
 
-#   res <- arrange(d, desc(y))
-#   expect_true(all(is.na(res$y[9:10])))
+  d$y[c(3, 6)] <- NA
+  res <- arrange(d, y)
+  expect_true(all(is.na(res$y[9:10])))
 
-# })
+  res <- arrange(d, desc(y))
+  expect_true(all(is.na(res$y[9:10])))
+
+})
 
 test_that("arrange respects attributes #1105", {
   env <- environment()
@@ -151,12 +153,14 @@ test_that("arrange respects attributes #1105", {
   expect_is(res$p, "Period")
 })
 
-# test_that("arrange works with empty data frame (#1142)", {
-#   df <- data.table()
-#   res <- df %>% arrange
-#   expect_equal(nrow(res), 0L)
-#   expect_equal(length(res), 0L)
-# })
+test_that("arrange works with empty data frame (#1142)", {
+  skip_if_dtplyr()
+
+  df <- data.table()
+  res <- df %>% arrange
+  expect_equal(nrow(res), 0L)
+  expect_equal(length(res), 0L)
+})
 
 test_that("arrange respects locale (#1280)", {
   df2 <- data_frame(words = c("casa", "\u00e1rbol", "zona", "\u00f3rgano"))
@@ -169,19 +173,21 @@ test_that("arrange respects locale (#1280)", {
 
 })
 
-# test_that("duplicated column name is explicit about which column (#996)", {
-#   df <- data.table(x = 1:10, x = 1:10)
-#   names(df) <- c("x", "x")
+test_that("duplicated column name is explicit about which column (#996)", {
+  skip_if_dtplyr()
 
-#   # Error message created by tibble
-#   expect_error(df %>% arrange)
+  df <- data.table(x = 1:10, x = 1:10)
+  names(df) <- c("x", "x")
 
-#   df <- data.table(x = 1:10, x = 1:10, y = 1:10, y = 1:10)
-#   names(df) <- c("x", "x", "y", "y")
+  # Error message created by tibble
+  expect_error(df %>% arrange)
 
-#   # Error message created by tibble
-#   expect_error(df %>% arrange)
-# })
+  df <- data.table(x = 1:10, x = 1:10, y = 1:10, y = 1:10)
+  names(df) <- c("x", "x", "y", "y")
+
+  # Error message created by tibble
+  expect_error(df %>% arrange)
+})
 
 test_that("arrange fails gracefully on list columns (#1489)", {
   df <- expand.grid(group = 1:2, y = 1, x = 1) %>%

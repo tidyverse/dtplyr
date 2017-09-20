@@ -81,19 +81,23 @@ test_that("unless .keep_all = TRUE", {
   expect_equal(df %>% distinct(x, .keep_all = TRUE), data_frame(x = 1, y = 3L))
 })
 
-# test_that("distinct doesn't duplicate columns", {
-#   df <- data.table(a = 1:3, b = 4:6)
+test_that("distinct doesn't duplicate columns", {
+  skip_if_dtplyr()
 
-#   expect_named(df %>% distinct(a, a), "a")
-#   expect_named(df %>% group_by(a) %>% distinct(a), "a")
-# })
+  df <- data.table(a = 1:3, b = 4:6)
 
-# test_that("grouped distinct always includes group cols", {
-#   df <- data.table(g = c(1, 2), x = c(1, 2))
+  expect_named(df %>% distinct(a, a), "a")
+  expect_named(df %>% group_by(a) %>% distinct(a), "a")
+})
 
-#   out <- df %>% group_by(g) %>% distinct(x)
-#   expect_equal(df, out)
-# })
+test_that("grouped distinct always includes group cols", {
+  skip_if_dtplyr()
+  
+  df <- data.table(g = c(1, 2), x = c(1, 2))
+
+  out <- df %>% group_by(g) %>% distinct(x)
+  expect_equal(df, out)
+})
 
 test_that("empty grouped distinct equivalent to empty ungrouped", {
   df <- data.table(g = c(1, 2), x = c(1, 2))

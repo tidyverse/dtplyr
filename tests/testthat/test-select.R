@@ -64,19 +64,23 @@ test_that("select doesn't fail if some names missing", {
 # Empty selects -------------------------------------------------
 
 test_that("select with no args returns nothing", {
+  skip_if_dtplyr()
+
   empty <- select(mtcars_dt)
   expect_equal(ncol(empty), 0)
-  # expect_equal(nrow(empty), 32)
+  expect_equal(nrow(empty), 32)
 })
 
 test_that("select excluding all vars returns nothing", {
-  # expect_equal(dim(select(mtcars_dt, -(mpg:carb))), c(32, 0))
-  # expect_equal(dim(select(mtcars_dt, starts_with("x"))), c(32, 0))
-  # expect_equal(dim(select(mtcars_dt, -matches("."))), c(32, 0))
+  skip_if_dtplyr()
+
+  expect_equal(dim(select(mtcars_dt, -(mpg:carb))), c(32, 0))
+  expect_equal(dim(select(mtcars_dt, starts_with("x"))), c(32, 0))
+  expect_equal(dim(select(mtcars_dt, -matches("."))), c(32, 0))
 
   expect_equal(dim(select(mtcars_dt, -(mpg:carb))), c(0, 0))
   expect_equal(dim(select(mtcars_dt, starts_with("x"))), c(0, 0))
-  # expect_equal(dim(select(mtcars_dt, -matches("."))), c(0, 0))
+  expect_equal(dim(select(mtcars_dt, -matches("."))), c(0, 0))
 })
 
 test_that("negating empty match returns everything", {
@@ -134,14 +138,18 @@ test_that("rename does not crash with invalid grouped data frame (#640)", {
   )
 })
 
-# test_that("can select with character vectors", {
-#   expect_identical(select_vars(letters, "b", !! "z", c("b", "c")), set_names(c("b", "z", "c")))
-# })
+test_that("can select with character vectors", {
+  skip_if_dtplyr()
 
-# test_that("abort on unknown columns", {
-#   expect_error(select_vars(letters, "foo"), "must match column names")
-#   expect_error(select_vars(letters, c("a", "bar", "foo", "d")), "bar, foo")
-# })
+  expect_identical(select_vars(letters, "b", !! "z", c("b", "c")), set_names(c("b", "z", "c")))
+})
+
+test_that("abort on unknown columns", {
+  skip_if_dtplyr()
+
+  expect_error(select_vars(letters, "foo"), "must match column names")
+  expect_error(select_vars(letters, c("a", "bar", "foo", "d")), "bar, foo")
+})
 
 test_that("rename() handles data pronoun", {
   expect_identical(rename(data.table(x = 1), y = .data$x), data.table(y = 1))
@@ -151,85 +159,107 @@ test_that("rename() handles data pronoun", {
 # combine_vars ------------------------------------------------------------
 # This is the low C++ function which works on integer indices
 
-# test_that("empty index gives empty output", {
-#   vars <- combine_vars(letters, list())
-#   expect_equal(length(vars), 0)
+test_that("empty index gives empty output", {
+  skip_if_dtplyr()
 
-#   vars <- combine_vars(letters, list(numeric()))
-#   expect_equal(length(vars), 0)
-# })
+  vars <- combine_vars(letters, list())
+  expect_equal(length(vars), 0)
 
-# test_that("positive indexes kept", {
-#   expect_equal(combine_vars(letters, list(1)), c(a = 1))
-#   expect_equal(combine_vars(letters, list(1, 26)), c(a = 1, z = 26))
-#   expect_equal(combine_vars(letters, list(c(1, 26))), c(a = 1, z = 26))
-# })
+  vars <- combine_vars(letters, list(numeric()))
+  expect_equal(length(vars), 0)
+})
 
-# test_that("indexes returned in order they appear", {
-#   expect_equal(combine_vars(letters, list(26, 1)), c(z = 26, a = 1))
-# })
+test_that("positive indexes kept", {
+  skip_if_dtplyr()
+
+  expect_equal(combine_vars(letters, list(1)), c(a = 1))
+  expect_equal(combine_vars(letters, list(1, 26)), c(a = 1, z = 26))
+  expect_equal(combine_vars(letters, list(c(1, 26))), c(a = 1, z = 26))
+})
+
+test_that("indexes returned in order they appear", {
+  skip_if_dtplyr()
+
+  expect_equal(combine_vars(letters, list(26, 1)), c(z = 26, a = 1))
+})
 
 
-# test_that("negative index in first position includes all others", {
-#   vars <- combine_vars(letters[1:3], list(-1))
-#   expect_equal(vars, c(b = 2, c = 3))
-# })
+test_that("negative index in first position includes all others", {
+  skip_if_dtplyr()
 
-# test_that("named inputs rename outputs", {
-#   expect_equal(combine_vars(letters[1:3], list(d = 1)), c(d = 1))
-#   expect_equal(combine_vars(letters[1:3], list(c(d = 1))), c(d = 1))
-# })
+  vars <- combine_vars(letters[1:3], list(-1))
+  expect_equal(vars, c(b = 2, c = 3))
+})
 
-# test_that("if multiple names, last kept", {
-#   expect_equal(combine_vars(letters[1:3], list(d = 1, e = 1)), c(e = 1))
-#   expect_equal(combine_vars(letters[1:3], list(c(d = 1, e = 1))), c(e = 1))
-# })
+test_that("named inputs rename outputs", {
+  skip_if_dtplyr()
 
-# test_that("if one name for multiple vars, use integer index", {
-#   expect_equal(combine_vars(letters[1:3], list(x = 1:3)), c(x1 = 1, x2 = 2, x3 = 3))
-# })
+  expect_equal(combine_vars(letters[1:3], list(d = 1)), c(d = 1))
+  expect_equal(combine_vars(letters[1:3], list(c(d = 1))), c(d = 1))
+})
 
-# test_that("invalid inputs raise error", {
-#   expect_error(
-#     combine_vars(names(mtcars_dt), list(0)),
-#     "Each argument must yield either positive or negative integers",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     combine_vars(names(mtcars_dt), list(c(-1, 1))),
-#     "Each argument must yield either positive or negative integers",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     combine_vars(names(mtcars_dt), list(12)),
-#     "Position must be between 0 and n",
-#     fixed = TRUE
-#   )
-# })
+test_that("if multiple names, last kept", {
+  skip_if_dtplyr()
 
-# test_that("select succeeds in presence of raw columns (#1803)", {
-#   df <- data.table(a = 1:3, b = as.raw(1:3))
-#   expect_identical(select(df, a), df["a"])
-#   expect_identical(select(df, b), df["b"])
-#   expect_identical(select(df, -b), df["a"])
-# })
+  expect_equal(combine_vars(letters[1:3], list(d = 1, e = 1)), c(e = 1))
+  expect_equal(combine_vars(letters[1:3], list(c(d = 1, e = 1))), c(e = 1))
+})
+
+test_that("if one name for multiple vars, use integer index", {
+  skip_if_dtplyr()
+
+  expect_equal(combine_vars(letters[1:3], list(x = 1:3)), c(x1 = 1, x2 = 2, x3 = 3))
+})
+
+test_that("invalid inputs raise error", {
+  skip_if_dtplyr()
+
+  expect_error(
+    combine_vars(names(mtcars_dt), list(0)),
+    "Each argument must yield either positive or negative integers",
+    fixed = TRUE
+  )
+  expect_error(
+    combine_vars(names(mtcars_dt), list(c(-1, 1))),
+    "Each argument must yield either positive or negative integers",
+    fixed = TRUE
+  )
+  expect_error(
+    combine_vars(names(mtcars_dt), list(12)),
+    "Position must be between 0 and n",
+    fixed = TRUE
+  )
+})
+
+test_that("select succeeds in presence of raw columns (#1803)", {
+  skip_if_dtplyr()
+  
+  df <- data.table(a = 1:3, b = as.raw(1:3))
+  expect_identical(select(df, a), df["a"])
+  expect_identical(select(df, b), df["b"])
+  expect_identical(select(df, -b), df["a"])
+})
 
 test_that("arguments to select() don't match select_vars() arguments", {
+  skip_if_dtplyr()
+
   df <- data.table(a = 1)
   expect_identical(select(df, var = a), data.table(var = 1))
-  # expect_identical(select(group_by(df, a), var = a), group_by(data.table(var = 1), var))
+  expect_identical(select(group_by(df, a), var = a), group_by(data.table(var = 1), var))
   expect_identical(select(df, exclude = a), data.table(exclude = 1))
   expect_identical(select(df, include = a), data.table(include = 1))
-  # expect_identical(select(group_by(df, a), exclude = a), group_by(data.table(exclude = 1), exclude))
-  # expect_identical(select(group_by(df, a), include = a), group_by(data.table(include = 1), include))
+  expect_identical(select(group_by(df, a), exclude = a), group_by(data.table(exclude = 1), exclude))
+  expect_identical(select(group_by(df, a), include = a), group_by(data.table(include = 1), include))
 })
 
 test_that("arguments to rename() don't match rename_vars() arguments (#2861)", {
+  skip_if_dtplyr()
+
   df <- data.table(a = 1)
   expect_identical(rename(df, var = a), data.table(var = 1))
-  # expect_identical(rename(group_by(df, a), var = a), group_by(data.table(var = 1), var))
+  expect_identical(rename(group_by(df, a), var = a), group_by(data.table(var = 1), var))
   expect_identical(rename(df, strict = a), data.table(strict = 1))
-  # expect_identical(rename(group_by(df, a), strict = a), group_by(data.table(strict = 1), strict))
+  expect_identical(rename(group_by(df, a), strict = a), group_by(data.table(strict = 1), strict))
 })
 
 test_that("can select() with .data pronoun (#2715)", {
@@ -240,10 +270,12 @@ test_that("can select() with character vectors", {
   expect_identical(select(mtcars_dt, "cyl", !! "disp", c("cyl", "am", "drat")), mtcars_dt[, c("cyl", "disp", "am", "drat")])
 })
 
-# test_that("rename() to UTF-8 column names", {
-#   skip_on_os("windows") # needs an rlang update? #3049
-#   df <- data.table(a = 1) %>% rename("\u5e78" := a)
+test_that("rename() to UTF-8 column names", {
+  skip_if_dtplyr()
 
-#   expect_equal(colnames(df), "\u5e78")
-# })
+  skip_on_os("windows") # needs an rlang update? #3049
+  df <- data.table(a = 1) %>% rename("\u5e78" := a)
+
+  expect_equal(colnames(df), "\u5e78")
+})
 

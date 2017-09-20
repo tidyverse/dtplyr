@@ -112,65 +112,76 @@ test_that("mutate does not loose variables (#144)", {
   expect_equal(names(by_a_quartile), c("a", "b", "x", "quartile"))
 })
 
-# test_that("group_by uses shallow copy", {
-#   m1 <- group_by(mtcars, cyl)
-#   expect_no_groups(mtcars)
+test_that("group_by uses shallow copy", {
+  skip_if_dtplyr()
 
-#   expect_equal(dfloc(mtcars), dfloc(m1))
-# })
+  m1 <- group_by(mtcars, cyl)
+  expect_no_groups(mtcars)
 
-# test_that("FactorVisitor handles NA. #183", {
-#   g <- group_by(as.data.table(MASS::survey), M.I)
-#   expect_equal(g$M.I, MASS::survey$M.I)
-# })
+  expect_equal(dfloc(mtcars), dfloc(m1))
+})
 
-# test_that("group_by orders by groups. #242", {
-#   df <- data.table(a = sample(1:10, 3000, replace = TRUE)) %>% group_by(a)
-#   expect_equal(attr(df, "labels")$a, 1:10)
+test_that("FactorVisitor handles NA. #183", {
+  skip_if_dtplyr()
 
-#   df <- data.table(a = sample(letters[1:10], 3000, replace = TRUE), stringsAsFactors = FALSE) %>% group_by(a)
-#   expect_equal(attr(df, "labels")$a, letters[1:10])
+  g <- group_by(as.data.table(MASS::survey), M.I)
+  expect_equal(g$M.I, MASS::survey$M.I)
+})
 
-#   df <- data.table(a = sample(sqrt(1:10), 3000, replace = TRUE)) %>% group_by(a)
-#   expect_equal(attr(df, "labels")$a, sqrt(1:10))
-# })
+test_that("group_by orders by groups. #242", {
+  skip_if_dtplyr()
 
-# test_that("group_by uses the white list", {
-#   df <- data.table(times = 1:5)
-#   df$times <- as.POSIXlt(seq.Date(Sys.Date(), length.out = 5, by = "day"))
-#   expect_error(
-#     group_by(df, times),
-#     "Column `times` is of unsupported class POSIXlt/POSIXt",
-#     fixed = TRUE
-#   )
-# })
+  df <- data.table(a = sample(1:10, 3000, replace = TRUE)) %>% group_by(a)
+  expect_equal(attr(df, "labels")$a, 1:10)
 
-# test_that("group_by fails when lists are used as grouping variables (#276)", {
-#   df <- data.table(x = 1:3)
-#   df$y <- list(1:2, 1:3, 1:4)
-#   expect_error(
-#     group_by(df, y),
-#     "Column `y` can't be used as a grouping variable because it's a list",
-#     fixed = TRUE
-#   )
-# })
+  df <- data.table(a = sample(letters[1:10], 3000, replace = TRUE), stringsAsFactors = FALSE) %>% group_by(a)
+  expect_equal(attr(df, "labels")$a, letters[1:10])
 
+  df <- data.table(a = sample(sqrt(1:10), 3000, replace = TRUE)) %>% group_by(a)
+  expect_equal(attr(df, "labels")$a, sqrt(1:10))
+})
+
+test_that("group_by uses the white list", {
+  skip_if_dtplyr()
+
+  df <- data.table(times = 1:5)
+  df$times <- as.POSIXlt(seq.Date(Sys.Date(), length.out = 5, by = "day"))
+  expect_error(
+    group_by(df, times),
+    "Column `times` is of unsupported class POSIXlt/POSIXt",
+    fixed = TRUE
+  )
+})
+
+test_that("group_by fails when lists are used as grouping variables (#276)", {
+  skip_if_dtplyr()
+
+  df <- data.table(x = 1:3)
+  df$y <- list(1:2, 1:3, 1:4)
+  expect_error(
+    group_by(df, y),
+    "Column `y` can't be used as a grouping variable because it's a list",
+    fixed = TRUE
+  )
+})
 
 test_that("select(group_by(.)) implicitely adds grouping variables (#170)", {
   res <- as.data.table(mtcars) %>% group_by(vs) %>% select(mpg)
   expect_equal(names(res), c("vs", "mpg"))
 })
 
-# test_that("grouped_df errors on empty vars (#398)", {
-#   m <- as.data.table(mtcars) %>% group_by(cyl)
-#   attr(m, "vars") <- NULL
-#   attr(m, "indices") <- NULL
-#   expect_error(
-#     m %>% do(mpg = mean(.$mpg)),
-#     "no variables to group by",
-#     fixed = TRUE
-#   )
-# })
+test_that("grouped_df errors on empty vars (#398)", {
+  skip_if_dtplyr()
+
+  m <- as.data.table(mtcars) %>% group_by(cyl)
+  attr(m, "vars") <- NULL
+  attr(m, "indices") <- NULL
+  expect_error(
+    m %>% do(mpg = mean(.$mpg)),
+    "no variables to group by",
+    fixed = TRUE
+  )
+})
 
 test_that("grouped_df errors on non-existent var (#2330)", {
   df <- data.table(x = 1:5)
@@ -241,15 +252,17 @@ test_that("group_by gives meaningful message with unknow column (#716)", {
   )
 })
 
-# test_that("[ on grouped_df preserves grouping if subset includes grouping vars", {
-#   df <- data.table(x = 1:5, ` ` = 6:10)
-#   by_x <- df %>% group_by(x)
-#   expect_equal(by_x %>% groups(), by_x %>% `[`(1:2) %>% groups)
+test_that("[ on grouped_df preserves grouping if subset includes grouping vars", {
+  skip_if_dtplyr()
 
-#   # non-syntactic name
-#   by_ns <- df %>% group_by(` `)
-#   expect_equal(by_ns %>% groups(), by_ns %>% `[`(1:2) %>% groups)
-# })
+  df <- data.table(x = 1:5, ` ` = 6:10)
+  by_x <- df %>% group_by(x)
+  expect_equal(by_x %>% groups(), by_x %>% `[`(1:2) %>% groups)
+
+  # non-syntactic name
+  by_ns <- df %>% group_by(` `)
+  expect_equal(by_ns %>% groups(), by_ns %>% `[`(1:2) %>% groups)
+})
 
 
 test_that("[ on grouped_df drops grouping if subset doesn't include grouping vars", {
@@ -276,49 +289,55 @@ test_that("group_by keeps attributes", {
   expect_equal(attr(gd$x, "foo"), "bar")
 })
 
-# test_that("ungroup.rowwise_df gives a tbl_dt (#936)", {
-#   res <- tbl_dt(mtcars) %>% rowwise %>% ungroup %>% class
-#   expect_equal(res, c("tbl_dt", "tbl", "data.table"))
-# })
+test_that("ungroup.rowwise_df gives a tbl_dt (#936)", {
+  skip_if_dtplyr()
 
-# test_that(paste0("group_by handles encodings for native strings (#1507)"), {
-#   with_non_utf8_encoding({
-#     special <- get_native_lang_string()
+  res <- tbl_dt(mtcars) %>% rowwise %>% ungroup %>% class
+  expect_equal(res, c("tbl_dt", "tbl", "data.table"))
+})
 
-#     df <- data.table(x = 1:3, Eng = 2:4)
+test_that(paste0("group_by handles encodings for native strings (#1507)"), {
+  skip_if_dtplyr()
 
-#     for (names_converter in c(enc2native, enc2utf8)) {
-#       for (dots_converter in c(enc2native, enc2utf8)) {
-#         names(df) <- names_converter(c(special, "Eng"))
-#         res <- group_by(df, !!! syms(dots_converter(special)))
-#         expect_equal(names(res), names(df))
-#         expect_groups(res, special)
-#       }
-#     }
+  with_non_utf8_encoding({
+    special <- get_native_lang_string()
 
-#     for (names_converter in c(enc2native, enc2utf8)) {
-#       names(df) <- names_converter(c(special, "Eng"))
+    df <- data.table(x = 1:3, Eng = 2:4)
 
-#       res <- group_by(df, !!! special)
-#       expect_equal(names(res), c(names(df), deparse(special)))
-#       expect_equal(groups(res), list(as.name(enc2native(deparse(special)))))
-#     }
-#   })
-# })
+    for (names_converter in c(enc2native, enc2utf8)) {
+      for (dots_converter in c(enc2native, enc2utf8)) {
+        names(df) <- names_converter(c(special, "Eng"))
+        res <- group_by(df, !!! syms(dots_converter(special)))
+        expect_equal(names(res), names(df))
+        expect_groups(res, special)
+      }
+    }
 
-# test_that("group_by fails gracefully on raw columns (#1803)", {
-#   df <- data.table(a = 1:3, b = as.raw(1:3))
-#   expect_error(
-#     group_by(df, a),
-#     "Column `b` is of unsupported type raw",
-#     fixed = TRUE
-#   )
-#   expect_error(
-#     group_by(df, b),
-#     "Column `b` is of unsupported type raw",
-#     fixed = TRUE
-#   )
-# })
+    for (names_converter in c(enc2native, enc2utf8)) {
+      names(df) <- names_converter(c(special, "Eng"))
+
+      res <- group_by(df, !!! special)
+      expect_equal(names(res), c(names(df), deparse(special)))
+      expect_equal(groups(res), list(as.name(enc2native(deparse(special)))))
+    }
+  })
+})
+
+test_that("group_by fails gracefully on raw columns (#1803)", {
+  skip_if_dtplyr()
+  
+  df <- data.table(a = 1:3, b = as.raw(1:3))
+  expect_error(
+    group_by(df, a),
+    "Column `b` is of unsupported type raw",
+    fixed = TRUE
+  )
+  expect_error(
+    group_by(df, b),
+    "Column `b` is of unsupported type raw",
+    fixed = TRUE
+  )
+})
 
 test_that("rowwise fails gracefully on raw columns (#1803)", {
   df <- data.table(a = 1:3, b = as.raw(1:3))
