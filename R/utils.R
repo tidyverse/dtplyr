@@ -15,9 +15,8 @@ dt_subset <- function(dt, i, j, env = parent.frame(), sd_cols = NULL) {
     call <- substitute(`_dt`[i, j, by = `_vars`], args)
     call$.SDcols = sd_cols
   }
-  # print(call)
 
-  eval(call, env)
+  eval_bare(call, env)
 }
 
 dt_replace <- function(x) {

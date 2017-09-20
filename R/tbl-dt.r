@@ -172,24 +172,42 @@ and_expr <- function(exprs) {
 #   env
 # }
 
-# but this still does not take care of literals. Basically, we want to fall back
-# to baseenv() if we dont have a unique env that is not emptyenv(). (But I
-# am not sure if the case of emptyenv is relevant here.)
+# but this still does not take care of:
 
-# second version
+# a) Literals. We want to fall back to baseenv() if we dont have a unique env
+# that is not emptyenv().
+
+# b) Nested environments. If a function is called within a function, we want to
+# evaluate the data.table call in the same environments. Some quosures may have
+# an environment that is a parent of this environment, so we need to figure
+# out the 'deepest' environment. We also need to check that all other
+# environments are parents of this environment.
+
+# third version
 common_env <- function (dots){
+  stopifnot(inherits(dots, "quosures"))
   if (length(dots) == 0) return(baseenv())
-  env <- get_env(dots[[1]])
+  if (length(dots) == 1){
+    env <- get_env(dots[[1]])
+  } else {
+    # evaluate common env
+    envs <- lapply(dots, get_env)
+
+    # use deepest env as a candidate for common env
+    env <- envs[[which.max(vapply(envs, env_depth, 0L))]]
+    # fail if some environments are not in search path
+    if (!all(envs %in% c(env_parents(env), env))){
+      stop("Conflicting environment tree. Does this ever arise?")
+    }
+  }
+
+  # from ?quosure: 
+  #   Literals are enquosed with the empty environment because they can
+  #   be evaluated anywhere.
+  # But we don't have `[` in emptyenv, which we need in the data.table call. 
+  # Changing to baseenv which was also returned in lazyeval::all_dots()
   if (identical(env, emptyenv())){
     env <- baseenv()
-  }
-  if (length(dots) == 1){
-    return(env)
-  }
-  for (i in 2:length(dots)) {
-    if (!identical(env, get_env(dots[[i]]))) {
-      return(baseenv())
-    }
   }
   env
 }
@@ -226,11 +244,8 @@ summarise.tbl_dt <- function(.data, ...) {
 summarise.data.table <- function(.data, ...) {
   dots <- quos(..., .named = TRUE)
 
-  envs <- lapply(dots, get_env)
+  env <- common_env(dots)
   exprs <- lapply(dots, get_expr)  
-
-  # use (first) deepest env as common env
-  env <- envs[[which.max(vapply(envs, env_depth, 0L))]]
 
   j <- as.call(c(quote(list), exprs))
 
@@ -258,16 +273,7 @@ mutate.data.table <- function(.data, ...) {
     # For each new variable, generate a call of the form df[, new := expr]
     j <- substitute(lhs := rhs, list(lhs = names[[i]], rhs = get_expr(dots[[i]])))
 
-    # from ?quosure: 
-    #   Literals are enquosed with the empty environment because they can
-    #   be evaluated anywhere.
-    # But we don't have `[` in emptyenv, which we need in the data.table call. 
-    # Changing to baseenv which was also returned in old lazyeval::all_dots()
-    if (identical(get_env(dots[[i]]), emptyenv())){
-      env <- baseenv()
-    } else {
-      env <- get_env(dots[[i]])
-    }
+    env <- common_env(dots[i])
 
     .data <- dt_subset(.data, , j,  env)
   }
