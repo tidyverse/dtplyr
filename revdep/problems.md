@@ -1,31 +1,63 @@
-# Setup
+# dplyr
 
-## Platform
+Version: 0.8.0.1
 
-|setting  |value                        |
-|:--------|:----------------------------|
-|version  |R version 3.3.2 (2016-10-31) |
-|system   |x86_64, darwin13.4.0         |
-|ui       |X11                          |
-|language |(EN)                         |
-|collate  |en_US.UTF-8                  |
-|tz       |Europe/Brussels              |
-|date     |2017-04-21                   |
+## In both
 
-## Packages
+*   checking installed package size ... NOTE
+    ```
+      installed size is  6.3Mb
+      sub-directories of 1Mb or more:
+        R      2.1Mb
+        libs   2.4Mb
+    ```
 
-|package      |*  |version    |date       |source                   |
-|:------------|:--|:----------|:----------|:------------------------|
-|covr         |   |2.2.2      |2017-01-05 |CRAN (R 3.3.2)           |
-|data.table   |   |1.10.4     |2017-02-01 |CRAN (R 3.3.2)           |
-|dplyr        |   |0.5.0      |2016-06-24 |CRAN (R 3.3.0)           |
-|dtplyr       |   |0.0.1.9000 |2017-04-21 |local (hadley/dtplyr@NA) |
-|Lahman       |   |5.0-0      |2016-08-27 |CRAN (R 3.3.0)           |
-|lazyeval     |   |0.2.0      |2016-06-12 |CRAN (R 3.3.0)           |
-|nycflights13 |   |0.2.2      |2017-01-27 |CRAN (R 3.3.2)           |
-|testthat     |   |1.0.2      |2016-04-23 |CRAN (R 3.3.0)           |
+*   checking Rd cross-references ... NOTE
+    ```
+    Package unavailable to check Rd xrefs: ‘vctrs’
+    ```
 
-# Check results
-0 packages with problems
+*   checking data for non-ASCII characters ... NOTE
+    ```
+      Note: found 4 marked UTF-8 strings
+    ```
 
+# grattan
+
+Version: 1.7.0.0
+
+## In both
+
+*   checking package dependencies ... NOTE
+    ```
+    Packages suggested but not available for checking:
+      ‘taxstats’ ‘taxstats1516’
+    ```
+
+# randomForestExplainer
+
+Version: 0.9
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespaces in Imports field not imported from:
+      ‘MASS’ ‘dtplyr’
+      All declared Imports should be used.
+    ```
+
+# stranger
+
+Version: 0.3.3
+
+## In both
+
+*   checking whether package ‘stranger’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: package ‘data.table’ was built under R version 3.5.2
+      Warning: package ‘dplyr’ was built under R version 3.5.2
+    See ‘/Users/lionel/Dropbox/Projects/R/hadley/dtplyr/revdep/checks.noindex/stranger/new/stranger.Rcheck/00install.out’ for details.
+    ```
 

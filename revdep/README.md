@@ -1,59 +1,53 @@
-# Setup
+# Platform
 
-## Platform
-
-|setting  |value                        |
+|field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.3.2 (2016-10-31) |
-|system   |x86_64, darwin13.4.0         |
+|version  |R version 3.5.1 (2018-07-02) |
+|os       |macOS  10.14                 |
+|system   |x86_64, darwin15.6.0         |
 |ui       |X11                          |
 |language |(EN)                         |
 |collate  |en_US.UTF-8                  |
+|ctype    |en_US.UTF-8                  |
 |tz       |Europe/Brussels              |
-|date     |2017-04-21                   |
+|date     |2019-02-25                   |
 
-## Packages
+# Dependencies
 
-|package      |*  |version    |date       |source                   |
-|:------------|:--|:----------|:----------|:------------------------|
-|covr         |   |2.2.2      |2017-01-05 |CRAN (R 3.3.2)           |
-|data.table   |   |1.10.4     |2017-02-01 |CRAN (R 3.3.2)           |
-|dplyr        |   |0.5.0      |2016-06-24 |CRAN (R 3.3.0)           |
-|dtplyr       |   |0.0.1.9000 |2017-04-21 |local (hadley/dtplyr@NA) |
-|Lahman       |   |5.0-0      |2016-08-27 |CRAN (R 3.3.0)           |
-|lazyeval     |   |0.2.0      |2016-06-12 |CRAN (R 3.3.0)           |
-|nycflights13 |   |0.2.2      |2017-01-27 |CRAN (R 3.3.2)           |
-|testthat     |   |1.0.2      |2016-04-23 |CRAN (R 3.3.0)           |
+|package    |old      |new      |Δ  |
+|:----------|:--------|:--------|:--|
+|dtplyr     |0.0.2    |0.0.3    |*  |
+|assertthat |0.2.0    |0.2.0    |   |
+|BH         |1.69.0-1 |1.69.0-1 |   |
+|cli        |1.0.1    |1.0.1    |   |
+|crayon     |1.3.4    |1.3.4    |   |
+|data.table |1.12.0   |1.12.0   |   |
+|dplyr      |0.8.0.1  |0.8.0.1  |   |
+|fansi      |0.4.0    |0.4.0    |   |
+|glue       |1.3.0    |1.3.0    |   |
+|lazyeval   |0.2.1    |0.2.1    |   |
+|magrittr   |1.5      |1.5      |   |
+|pillar     |1.3.1    |1.3.1    |   |
+|pkgconfig  |2.0.2    |2.0.2    |   |
+|plogr      |0.2.0    |0.2.0    |   |
+|purrr      |0.3.0    |0.3.0    |   |
+|R6         |2.4.0    |2.4.0    |   |
+|Rcpp       |1.0.0    |1.0.0    |   |
+|rlang      |0.3.1    |0.3.1    |   |
+|tibble     |2.0.1    |2.0.1    |   |
+|tidyselect |0.2.5    |0.2.5    |   |
+|utf8       |1.1.4    |1.1.4    |   |
 
-# Check results
-4 packages
+# Revdeps
 
-## dplyr (0.5.0)
-Maintainer: Hadley Wickham <hadley@rstudio.com>  
-Bug reports: https://github.com/hadley/dplyr/issues
+## All (6)
 
-0 errors | 0 warnings | 0 notes
-
-## grattan (1.4.1.2)
-Maintainer: Hugh Parsonage <hugh.parsonage@gmail.com>  
-Bug reports: https://github.com/HughParsonage/grattan/issues
-
-0 errors | 0 warnings | 1 note 
-
-```
-checking package dependencies ... NOTE
-Package suggested but not available for checking: ‘taxstats’
-```
-
-## ndjson (0.2.0)
-Maintainer: Bob Rudis <bob@rud.is>  
-Bug reports: https://gitlab.com/hrbrmstr/ndjson/issues
-
-0 errors | 0 warnings | 0 notes
-
-## unpivotr (0.1.0)
-Maintainer: Duncan Garmonsway <nacnudus@gmail.com>  
-Bug reports: https://github.com/nacnudus/unpivotr/issues
-
-0 errors | 0 warnings | 0 notes
+|package                                                    |version |error |warning |note |
+|:----------------------------------------------------------|:-------|:-----|:-------|:----|
+|[dplyr](problems.md#dplyr)                                 |0.8.0.1 |      |        |3    |
+|ForecastFramework                                          |0.9.0   |      |        |     |
+|[grattan](problems.md#grattan)                             |1.7.0.0 |      |        |1    |
+|ndjson                                                     |0.7.0   |      |        |     |
+|[randomForestExplainer](problems.md#randomforestexplainer) |0.9     |      |        |1    |
+|[stranger](problems.md#stranger)                           |0.3.3   |      |1       |     |
 
