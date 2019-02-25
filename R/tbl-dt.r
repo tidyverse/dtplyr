@@ -57,12 +57,12 @@ tbl_dt <- function(data, copy = TRUE) {
     return(ungroup(data))
   }
 
-  if (data.table::is.data.table(data)) {
-    if (copy)
-      data <- data.table::copy(data)
-  } else {
+  if (!data.table::is.data.table(data)) {
     data <- data.table::as.data.table(data)
+  } else if (copy) {
+    data <- data.table::copy(data)
   }
+
   data.table::setattr(data, "class", c("tbl_dt", "tbl", "data.table", "data.frame"))
   data
 }
