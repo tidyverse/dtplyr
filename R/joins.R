@@ -75,7 +75,6 @@ full_join.data.table <- function(x, y, by = NULL, copy = FALSE,
 }
 
 #' @rdname join.tbl_dt
-#' @import rlang
 semi_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
@@ -87,7 +86,6 @@ semi_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
 }
 
 #' @rdname join.tbl_dt
-#' @import rlang
 anti_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
