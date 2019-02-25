@@ -1,5 +1,5 @@
 
-# dtplyr 0.0.2.9000
+# dtplyr 0.0.3
 
 - Maintenance release for CRAN checks.
 
