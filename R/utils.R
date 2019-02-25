@@ -7,8 +7,8 @@ dt_subset <- function(dt, i, j, env = parent.frame(), sd_cols = NULL) {
   env$`_vars` <- dplyr::group_vars(dt)
 
   args <- list(
-    i = if (missing(i)) quote(expr =) else dt_replace(i),
-    j = if (missing(j)) quote(expr =) else dt_replace(j)
+    i = if (missing(i)) missing_arg() else dt_replace(i),
+    j = if (missing(j)) missing_arg() else dt_replace(j)
   )
 
   if (missing(j)) {
