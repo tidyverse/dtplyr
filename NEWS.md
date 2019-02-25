@@ -1,7 +1,10 @@
+
 # dtplyr 0.0.2.9000
 
-- `inner_join()`, `left_join()`, `right_join()`, and `full_join()`: new `suffix` 
-  argument which allows you to control what suffix duplicated variable names 
+- Maintenance release for CRAN checks.
+
+- `inner_join()`, `left_join()`, `right_join()`, and `full_join()`: new `suffix`
+  argument which allows you to control what suffix duplicated variable names
   receive, as introduced in dplyr 0.5 (#40, @christophsax).
 
 - Joins use extended `merge.data.table()` and the `on` argument, introduced in
