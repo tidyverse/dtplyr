@@ -53,7 +53,9 @@
 #' ungroup(by_day)
 #' }
 tbl_dt <- function(data, copy = TRUE) {
-  if (is.grouped_dt(data)) return(ungroup(data))
+  if (is.grouped_dt(data)) {
+    return(ungroup(data))
+  }
 
   if (data.table::is.data.table(data)) {
     if (copy)
@@ -142,8 +144,12 @@ all.equal.tbl_dt <- function(target, current, ignore_col_order = TRUE,
 
 and_expr <- function(exprs) {
   stopifnot(is.list(exprs))
-  if (length(exprs) == 0) return(TRUE)
-  if (length(exprs) == 1) return(exprs[[1]])
+  if (length(exprs) == 0) {
+    return(TRUE)
+  }
+  if (length(exprs) == 1) {
+    return(exprs[[1]])
+  }
 
   left <- exprs[[1]]
   for (i in 2:length(exprs)) {

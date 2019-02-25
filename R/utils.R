@@ -54,7 +54,9 @@ deparse_all <- function(x) {
 
 
 drop_last <- function(x) {
-  if (length(x) <= 1L) return(NULL)
+  if (length(x) <= 1L) {
+    return(NULL)
+  }
   x[-length(x)]
 }
 

@@ -20,7 +20,9 @@
 #' }
 grouped_dt <- function(data, vars, copy = TRUE) {
   stopifnot(data.table::is.data.table(data))
-  if (length(vars) == 0) return(tbl_dt(data))
+  if (length(vars) == 0) {
+    return(tbl_dt(data))
+  }
 
   is_name <- vapply(vars, is.name, logical(1))
   if (!all(is_name)) {
