@@ -4,7 +4,7 @@
 dt_subset <- function(dt, i, j, env = parent.frame(), sd_cols = NULL) {
   env <- new.env(parent = env, size = 2L)
   env$`_dt` <- dt
-  env$`_vars` <- deparse_all(groups(dt))
+  env$`_vars` <- dplyr::group_vars(dt)
 
   args <- list(
     i = if (missing(i)) quote(expr =) else dt_replace(i),
@@ -46,12 +46,6 @@ dt_replace <- function(x) {
 }
 
 commas <- function(...) paste0(..., collapse = ", ")
-
-deparse_all <- function(x) {
-  deparse2 <- function(x) paste(deparse(x, width.cutoff = 500L), collapse = "")
-  vapply(x, deparse2, FUN.VALUE = character(1))
-}
-
 
 drop_last <- function(x) {
   if (length(x) <= 1L) {

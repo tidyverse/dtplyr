@@ -50,7 +50,7 @@ is.grouped_dt <- function(x) inherits(x, "grouped_dt")
 
 print.grouped_dt <- function(x, ..., n = NULL, width = NULL) {
   cat("Source: local data table ", dplyr::dim_desc(x), "\n", sep = "")
-  cat("Groups: ", commas(deparse_all(dplyr::groups(x))), "\n", sep = "")
+  cat("Groups: ", commas(dplyr::group_vars(x)), "\n", sep = "")
   cat("\n")
   print(dplyr::trunc_mat(x, n = n, width = width))
   invisible(x)
