@@ -10,21 +10,21 @@
 \alias{anti_join.data.table}
 \title{Join data table tbls.}
 \usage{
-\method{inner_join}{data.table}(x, y, by = NULL, copy = FALSE,
-  suffix = c(".x", ".y"), ...)
+inner_join.data.table(x, y, by = NULL, copy = FALSE, suffix = c(".x",
+  ".y"), ...)
 
-\method{left_join}{data.table}(x, y, by = NULL, copy = FALSE,
-  suffix = c(".x", ".y"), ...)
+left_join.data.table(x, y, by = NULL, copy = FALSE, suffix = c(".x",
+  ".y"), ...)
 
-\method{right_join}{data.table}(x, y, by = NULL, copy = FALSE,
-  suffix = c(".x", ".y"), ...)
+right_join.data.table(x, y, by = NULL, copy = FALSE, suffix = c(".x",
+  ".y"), ...)
 
-\method{full_join}{data.table}(x, y, by = NULL, copy = FALSE,
-  suffix = c(".x", ".y"), ...)
+full_join.data.table(x, y, by = NULL, copy = FALSE, suffix = c(".x",
+  ".y"), ...)
 
-\method{semi_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
+semi_join.data.table(x, y, by = NULL, copy = FALSE, ...)
 
-\method{anti_join}{data.table}(x, y, by = NULL, copy = FALSE, ...)
+anti_join.data.table(x, y, by = NULL, copy = FALSE, ...)
 }
 \arguments{
 \item{x, y}{tbls to join}
@@ -45,7 +45,7 @@ same src as \code{x}.  This allows you to join tables across srcs, but
 it is a potentially expensive operation so you must opt into it.}
 
 \item{suffix}{If there are non-joined duplicate variables in \code{x} and
-\code{y}, these suffixes will be added to the output to diambiguate them.
+\code{y}, these suffixes will be added to the output to disambiguate them.
 Should be a character vector of length 2.}
 
 \item{...}{Included for compatibility with generic; otherwise ignored.}
