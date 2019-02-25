@@ -4,7 +4,6 @@
 dt_subset <- function(dt, i, j, env = parent.frame(), sd_cols = NULL) {
   env <- new.env(parent = env, size = 2L)
   env$`_dt` <- dt
-  env$`_vars` <- dplyr::group_vars(dt)
 
   args <- list(
     i = if (missing(i)) missing_arg() else dt_replace(i),
@@ -12,8 +11,10 @@ dt_subset <- function(dt, i, j, env = parent.frame(), sd_cols = NULL) {
   )
 
   if (missing(j)) {
+    # No need for `by` groups when subsetting rows
     call <- substitute(`_dt`[i], args)
   } else {
+    env$`_vars` <- dplyr::group_vars(dt)
     call <- substitute(`_dt`[i, j, by = `_vars`], args)
     call$.SDcols = sd_cols
   }
