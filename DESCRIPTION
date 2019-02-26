@@ -1,6 +1,6 @@
 Package: dtplyr
 Title: Data Table Back-End for 'dplyr'
-Version: 0.0.3
+Version: 0.0.3.9000
 Authors@R: c(
     person("Lionel", "Henry", , "lionel@rstudio.com", role = "cre"),
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
