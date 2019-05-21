@@ -7,7 +7,7 @@
 \title{dtplyr: Data Table Back-End for 'dplyr'}
 \description{
 This implements the data table back-end for 'dplyr' so that you
-can seamlessly use data table and 'dplyr' together.
+    can seamlessly use data table and 'dplyr' together.
 }
 \seealso{
 Useful links:

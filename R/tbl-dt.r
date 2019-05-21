@@ -53,14 +53,16 @@
 #' ungroup(by_day)
 #' }
 tbl_dt <- function(data, copy = TRUE) {
-  if (is.grouped_dt(data)) return(ungroup(data))
-
-  if (data.table::is.data.table(data)) {
-    if (copy)
-      data <- data.table::copy(data)
-  } else {
-    data <- data.table::as.data.table(data)
+  if (is.grouped_dt(data)) {
+    return(ungroup(data))
   }
+
+  if (!data.table::is.data.table(data)) {
+    data <- data.table::as.data.table(data)
+  } else if (copy) {
+    data <- data.table::copy(data)
+  }
+
   data.table::setattr(data, "class", c("tbl_dt", "tbl", "data.table", "data.frame"))
   data
 }
@@ -142,8 +144,12 @@ all.equal.tbl_dt <- function(target, current, ignore_col_order = TRUE,
 
 and_expr <- function(exprs) {
   stopifnot(is.list(exprs))
-  if (length(exprs) == 0) return(TRUE)
-  if (length(exprs) == 1) return(exprs[[1]])
+  if (length(exprs) == 0) {
+    return(TRUE)
+  }
+  if (length(exprs) == 1) {
+    return(exprs[[1]])
+  }
 
   left <- exprs[[1]]
   for (i in 2:length(exprs)) {
