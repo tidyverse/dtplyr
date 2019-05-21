@@ -127,7 +127,7 @@ test_that("named argument become list columns", {
 
 test_that("colums in output override columns in input", {
   skip_if_dtplyr()
-  
+
   out <- df %>% do(data.table(g = 1))
   expect_equal(names(out), "g")
   expect_equal(out$g, c(1, 1, 1))
@@ -193,7 +193,7 @@ test_that("ungrouped do evaluates args in correct environment", {
 # Zero row inputs --------------------------------------------------------------
 
 test_that("empty data frames give consistent outputs", {
-  dat <- data_frame(x = numeric(0), g = character(0))
+  dat <- tibble(x = numeric(0), g = character(0))
   grp <- dat %>% group_by(g)
   emt <- grp %>% filter(FALSE)
 

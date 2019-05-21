@@ -14,7 +14,7 @@ test_that("slicing data table preserves input class", {
 })
 
 context("slice (tests from dplyr)")
- 
+
 mtcars_dt <- as.data.table(mtcars)
 
 test_that("slice handles numeric input (#226)", {
@@ -80,11 +80,11 @@ test_that("slice works with grouped data", {
 })
 
 test_that("slice gives correct rows (#649)", {
-  a <- data_frame(value = paste0("row", 1:10))
+  a <- tibble(value = paste0("row", 1:10))
   expect_equal(slice(a, 1:3)$value, paste0("row", 1:3))
   expect_equal(slice(a, c(4, 6, 9))$value, paste0("row", c(4, 6, 9)))
 
-  a <- data_frame(
+  a <- tibble(
     value = paste0("row", 1:10),
     group = rep(1:2, each = 5)
   ) %>%
@@ -95,12 +95,12 @@ test_that("slice gives correct rows (#649)", {
 })
 
 test_that("slice handles NA (#1235)", {
-  df <- data_frame(x = 1:3)
+  df <- tibble(x = 1:3)
   expect_equal(nrow(slice(df, NA_integer_)), 0L)
   expect_equal(nrow(slice(df, c(1L, NA_integer_))), 1L)
   expect_equal(nrow(slice(df, c(-1L, NA_integer_))), 2L)
 
-  df <- data_frame(x = 1:4, g = rep(1:2, 2)) %>% group_by(g)
+  df <- tibble(x = 1:4, g = rep(1:2, 2)) %>% group_by(g)
   expect_equal(nrow(slice(df, NA)), 0L)
   expect_equal(nrow(slice(df, c(1, NA))), 2)
   expect_equal(nrow(slice(df, c(-1, NA))), 2)
@@ -132,14 +132,14 @@ test_that("slice strips grouped indices (#1405)", {
 
 test_that("slice works with zero-column data frames (#2490)", {
   expect_equal(
-    data_frame(a = 1:3) %>% select(-a) %>% slice(1) %>% nrow,
+    tibble(a = 1:3) %>% select(-a) %>% slice(1) %>% nrow,
     1L
   )
 })
 
 test_that("slice works under gctorture2", {
   skip_if_dtplyr()
-  
+
   x <- data.table(y = 1:10)
   with_gctorture2(999, x2 <- slice(x, 1:10))
   expect_identical(x, x2)
