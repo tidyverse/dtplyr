@@ -159,10 +159,10 @@ and_expr <- function(exprs) {
 
 # first version, adapted from lazyeval
 # common_env <- function (dots){
-#   if (length(dots) == 0) 
+#   if (length(dots) == 0)
 #       return(baseenv())
 #   env <- get_env(dots[[1]])
-#   if (length(dots) == 1) 
+#   if (length(dots) == 1)
 #       return(env)
 #   for (i in 2:length(dots)) {
 #       if (!identical(env, get_env(dots[[i]]))) {
@@ -201,10 +201,10 @@ common_env <- function (dots){
     }
   }
 
-  # from ?quosure: 
+  # from ?quosure:
   #   Literals are enquosed with the empty environment because they can
   #   be evaluated anywhere.
-  # But we don't have `[` in emptyenv, which we need in the data.table call. 
+  # But we don't have `[` in emptyenv, which we need in the data.table call.
   # Changing to baseenv which was also returned in lazyeval::all_dots()
   if (identical(env, emptyenv())){
     env <- baseenv()
@@ -245,7 +245,7 @@ summarise.data.table <- function(.data, ...) {
   dots <- quos(..., .named = TRUE)
 
   env <- common_env(dots)
-  exprs <- lapply(dots, get_expr)  
+  exprs <- lapply(dots, get_expr)
 
   j <- as.call(c(quote(list), exprs))
 
@@ -304,7 +304,7 @@ arrange.data.table <- function(.data, ...) {
 }
 
 arrange_impl <- function(.data, dots) {
-  exprs <- lapply(dots, get_expr) 
+  exprs <- lapply(dots, get_expr)
   env <- common_env(dots)
 
   i <- as.call(c(quote(order), exprs))
@@ -321,7 +321,7 @@ ensure_group_vars <- function(vars, data, notify = TRUE) {
 
   if (length(missing) > 0) {
     if (notify) {
-      inform(paste0("Adding missing grouping variables: ", 
+      inform(paste0("Adding missing grouping variables: ",
                     "`", missing, "`", collapse = ", ")
              )
     }
@@ -333,8 +333,9 @@ ensure_group_vars <- function(vars, data, notify = TRUE) {
 
 
 #' @importFrom dplyr select
+#' @importFrom tidyselect vars_select vars_rename
 select.grouped_dt <- function(.data, ...) {
-  vars <- dplyr::select_vars(names(.data), !!! quos(...))
+  vars <- tidyselect::vars_select(names(.data), !!! quos(...))
   vars <- ensure_group_vars(vars, .data)
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
@@ -345,7 +346,7 @@ select.grouped_dt <- function(.data, ...) {
 
 }
 select.data.table <- function(.data, ...) {
-  vars <- dplyr::select_vars(names(.data), !!! quos(...))
+  vars <- tidyselect::vars_select(names(.data), !!! quos(...))
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
 
@@ -361,7 +362,7 @@ select.tbl_dt <- function(.data, ...) {
 
 #' @importFrom dplyr rename
 rename.grouped_dt <- function(.data, ...) {
-  vars <- dplyr::rename_vars(names(.data), !!! quos(...))
+  vars <- tidyselect::vars_rename(names(.data), !!! quos(...))
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
 
@@ -370,7 +371,7 @@ rename.grouped_dt <- function(.data, ...) {
   grouped_dt(out, groups(.data), copy = FALSE)
 }
 rename.data.table <- function(.data, ...) {
-  vars <- dplyr::rename_vars(names(.data), !!! quos(...))
+  vars <- tidyselect::vars_rename(names(.data), !!! quos(...))
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
 
