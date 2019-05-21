@@ -8,6 +8,7 @@ test_that("filter succeeds even if column called V1 (#615)", {
 })
 
 test_that("filter_ works (#906)", {
+  skip_if_dtplyr()
   dt <- data.table::data.table(x = 1:10 ,V1 = 0)
   out <- dt %>% filter_(~x > 5)
   expect_equal(nrow(out), 5)
@@ -191,20 +192,6 @@ test_that("$ does not end call traversing. #502", {
 
 })
 
-test_that("GroupedDataFrame checks consistency of data (#606)", {
-  df1 <- tibble(
-   g = rep(1:2, each = 5),
-   x = 1:10
-  ) %>% group_by(g)
-  attr(df1, "group_sizes") <- c(2, 2)
-
-  expect_error(
-    df1 %>% filter(x == 1),
-    "`.data` is a corrupt grouped_df, contains 10 rows, and 4 rows in groups",
-    fixed = TRUE
-  )
-})
-
 test_that("filter uses the white list (#566)", {
   datesDF <- read.csv(stringsAsFactors = FALSE, text = "
 X
@@ -311,6 +298,7 @@ test_that("grouped filter handles indices (#880)", {
 })
 
 test_that("filter(FALSE) drops indices", {
+  skip_if_dtplyr()
   out <- mtcars %>%
     group_by(cyl) %>%
     filter(FALSE) %>%
@@ -351,6 +339,7 @@ test_that("hybrid lag and default value for string columns work (#1403)", {
 # .data and .env tests now in test-hybrid-traverse.R
 
 test_that("filter fails gracefully on raw columns (#1803)", {
+  skip_if_dtplyr()
   df <- tibble(a = 1:3, b = as.raw(1:3))
   expect_error(
     filter(df, a == 1),

@@ -208,6 +208,7 @@ test_that("there can be 0 groups (#486)", {
 })
 
 test_that("group_by works with zero-row data frames (#486)", {
+  skip_if_dtplyr()
   dfg <- group_by(data.table(a = numeric(0), b = numeric(0), g = character(0)), g)
   expect_equal(dim(dfg), c(0, 3))
   expect_groups(dfg, "g")
@@ -266,6 +267,7 @@ test_that("[ on grouped_df preserves grouping if subset includes grouping vars",
 
 
 test_that("[ on grouped_df drops grouping if subset doesn't include grouping vars", {
+  skip_if_dtplyr()
   by_cyl <- as.data.table(mtcars) %>% group_by(cyl)
   no_cyl <- by_cyl %>% `[`(c(1, 3))
 
@@ -274,6 +276,7 @@ test_that("[ on grouped_df drops grouping if subset doesn't include grouping var
 })
 
 test_that("group_by works after arrange (#959)", {
+  skip_if_dtplyr()
   df  <- data.table(Log = c(1, 2, 1, 2, 1, 2), Time = c(10, 1, 3, 0, 15, 11))
   res <- df %>%
     arrange(Time) %>%
@@ -325,7 +328,7 @@ test_that(paste0("group_by handles encodings for native strings (#1507)"), {
 
 test_that("group_by fails gracefully on raw columns (#1803)", {
   skip_if_dtplyr()
-  
+
   df <- data.table(a = 1:3, b = as.raw(1:3))
   expect_error(
     group_by(df, a),
@@ -340,6 +343,7 @@ test_that("group_by fails gracefully on raw columns (#1803)", {
 })
 
 test_that("rowwise fails gracefully on raw columns (#1803)", {
+  skip_if_dtplyr()
   df <- data.table(a = 1:3, b = as.raw(1:3))
   expect_error(
     rowwise(df),

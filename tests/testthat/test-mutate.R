@@ -426,10 +426,11 @@ test_that("mutate works on zero-row grouped data frame (#596)", {
 })
 
 test_that("Non-ascii column names in version 0.3 are not duplicated (#636)", {
+  skip_if_dtplyr()
   df <- data.table(a = "1", b = "2")
   names(df) <- c("a", enc2native("\u4e2d"))
 
-  res <- df %>% mutate_all(funs(as.numeric)) %>% names
+  res <- df %>% mutate_all(as.numeric) %>% names()
   expect_equal(res, names(df))
 })
 
@@ -760,7 +761,7 @@ test_that("ntile falls back to R (#1750)", {
 
 test_that("mutate() names pronouns correctly (#2686)", {
   skip_if_dtplyr()
-  
+
   expect_named(mutate(data.table(x = 1), .data$x), "x")
   expect_named(mutate(data.table(x = 1), .data[["x"]]), "x")
 })

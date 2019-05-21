@@ -249,8 +249,8 @@ test_that("summarise fails on missing variables when grouping (#2223)", {
 
 test_that("n() does not accept arguments", {
   expect_error(
-    summarise(group_by(mtcars, cyl), n(hp)),
-    "`n()` does not take arguments",
+    summarise(group_by(as.data.table(mtcars), cyl), n(hp)),
+    "unused argument",
     fixed = TRUE
   )
 })
@@ -753,6 +753,7 @@ test_that("min and max handle empty sets in summarise (#1481)", {
 })
 
 test_that("lead and lag behave correctly in summarise (#1434)", {
+  skip_if_dtplyr()
   res <- mtcars %>%
     group_by(cyl) %>%
     summarise(
@@ -1043,7 +1044,7 @@ test_that("can refer to symbols if group size is one overall", {
 
 test_that("summarise() supports unquoted values", {
   skip_if_dtplyr()
-  
+
   df <- tbl_dt(g = c(1, 1, 2, 2, 2), x = 1:5)
   expect_identical(summarise(df, out = !! 1), tbl_dt(out = 1))
   expect_identical(summarise(df, out = !! quote(identity(1))), tbl_dt(out = 1))

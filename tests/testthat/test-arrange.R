@@ -111,7 +111,8 @@ test_that("grouped arrange ignores group (#491 -> #1206)", {
 })
 
 test_that("arrange keeps the grouping structure (#605)", {
-  dat <- tibble(g = c(2, 2, 1, 1), x = c(1, 3, 2, 4))
+  skip_if_dtplyr()
+  dat <- data.table(g = c(2, 2, 1, 1), x = c(1, 3, 2, 4))
   res <- dat %>% group_by(g) %>% arrange()
   expect_is(res, "grouped_df")
   expect_equal(res$x, dat$x)
@@ -201,7 +202,8 @@ test_that("arrange fails gracefully on list columns (#1489)", {
 })
 
 test_that("arrange fails gracefully on raw columns (#1803)", {
-  df <- tibble(a = 1:3, b = as.raw(1:3))
+  skip_if_dtplyr()
+  df <- data.table(a = 1:3, b = as.raw(1:3))
   expect_error(
     arrange(df, a),
     "Column `b` is of unsupported type raw",
