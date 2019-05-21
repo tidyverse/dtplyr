@@ -62,7 +62,7 @@ n_groups.grouped_dt <- function(x) {
   nrow(dt_subset(x, , quote(list(1))))
 }
 
-#' @importFrom dplyr group_by
+#' @importFrom dplyr group_by group_by_prepare group_vars
 group_by.data.table <- function(.data, ..., add = FALSE) {
   groups <- group_by_prepare(.data, ..., add = add)
   grouped_dt(groups$data, groups$groups)

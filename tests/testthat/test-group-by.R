@@ -124,8 +124,8 @@ test_that("group_by uses shallow copy", {
 test_that("FactorVisitor handles NA. #183", {
   skip_if_dtplyr()
 
-  g <- group_by(as.data.table(MASS::survey), M.I)
-  expect_equal(g$M.I, MASS::survey$M.I)
+  # g <- group_by(as.data.table(MASS::survey), M.I)
+  # expect_equal(g$M.I, MASS::survey$M.I)
 })
 
 test_that("group_by orders by groups. #242", {
