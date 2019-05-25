@@ -1,13 +1,9 @@
 
 # Set operations ---------------------------------------------------------------
 
-distinct.data.table <- function(.data, ..., .keep_all = FALSE) {
-  distinct_(.data, .dots = lazyeval::lazy_dots(...), .keep_all = .keep_all)
-}
-
-#' @importFrom dplyr distinct_
-distinct_.data.table <- function(.data, ..., .dots, .keep_all = FALSE) {
-  dist <- distinct_vars(.data, ..., .dots = .dots)
+#' @importFrom dplyr distinct
+distinct.data.table <- function(.data, ..., .dots, .keep_all = FALSE) {
+  dist <- distinct_vars(.data, quos(..., .named = TRUE), .keep_all = .keep_all)
 
   if (length(dist$vars) == 0) {
     res <- unique(dist$data, by = NULL)
@@ -21,21 +17,38 @@ distinct_.data.table <- function(.data, ..., .dots, .keep_all = FALSE) {
 
   res
 }
-distinct_.tbl_dt <- function(.data, ..., .dots) {
+distinct.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
 
-distinct_vars <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
+# unexported from dplyr, removed purrr dependency
+distinct_vars <- function(.data, vars, group_vars = character(), .keep_all = FALSE) {
+  stopifnot(is_quosures(vars), is.character(group_vars))
+
+  # If no input, keep all variables
+  if (length(vars) == 0) {
+    return(list(
+      data = .data,
+      vars = names(.data),
+      keep = names(.data)
+    ))
+  }
 
   # If any calls, use mutate to add new columns, then distinct on those
-  needs_mutate <- vapply(dots, function(x) !is.name(x$expr), logical(1))
+  needs_mutate <- vapply(vars, quo_is_lang, TRUE)
   if (any(needs_mutate)) {
-    .data <- mutate_(.data, .dots = dots[needs_mutate])
+    .data <- mutate(.data, !!! vars[needs_mutate])
   }
 
   # Once we've done the mutate, we no longer need lazy objects, and
   # can instead just use their names
-  list(data = .data, vars = names(dots))
-}
+  out_vars <- intersect(names(.data), c(names(vars), group_vars))
 
+  if (.keep_all) {
+    keep <- names(.data)
+  } else {
+    keep <- unique(out_vars)
+  }
+
+  list(data = .data, vars = out_vars, keep = keep)
+}

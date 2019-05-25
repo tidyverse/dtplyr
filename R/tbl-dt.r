@@ -161,23 +161,77 @@ and_expr <- function(exprs) {
 # The S3 method is registered manually in .onLoad() to avoid an R CMD
 # check warning
 
-filter.data.table <- function(.data, ...) {
-  filter_(.data, .dots = lazyeval::lazy_dots(...))
+# Is there something similar in rlang?
+
+# first version, adapted from lazyeval
+# common_env <- function (dots){
+#   if (length(dots) == 0)
+#       return(baseenv())
+#   env <- get_env(dots[[1]])
+#   if (length(dots) == 1)
+#       return(env)
+#   for (i in 2:length(dots)) {
+#       if (!identical(env, get_env(dots[[i]]))) {
+#           return(baseenv())
+#       }
+#   }
+#   env
+# }
+
+# but this still does not take care of:
+
+# a) Literals. We want to fall back to baseenv() if we dont have a unique env
+# that is not emptyenv().
+
+# b) Nested environments. If a function is called within a function, we want to
+# evaluate the data.table call in the same environments. Some quosures may have
+# an environment that is a parent of this environment, so we need to figure
+# out the 'deepest' environment. We also need to check that all other
+# environments are parents of this environment.
+
+# third version
+common_env <- function (dots){
+  stopifnot(inherits(dots, "quosures"))
+  if (length(dots) == 0) return(baseenv())
+  if (length(dots) == 1){
+    env <- get_env(dots[[1]])
+  } else {
+    # evaluate common env
+    envs <- lapply(dots, get_env)
+
+    # use deepest env as a candidate for common env
+    env <- envs[[which.max(vapply(envs, env_depth, 0L))]]
+    # fail if some environments are not in search path
+    if (!all(envs %in% c(env_parents(env), env))){
+      stop("Conflicting environment tree. Does this ever arise?")
+    }
+  }
+
+  # from ?quosure:
+  #   Literals are enquosed with the empty environment because they can
+  #   be evaluated anywhere.
+  # But we don't have `[` in emptyenv, which we need in the data.table call.
+  # Changing to baseenv which was also returned in lazyeval::all_dots()
+  if (identical(env, emptyenv())){
+    env <- baseenv()
+  }
+  env
 }
 
-#' @importFrom dplyr filter_
-filter_.grouped_dt <- function(.data, ..., .dots) {
+#' @importFrom dplyr filter
+filter.grouped_dt <- function(.data, ...) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
-filter_.tbl_dt <- function(.data, ..., .dots) {
+filter.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-filter_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
-  env <- lazyeval::common_env(dots)
+filter.data.table <- function(.data, ...) {
+  dots <- quos(...)
+  env <- common_env(dots)
 
   # http://stackoverflow.com/questions/16573995/subset-by-group-with-data-table
-  expr <- lapply(dots, `[[`, "expr")
+  # expr <- lapply(dots, `[[`, "expr")
+  expr <- lapply(dots, get_expr)
   j <- substitute(list(`_row` = .I[expr]), list(expr = and_expr(expr)))
   indices <- dt_subset(.data, , j, env)$`_row`
 
@@ -186,48 +240,48 @@ filter_.data.table <- function(.data, ..., .dots) {
 
 # Summarise --------------------------------------------------------------------
 
-summarise.data.table <- function(.data, ...) {
-  summarise_(.data, .dots = lazyeval::lazy_dots(...))
-}
-
-#' @importFrom dplyr summarise_
-summarise_.grouped_dt <- function(.data, ..., .dots) {
+#' @importFrom dplyr summarise
+summarise.grouped_dt <- function(.data, ...) {
   grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
 }
-summarise_.tbl_dt <- function(.data, ..., .dots) {
+summarise.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-summarise_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
+summarise.data.table <- function(.data, ...) {
+  dots <- quos(..., .named = TRUE)
 
-  j <- lazyeval::make_call(quote(list), dots)
-  dt_subset(.data, , j$expr, env = j$env)
+  env <- common_env(dots)
+  exprs <- lapply(dots, get_expr)
+
+  j <- as.call(c(quote(list), exprs))
+
+  dt_subset(.data, , j, env = env)
 }
 
 # Mutate -----------------------------------------------------------------------
 
-mutate.data.table <- function(.data, ...) {
-  mutate_(.data, .dots = lazyeval::lazy_dots(...))
+mutate.grouped_dt <- function(.data, ...) {
+  grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
-
-#' @importFrom dplyr mutate_
-mutate_.grouped_dt <- function(.data, ..., .dots) {
-  grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
-}
-mutate_.tbl_dt <- function(.data, ..., .dots) {
+mutate.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-mutate_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
-  names <- lapply(names(dots), as.name)
+
+#' @importFrom dplyr mutate
+mutate.data.table <- function(.data, ...) {
+  dots <- quos(..., .named = TRUE)
+  names <- names(dots)
 
   # Never want to modify in place
   .data <- data.table::copy(.data)
 
   for(i in seq_along(dots)) {
     # For each new variable, generate a call of the form df[, new := expr]
-    j <- substitute(lhs := rhs, list(lhs = names[[i]], rhs = dots[[i]]$expr))
-    .data <- dt_subset(.data, , j, dots[[i]]$env)
+    j <- substitute(lhs := rhs, list(lhs = names[[i]], rhs = get_expr(dots[[i]])))
+
+    env <- common_env(dots[i])
+
+    .data <- dt_subset(.data, , j,  env)
   }
 
   # Need to use this syntax to make the output visible (#11).
@@ -236,101 +290,124 @@ mutate_.data.table <- function(.data, ..., .dots) {
 
 # Arrange ----------------------------------------------------------------------
 
-arrange.data.table <- function(.data, ...) {
-  arrange_(.data, .dots = lazyeval::lazy_dots(...))
-}
+#' @importFrom dplyr arrange
+arrange.grouped_dt <- function(.data, ..., .by_group = FALSE) {
+  if (.by_group) {
+    dots <- quos(!!!groups(.data), ...)
+  } else {
+    dots <- quos(...)
+  }
 
-#' @importFrom dplyr arrange_
-arrange_.grouped_dt <- function(.data, ..., .dots) {
-  grouped_dt(NextMethod(), groups(.data), copy = FALSE)
+  arrange_impl(.data, dots)
 }
-arrange_.tbl_dt <- function(.data, ..., .dots) {
+arrange.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-arrange_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
+arrange.data.table <- function(.data, ...) {
+  dots <- quos(...)
 
-  groups <- lazyeval::as.lazy_dots(groups(.data),
-    env = lazyeval::common_env(dots))
-  i <- lazyeval::make_call(quote(order), c(groups, dots))
+  arrange_impl(.data, dots)
+}
 
-  dt_subset(.data, i$expr, , env = i$env)
+arrange_impl <- function(.data, dots) {
+  exprs <- lapply(dots, get_expr)
+  env <- common_env(dots)
+
+  i <- as.call(c(quote(order), exprs))
+
+  dt_subset(.data, i, , env = env)
 }
 
 # Select -----------------------------------------------------------------------
 
-select.data.table <- function(.data, ...) {
-  select_(.data, .dots = lazyeval::lazy_dots(...))
+# not exported from dplyr
+ensure_group_vars <- function(vars, data, notify = TRUE) {
+  group_names <- group_vars(data)
+  missing <- setdiff(group_names, vars)
+
+  if (length(missing) > 0) {
+    if (notify) {
+      inform(paste0("Adding missing grouping variables: ",
+                    "`", missing, "`", collapse = ", ")
+             )
+    }
+    vars <- c(set_names(missing, missing), vars)
+  }
+
+  vars
 }
 
-#' @importFrom dplyr select_
-select_.grouped_dt <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
-  vars <- dplyr::select_vars_(names(.data), dots,
-    include = as.character(groups(.data)))
+
+#' @importFrom dplyr select
+#' @importFrom tidyselect vars_select vars_rename
+select.grouped_dt <- function(.data, ...) {
+  vars <- tidyselect::vars_select(names(.data), !!! quos(...))
+  vars <- ensure_group_vars(vars, .data)
+
   out <- .data[, vars, drop = FALSE, with = FALSE]
-  data.table::setnames(out, names(vars))
+
+  if (nrow(out) > 0) data.table::setnames(out, names(vars))
 
   grouped_dt(out, groups(.data), copy = FALSE)
+
 }
-select_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
-  vars <- dplyr::select_vars_(names(.data), dots)
+select.data.table <- function(.data, ...) {
+  vars <- tidyselect::vars_select(names(.data), !!! quos(...))
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
-  data.table::setnames(out, names(vars))
+
+  if (nrow(out) > 0) data.table::setnames(out, names(vars))
+
   out
 }
-select_.tbl_dt <- function(.data, ..., .dots) {
+select.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
 
 # Rename -----------------------------------------------------------------------
 
-rename.data.table <- function(.data, ...) {
-  rename_(.data, .dots = lazyeval::lazy_dots(...))
-}
-
-#' @importFrom dplyr rename_
-rename_.grouped_dt <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
-  vars <- dplyr::rename_vars_(names(.data), dots)
+#' @importFrom dplyr rename
+rename.grouped_dt <- function(.data, ...) {
+  vars <- tidyselect::vars_rename(names(.data), !!! quos(...))
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
-  data.table::setnames(out, names(vars))
+
+  if (nrow(out) > 0) data.table::setnames(out, names(vars))
 
   grouped_dt(out, groups(.data), copy = FALSE)
 }
-rename_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ...)
-  vars <- dplyr::rename_vars_(names(.data), dots)
+rename.data.table <- function(.data, ...) {
+  vars <- tidyselect::vars_rename(names(.data), !!! quos(...))
 
   out <- .data[, vars, drop = FALSE, with = FALSE]
-  data.table::setnames(out, names(vars))
+
+  if (nrow(out) > 0) data.table::setnames(out, names(vars))
+
   out
 }
-rename_.tbl_dt <- function(.data, ..., .dots) {
+rename.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
 
 
-# Slice -------------------------------------------------------------------
+# Slice ------------------------------------------------------------------------
 
-slice.data.table <- function(.data, ...) {
-  slice_(.data, .dots = lazyeval::lazy_dots(...))
-}
-
-#' @importFrom dplyr slice_
-slice_.grouped_dt <- function(.data, ..., .dots) {
+#' @importFrom dplyr slice
+slice.grouped_dt <- function(.data, ...) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
-slice_.tbl_dt <- function(.data, ..., .dots) {
+slice.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
-slice_.data.table <- function(.data, ..., .dots) {
-  dots <- lazyeval::all_dots(.dots, ..., all_named = TRUE)
-  env <- lazyeval::common_env(dots)
+slice.data.table <- function(.data, ...) {
 
-  j <- substitute(.SD[rows], list(rows = dots[[1]]$expr))
+  dots <- quos(...)
+  env <- common_env(dots)
+
+  exprs <- lapply(dots, get_expr)
+
+  i <- as.call(c(quote(c), exprs))
+
+  j <- substitute(.SD[rows], list(rows = i))
   dt_subset(.data, , j, env)
 }

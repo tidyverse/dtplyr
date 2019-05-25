@@ -1,5 +1,3 @@
-# j <- lazyeval::interp(~ .I[rows], rows = args[[1]]$expr)
-# dt_subset(dt, , j, env)
 
 dt_subset <- function(dt, i, j, env = parent.frame(), sd_cols = NULL) {
   env <- new.env(parent = env, size = 2L)
@@ -18,9 +16,8 @@ dt_subset <- function(dt, i, j, env = parent.frame(), sd_cols = NULL) {
     call <- substitute(`_dt`[i, j, by = `_vars`], args)
     call$.SDcols = sd_cols
   }
-  # print(call)
 
-  eval(call, env)
+  eval_bare(call, env)
 }
 
 dt_replace <- function(x) {

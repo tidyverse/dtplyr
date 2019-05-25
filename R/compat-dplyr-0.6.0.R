@@ -13,8 +13,8 @@
     register_s3_method("dplyr", "slice", "data.table")
   }
 
-  register_s3_method("dplyr", "do_", "data.table")
-  register_s3_method("dplyr", "do_", "tbl_dt")
+  register_s3_method("dplyr", "do", "data.table")
+  register_s3_method("dplyr", "do", "tbl_dt")
 
   register_s3_method("base", "print", "grouped_dt")
   register_s3_method("dplyr", "groups", "grouped_dt")
@@ -22,9 +22,9 @@
   register_s3_method("dplyr", "n_groups", "grouped_dt")
   register_s3_method("dplyr", "ungroup", "grouped_dt")
 
-  register_s3_method("dplyr", "group_by_", "data.table")
-  register_s3_method("dplyr", "do_", "grouped_dt")
-  register_s3_method("dplyr", "distinct_", "grouped_dt")
+  register_s3_method("dplyr", "group_by", "data.table")
+  register_s3_method("dplyr", "do", "grouped_dt")
+  register_s3_method("dplyr", "distinct", "grouped_dt")
 
   register_s3_method("dplyr", "inner_join", "data.table")
   register_s3_method("dplyr", "left_join", "data.table")
@@ -38,36 +38,36 @@
   register_s3_method("dplyr", "sample_frac", "tbl_dt")
   register_s3_method("dplyr", "sample_frac", "grouped_dt")
 
-  register_s3_method("dplyr", "distinct_", "data.table")
-  register_s3_method("dplyr", "distinct_", "tbl_dt")
+  register_s3_method("dplyr", "distinct", "data.table")
+  register_s3_method("dplyr", "distinct", "tbl_dt")
 
-  register_s3_method("dplyr", "filter_", "grouped_dt")
-  register_s3_method("dplyr", "filter_", "tbl_dt")
-  register_s3_method("dplyr", "filter_", "data.table")
+  register_s3_method("dplyr", "filter", "grouped_dt")
+  register_s3_method("dplyr", "filter", "tbl_dt")
+  register_s3_method("dplyr", "filter", "data.table")
 
-  register_s3_method("dplyr", "summarise_", "grouped_dt")
-  register_s3_method("dplyr", "summarise_", "tbl_dt")
-  register_s3_method("dplyr", "summarise_", "data.table")
+  register_s3_method("dplyr", "summarise", "grouped_dt")
+  register_s3_method("dplyr", "summarise", "tbl_dt")
+  register_s3_method("dplyr", "summarise", "data.table")
 
-  register_s3_method("dplyr", "mutate_", "grouped_dt")
-  register_s3_method("dplyr", "mutate_", "tbl_dt")
-  register_s3_method("dplyr", "mutate_", "data.table")
+  register_s3_method("dplyr", "mutate", "grouped_dt")
+  register_s3_method("dplyr", "mutate", "tbl_dt")
+  register_s3_method("dplyr", "mutate", "data.table")
 
-  register_s3_method("dplyr", "arrange_", "grouped_dt")
-  register_s3_method("dplyr", "arrange_", "tbl_dt")
-  register_s3_method("dplyr", "arrange_", "data.table")
+  register_s3_method("dplyr", "arrange", "grouped_dt")
+  register_s3_method("dplyr", "arrange", "tbl_dt")
+  register_s3_method("dplyr", "arrange", "data.table")
 
-  register_s3_method("dplyr", "select_", "grouped_dt")
-  register_s3_method("dplyr", "select_", "tbl_dt")
-  register_s3_method("dplyr", "select_", "data.table")
+  register_s3_method("dplyr", "select", "grouped_dt")
+  register_s3_method("dplyr", "select", "tbl_dt")
+  register_s3_method("dplyr", "select", "data.table")
 
-  register_s3_method("dplyr", "rename_", "grouped_dt")
-  register_s3_method("dplyr", "rename_", "tbl_dt")
-  register_s3_method("dplyr", "rename_", "data.table")
+  register_s3_method("dplyr", "rename", "grouped_dt")
+  register_s3_method("dplyr", "rename", "tbl_dt")
+  register_s3_method("dplyr", "rename", "data.table")
 
-  register_s3_method("dplyr", "slice_", "grouped_dt")
-  register_s3_method("dplyr", "slice_", "tbl_dt")
-  register_s3_method("dplyr", "slice_", "data.table")
+  register_s3_method("dplyr", "slice", "grouped_dt")
+  register_s3_method("dplyr", "slice", "tbl_dt")
+  register_s3_method("dplyr", "slice", "data.table")
 
   invisible()
 }

@@ -1,5 +1,12 @@
-
 # dtplyr 0.0.3.9000
+
+* Convert from lazyeval to tidy eval (@christophsax).
+
+* `ungroup()` now copies it's input (@christophsax, #54).
+
+* Scoped verbs now work (@christophsax, #43, #51).
+
+* `mutate()` preserves grouping (@christophsax, #17).
 
 # dtplyr 0.0.3
 

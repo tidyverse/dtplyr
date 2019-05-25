@@ -64,34 +64,35 @@ n_groups.grouped_dt <- function(x) {
   nrow(dt_subset(x, , quote(list(1))))
 }
 
-#' @importFrom dplyr group_by_
+#' @importFrom dplyr group_by group_by_prepare group_vars
 group_by.data.table <- function(.data, ..., add = FALSE) {
-  group_by_(.data, .dots = lazyeval::lazy_dots(...), add = add)
-}
-group_by_.data.table <- function(.data, ..., .dots, add = FALSE) {
-  groups <- dplyr::group_by_prepare(.data, ..., .dots = .dots, add = add)
+  groups <- group_by_prepare(.data, ..., add = add)
   grouped_dt(groups$data, groups$groups)
+  # groups <- dplyr::group_by_prepare(.data, ..., .dots = .dots, add = add)
+  # grouped_dt(groups$data, groups$groups)
 }
 
 ungroup.grouped_dt <- function(x, ...) {
-  data.table::setattr(x, "vars", NULL)
-  data.table::setattr(x, "class", setdiff(class(x), "grouped_dt"))
-  x
+  z <- data.table::copy(x)
+  data.table::setattr(z, "vars", NULL)
+  data.table::setattr(z, "class", setdiff(class(z), "grouped_dt"))
+  z
 }
 
 
 # Do ---------------------------------------------------------------------------
 
-do_.grouped_dt <- function(.data, ..., .dots) {
-  args <- lazyeval::all_dots(.dots, ...)
-  env <- lazyeval::common_env(args)
-  named <- named_args(args)
+do.grouped_dt <- function(.data, ...) {
+
+  dots <- quos(...)
+  env <- common_env(dots)
+  named <- named_args(dots)
 
   if (!named) {
-    j <- args[[1]]$expr
+    j <- get_expr(dots[[1]])
   } else {
-    args <- lapply(args, function(x) call("list", x$expr))
-    j <- as.call(c(quote(list), args))
+    exprs <- lapply(dots, function(x) call("list", get_expr(x)))
+    j <- as.call(c(quote(list), exprs))
   }
 
   out <- dt_subset(.data, , j, env = env, sd_cols = names(.data))
@@ -125,9 +126,9 @@ named_args <- function(args) {
 
 # Set operations ---------------------------------------------------------------
 
-distinct_.grouped_dt <- function(.data, ..., .dots) {
-  groups <- lazyeval::as.lazy_dots(groups(.data))
-  dist <- distinct_vars(.data, ..., .dots = c(.dots, groups))
+distinct.grouped_dt <- function(.data, ...) {
+
+  dist <- distinct_vars(.data, quos(!!!groups(.data), ..., .named = TRUE))
 
   grouped_dt(unique(dist$data, by = dist$vars), groups(.data), copy = FALSE)
 }
