@@ -66,6 +66,7 @@ tbl_dt <- function(data, copy = TRUE) {
   data.table::setattr(data, "class", c("tbl_dt", "tbl", "data.table", "data.frame"))
   data
 }
+setOldClass(c("tbl_dt", "tbl", "data.table", "data.frame"))
 
 #' @export
 #' @importFrom dplyr as.tbl

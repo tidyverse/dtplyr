@@ -13,6 +13,7 @@ Imports:
     dplyr (>= 0.8.1),
     ellipsis,
     tidyselect,
+    methods,
     data.table (>= 1.9.6),
     rlang
 Suggests:

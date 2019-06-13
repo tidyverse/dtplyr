@@ -38,6 +38,8 @@ grouped_dt <- function(data, vars, copy = TRUE) {
   data.table::setattr(data, "class", c("grouped_dt", "tbl_dt", "tbl", class(data)))
   data
 }
+setOldClass(c("grouped_dt", "tbl_dt", "tbl", "data.table", "data.frame"))
+
 
 #' @export
 groups.grouped_dt <- function(x) {
