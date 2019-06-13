@@ -218,6 +218,7 @@ common_env <- function (dots){
   env
 }
 
+# registered onLoad
 #' @importFrom dplyr filter
 filter.grouped_dt <- function(.data, ...) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
@@ -241,12 +242,15 @@ filter.data.table <- function(.data, ...) {
 # Summarise --------------------------------------------------------------------
 
 #' @importFrom dplyr summarise
+#' @export
 summarise.grouped_dt <- function(.data, ...) {
   grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
 }
+#' @export
 summarise.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
+#' @export
 summarise.data.table <- function(.data, ...) {
   dots <- quos(..., .named = TRUE)
 
@@ -260,14 +264,17 @@ summarise.data.table <- function(.data, ...) {
 
 # Mutate -----------------------------------------------------------------------
 
+#' @export
 mutate.grouped_dt <- function(.data, ...) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
+#' @export
 mutate.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
 
 #' @importFrom dplyr mutate
+#' @export
 mutate.data.table <- function(.data, ...) {
   dots <- quos(..., .named = TRUE)
   names <- names(dots)
@@ -291,6 +298,7 @@ mutate.data.table <- function(.data, ...) {
 # Arrange ----------------------------------------------------------------------
 
 #' @importFrom dplyr arrange
+#' @export
 arrange.grouped_dt <- function(.data, ..., .by_group = FALSE) {
   if (.by_group) {
     dots <- quos(!!!groups(.data), ...)
@@ -300,9 +308,11 @@ arrange.grouped_dt <- function(.data, ..., .by_group = FALSE) {
 
   arrange_impl(.data, dots)
 }
+#' @export
 arrange.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
+#' @export
 arrange.data.table <- function(.data, ...) {
   dots <- quos(...)
 
@@ -340,6 +350,7 @@ ensure_group_vars <- function(vars, data, notify = TRUE) {
 
 #' @importFrom dplyr select
 #' @importFrom tidyselect vars_select vars_rename
+#' @export
 select.grouped_dt <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! quos(...))
   vars <- ensure_group_vars(vars, .data)
@@ -351,6 +362,7 @@ select.grouped_dt <- function(.data, ...) {
   grouped_dt(out, groups(.data), copy = FALSE)
 
 }
+#' @export
 select.data.table <- function(.data, ...) {
   vars <- tidyselect::vars_select(names(.data), !!! quos(...))
 
@@ -360,6 +372,7 @@ select.data.table <- function(.data, ...) {
 
   out
 }
+#' @export
 select.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
@@ -367,6 +380,7 @@ select.tbl_dt <- function(.data, ...) {
 # Rename -----------------------------------------------------------------------
 
 #' @importFrom dplyr rename
+#' @export
 rename.grouped_dt <- function(.data, ...) {
   vars <- tidyselect::vars_rename(names(.data), !!! quos(...))
 
@@ -376,6 +390,7 @@ rename.grouped_dt <- function(.data, ...) {
 
   grouped_dt(out, groups(.data), copy = FALSE)
 }
+#' @export
 rename.data.table <- function(.data, ...) {
   vars <- tidyselect::vars_rename(names(.data), !!! quos(...))
 
@@ -385,6 +400,7 @@ rename.data.table <- function(.data, ...) {
 
   out
 }
+#' @export
 rename.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
@@ -393,12 +409,15 @@ rename.tbl_dt <- function(.data, ...) {
 # Slice ------------------------------------------------------------------------
 
 #' @importFrom dplyr slice
+#' @export
 slice.grouped_dt <- function(.data, ...) {
   grouped_dt(NextMethod(), groups(.data), copy = FALSE)
 }
+#' @export
 slice.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }
+#' @export
 slice.data.table <- function(.data, ...) {
 
   dots <- quos(...)

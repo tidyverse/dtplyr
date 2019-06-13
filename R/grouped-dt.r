@@ -39,6 +39,7 @@ grouped_dt <- function(data, vars, copy = TRUE) {
   data
 }
 
+#' @export
 groups.grouped_dt <- function(x) {
   attr(x, "vars")
 }
@@ -48,6 +49,7 @@ groups.grouped_dt <- function(x) {
 #' @export
 is.grouped_dt <- function(x) inherits(x, "grouped_dt")
 
+#' @export
 print.grouped_dt <- function(x, ..., n = NULL, width = NULL) {
   cat("Source: local data table ", dplyr::dim_desc(x), "\n", sep = "")
   cat("Groups: ", commas(dplyr::group_vars(x)), "\n", sep = "")
@@ -56,14 +58,19 @@ print.grouped_dt <- function(x, ..., n = NULL, width = NULL) {
   invisible(x)
 }
 
+#' @importFrom dplyr group_size
+#' @export
 group_size.grouped_dt <- function(x) {
   dplyr::summarise_(x, n = ~n())$n
 }
 
+#' @importFrom dplyr n_groups
+#' @export
 n_groups.grouped_dt <- function(x) {
   nrow(dt_subset(x, , quote(list(1))))
 }
 
+#' @export
 #' @importFrom dplyr group_by group_by_prepare group_vars
 group_by.data.table <- function(.data, ..., add = FALSE) {
   groups <- group_by_prepare(.data, ..., add = add)
@@ -72,6 +79,7 @@ group_by.data.table <- function(.data, ..., add = FALSE) {
   # grouped_dt(groups$data, groups$groups)
 }
 
+#' @export
 ungroup.grouped_dt <- function(x, ...) {
   z <- data.table::copy(x)
   data.table::setattr(z, "vars", NULL)
@@ -82,6 +90,7 @@ ungroup.grouped_dt <- function(x, ...) {
 
 # Do ---------------------------------------------------------------------------
 
+#' @export
 do.grouped_dt <- function(.data, ...) {
 
   dots <- quos(...)
@@ -126,6 +135,7 @@ named_args <- function(args) {
 
 # Set operations ---------------------------------------------------------------
 
+#' @export
 distinct.grouped_dt <- function(.data, ...) {
 
   dist <- distinct_vars(.data, quos(!!!groups(.data), ..., .named = TRUE))

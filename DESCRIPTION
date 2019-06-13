@@ -10,7 +10,7 @@ Description: This implements the data table back-end for 'dplyr' so that you
     can seamlessly use data table and 'dplyr' together.
 License: GPL (>= 2)
 Imports:
-    dplyr (>= 0.5.0),
+    dplyr (>= 0.8.1),
     ellipsis,
     tidyselect,
     data.table (>= 1.9.6),

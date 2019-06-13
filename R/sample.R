@@ -1,8 +1,11 @@
+#' @export
 sample_n.tbl_dt <- function(tbl, size, replace = FALSE, weight = NULL,
                             .env = parent.frame()) {
   tbl_dt(NextMethod())
 }
 
+#' @export
+#' @importFrom dplyr sample_n
 sample_n.grouped_dt <- function(tbl, size, replace = FALSE, weight = NULL,
                                 .env = parent.frame()) {
 
@@ -15,11 +18,14 @@ sample_n.grouped_dt <- function(tbl, size, replace = FALSE, weight = NULL,
   grouped_dt(tbl[idx], groups(tbl))
 }
 
+#' @importFrom dplyr sample_frac
+#' @export
 sample_frac.tbl_dt <- function(tbl, size = 1, replace = FALSE, weight = NULL,
                                .env = parent.frame()) {
   tbl_dt(NextMethod())
 }
 
+#' @export
 sample_frac.grouped_dt <- function(tbl, size = 1, replace = FALSE, weight = NULL,
                                    .env = parent.frame()) {
 

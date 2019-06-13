@@ -2,6 +2,7 @@
 # Set operations ---------------------------------------------------------------
 
 #' @importFrom dplyr distinct
+#' @export
 distinct.data.table <- function(.data, ..., .dots, .keep_all = FALSE) {
   dist <- distinct_vars(.data, quos(..., .named = TRUE), .keep_all = .keep_all)
 
@@ -17,6 +18,7 @@ distinct.data.table <- function(.data, ..., .dots, .keep_all = FALSE) {
 
   res
 }
+#' @export
 distinct.tbl_dt <- function(.data, ...) {
   tbl_dt(NextMethod(), copy = FALSE)
 }

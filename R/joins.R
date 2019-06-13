@@ -50,24 +50,28 @@ join_using_merge <- function(x, y, ..., by, copy, suffix,
 }
 
 #' @rdname join.tbl_dt
+#' @export
 inner_join.data.table <- function(x, y, ..., by = NULL, copy = FALSE,
                                   suffix = c(".x", ".y")){
   join_using_merge(x, y, by = by, copy = copy, suffix = suffix, ...)
 }
 
 #' @rdname join.tbl_dt
+#' @export
 left_join.data.table <- function(x, y, ..., by = NULL, copy = FALSE,
                                  suffix = c(".x", ".y")){
   join_using_merge(x, y, by = by, copy = copy, suffix = suffix, all.x = TRUE, ...)
 }
 
 #' @rdname join.tbl_dt
+#' @export
 right_join.data.table <- function(x, y, ..., by = NULL, copy = FALSE,
                                   suffix = c(".x", ".y")){
   join_using_merge(x, y, by = by, copy = copy, suffix = suffix, all.y = TRUE, ...)
 }
 
 #' @rdname join.tbl_dt
+#' @export
 full_join.data.table <- function(x, y, ..., by = NULL, copy = FALSE,
                                  suffix = c(".x", ".y")){
   join_using_merge(x, y,
@@ -81,6 +85,7 @@ full_join.data.table <- function(x, y, ..., by = NULL, copy = FALSE,
 }
 
 #' @rdname join.tbl_dt
+#' @export
 semi_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
   ellipsis::check_dots_empty()
 
@@ -94,6 +99,7 @@ semi_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
 }
 
 #' @rdname join.tbl_dt
+#' @export
 anti_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
   ellipsis::check_dots_empty()
 
