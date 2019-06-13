@@ -10,17 +10,17 @@
 \alias{anti_join.data.table}
 \title{Join data table tbls.}
 \usage{
-inner_join.data.table(x, y, by = NULL, copy = FALSE, suffix = c(".x",
-  ".y"), ...)
+inner_join.data.table(x, y, ..., by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"))
 
-left_join.data.table(x, y, by = NULL, copy = FALSE, suffix = c(".x",
-  ".y"), ...)
+left_join.data.table(x, y, ..., by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"))
 
-right_join.data.table(x, y, by = NULL, copy = FALSE, suffix = c(".x",
-  ".y"), ...)
+right_join.data.table(x, y, ..., by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"))
 
-full_join.data.table(x, y, by = NULL, copy = FALSE, suffix = c(".x",
-  ".y"), ...)
+full_join.data.table(x, y, ..., by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"))
 
 semi_join.data.table(x, y, by = NULL, copy = FALSE, ...)
 
@@ -28,6 +28,11 @@ anti_join.data.table(x, y, by = NULL, copy = FALSE, ...)
 }
 \arguments{
 \item{x, y}{tbls to join}
+
+\item{...}{For `inner_join()`, `left_join()`, `right_join()` and
+`full_join()` passed on to data.table [merge()] method. For
+`semi_join()` and `anti_join()` included only for compatibility with
+generic and must be empty.}
 
 \item{by}{a character vector of variables to join by.  If \code{NULL}, the
 default, \code{*_join()} will do a natural join, using all variables with
@@ -47,8 +52,6 @@ it is a potentially expensive operation so you must opt into it.}
 \item{suffix}{If there are non-joined duplicate variables in \code{x} and
 \code{y}, these suffixes will be added to the output to disambiguate them.
 Should be a character vector of length 2.}
-
-\item{...}{Included for compatibility with generic; otherwise ignored.}
 }
 \description{
 See \code{\link{join}} for a description of the general purpose of the

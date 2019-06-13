@@ -1,5 +1,7 @@
 # dtplyr 0.0.3.9000
 
+* Joins now pass `...` on to data table's merge method (#41).
+
 * Convert from lazyeval to tidy eval (@christophsax).
 
 * `ungroup()` now copies it's input (@christophsax, #54).
@@ -19,7 +21,6 @@
 - Joins use extended `merge.data.table()` and the `on` argument, introduced in
   data.table 1.9.6. Avoids copy and allows joins by different keys (#20, #21,
   @christophsax).
-
 
 # dtplyr 0.0.2
 

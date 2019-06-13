@@ -5,7 +5,10 @@
 #'
 #' @inheritParams dplyr::join
 #' @param x,y tbls to join
-#' @param ... Included for compatibility with generic; otherwise ignored.
+#' @param ... For `inner_join()`, `left_join()`, `right_join()` and
+#'   `full_join()` passed on to data.table [merge()] method. For
+#'   `semi_join()` and `anti_join()` included only for compatibility with
+#'   generic and must be empty.
 #' @examples
 #' library(dplyr, warn.conflicts = FALSE)
 #'
@@ -31,51 +34,56 @@
 #' @name join.tbl_dt
 NULL
 
-join_using_merge <- function(x, y, by, copy, suffix, 
+join_using_merge <- function(x, y, ..., by, copy, suffix,
                              all.x = FALSE, all.y = FALSE){
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
   out <- merge(
-    x, y, 
-    by.x = by$x, by.y = by$y, 
+    x, y,
+    by.x = by$x, by.y = by$y,
     all.x = all.x, all.y = all.y,
-    suffixes = suffix, 
-    allow.cartesian = TRUE
+    suffixes = suffix,
+    allow.cartesian = TRUE,
+    ...
   )
-  grouped_dt(out, groups(x)) 
+  grouped_dt(out, groups(x))
 }
 
 #' @rdname join.tbl_dt
-inner_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
-                                  suffix = c(".x", ".y"), ...){
-  join_using_merge(x, y, by = by, copy = copy, suffix = suffix)
+inner_join.data.table <- function(x, y, ..., by = NULL, copy = FALSE,
+                                  suffix = c(".x", ".y")){
+  join_using_merge(x, y, by = by, copy = copy, suffix = suffix, ...)
 }
 
 #' @rdname join.tbl_dt
-left_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
-                                 suffix = c(".x", ".y"), ...){
-  join_using_merge(x, y, by = by, copy = copy, suffix = suffix, all.x = TRUE)
+left_join.data.table <- function(x, y, ..., by = NULL, copy = FALSE,
+                                 suffix = c(".x", ".y")){
+  join_using_merge(x, y, by = by, copy = copy, suffix = suffix, all.x = TRUE, ...)
 }
 
 #' @rdname join.tbl_dt
-right_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
-                                  suffix = c(".x", ".y"), ...){
-  join_using_merge(x, y, by = by, copy = copy, suffix = suffix, all.y = TRUE)
+right_join.data.table <- function(x, y, ..., by = NULL, copy = FALSE,
+                                  suffix = c(".x", ".y")){
+  join_using_merge(x, y, by = by, copy = copy, suffix = suffix, all.y = TRUE, ...)
 }
 
 #' @rdname join.tbl_dt
-full_join.data.table <- function(x, y, by = NULL, copy = FALSE, 
-                                 suffix = c(".x", ".y"), ...){
-  join_using_merge(x, y, 
-    by = by, 
-    copy = copy, 
-    suffix = suffix, 
-    all.x = TRUE, all.y = TRUE
+full_join.data.table <- function(x, y, ..., by = NULL, copy = FALSE,
+                                 suffix = c(".x", ".y")){
+  join_using_merge(x, y,
+    by = by,
+    copy = copy,
+    suffix = suffix,
+    all.x = TRUE,
+    all.y = TRUE,
+    ...
   )
 }
 
 #' @rdname join.tbl_dt
 semi_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
+  ellipsis::check_dots_empty()
+
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
   on <- set_names(by$y, by$x)
@@ -87,6 +95,8 @@ semi_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
 
 #' @rdname join.tbl_dt
 anti_join.data.table <- function(x, y, by = NULL, copy = FALSE, ...) {
+  ellipsis::check_dots_empty()
+
   by <- dplyr::common_by(by, x, y)
   y <- dplyr::auto_copy(x, y, copy = copy)
   on <- set_names(by$y, by$x)

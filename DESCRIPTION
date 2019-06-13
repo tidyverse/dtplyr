@@ -11,6 +11,7 @@ Description: This implements the data table back-end for 'dplyr' so that you
 License: GPL (>= 2)
 Imports:
     dplyr (>= 0.5.0),
+    ellipsis,
     tidyselect,
     data.table (>= 1.9.6),
     rlang
