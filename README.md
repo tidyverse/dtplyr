@@ -39,3 +39,14 @@ dtplyr will always be a bit slower than data.table, because it creates copies of
   `X[Y, sum(foo*bar)]` selects the relevant variables _before_ joining. 
   The dplyr equivalent, `X %>% left_join(Y) %>% summarise(sum(foo * bar))`,
   carries along all variables in the join.
+
+## Using dtplyr
+
+To use dtplyr, you'll need to load both dplyr and dtplyr.
+
+```R
+library(dplyr)
+library(dtplyr)
+```
+
+If you don't load dtplyr, dplyr doesn't know about the data table backend so will treat data.tables like data.frames. 
