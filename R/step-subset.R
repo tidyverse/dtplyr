@@ -19,12 +19,12 @@ new_step_subset <- function(parent,
   )
 }
 
-dt_call.dtplyr_step_subset <- function(x) {
+dt_call.dtplyr_step_subset <- function(x, needs_copy = dt_needs_copy(x)) {
   i <- if (is.null(x$i)) missing_arg() else x$i
   j <- if (is.null(x$j)) missing_arg() else x$j
 
   if (length(x$groups) == 0) {
-    call2("[", dt_call(x$parent), maybe_missing(i), maybe_missing(j))
+    call2("[", dt_call(x$parent, needs_copy), maybe_missing(i), maybe_missing(j))
   } else {
     by <- call2(".", !!!syms(x$groups))
 
@@ -32,8 +32,12 @@ dt_call.dtplyr_step_subset <- function(x) {
       j <- call2("[", expr(.SD), i, maybe_missing(j))
     }
 
-    call2("[", dt_call(x$parent), , j, by = by)
+    call2("[", dt_call(x$parent, needs_copy), , j, by = by)
   }
+}
+
+dt_needs_copy.dtplyr_step_subset <- function(x) {
+  dt_needs_copy(x$parent)
 }
 
 # dplyr methods -----------------------------------------------------------

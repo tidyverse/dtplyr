@@ -7,7 +7,13 @@ new_step_group <- function(parent, vars = parent$vars, groups = parent$groups) {
   )
 }
 
-dt_call.dtplyr_step_group <- function(x) dt_call(x$parent)
+dt_call.dtplyr_step_group <- function(x, needs_copy = dt_needs_copy(x)) {
+  dt_call(x$parent, needs_copy)
+}
+
+dt_needs_copy.dtplyr_step_group <- function(x) {
+  dt_needs_copy(x$parent)
+}
 
 # dplyr methods -----------------------------------------------------------
 
