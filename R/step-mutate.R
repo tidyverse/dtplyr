@@ -32,5 +32,81 @@ dt_call.dtplyr_step_mutate <- function(x) {
 mutate.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
 
-  new_step_mutate(.data, dots)
+  nest_vars(.data, dots, .data$vars, transmute = FALSE)
 }
+
+transmute.dtplyr_step <- function(.data, ...) {
+  dots <- capture_dots(...)
+
+  nest_vars(.data, dots, .data$vars, transmute = TRUE)
+}
+
+
+# For each expression, check if it uses any newly created variables.
+# If so, nest the mutate()
+nest_vars <- function(.data, dots, all_vars, transmute = FALSE) {
+  new_vars <- character()
+  all_new_vars <- unique(names(dots))
+
+  init <- 0L
+  for (i in seq_along(dots)) {
+    cur_var <- names(dots)[[i]]
+    used_vars <- all_names(get_expr(dots[[i]]))
+
+    if (any(used_vars %in% new_vars)) {
+      .data <- new_step_mutate(.data, dots[new_vars])
+      all_vars <- c(all_vars, setdiff(new_vars, all_vars))
+      new_vars <- cur_var
+      init <- i
+    } else {
+      new_vars <- c(new_vars, cur_var)
+    }
+  }
+
+  if (init != 0L) {
+    dots <- dots[-seq2(1L, init - 1)]
+  }
+
+  if (transmute) {
+    # Final step needs to include all variable names
+    vars <- syms(set_names(all_new_vars))
+    vars[names(dots)] <- dots
+    names(vars)[!names(vars) %in% names(dots)] <- ""
+
+    new_step_subset(.data, j = call2(".", !!!vars))
+  } else {
+    new_step_mutate(.data, dots)
+  }
+}
+
+# Helpers -----------------------------------------------------------------
+
+all_names <- function(x) {
+  if (is.name(x)) return(as.character(x))
+  if (is_quosure(x)) return(all_names(quo_get_expr(x)))
+  if (!is.call(x)) return(NULL)
+
+  unique(unlist(lapply(x[-1], all_names), use.names = FALSE))
+}
+
+# Combine a selection (passed through from subquery)
+# with new actions
+carry_over <- function(sel = character(), act = list()) {
+  if (is.null(names(sel))) {
+    names(sel) <- sel
+  }
+  sel <- syms(sel)
+
+  # Keep last of duplicated acts
+  act <- act[!duplicated(names(act), fromLast = TRUE)]
+
+  # Preserve order of sel
+  both <- intersect(names(sel), names(act))
+  sel[both] <- act[both]
+
+  # Adding new variables at end
+  new <- setdiff(names(act), names(sel))
+
+  c(sel, act[new])
+}
+

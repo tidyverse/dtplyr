@@ -65,6 +65,8 @@ dt_call <- function(x) {
 #' mtcars2 %>% select(x = mpg, y = cyl)
 #' mtcars2 %>% filter(x == 1) %>% select(mpg)
 #' mtcars2 %>% select(mpg) %>% filter(x == 1)
+#' mtcars2 %>% mutate(x2 = x * 2, x4 = x2 * 2)
+#' mtcars2 %>% transmute(x2 = x * 2, x4 = x2 * 2)
 #'
 #' by_cyl <- mtcars2 %>% group_by(cyl)
 #' by_cyl %>% summarise(x = mean(x))
