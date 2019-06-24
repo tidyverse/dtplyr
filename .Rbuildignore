@@ -5,3 +5,5 @@
 ^cran-comments\.md$
 ^revdep$
 ^codecov\.yml$
+^vignettes/benchmark\.R$
+^vignettes/translation\.R$

@@ -52,3 +52,5 @@ drop_last <- function(x) {
   x[-length(x)]
 }
 
+
+cat_line <- function(...) cat(paste(..., "\n", collapse = "", sep = ""))

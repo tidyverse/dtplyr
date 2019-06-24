@@ -6,8 +6,8 @@
 \alias{dtplyr-package}
 \title{dtplyr: Data Table Back-End for 'dplyr'}
 \description{
-This implements the data table back-end for 'dplyr' so that you
-    can seamlessly use data table and 'dplyr' together.
+This implements the data table back-end for 'dplyr'
+    so that you can seamlessly use data table and 'dplyr' together.
 }
 \seealso{
 Useful links:
@@ -18,11 +18,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Lionel Henry \email{lionel@rstudio.com}
+\strong{Maintainer}: Hadley Wickham \email{hadley@rstudio.com}
 
 Authors:
 \itemize{
-  \item Hadley Wickham \email{hadley@rstudio.com}
+  \item Lionel Henry \email{lionel@rstudio.com}
 }
 
 Other contributors:
