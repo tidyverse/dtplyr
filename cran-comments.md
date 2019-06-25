@@ -3,10 +3,10 @@ Compatibility with dplyr 0.8.0.
 
 ## Test environments
 
-* local OS X install, R release
-* ubuntu 12.04 (on travis-ci), R oldrel, release and devel
-* win-builder (rlease and devel)
-
+* local: darwin15.6.0-3.5.2
+* travis: 3.1, 3.2, 3.3, oldrel, release, devel
+* r-hub: windows-x86_64-devel, ubuntu-gcc-release, fedora-clang-devel
+* win-builder: windows-x86_64-devel
 
 ## R CMD check results
 

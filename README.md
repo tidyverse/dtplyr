@@ -1,8 +1,10 @@
 # dtplyr
 
-[![Travis-CI Build Status](https://travis-ci.org/hadley/dtplyr.svg?branch=master)](https://travis-ci.org/hadley/dtplyr)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/dtplyr)](https://cran.r-project.org/package=dtplyr)
-[![Coverage Status](https://img.shields.io/codecov/c/github/hadley/dtplyr/master.svg)](https://codecov.io/github/hadley/dtplyr?branch=master)
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/dtplyr)](https://cran.r-project.org/package=dtplyr)
+[![Travis build status](https://travis-ci.org/hadley/dtplyr.svg?branch=master)](https://travis-ci.org/hadley/dtplyr)
+[![Codecov test coverage](https://codecov.io/gh/hadley/dtplyr/branch/master/graph/badge.svg)](https://codecov.io/gh/hadley/dtplyr?branch=master)
+<!-- badges: end -->
 
 dtplyr is the data.table backend for dplyr. It provides S3 methods for data.table objects so that dplyr works the way you expect. 
 
