@@ -6,6 +6,8 @@
 [![Codecov test coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyverse/dtplyr?branch=master)
 <!-- badges: end -->
 
+## Overview
+
 dtplyr is the data.table backend for dplyr. It provides S3 methods for data.table objects so that dplyr works the way you expect. 
 
 dtplyr was extracted out of dplyr so it could evolve independently (i.e. more rapidly!) than dplyr. It also makes dplyr a little simpler, and it's easier to keep track of issues by backend.
@@ -42,13 +44,12 @@ dtplyr will always be a bit slower than data.table, because it creates copies of
   The dplyr equivalent, `X %>% left_join(Y) %>% summarise(sum(foo * bar))`,
   carries along all variables in the join.
 
-## Using dtplyr
+## Usage
 
-To use dtplyr, you'll need to load both dplyr and dtplyr.
+To use dtplyr, I recommend loading dplyr, dtplyr, and data.table:
 
 ```R
 library(dplyr)
 library(dtplyr)
+library(data.table)
 ```
-
-If you don't load dtplyr, dplyr doesn't know about the data table backend so will treat data.tables like data.frames. 

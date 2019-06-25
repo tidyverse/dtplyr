@@ -1,5 +1,7 @@
 url: https://dtplyr.tidyverse.org
 
 template:
-  params:
-    ganalytics: UA-115082821-1
+  package: tidytemplate
+
+home:
+  strip_header: true
