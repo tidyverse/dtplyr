@@ -30,10 +30,12 @@ dt_call.dtplyr_step_call <- function(x, needs_copy = dt_needs_copy(x)) {
 
 # dplyr verbs -------------------------------------------------------------
 
+#' @export
 head.dtplyr_step <- function(x, n = 6L, ...) {
   new_step_call(x, "head", args = list(n = n))
 }
 
+#' @export
 tail.dtplyr_step <- function(x, n = 6L, ...) {
   new_step_call(x, "tail", args = list(n = n))
 }

@@ -1,5 +1,6 @@
 # nocov start
 .onLoad <- function(...) {
+  register_s3_method("dplyr", "filter", "dtplyr_step")
   register_s3_method("dplyr", "filter", "tbl_dt")
   register_s3_method("dplyr", "filter", "grouped_dt")
   register_s3_method("dplyr", "filter", "data.table")

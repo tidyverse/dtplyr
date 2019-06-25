@@ -21,7 +21,8 @@ new_step <- function(parent,
   )
 }
 
-print.dtplyr_step <- function(x) {
+#' @export
+print.dtplyr_step <- function(x, ...) {
   cat_line("<dtplyr_step>")
   cat_line("Vars:   ", paste0(x$vars, collapse = ", "))
   cat_line("Groups: ", paste0(x$groups, collapse = ", "))
@@ -30,6 +31,8 @@ print.dtplyr_step <- function(x) {
   invisible(x)
 }
 
+#' @importFrom dplyr show_query
+#' @export
 show_query.dtplyr_step <- function(x) {
   dt_call(x)
 }
@@ -58,25 +61,6 @@ dt_source <- function(x) {
 
 dt_call <- function(x, needs_copy = dt_needs_copy(x)) {
   UseMethod("dt_call")
-}
-
-#' @examples
-#' mtcars2 <- mtcars %>% lazy_dt()
-#' mtcars2
-#' mtcars2 %>% select(mpg:cyl)
-#' mtcars2 %>% select(x = mpg, y = cyl)
-#' mtcars2 %>% filter(x == 1) %>% select(mpg)
-#' mtcars2 %>% select(mpg) %>% filter(x == 1)
-#' mtcars2 %>% mutate(x2 = x * 2, x4 = x2 * 2)
-#' mtcars2 %>% transmute(x2 = x * 2, x4 = x2 * 2)
-#' mtcars2 %>% filter(x == 1) %>% mutate(x2 = x * 2)
-#'
-#' by_cyl <- mtcars2 %>% group_by(cyl)
-#' by_cyl %>% summarise(x = mean(x))
-#' by_cyl %>% group_by(mpg) %>% mutate(x = mean(x))
-#' by_cyl %>% filter(mpg < mean(mpg)) %>% summarise(hp = mean(hp))
-lazy_dt <- function(x, name = NULL) {
-  new_step_first(as.data.table(x), name = name)
 }
 
 capture_dots <- function(..., vars, .named = TRUE) {

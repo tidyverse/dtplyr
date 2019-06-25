@@ -77,6 +77,7 @@ dt_needs_copy.dtplyr_step_subset <- function(x) {
 
 # dplyr methods -----------------------------------------------------------
 
+#' @export
 select.dtplyr_step <- function(.data, ...) {
   vars <- tidyselect::vars_select(.data$vars, ...)
 
@@ -91,6 +92,7 @@ select.dtplyr_step <- function(.data, ...) {
   )
 }
 
+#' @export
 rename.dtplyr_step <- function(.data, ...) {
   vars <- tidyselect::vars_rename(.data$vars, ...)
 
@@ -105,6 +107,7 @@ rename.dtplyr_step <- function(.data, ...) {
   )
 }
 
+#' @export
 summarise.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
 
@@ -116,6 +119,7 @@ summarise.dtplyr_step <- function(.data, ...) {
   new_step_group(out, groups = tail(.data$groups, -1))
 }
 
+# exported onLoad
 filter.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
 
@@ -130,6 +134,7 @@ filter.dtplyr_step <- function(.data, ...) {
   new_step_subset(.data, i = i)
 }
 
+#' @export
 arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   dots <- capture_dots(...)
   if (.by_group) {

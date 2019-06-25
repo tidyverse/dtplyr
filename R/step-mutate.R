@@ -37,12 +37,15 @@ dt_needs_copy.dtplyr_step_mutate <- function(x) {
 
 # dplyr methods -----------------------------------------------------------
 
+#' @export
 mutate.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
 
   nest_vars(.data, dots, .data$vars, transmute = FALSE)
 }
 
+#' @importFrom dplyr transmute
+#' @export
 transmute.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
 

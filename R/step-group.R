@@ -17,6 +17,7 @@ dt_needs_copy.dtplyr_step_group <- function(x) {
 
 # dplyr methods -----------------------------------------------------------
 
+#' @export
 group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
   prep <- dplyr::group_by_prepare(.data, ..., add = add)
 
@@ -26,6 +27,7 @@ group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
   )
 }
 
+#' @export
 ungroup.dtplyr_step <- function(.data, ...) {
   new_step_group(.data, groups = character())
 }
