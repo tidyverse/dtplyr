@@ -12,8 +12,8 @@ This implements the data table back-end for 'dplyr'
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/hadley/dtplyr}
-  \item Report bugs at \url{https://github.com/hadley/dtplyr/issues}
+  \item \url{https://github.com/tidyverse/dtplyr}
+  \item Report bugs at \url{https://github.com/tidyverse/dtplyr/issues}
 }
 
 }

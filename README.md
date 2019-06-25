@@ -2,8 +2,8 @@
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/dtplyr)](https://cran.r-project.org/package=dtplyr)
-[![Travis build status](https://travis-ci.org/hadley/dtplyr.svg?branch=master)](https://travis-ci.org/hadley/dtplyr)
-[![Codecov test coverage](https://codecov.io/gh/hadley/dtplyr/branch/master/graph/badge.svg)](https://codecov.io/gh/hadley/dtplyr?branch=master)
+[![Travis build status](https://travis-ci.org/tidyverse/dtplyr.svg?branch=master)](https://travis-ci.org/tidyverse/dtplyr)
+[![Codecov test coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyverse/dtplyr?branch=master)
 <!-- badges: end -->
 
 dtplyr is the data.table backend for dplyr. It provides S3 methods for data.table objects so that dplyr works the way you expect. 
@@ -22,7 +22,7 @@ Or try the development version from GitHub with:
 
 ```R
 # install.packages("devtools")
-devtools::install_github("hadley/dtplyr")
+devtools::install_github("tidyverse/dtplyr")
 ```
 
 ## Why is dtplyr slower than data.table?
