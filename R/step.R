@@ -75,8 +75,8 @@ dt_call <- function(x, needs_copy = dt_needs_copy(x)) {
 #' by_cyl %>% summarise(x = mean(x))
 #' by_cyl %>% group_by(mpg) %>% mutate(x = mean(x))
 #' by_cyl %>% filter(mpg < mean(mpg)) %>% summarise(hp = mean(hp))
-lazy_dt <- function(x) {
-  new_step_first(as.data.table(x))
+lazy_dt <- function(x, name = NULL) {
+  new_step_first(as.data.table(x), name = name)
 }
 
 capture_dots <- function(..., vars, .named = TRUE) {

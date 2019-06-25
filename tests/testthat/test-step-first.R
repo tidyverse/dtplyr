@@ -6,6 +6,7 @@ test_that("constructor has sensible defaults", {
   expect_equal(step$parent, dt)
   expect_equal(step$vars, c("x", "y"))
   expect_equal(step$groups, character())
+  expect_match(as.character(step$name), "_DT")
 })
 
 test_that("doesn't need copy", {
@@ -14,9 +15,9 @@ test_that("doesn't need copy", {
 })
 
 test_that("dt_call() copies if requested", {
-  dt <- lazy_dt(mtcars)
+  dt <- lazy_dt(mtcars, name = "DT")
 
-  expect_equal(dt_call(dt, FALSE), quote(`_DT`))
-  expect_equal(dt_call(dt, TRUE), quote(copy(`_DT`)))
+  expect_equal(dt_call(dt, FALSE), quote(DT))
+  expect_equal(dt_call(dt, TRUE), quote(copy(DT)))
 })
 
