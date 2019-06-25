@@ -143,4 +143,6 @@ dt %>% select(-a) %>% filter(a == 1) %>% show_query()
 
 ```
 
-Over time, as I learn more about data.table, I hope to expand the set of these simplification.
+Note that `filter()` and `mutate()` can't be combined because `dt[a == 1, .(b2 := b * 2)]` modifies the selected rows in place.
+
+Over time, as I learn more about data.table, I hope to expand the set of these simplifications.
