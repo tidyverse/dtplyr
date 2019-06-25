@@ -49,6 +49,11 @@ test_that("simple calls generate expected translations", {
   )
 
   expect_equal(
+    dt %>% arrange(x) %>% show_query(),
+    expr(DT[order(x), ])
+  )
+
+  expect_equal(
     dt %>% filter() %>% show_query(),
     expr(DT[, ])
   )
@@ -62,7 +67,17 @@ test_that("simple calls generate expected translations", {
     dt %>% filter(x > 1, y > 2) %>% show_query(),
     expr(DT[.(x > 1, y > 2), ])
   )
+})
 
+test_that("arrange doesn't use, but still preserves, grouping", {
+  dt <- group_by(lazy_dt(data.table(x = 1, y = 2), "DT"), x)
+
+  step <- arrange(dt, y)
+  expect_equal(step$groups, "x")
+  expect_equal(dt_call(step), expr(DT[order(y), ]))
+
+  step2 <- arrange(dt, y, .by_group = TRUE)
+  expect_equal(dt_call(step2), expr(DT[order(x, y), ]))
 })
 
 test_that("select and summarise changes grouping", {

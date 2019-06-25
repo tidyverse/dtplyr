@@ -130,6 +130,18 @@ filter.dtplyr_step <- function(.data, ...) {
   new_step_subset(.data, i = i)
 }
 
+arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
+  dots <- capture_dots(...)
+  if (.by_group) {
+    dots <- c(syms(.data$groups), dots)
+  }
+
+  # Order without grouping then restore
+  step <- new_step_subset(.data, i = call2("order", !!!dots), groups = character())
+  new_step_group(step, groups = .data$groups)
+}
+
+
 # helpers ------------------------------------------------------------------
 
 rename_groups <- function(groups, vars) {
