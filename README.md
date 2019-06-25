@@ -8,9 +8,17 @@
 
 ## Overview
 
-dtplyr is the [data.table](https://github.com/Rdatatable/data.table/wiki) backend for dplyr. It provides S3 methods for data.table objects so that dplyr works the way you expect. 
+dtplyr provides a dplyr backend for [data.table](https://github.com/Rdatatable/data.table/wiki). It has two modes of operation:
 
-dtplyr was extracted out of dplyr so it could evolve independently (i.e. more rapidly!) than dplyr. It also makes dplyr a little simpler, and it's easier to keep track of issues by backend.
+*   Eager [WIP]. When you use a dplyr verb directly on a data.table object, it 
+    eagerly converts the dplyr code to data.table code, runs it, and returns a 
+    new data.table. This is not very efficient because it can't take advantage 
+    of many of data.table's best features.
+    
+*   Lazy. When you create a `lazy_dt()`, no computation is performed until you 
+    explicitly request it with `as.data.table()`, `as.data.frame()` or 
+    `as_tibble()`. This allows dtplyr to inspect the  full sequence of 
+    operations to figure out the best translation.
 
 ## Installation
 

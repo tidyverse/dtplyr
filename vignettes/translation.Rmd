@@ -24,18 +24,6 @@ library(data.table)
 library(dplyr)
 ```
 
-Note that there are two ways to use dtplyr:
-
-*   Eagerly [WIP]. When you use a dplyr verb directly on a data.table object, it 
-    eagerly converts the dplyr code to data.table code, runs it, and returns a 
-    new data.table. This is not very efficient because it can't take advantage 
-    of many of data.table's best features.
-    
-*   Lazily. In this form, trigged by using `lazy_dt()`, no computation is 
-    performed until you explicitly request it with `as.data.table()`, 
-    `as.data.frame()` or `as_tibble()`. This allows dtplyr to inspect the 
-    full sequence of operations to figure out the best translation.
-
 # The basics
 
 To get started, I'll create a simple lazy frame. The actual data doesn't matter here since we're just looking at the translation:
