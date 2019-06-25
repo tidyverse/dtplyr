@@ -7,3 +7,6 @@
 ^codecov\.yml$
 ^vignettes/benchmark\.R$
 ^vignettes/translation\.R$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
