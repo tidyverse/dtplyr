@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://dtplyr.tidyverse.org/index.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/reference/dtplyr-package.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/reference/grouped_dt.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/reference/join.tbl_dt.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/reference/src_local.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/reference/tbl_dt.html</loc>
+  </url>
+</urlset>
