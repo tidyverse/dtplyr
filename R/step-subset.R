@@ -123,14 +123,7 @@ summarise.dtplyr_step <- function(.data, ...) {
 filter.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
 
-  if (length(dots) == 0) {
-    i <- NULL
-  } else if (length(dots) == 1) {
-    i <- dots[[1]]
-  } else {
-    i <- call2(".", !!!dots)
-  }
-
+  i <- Reduce(function(x, y) call2("&", x, y), dots)
   new_step_subset(.data, i = i)
 }
 

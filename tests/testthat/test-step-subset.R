@@ -65,7 +65,7 @@ test_that("simple calls generate expected translations", {
 
   expect_equal(
     dt %>% filter(x > 1, y > 2) %>% show_query(),
-    expr(DT[.(x > 1, y > 2), ])
+    expr(DT[x > 1 & y > 2, ])
   )
 })
 
