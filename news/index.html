@@ -85,6 +85,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/translation.html">Translation</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -92,7 +104,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hadley/dtplyr">
+  <a href="https://github.com/tidyverse/dtplyr">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -110,7 +122,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/hadley/dtplyr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      <small>Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="dtplyr-0-0-3-9000" class="section level1">
@@ -118,11 +130,11 @@
 <a href="#dtplyr-0-0-3-9000" class="anchor"></a>dtplyr 0.0.3.9000<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>Joins now pass <code>...</code> on to data table’s merge method (<a href='https://github.com/hadley/dtplyr/issues/41'>#41</a>).</p></li>
+<li><p>Joins now pass <code>...</code> on to data table’s merge method (<a href='https://github.com/tidyverse/dtplyr/issues/41'>#41</a>).</p></li>
 <li><p>Convert from lazyeval to tidy eval (<a href='https://github.com/christophsax'>@christophsax</a>).</p></li>
-<li><p><code>ungroup()</code> now copies it’s input (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/hadley/dtplyr/issues/54'>#54</a>).</p></li>
-<li><p>Scoped verbs now work (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/hadley/dtplyr/issues/43'>#43</a>, <a href='https://github.com/hadley/dtplyr/issues/51'>#51</a>).</p></li>
-<li><p><code>mutate()</code> preserves grouping (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/hadley/dtplyr/issues/17'>#17</a>).</p></li>
+<li><p><code>ungroup()</code> now copies it’s input (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/tidyverse/dtplyr/issues/54'>#54</a>).</p></li>
+<li><p>Scoped verbs now work (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/tidyverse/dtplyr/issues/43'>#43</a>, <a href='https://github.com/tidyverse/dtplyr/issues/51'>#51</a>).</p></li>
+<li><p><code>mutate()</code> preserves grouping (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/tidyverse/dtplyr/issues/17'>#17</a>).</p></li>
 </ul>
 </div>
     <div id="dtplyr-0-0-3" class="section level1">
@@ -131,8 +143,8 @@
 </h1>
 <ul>
 <li><p>Maintenance release for CRAN checks.</p></li>
-<li><p><code>inner_join()</code>, <code>left_join()</code>, <code>right_join()</code>, and <code>full_join()</code>: new <code>suffix</code> argument which allows you to control what suffix duplicated variable names receive, as introduced in dplyr 0.5 (<a href='https://github.com/hadley/dtplyr/issues/40'>#40</a>, <a href='https://github.com/christophsax'>@christophsax</a>).</p></li>
-<li><p>Joins use extended <code>merge.data.table()</code> and the <code>on</code> argument, introduced in data.table 1.9.6. Avoids copy and allows joins by different keys (<a href='https://github.com/hadley/dtplyr/issues/20'>#20</a>, <a href='https://github.com/hadley/dtplyr/issues/21'>#21</a>, <a href='https://github.com/christophsax'>@christophsax</a>).</p></li>
+<li><p><code>inner_join()</code>, <code>left_join()</code>, <code>right_join()</code>, and <code>full_join()</code>: new <code>suffix</code> argument which allows you to control what suffix duplicated variable names receive, as introduced in dplyr 0.5 (<a href='https://github.com/tidyverse/dtplyr/issues/40'>#40</a>, <a href='https://github.com/christophsax'>@christophsax</a>).</p></li>
+<li><p>Joins use extended <code>merge.data.table()</code> and the <code>on</code> argument, introduced in data.table 1.9.6. Avoids copy and allows joins by different keys (<a href='https://github.com/tidyverse/dtplyr/issues/20'>#20</a>, <a href='https://github.com/tidyverse/dtplyr/issues/21'>#21</a>, <a href='https://github.com/christophsax'>@christophsax</a>).</p></li>
 </ul>
 </div>
     <div id="dtplyr-0-0-2" class="section level1">
@@ -148,11 +160,11 @@
 <a href="#dtplyr-0-0-1" class="anchor"></a>dtplyr 0.0.1<small> 2016-06-27 </small>
 </h1>
 <ul>
-<li><p><code>distinct()</code> gains <code>.keep_all</code> argument (<a href='https://github.com/hadley/dtplyr/issues/30'>#30</a>, <a href='https://github.com/hadley/dtplyr/issues/31'>#31</a>).</p></li>
-<li><p>Slightly improve test coverage (<a href='https://github.com/hadley/dtplyr/issues/6'>#6</a>).</p></li>
-<li><p>Install <code>devtools</code> from GitHub on Travis (<a href='https://github.com/hadley/dtplyr/issues/32'>#32</a>).</p></li>
-<li><p>Joins return <code>data.table</code>. Right and full join are now implemented (<a href='https://github.com/hadley/dtplyr/issues/16'>#16</a>, <a href='https://github.com/hadley/dtplyr/issues/19'>#19</a>).</p></li>
-<li><p>Remove warnings from tests (<a href='https://github.com/hadley/dtplyr/issues/4'>#4</a>).</p></li>
+<li><p><code>distinct()</code> gains <code>.keep_all</code> argument (<a href='https://github.com/tidyverse/dtplyr/issues/30'>#30</a>, <a href='https://github.com/tidyverse/dtplyr/issues/31'>#31</a>).</p></li>
+<li><p>Slightly improve test coverage (<a href='https://github.com/tidyverse/dtplyr/issues/6'>#6</a>).</p></li>
+<li><p>Install <code>devtools</code> from GitHub on Travis (<a href='https://github.com/tidyverse/dtplyr/issues/32'>#32</a>).</p></li>
+<li><p>Joins return <code>data.table</code>. Right and full join are now implemented (<a href='https://github.com/tidyverse/dtplyr/issues/16'>#16</a>, <a href='https://github.com/tidyverse/dtplyr/issues/19'>#19</a>).</p></li>
+<li><p>Remove warnings from tests (<a href='https://github.com/tidyverse/dtplyr/issues/4'>#4</a>).</p></li>
 <li><p>Extracted from <code>dplyr</code> at revision e5f2952923028803.</p></li>
 </ul>
 </div>

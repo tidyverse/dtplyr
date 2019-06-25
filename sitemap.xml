@@ -13,9 +13,15 @@
     <loc>https://dtplyr.tidyverse.org/reference/join.tbl_dt.html</loc>
   </url>
   <url>
+    <loc>https://dtplyr.tidyverse.org/reference/lazy_dt.html</loc>
+  </url>
+  <url>
     <loc>https://dtplyr.tidyverse.org/reference/src_local.html</loc>
   </url>
   <url>
     <loc>https://dtplyr.tidyverse.org/reference/tbl_dt.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/articles/translation.html</loc>
   </url>
 </urlset>
