@@ -96,25 +96,3 @@ all_names <- function(x) {
 
   unique(unlist(lapply(x[-1], all_names), use.names = FALSE))
 }
-
-# Combine a selection (passed through from subquery)
-# with new actions
-carry_over <- function(sel = character(), act = list()) {
-  if (is.null(names(sel))) {
-    names(sel) <- sel
-  }
-  sel <- syms(sel)
-
-  # Keep last of duplicated acts
-  act <- act[!duplicated(names(act), fromLast = TRUE)]
-
-  # Preserve order of sel
-  both <- intersect(names(sel), names(act))
-  sel[both] <- act[both]
-
-  # Adding new variables at end
-  new <- setdiff(names(act), names(sel))
-
-  c(sel, act[new])
-}
-
