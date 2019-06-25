@@ -42,22 +42,17 @@ dt_needs_copy.dtplyr_step_subset <- function(x) {
 
 # dplyr methods -----------------------------------------------------------
 
-can_merge_subset <- function(x, needs, groups = character()) {
+can_merge_subset <- function(x) {
   # Can only merge subsets
   if (!inherits(x, "dtplyr_step_subset")) {
     return(FALSE)
   }
 
-  # If the grouping is the same
-  if (!identical(groups, x$groups)) {
-    return(FALSE)
-  }
+  # Don't need to check that groups are identical because the only
+  # dplyr functions that generate expression in i are
+  # filter/slice/sample/arrange/join and don't affect groups
 
-  switch(needs,
-    "i" = is.null(x$i) && is.null(x$j),
-    "j" = is.null(x$j),
-    abort("Invalid needs {needs}")
-  )
+  is.null(x$j)
 }
 
 select.dtplyr_step <- function(.data, ...) {
@@ -72,7 +67,7 @@ select.dtplyr_step <- function(.data, ...) {
   # vars <- simplify_names(vars)
   names(vars)[vars == names(vars)] <- ""
 
-  if (can_merge_subset(.data, "j", groups = groups)) {
+  if (can_merge_subset(.data)) {
     i <- .data$i
     .data <- .data$parent
   } else {
@@ -93,7 +88,7 @@ summarise.dtplyr_step <- function(.data, ...) {
 
   vars <- union(.data$groups, names(dots))
 
-  if (can_merge_subset(.data, "j", groups = .data$groups)) {
+  if (can_merge_subset(.data)) {
     i <- .data$i
     .data <- .data$parent
   } else {
