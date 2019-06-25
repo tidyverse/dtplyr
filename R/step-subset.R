@@ -141,7 +141,6 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   new_step_group(step, groups = .data$groups)
 }
 
-
 # helpers ------------------------------------------------------------------
 
 rename_groups <- function(groups, vars) {
