@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-This vignette shows the details of how dtplyr translates dplyr expressions into data.table code. If you see places where you think I could generate better data.table code, please let me know!
+This vignette shows the details of how dtplyr translates dplyr expressions into [data.table](https://github.com/Rdatatable/data.table/wiki) code. If you see places where you think I could generate better data.table code, please let me know!
 
 ```{r setup, message = FALSE}
 library(dtplyr)
@@ -35,9 +35,6 @@ Note that there are two ways to use dtplyr:
     performed until you explicitly request it with `as.data.table()`, 
     `as.data.frame()` or `as_tibble()`. This allows dtplyr to inspect the 
     full sequence of operations to figure out the best translation.
-    
-    dplyr never modifies its inputs in place, so the lazy approach also ensures
-    that dtplyr never makes more than single copy.
 
 # The basics
 
@@ -93,7 +90,7 @@ dt %>% transmute(a2 = a * 2) %>% show_query()
 dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
 
-Note that dplyr pledges to never modify the input data, so note that dtplyr automatically `copy()`s the input data.table.
+Note that dplyr never modifies the input data, so here it automatically `copy()`s the input data.table.
 
 `mutate()` allows to refer to variables that you just created. data.tables `:=` doesn't support that out of the box, so we automatically chain together as many `[` as needed:
 
@@ -109,7 +106,7 @@ dt %>% transmute(a2 = a * 2, b2 = b * 2, a4 = a2 * 2) %>% show_query()
 
 ## Grouping
 
-Just like in dplyr, `group_by()` doesn't do anything by itself, but instead modifies the operation of downstream verbs. This general just involves using the `by` argument:
+Just like in dplyr, `group_by()` doesn't do anything by itself, but instead modifies the operation of downstream verbs. This generally just involves using the `by` argument:
 
 ```{r}
 dt %>% group_by(a) %>% summarise(b = mean(b)) %>% show_query()
