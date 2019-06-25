@@ -8,7 +8,7 @@
 
 ## Overview
 
-dtplyr is the data.table backend for dplyr. It provides S3 methods for data.table objects so that dplyr works the way you expect. 
+dtplyr is the [data.table](https://github.com/Rdatatable/data.table/wiki) backend for dplyr. It provides S3 methods for data.table objects so that dplyr works the way you expect. 
 
 dtplyr was extracted out of dplyr so it could evolve independently (i.e. more rapidly!) than dplyr. It also makes dplyr a little simpler, and it's easier to keep track of issues by backend.
 
