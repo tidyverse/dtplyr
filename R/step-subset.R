@@ -77,18 +77,25 @@ dt_needs_copy.dtplyr_step_subset <- function(x) {
 
 # dplyr methods -----------------------------------------------------------
 
-
 select.dtplyr_step <- function(.data, ...) {
   vars <- tidyselect::vars_select(.data$vars, ...)
 
-  # groups <- rename_groups(groups, vars) ?
-  old2new <- set_names(names(vars), vars)
-  groups <- .data$groups
-  groups[groups %in% names(old2new)] <- old2new[groups]
+  groups <- rename_groups(.data$groups, vars)
+  vars <- simplify_names(vars)
 
-  # Strip names where not needed to simplify call
-  # vars <- simplify_names(vars)
-  names(vars)[vars == names(vars)] <- ""
+  step_subset_j(
+    .data,
+    vars = vars,
+    groups = groups,
+    j = call2(".", !!!syms(vars))
+  )
+}
+
+rename.dtplyr_step <- function(.data, ...) {
+  vars <- tidyselect::vars_rename(.data$vars, ...)
+
+  groups <- rename_groups(.data$groups, vars)
+  vars <- simplify_names(vars)
 
   step_subset_j(
     .data,
@@ -121,4 +128,17 @@ filter.dtplyr_step <- function(.data, ...) {
   }
 
   new_step_subset(.data, i = i)
+}
+
+# helpers ------------------------------------------------------------------
+
+rename_groups <- function(groups, vars) {
+  old2new <- set_names(names(vars), vars)
+  groups[groups %in% names(old2new)] <- old2new[groups]
+  groups
+}
+
+simplify_names <- function(vars) {
+  names(vars)[vars == names(vars)] <- ""
+  vars
 }
