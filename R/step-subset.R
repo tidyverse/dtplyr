@@ -19,6 +19,41 @@ new_step_subset <- function(parent,
   )
 }
 
+# When adding a subset that contains only j, it may be possible to merge
+# the previous step.
+step_subset_j <- function(parent,
+                              vars = parent$vars,
+                              groups = parent$groups,
+                              j = NULL) {
+  if (can_merge_subset(parent)) {
+    i <- parent$i
+    parent <- parent$parent
+  } else {
+    i <- NULL
+  }
+
+  new_step_subset(
+    parent,
+    vars = vars,
+    groups = groups,
+    i = i,
+    j = j
+  )
+}
+
+can_merge_subset <- function(x) {
+  # Can only merge subsets
+  if (!inherits(x, "dtplyr_step_subset")) {
+    return(FALSE)
+  }
+
+  # Don't need to check that groups are identical because the only
+  # dplyr functions that generate expression in i are
+  # filter/slice/sample/arrange/join and don't affect groups
+
+  is.null(x$j)
+}
+
 dt_call.dtplyr_step_subset <- function(x, needs_copy = dt_needs_copy(x)) {
   i <- if (is.null(x$i)) missing_arg() else x$i
   j <- if (is.null(x$j)) missing_arg() else x$j
@@ -42,18 +77,6 @@ dt_needs_copy.dtplyr_step_subset <- function(x) {
 
 # dplyr methods -----------------------------------------------------------
 
-can_merge_subset <- function(x) {
-  # Can only merge subsets
-  if (!inherits(x, "dtplyr_step_subset")) {
-    return(FALSE)
-  }
-
-  # Don't need to check that groups are identical because the only
-  # dplyr functions that generate expression in i are
-  # filter/slice/sample/arrange/join and don't affect groups
-
-  is.null(x$j)
-}
 
 select.dtplyr_step <- function(.data, ...) {
   vars <- tidyselect::vars_select(.data$vars, ...)
@@ -67,18 +90,10 @@ select.dtplyr_step <- function(.data, ...) {
   # vars <- simplify_names(vars)
   names(vars)[vars == names(vars)] <- ""
 
-  if (can_merge_subset(.data)) {
-    i <- .data$i
-    .data <- .data$parent
-  } else {
-    i <- NULL
-  }
-
-  new_step_subset(
+  step_subset_j(
     .data,
     vars = vars,
     groups = groups,
-    i = i,
     j = call2(".", !!!syms(vars))
   )
 }
@@ -86,24 +101,12 @@ select.dtplyr_step <- function(.data, ...) {
 summarise.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
 
-  vars <- union(.data$groups, names(dots))
-
-  if (can_merge_subset(.data)) {
-    i <- .data$i
-    .data <- .data$parent
-  } else {
-    i <- NULL
-  }
-
-  out <- new_step_subset(
+  out <- step_subset_j(
     .data,
-    vars = vars,
-    i = i,
+    vars = union(.data$groups, names(dots)),
     j = call2(".", !!!dots)
   )
-
-  groups <- tail(.data$groups, -1)
-  new_step_group(out, groups = groups)
+  new_step_group(out, groups = tail(.data$groups, -1))
 }
 
 filter.dtplyr_step <- function(.data, ...) {
@@ -117,10 +120,5 @@ filter.dtplyr_step <- function(.data, ...) {
     i <- call2(".", !!!dots)
   }
 
-  new_step_subset(
-    .data,
-    vars = .data$vars,
-    groups = .data$groups,
-    i = i
-  )
+  new_step_subset(.data, i = i)
 }
