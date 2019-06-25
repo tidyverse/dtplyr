@@ -22,11 +22,18 @@ new_step <- function(parent,
 }
 
 #' @export
+dim.dtplyr_step <- function(x) {
+  c(NA, length(x$vars))
+}
+
+#' @export
 print.dtplyr_step <- function(x, ...) {
-  cat_line("<dtplyr_step>")
-  cat_line("Vars:   ", paste0(x$vars, collapse = ", "))
-  cat_line("Groups: ", paste0(x$groups, collapse = ", "))
-  cat_line("Call:   ", expr_text(dt_call(x)))
+  cat_line(crayon::bold("Source: "), "local data table ", dplyr::dim_desc(x))
+  cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
+  cat_line()
+  cat_line(crayon::silver(
+    "# Use as.data.table()/as.data.frame()/as.tibble() to access results"
+  ))
 
   invisible(x)
 }

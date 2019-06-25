@@ -18,6 +18,7 @@ License: GPL (>= 2)
 URL: https://github.com/tidyverse/dtplyr
 BugReports: https://github.com/tidyverse/dtplyr/issues
 Imports:
+    crayon,
     data.table (>= 1.9.6),
     dplyr (>= 0.8.1),
     ellipsis,
@@ -28,9 +29,12 @@ Suggests:
     covr,
     Lahman,
     nycflights13,
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    knitr,
+    rmarkdown
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Depends: 
     R (>= 3.2)
+VignetteBuilder: knitr

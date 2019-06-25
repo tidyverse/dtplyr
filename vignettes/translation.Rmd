@@ -1,0 +1,149 @@
+---
+title: "Translation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{translation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+This vignette shows the details of how dtplyr translates dplyr expressions into data.table code. If you see places where you think I could generate better data.table code, please let me know!
+
+```{r setup, message = FALSE}
+library(dtplyr)
+library(data.table)
+library(dplyr)
+```
+
+Note that there are two ways to use dtplyr:
+
+*   Eagerly [WIP]. When you use a dplyr verb directly on a data.table object, it 
+    eagerly converts the dplyr code to data.table code, runs it, and returns a 
+    new data.table. This is not very efficient because it can't take advantage 
+    of many of data.table's best features.
+    
+*   Lazily. In this form, trigged by using `lazy_dt()`, no computation is 
+    performed until you explicitly request it with `as.data.table()`, 
+    `as.data.frame()` or `as_tibble()`. This allows dtplyr to inspect the 
+    full sequence of operations to figure out the best translation.
+    
+    dplyr never modifies its inputs in place, so the lazy approach also ensures
+    that dtplyr never makes more than single copy.
+
+# The basics
+
+To get started, I'll create a simple lazy frame. The actual data doesn't matter here since we're just looking at the translation:
+
+```{r}
+df <- data.frame(a = integer(), b = integer(), c = integer(), d = integer())
+dt <- lazy_dt(df)
+```
+
+When we print it out, it tells us that it's a local data table with four rows. It also prints the call that dtplyr will evaluate when we execute the lazy table. In this case it's very simple: 
+
+```{r}
+dt
+```
+
+If we just want to see the generated code, you can use `show_query()`. I'll use that a lot in this vignette.
+
+```{r}
+dt %>% show_query()
+```
+
+
+# Simple verbs
+
+Many dplyr verbs have a straightforward translation to either the `i` or `j` component of `[.data.table`. 
+
+
+## `i`
+
+`filter()` and `arrange()` become elements of `i`:
+
+```{r}
+dt %>% arrange(a, b, c) %>% show_query()
+dt %>% filter(b == c) %>% show_query()
+dt %>% filter(b == c, c == d) %>% show_query()
+```
+
+## `j`
+
+`select()`, `rename()`, `summarise()` and `transmute()` all become elements of `j`:
+
+```{r}
+dt %>% select(a:b) %>% show_query()
+dt %>% rename(x = a, y = b) %>% show_query()
+dt %>% summarise(a = mean(a)) %>% show_query()
+dt %>% transmute(a2 = a * 2) %>% show_query()
+```
+
+`mutate()` also uses the `j` component with data.table's special `:=` operator:
+
+```{r}
+dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
+```
+
+Note that dplyr pledges to never modify the input data, so note that dtplyr automatically `copy()`s the input data.table.
+
+`mutate()` allows to refer to variables that you just created. data.tables `:=` doesn't support that out of the box, so we automatically chain together as many `[` as needed:
+
+```{r}
+dt %>% mutate(a2 = a * 2, b2 = b * 2, a4 = a2 * 2) %>% show_query()
+```
+
+`transmute()` works similarly:
+
+```{r}
+dt %>% transmute(a2 = a * 2, b2 = b * 2, a4 = a2 * 2) %>% show_query()
+```
+
+## Grouping
+
+Just like in dplyr, `group_by()` doesn't do anything by itself, but instead modifies the operation of downstream verbs. This general just involves using the `by` argument:
+
+```{r}
+dt %>% group_by(a) %>% summarise(b = mean(b)) %>% show_query()
+```
+
+The primary exception is grouped `filter()`, which requires the use of `.SD` ()
+
+```{r}
+dt %>% group_by(a) %>% filter(b < mean(b)) %>% show_query()
+```
+
+# Combinations
+
+dtplyr tries to generate generate data.table code as close to what you'd write by hand as possible, as this tends to unlock data.tables tremendous speed. For example, if you `filter()` and then `select()`, dtplyr generates a single `[`:
+
+```{r}
+dt %>% filter(a == 1) %>% select(-a) %>% show_query()
+```
+
+And similarly for filtering and summarising:
+
+```{r}
+dt %>% 
+  group_by(a) %>% 
+  filter(b < mean(b)) %>% 
+  summarise(c = max(c)) %>% 
+  show_query()
+```
+
+Note however, that `select()`ing and then `filter()`ing must generate two separate calls to `[`, because data.table evaluates `i` before `j`.
+
+```{r}
+dt %>% select(-a) %>% filter(a == 1) %>% show_query()
+
+```
+
+Over time, as I learn more about data.table, I hope to expand the set of these simplification.
