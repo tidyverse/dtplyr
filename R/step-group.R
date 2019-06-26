@@ -1,7 +1,7 @@
-new_step_group <- function(parent, vars = parent$vars, groups = parent$groups) {
+step_group <- function(parent, groups = parent$groups) {
   new_step(
     parent,
-    vars = vars,
+    vars = parent$vars,
     groups = groups,
     class = "dtplyr_step_group"
   )
@@ -17,7 +17,7 @@ dt_call.dtplyr_step_group <- function(x, needs_copy = x$needs_copy) {
 group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
   prep <- dplyr::group_by_prepare(.data, ..., add = add)
 
-  new_step_group(
+  step_group(
     prep$data,
     groups = prep$group_names
   )
@@ -25,5 +25,5 @@ group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
 
 #' @export
 ungroup.dtplyr_step <- function(.data, ...) {
-  new_step_group(.data, groups = character())
+  step_group(.data, groups = character())
 }

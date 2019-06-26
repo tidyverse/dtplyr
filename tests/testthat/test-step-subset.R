@@ -1,6 +1,6 @@
 test_that("construtor has sensible defaults", {
-  first <- new_step_first(data.table(x = 1), "DT")
-  step <- new_step_subset(first)
+  first <- step_first(data.table(x = 1), "DT")
+  step <- step_subset(first)
 
   expect_s3_class(step, "dtplyr_step_subset")
   expect_equal(step$parent, first)
@@ -11,22 +11,22 @@ test_that("construtor has sensible defaults", {
 })
 
 test_that("generates expected calls", {
-  first <- new_step_first(data.table(x = 1), "DT")
+  first <- lazy_dt(data.table(x = 1), "DT")
 
-  ungrouped <- new_step_subset(first, i = quote(i), j = quote(j))
+  ungrouped <- step_subset(first, i = quote(i), j = quote(j))
   expect_equal(dt_call(ungrouped), expr(DT[i, j]))
 
-  with_i <- new_step_subset(first, i = quote(i), j = quote(j), groups = "x")
+  with_i <- step_subset(first, i = quote(i), j = quote(j), groups = "x")
   expect_equal(dt_call(with_i), expr(DT[, .SD[i, j], by = .(x)]))
 
-  without_i <- new_step_subset(first, j = quote(j), groups = "x")
+  without_i <- step_subset(first, j = quote(j), groups = "x")
   expect_equal(dt_call(without_i), expr(DT[, j, by = .(x)]))
 })
 
 # dplyr methods -----------------------------------------------------------
 
 test_that("simple calls generate expected translations", {
-  dt <- new_step_first(data.table(x = 1, y = 1, z = 1), "DT")
+  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
 
   expect_equal(
     dt %>% select(-z) %>% show_query(),
@@ -89,7 +89,7 @@ test_that("select and summarise changes grouping", {
 })
 
 test_that("can merge iff j-generating call comes after i", {
-  dt <- new_step_first(data.table(x = 1, y = 1, z = 1), "DT")
+  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
 
   expect_equal(
     dt %>% filter(x > 1) %>% select(y) %>% show_query(),

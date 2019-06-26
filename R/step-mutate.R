@@ -1,13 +1,10 @@
-new_step_mutate <- function(parent,
-                            new_vars = list(),
-                            groups = parent$groups) {
-
+step_mutate <- function(parent, new_vars = list()) {
   vars <- union(parent$vars, names(new_vars))
 
   new_step(
     parent,
     vars = vars,
-    groups = groups,
+    groups = parent$groups,
     needs_copy = !parent$implicit_copy,
     new_vars = new_vars,
     class = "dtplyr_step_mutate"
@@ -55,7 +52,7 @@ nest_vars <- function(.data, dots, all_vars, transmute = FALSE) {
     used_vars <- all_names(get_expr(dots[[i]]))
 
     if (any(used_vars %in% new_vars)) {
-      .data <- new_step_mutate(.data, dots[new_vars])
+      .data <- step_mutate(.data, dots[new_vars])
       all_vars <- c(all_vars, setdiff(new_vars, all_vars))
       new_vars <- cur_var
       init <- i
@@ -74,9 +71,9 @@ nest_vars <- function(.data, dots, all_vars, transmute = FALSE) {
     vars[names(dots)] <- dots
     names(vars)[!names(vars) %in% names(dots)] <- ""
 
-    new_step_subset(.data, j = call2(".", !!!vars))
+    step_subset(.data, j = call2(".", !!!vars))
   } else {
-    new_step_mutate(.data, dots)
+    step_mutate(.data, dots)
   }
 }
 

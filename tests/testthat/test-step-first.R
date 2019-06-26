@@ -1,6 +1,6 @@
 test_that("constructor has sensible defaults", {
   dt <- data.table(x = 1:2, y = 1:2)
-  step <- new_step_first(dt)
+  step <- step_first(dt)
 
   expect_s3_class(step, "dtplyr_step_first")
   expect_equal(step$parent, dt)

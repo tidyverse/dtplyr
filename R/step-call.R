@@ -1,9 +1,4 @@
-new_step_call <- function(parent,
-                          fun,
-                          args = list(),
-                          vars = parent$vars,
-                          groups = parent$groups
-                          ) {
+step_call <- function(parent, fun, args = list()) {
 
   stopifnot(is_step(parent))
   stopifnot(is.character(fun))
@@ -11,8 +6,8 @@ new_step_call <- function(parent,
 
   new_step(
     parent = parent,
-    vars = vars,
-    groups = groups,
+    vars = parent$vars,
+    groups = parent$groups,
     implicit_copy = TRUE,
     fun = fun,
     args = args,
@@ -28,10 +23,10 @@ dt_call.dtplyr_step_call <- function(x, needs_copy = x$needs_copy) {
 
 #' @export
 head.dtplyr_step <- function(x, n = 6L, ...) {
-  new_step_call(x, "head", args = list(n = n))
+  step_call(x, "head", args = list(n = n))
 }
 
 #' @export
 tail.dtplyr_step <- function(x, n = 6L, ...) {
-  new_step_call(x, "tail", args = list(n = n))
+  step_call(x, "tail", args = list(n = n))
 }

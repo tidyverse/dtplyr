@@ -1,9 +1,9 @@
-new_step_subset <- function(parent,
-                            vars = parent$vars,
-                            groups = parent$groups,
-                            i = NULL,
-                            j = NULL
-                            ) {
+step_subset <- function(parent,
+                        vars = parent$vars,
+                        groups = parent$groups,
+                        i = NULL,
+                        j = NULL
+                        ) {
 
   stopifnot(is_step(parent))
   stopifnot(is.null(i) || is_expression(i))
@@ -23,9 +23,9 @@ new_step_subset <- function(parent,
 # When adding a subset that contains only j, it may be possible to merge
 # the previous step.
 step_subset_j <- function(parent,
-                              vars = parent$vars,
-                              groups = parent$groups,
-                              j = NULL) {
+                          vars = parent$vars,
+                          groups = parent$groups,
+                          j = NULL) {
   if (can_merge_subset(parent)) {
     i <- parent$i
     parent <- parent$parent
@@ -33,7 +33,7 @@ step_subset_j <- function(parent,
     i <- NULL
   }
 
-  new_step_subset(
+  step_subset(
     parent,
     vars = vars,
     groups = groups,
@@ -113,7 +113,7 @@ summarise.dtplyr_step <- function(.data, ...) {
     vars = union(.data$groups, names(dots)),
     j = call2(".", !!!dots)
   )
-  new_step_group(out, groups = tail(.data$groups, -1))
+  step_group(out, groups = tail(.data$groups, -1))
 }
 
 # exported onLoad
@@ -121,7 +121,7 @@ filter.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
 
   i <- Reduce(function(x, y) call2("&", x, y), dots)
-  new_step_subset(.data, i = i)
+  step_subset(.data, i = i)
 }
 
 #' @export
@@ -132,8 +132,8 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   }
 
   # Order without grouping then restore
-  step <- new_step_subset(.data, i = call2("order", !!!dots), groups = character())
-  new_step_group(step, groups = .data$groups)
+  step <- step_subset(.data, i = call2("order", !!!dots), groups = character())
+  step_group(step, groups = .data$groups)
 }
 
 # helpers ------------------------------------------------------------------
