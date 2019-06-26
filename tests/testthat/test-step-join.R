@@ -46,3 +46,19 @@ test_that("simple usage generates expected translation", {
     expr(dt1[unique(dt1[dt2, which = TRUE, nomatch = 0L, on = .(x)])])
   )
 })
+
+test_that("automatically data.frame converts to lazy_dt", {
+  dt1 <- lazy_dt(data.frame(x = 1, y = 2, a = 3), "dt1")
+  df2 <- data.frame(x = 1, y = 2, a = 3)
+
+  out <- left_join(dt1, df2, by = "x")
+  expect_s3_class(out, "dtplyr_step_join")
+})
+
+test_that("converts other types if requested", {
+  dt1 <- lazy_dt(data.frame(x = 1, y = 2, a = 3), "dt1")
+  x <- structure(10, class = "foo")
+
+  expect_error(left_join(dt1, x, by = "x"), "copy")
+  expect_s3_class(left_join(dt1, x, by = "x", copy = TRUE), "dtplyr_step_join")
+})
