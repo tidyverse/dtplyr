@@ -8,17 +8,7 @@
 
 ## Overview
 
-dtplyr provides a dplyr backend for [data.table](https://github.com/Rdatatable/data.table/wiki). It has two modes of operation:
-
-*   Eager [WIP]. When you use a dplyr verb directly on a data.table object, it 
-    eagerly converts the dplyr code to data.table code, runs it, and returns a 
-    new data.table. This is not very efficient because it can't take advantage 
-    of many of data.table's best features.
-    
-*   Lazy. When you create a `lazy_dt()`, no computation is performed until you 
-    explicitly request it with `as.data.table()`, `as.data.frame()` or 
-    `as_tibble()`. This allows dtplyr to inspect the  full sequence of 
-    operations to figure out the best translation.
+dtplyr provides a dplyr backend for [data.table](https://github.com/Rdatatable/data.table/wiki). Compared to the previous release, this version of dtplyr focusses only on lazy evaluation triggered by use of `lazy_dt()`. This means that no computation is performed until you explicitly request it with `as.data.table()`, `as.data.frame()` or `as_tibble()`. This has a considerable advantage over the previous version (which eagerly evaluated each step) because it allows dtplyr to generate significantly more performant translations.
 
 ## Installation
 

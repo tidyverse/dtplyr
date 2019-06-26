@@ -1,5 +1,10 @@
 # dtplyr 0.0.3.9000
 
+* Converted from eager approach to lazy approach. You now must use `lazy_dt()`
+  to begin a translation pipeline, and must use `collect()`, `as.data.table()`, 
+  `as.data.frame()`, or `as_tibble()` to finish the translation and actually
+  perform the computation.
+
 * Joins now pass `...` on to data table's merge method (#41).
 
 * Convert from lazyeval to tidy eval (@christophsax).
