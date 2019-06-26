@@ -55,7 +55,7 @@ test_that("simple calls generate expected translations", {
 
   expect_equal(
     dt %>% filter() %>% show_query(),
-    expr(DT[, ])
+    expr(DT)
   )
 
   expect_equal(
@@ -149,4 +149,33 @@ test_that("empty returns original", {
   lz <- lazy_dt(dt, "DT")
 
   expect_equal(lz %>% rename() %>% collect(), dt)
+})
+
+
+# slice -------------------------------------------------------------------
+
+test_that("can slice", {
+  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
+
+  expect_equal(
+    dt %>% slice() %>% show_query(),
+    expr(DT)
+  )
+  expect_equal(
+    dt %>% slice(1:4) %>% show_query(),
+    expr(DT[1:4, ])
+  )
+  expect_equal(
+    dt %>% slice(1, 2, 3) %>% show_query(),
+    expr(DT[c(1, 2, 3), ])
+  )
+})
+
+test_that("can slice when grouped", {
+  dt <- lazy_dt(data.table(x = 1:4, y = c(1, 2, 1, 2)), "DT")
+
+  expect_equal(
+    dt %>% group_by(x) %>% slice(1) %>% show_query(),
+    expr(DT[, .SD[1, ], by = .(x)])
+  )
 })

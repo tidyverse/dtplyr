@@ -238,28 +238,3 @@ ensure_group_vars <- function(vars, data, notify = TRUE) {
 
   vars
 }
-
-# Slice ------------------------------------------------------------------------
-
-#' @importFrom dplyr slice
-#' @export
-slice.grouped_dt <- function(.data, ...) {
-  grouped_dt(NextMethod(), groups(.data), copy = FALSE)
-}
-#' @export
-slice.tbl_dt <- function(.data, ...) {
-  tbl_dt(NextMethod(), copy = FALSE)
-}
-#' @export
-slice.data.table <- function(.data, ...) {
-
-  dots <- quos(...)
-  env <- common_env(dots)
-
-  exprs <- lapply(dots, get_expr)
-
-  i <- as.call(c(quote(c), exprs))
-
-  j <- substitute(.SD[rows], list(rows = i))
-  dt_subset(.data, , j, env)
-}

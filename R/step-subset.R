@@ -56,6 +56,10 @@ can_merge_subset <- function(x) {
 }
 
 dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
+  if (is.null(x$i) && is.null(x$j)) {
+    return(dt_call(x$parent))
+  }
+
   i <- if (is.null(x$i)) missing_arg() else x$i
   j <- if (is.null(x$j)) missing_arg() else x$j
 
@@ -142,6 +146,23 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   # Order without grouping then restore
   step <- step_subset(.data, i = call2("order", !!!dots), groups = character())
   step_group(step, groups = .data$groups)
+}
+
+
+#' @importFrom dplyr slice
+#' @export
+slice.dtplyr_step <- function(.data, ...) {
+  dots <- capture_dots(..., .named = FALSE)
+
+  if (length(dots) == 0) {
+    i <- NULL
+  } else if (length(dots) == 1) {
+    i <- dots[[1]]
+  } else {
+    i <- call2("c", !!!dots)
+  }
+
+  step_subset(.data, i = i)
 }
 
 # helpers ------------------------------------------------------------------
