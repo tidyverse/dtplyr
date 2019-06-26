@@ -1,10 +1,13 @@
 #' Create a "lazy" data.table
 #'
+#' @description
 #' A lazy data.table lazy captures the intent of dplyr verbs, only actually
 #' performing computation when requested (with [connect()], [as.data.frame()],
 #' [data.table::as.data.table()], or [tibble::as_tibble()]). This allows dtplyr
 #' to convert dplyr verbs into as few data.table expressions as possible, which
 #' leads to a high performance translation.
+#'
+#' See `vignette("translation")` for more details.
 #'
 #' @param x A data table (or something can can be coerced to a data table)
 #' @param name Optionally, supply a name to be used in generated expressions.

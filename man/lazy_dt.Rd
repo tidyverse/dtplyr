@@ -18,6 +18,8 @@ performing computation when requested (with [connect()], [as.data.frame()],
 [data.table::as.data.table()], or [tibble::as_tibble()]). This allows dtplyr
 to convert dplyr verbs into as few data.table expressions as possible, which
 leads to a high performance translation.
+
+See `vignette("translation")` for more details.
 }
 \examples{
 library(dplyr)

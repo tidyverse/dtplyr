@@ -25,6 +25,8 @@ considerable advantage over the previous version (which eagerly
 evaluated each step) because it allows dtplyr to generate significantly
 more performant translations.
 
+See `vignette("translation")` for details of the current translations.
+
 ## Installation
 
 You can install from CRAN with:
