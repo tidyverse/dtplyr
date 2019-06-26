@@ -82,18 +82,19 @@ mtcars2 %>%
 
 ## Why is dtplyr slower than data.table?
 
-dtplyr will always be a bit slower than data.table, because it creates copies of objects rather than mutating in place (that's the dplyr philosophy). Currently, dtplyr is quite a lot slower than bare data.table because the methods aren't quite smart enough. I hope interested dplyr & data.table users from the community will help me to improve the performance.
-
-* Some data.table expressions have no direct dplyr equivalent. For example,
-  `X[Y, sum(foo*bar)]` selects the relevant variables _before_ joining. 
-  The dplyr equivalent, `X %>% left_join(Y) %>% summarise(sum(foo * bar))`,
-  carries along all variables in the join.
+There are three primary reasons that dtplyr will always be somewhat slower than data.table:
 
 * Each dplyr verb must do some computation to convert dplyr syntax to 
   data.table syntax. This takes time proportional to the complexity of 
   the input code, not the input _data_, so should be a negligible overhead
   for large datasets.
 
-* To match dplyr semantics, by default `mutate()` never modifies in place; 
-  so it must `copy()` the input first.
-  
+* Some data.table expressions have no direct dplyr equivalent. For example,
+  `X[Y, sum(foo*bar)]` selects the relevant variables _before_ joining. 
+  The dplyr equivalent, `X %>% left_join(Y) %>% summarise(sum(foo * bar))`,
+  carries along all variables in the join. Similarly, there's no efficient
+  way to express cross- or rolling-joins with dplyr verbs.
+
+* To match dplyr semantics, `mutate()` does not modify in place by default. 
+  This means that most expression involving `mutate()` needs to make a copy
+  that would not be necessary if you were using data.table directly.
