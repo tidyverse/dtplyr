@@ -69,22 +69,6 @@ test_that("simple calls generate expected translations", {
   )
 })
 
-test_that("arrange doesn't use, but still preserves, grouping", {
-  dt <- group_by(lazy_dt(data.table(x = 1, y = 2), "DT"), x)
-
-  step <- arrange(dt, y)
-  expect_equal(step$groups, "x")
-  expect_equal(dt_call(step), expr(DT[order(y), ]))
-
-  step2 <- arrange(dt, y, .by_group = TRUE)
-  expect_equal(dt_call(step2), expr(DT[order(x, y), ]))
-})
-
-test_that("empty arrange returns input unchanged", {
-  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
-  expect_true(identical(arrange(dt), dt))
-})
-
 test_that("select and summarise changes grouping", {
   dt <- lazy_dt(data.table(x = 1, y = 1, z = 1))
   gt <- group_by(dt, x)
@@ -114,3 +98,22 @@ test_that("can merge iff j-generating call comes after i", {
     expr(DT[, .(y = mean(x))][x > 1, ])
   )
 })
+
+# arrange -----------------------------------------------------------------
+
+test_that("arrange doesn't use, but still preserves, grouping", {
+  dt <- group_by(lazy_dt(data.table(x = 1, y = 2), "DT"), x)
+
+  step <- arrange(dt, y)
+  expect_equal(step$groups, "x")
+  expect_equal(dt_call(step), expr(DT[order(y), ]))
+
+  step2 <- arrange(dt, y, .by_group = TRUE)
+  expect_equal(dt_call(step2), expr(DT[order(x, y), ]))
+})
+
+test_that("empty arrange returns input unchanged", {
+  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
+  expect_true(identical(arrange(dt), dt))
+})
+
