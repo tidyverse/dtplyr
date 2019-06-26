@@ -78,7 +78,7 @@ dt %>% transmute(a2 = a * 2) %>% show_query()
 dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
 
-Note that dplyr never modifies the input data, so here it automatically `copy()`s the input data.table. 
+Note that dplyr doesn't modifies the input data (unless you set `immutable = FALSE`), so here it automatically `copy()`s the input data.table. 
 
 `mutate()` allows to refer to variables that you just created. data.tables `:=` doesn't support that out of the box, so we automatically chain together as many `[` as needed:
 

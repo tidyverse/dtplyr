@@ -123,4 +123,5 @@ slower than data.table:
   - To match dplyr semantics, `mutate()` does not modify in place by
     default. This means that most expression involving `mutate()` needs
     to make a copy that would not be necessary if you were using
-    data.table directly.
+    data.table directly. (You can opt out of this behaviour with
+    `immutable = FALSE`) )

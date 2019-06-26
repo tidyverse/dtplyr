@@ -14,6 +14,12 @@ test_that("doesn't need copy", {
   expect_false(dt$needs_copy)
 })
 
+test_that("mutable object never needs copy", {
+  dt <- lazy_dt(mtcars, immutable = FALSE)
+  expect_false(dt$needs_copy)
+  expect_false(dt %>% mutate(x = 1) %>% .$needs_copy)
+})
+
 test_that("dt_call() copies if requested", {
   dt <- lazy_dt(mtcars, name = "DT")
 
