@@ -74,21 +74,25 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 
 # dplyr methods -----------------------------------------------------------
 
+#' @importFrom dplyr select
 #' @export
 select.dtplyr_step <- function(.data, ...) {
-  vars <- tidyselect::vars_select(.data$vars, ...)
+  vars <- tidyselect::vars_select(.data$vars, ..., .include = .data$groups)
 
-  groups <- rename_groups(.data$groups, vars)
-  vars <- simplify_names(vars)
+  if (length(vars) == 0) {
+    j <- 0L
+    groups <- .data$groups
+  } else {
+    groups <- rename_groups(.data$groups, vars)
+    vars <- simplify_names(vars)
+    j <- call2(".", !!!syms(vars))
+  }
 
-  step_subset_j(
-    .data,
-    vars = vars,
-    groups = groups,
-    j = call2(".", !!!syms(vars))
-  )
+  out <- step_subset_j(.data, vars = vars, groups = character(), j = j)
+  step_group(out, groups)
 }
 
+#' @importFrom dplyr rename
 #' @export
 rename.dtplyr_step <- function(.data, ...) {
   vars <- tidyselect::vars_rename(.data$vars, ...)
@@ -96,12 +100,10 @@ rename.dtplyr_step <- function(.data, ...) {
   groups <- rename_groups(.data$groups, vars)
   vars <- simplify_names(vars)
 
-  step_subset_j(
-    .data,
-    vars = vars,
-    groups = groups,
-    j = call2(".", !!!syms(vars))
-  )
+  j <- call2(".", !!!syms(vars))
+
+  out <- step_subset_j(.data, vars = vars, groups = character(), j = j)
+  step_group(out, groups)
 }
 
 #' @importFrom dplyr summarise

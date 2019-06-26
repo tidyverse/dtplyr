@@ -293,65 +293,6 @@ ensure_group_vars <- function(vars, data, notify = TRUE) {
   vars
 }
 
-
-#' @importFrom dplyr select
-#' @importFrom tidyselect vars_select vars_rename
-#' @export
-select.grouped_dt <- function(.data, ...) {
-  vars <- tidyselect::vars_select(names(.data), !!! quos(...))
-  vars <- ensure_group_vars(vars, .data)
-
-  out <- .data[, vars, drop = FALSE, with = FALSE]
-
-  if (nrow(out) > 0) data.table::setnames(out, names(vars))
-
-  grouped_dt(out, groups(.data), copy = FALSE)
-
-}
-#' @export
-select.data.table <- function(.data, ...) {
-  vars <- tidyselect::vars_select(names(.data), !!! quos(...))
-
-  out <- .data[, vars, drop = FALSE, with = FALSE]
-
-  if (nrow(out) > 0) data.table::setnames(out, names(vars))
-
-  out
-}
-#' @export
-select.tbl_dt <- function(.data, ...) {
-  tbl_dt(NextMethod(), copy = FALSE)
-}
-
-# Rename -----------------------------------------------------------------------
-
-#' @importFrom dplyr rename
-#' @export
-rename.grouped_dt <- function(.data, ...) {
-  vars <- tidyselect::vars_rename(names(.data), !!! quos(...))
-
-  out <- .data[, vars, drop = FALSE, with = FALSE]
-
-  if (nrow(out) > 0) data.table::setnames(out, names(vars))
-
-  grouped_dt(out, groups(.data), copy = FALSE)
-}
-#' @export
-rename.data.table <- function(.data, ...) {
-  vars <- tidyselect::vars_rename(names(.data), !!! quos(...))
-
-  out <- .data[, vars, drop = FALSE, with = FALSE]
-
-  if (nrow(out) > 0) data.table::setnames(out, names(vars))
-
-  out
-}
-#' @export
-rename.tbl_dt <- function(.data, ...) {
-  tbl_dt(NextMethod(), copy = FALSE)
-}
-
-
 # Slice ------------------------------------------------------------------------
 
 #' @importFrom dplyr slice

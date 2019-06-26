@@ -69,14 +69,6 @@ test_that("simple calls generate expected translations", {
   )
 })
 
-test_that("select changes grouping", {
-  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1))
-  gt <- group_by(dt, x)
-
-  expect_equal(select(gt, y = x)$groups, "y")
-  expect_equal(summarise(gt)$groups, character())
-})
-
 test_that("can merge iff j-generating call comes after i", {
   dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
 
@@ -117,7 +109,6 @@ test_that("empty arrange returns input unchanged", {
   expect_true(identical(arrange(dt), dt))
 })
 
-
 # summarise ---------------------------------------------------------------
 
 test_that("summarise peels off layer of grouping", {
@@ -128,3 +119,34 @@ test_that("summarise peels off layer of grouping", {
   expect_equal(summarise(summarise(gt))$groups, character())
 })
 
+# select/rename ------------------------------------------------------------------
+
+test_that("renames grouping vars", {
+  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1))
+  gt <- group_by(dt, x)
+
+  expect_equal(select(gt, y = x)$groups, "y")
+  expect_equal(rename(gt, y = x)$groups, "y")
+})
+
+test_that("empty select returns no columns", {
+  dt <- data.table(x = 1, y = 1, z = 1)
+  lz <- lazy_dt(dt, "DT")
+  expect_equal(
+    lz %>% select() %>% collect(),
+    dt[, 0]
+  )
+
+  # unless it's grouped
+  expect_equal(
+    lz %>% group_by(x) %>% select() %>% collect(),
+    dt[, "x"]
+  )
+})
+
+test_that("empty returns original", {
+  dt <- data.table(x = 1, y = 1, z = 1)
+  lz <- lazy_dt(dt, "DT")
+
+  expect_equal(lz %>% rename() %>% collect(), dt)
+})
