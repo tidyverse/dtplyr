@@ -141,6 +141,33 @@ dt %>% filter(x == 1) %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 
 Over time, as I learn more about data.table, I hope to expand the set of these simplifications.
 
+# Joins
+
+dtplyr converts mutating joins to `merge()`:
+
+```{r}
+dt2 <- lazy_dt(data.frame(a = 1))
+
+dt %>% left_join(dt2, by = "a") %>% show_query()
+dt %>% right_join(dt2, by = "a") %>% show_query()
+dt %>% inner_join(dt2, by = "a") %>% show_query()
+dt %>% full_join(dt2, by = "a") %>% show_query()
+```
+
+I don't currently convert left joins to the more idiomatic `dt[dt2]` because I haven't yet figured out how to handle the `suffixes` argument. This is a shame because there's a big advantage of the `dt[dt2]` form: you can combine it with a `j` argument for efficient summaries, e.g. `dt[dt2, sum(x * y)]`.
+
+Anti-joins are easy to translate because data.table has a specific form for them:
+
+```{r}
+dt %>% anti_join(dt2, by = "a") %>% show_query()
+```
+
+Semi joins are little more complex:
+
+```{r}
+dt %>% semi_join(dt2, by = "a") %>% show_query()
+```
+
 # Performance
 
 There are two components to the performance of dtplyr: how long it takes to generate the translation, and how well translation performs. Given my exploration so far, I'm reasonably confident that we're generating high-quality data.table code, so most of the cost should be in the translation itself. 
