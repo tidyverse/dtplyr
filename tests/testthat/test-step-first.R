@@ -21,3 +21,9 @@ test_that("dt_call() copies if requested", {
   expect_equal(dt_call(dt, TRUE), quote(copy(DT)))
 })
 
+test_that("lazy_dt doesn't copy input", {
+  dt <- data.table(x = 1)
+  lz <- lazy_dt(dt)
+
+  expect_equal(address(dt), address(lz$parent))
+})

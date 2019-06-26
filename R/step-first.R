@@ -31,7 +31,11 @@
 #' by_cyl %>% mutate(mpg = mean(mpg))
 #' by_cyl %>% filter(mpg < mean(mpg)) %>% summarise(hp = mean(hp))
 lazy_dt <- function(x, name = NULL) {
-  step_first(as.data.table(x), name = name)
+  if (!is.data.table(x)) {
+    x <- as.data.table(x)
+  }
+
+  step_first(x, name = name)
 }
 
 step_first <- function(parent, name = NULL, env = caller_env()) {
