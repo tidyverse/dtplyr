@@ -199,23 +199,45 @@
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; `_DT1`[x == 1, ][, `:=`(a2 = a * 2, b2 = b * 2)]</span></a></code></pre></div>
 <p>Over time, as I learn more about data.table, I hope to expand the set of these simplifications.</p>
 </div>
+<div id="joins" class="section level1">
+<h1 class="hasAnchor">
+<a href="#joins" class="anchor"></a>Joins</h1>
+<p>dtplyr converts mutating joins to <code><a href="https://www.rdocumentation.org/packages/data.table/topics/merge">merge()</a></code>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">dt2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lazy_dt.html">lazy_dt</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">a =</span> <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co">#&gt; merge(`_DT1`, `_DT2`, all.x = TRUE, all.y = FALSE, by = "a")</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">right_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">#&gt; merge(`_DT2`, `_DT1`, all.x = TRUE, all.y = FALSE, by = "a")</span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt; merge(`_DT1`, `_DT2`, all = FALSE, by = "a")</span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">full_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
+<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">#&gt; merge(`_DT1`, `_DT2`, all = TRUE, by = "a")</span></a></code></pre></div>
+<p>I don’t currently convert left joins to the more idiomatic <code>dt[dt2]</code> because I haven’t yet figured out how to handle the <code>suffixes</code> argument. This is a shame because there’s a big advantage of the <code>dt[dt2]</code> form: you can combine it with a <code>j</code> argument for efficient summaries, e.g. <code>dt[dt2, sum(x * y)]</code>.</p>
+<p>Anti-joins are easy to translate because data.table has a specific form for them:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">anti_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; `_DT1`[!`_DT2`, on = .(a)]</span></a></code></pre></div>
+<p>Semi joins are little more complex:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">semi_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co">#&gt; `_DT1`[unique(`_DT1`[`_DT2`, which = TRUE, nomatch = 0L, on = .(a)])]</span></a></code></pre></div>
+</div>
 <div id="performance" class="section level1">
 <h1 class="hasAnchor">
 <a href="#performance" class="anchor"></a>Performance</h1>
 <p>There are two components to the performance of dtplyr: how long it takes to generate the translation, and how well translation performs. Given my exploration so far, I’m reasonably confident that we’re generating high-quality data.table code, so most of the cost should be in the translation itself.</p>
 <p>The following code briefly explores the performance of a few different translations. A signficant amount of work is done by the dplyr verbs, so we benchmark the whole process. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data. (The only exception is use of <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> will also generate a single copy of the input data.)</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">bench<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/bench/topics/mark">mark</a></span>(</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">  <span class="dt">filter =</span> dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(a <span class="op">==</span><span class="st"> </span>b, c <span class="op">==</span><span class="st"> </span>d),</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">  <span class="dt">mutate =</span> dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">a =</span> a <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">a4 =</span> a2 <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">a8 =</span> a4 <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>(),</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">  <span class="dt">summarise =</span> dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(a) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">b =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(b)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>(),</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">  <span class="dt">check =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6">)[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]</a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">#&gt; # A tibble: 3 x 6</span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">#&gt; 1 filter        174µs    194µs     5045.      280B     20.5</span></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">#&gt; 2 mutate        441µs    483µs     2016.      280B     17.4</span></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">#&gt; 3 summarise     696µs    749µs     1317.      280B     17.4</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">bench<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/bench/topics/mark">mark</a></span>(</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">  <span class="dt">filter =</span> dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(a <span class="op">==</span><span class="st"> </span>b, c <span class="op">==</span><span class="st"> </span>d),</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">  <span class="dt">mutate =</span> dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">a =</span> a <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">a4 =</span> a2 <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">a8 =</span> a4 <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>(),</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">  <span class="dt">summarise =</span> dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(a) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">b =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(b)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>(),</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">  <span class="dt">check =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">)[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>]</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co">#&gt; # A tibble: 3 x 6</span></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="co">#&gt; 1 filter        177µs    202µs     4777.      280B     18.1</span></a>
+<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="co">#&gt; 2 mutate        443µs    491µs     1982.      280B     17.4</span></a>
+<a class="sourceLine" id="cb19-12" data-line-number="12"><span class="co">#&gt; 3 summarise     705µs    770µs     1258.      280B     15.1</span></a></code></pre></div>
 <p>These translations all take less than a millisecond, which suggests that the performance overhead of dtplyr should be negligible.</p>
 </div>
   </div>
@@ -235,6 +257,7 @@
       </ul>
 </li>
       <li><a href="#combinations">Combinations</a></li>
+      <li><a href="#joins">Joins</a></li>
       <li><a href="#performance">Performance</a></li>
       </ul>
 </div>
