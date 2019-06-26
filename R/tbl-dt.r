@@ -141,55 +141,6 @@ all.equal.tbl_dt <- function(target, current, ignore_col_order = TRUE,
 #' @export
 .datatable.aware <- TRUE
 
-# Filter -----------------------------------------------------------------------
-
-and_expr <- function(exprs) {
-  stopifnot(is.list(exprs))
-  if (length(exprs) == 0) {
-    return(TRUE)
-  }
-  if (length(exprs) == 1) {
-    return(exprs[[1]])
-  }
-
-  left <- exprs[[1]]
-  for (i in 2:length(exprs)) {
-    left <- substitute(left & right, list(left = left, right = exprs[[i]]))
-  }
-  left
-}
-
-# The S3 method is registered manually in .onLoad() to avoid an R CMD
-# check warning
-
-# Is there something similar in rlang?
-
-# first version, adapted from lazyeval
-# common_env <- function (dots){
-#   if (length(dots) == 0)
-#       return(baseenv())
-#   env <- get_env(dots[[1]])
-#   if (length(dots) == 1)
-#       return(env)
-#   for (i in 2:length(dots)) {
-#       if (!identical(env, get_env(dots[[i]]))) {
-#           return(baseenv())
-#       }
-#   }
-#   env
-# }
-
-# but this still does not take care of:
-
-# a) Literals. We want to fall back to baseenv() if we dont have a unique env
-# that is not emptyenv().
-
-# b) Nested environments. If a function is called within a function, we want to
-# evaluate the data.table call in the same environments. Some quosures may have
-# an environment that is a parent of this environment, so we need to figure
-# out the 'deepest' environment. We also need to check that all other
-# environments are parents of this environment.
-
 # third version
 common_env <- function (dots){
   stopifnot(inherits(dots, "quosures"))
@@ -217,24 +168,4 @@ common_env <- function (dots){
     env <- baseenv()
   }
   env
-}
-
-
-# Select -----------------------------------------------------------------------
-
-# not exported from dplyr
-ensure_group_vars <- function(vars, data, notify = TRUE) {
-  group_names <- group_vars(data)
-  missing <- setdiff(group_names, vars)
-
-  if (length(missing) > 0) {
-    if (notify) {
-      inform(paste0("Adding missing grouping variables: ",
-                    "`", missing, "`", collapse = ", ")
-             )
-    }
-    vars <- c(set_names(missing, missing), vars)
-  }
-
-  vars
 }
