@@ -71,7 +71,7 @@ print.dtplyr_step <- function(x, ...) {
   cat_line(crayon::bold("Source: "), "local data table ", dplyr::dim_desc(x))
   cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
   cat_line()
-  print(as_tibble(head(x)))
+  cat_line(format(as_tibble(head(x)))[-1]) # Hack to remove "A tibble" line
   cat_line()
   cat_line(crayon::silver(
     "# Use as.data.table()/as.data.frame()/as_tibble() to access results"
