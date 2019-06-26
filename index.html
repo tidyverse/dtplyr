@@ -95,8 +95,11 @@
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
-<p>dtplyr is the <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a> backend for dplyr. It provides S3 methods for data.table objects so that dplyr works the way you expect.</p>
-<p>dtplyr was extracted out of dplyr so it could evolve independently (i.e. more rapidly!) than dplyr. It also makes dplyr a little simpler, and it’s easier to keep track of issues by backend.</p>
+<p>dtplyr provides a dplyr backend for <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a>. It has two modes of operation:</p>
+<ul>
+<li><p>Eager [WIP]. When you use a dplyr verb directly on a data.table object, it eagerly converts the dplyr code to data.table code, runs it, and returns a new data.table. This is not very efficient because it can’t take advantage of many of data.table’s best features.</p></li>
+<li><p>Lazy. When you create a <code><a href="reference/lazy_dt.html">lazy_dt()</a></code>, no computation is performed until you explicitly request it with <code><a href="https://www.rdocumentation.org/packages/data.table/topics/as.data.table">as.data.table()</a></code>, <code><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble()</a></code>. This allows dtplyr to inspect the full sequence of operations to figure out the best translation.</p></li>
+</ul>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">

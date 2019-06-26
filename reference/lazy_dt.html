@@ -165,39 +165,132 @@ For expert use only.</p></td>
 <span class='no'>mtcars2</span></div><div class='output co'>#&gt; Source: local data table [?? x 11]
 #&gt; Call:   `_DT1`
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>:<span class='no'>cyl</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 2]
+#&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  21       6   160   110  3.9   2.62  16.5     0     1     4     4
+#&gt; 2  21       6   160   110  3.9   2.88  17.0     0     1     4     4
+#&gt; 3  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1
+#&gt; 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1
+#&gt; 5  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2
+#&gt; 6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1
+#&gt; 
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>:<span class='no'>cyl</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 2]
 #&gt; Call:   `_DT1`[, .(mpg, cyl)]
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>mpg</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>cyl</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 2]
+#&gt;     mpg   cyl
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  21       6
+#&gt; 2  21       6
+#&gt; 3  22.8     4
+#&gt; 4  21.4     6
+#&gt; 5  18.7     8
+#&gt; 6  18.1     6
+#&gt; 
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>mpg</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>cyl</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 2]
 #&gt; Call:   `_DT1`[, .(x = mpg, y = cyl)]
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>x</span> <span class='kw'>==</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 1]
-#&gt; Call:   `_DT1`[x == 1, .(mpg)]
+#&gt;       x     y
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  21       6
+#&gt; 2  21       6
+#&gt; 3  22.8     4
+#&gt; 4  21.4     6
+#&gt; 5  18.7     8
+#&gt; 6  18.1     6
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>x</span> <span class='kw'>==</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 1]
-#&gt; Call:   `_DT1`[, .(mpg)][x == 1, ]
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>cyl</span> <span class='kw'>==</span> <span class='fl'>4</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 1]
+#&gt; Call:   `_DT1`[cyl == 4, .(mpg)]
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>x2</span> <span class='kw'>=</span> <span class='no'>x</span> * <span class='fl'>2</span>, <span class='kw'>x4</span> <span class='kw'>=</span> <span class='no'>x2</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 13]
-#&gt; Call:   copy(`_DT1`)[, `:=`(x2 = x * 2)][, `:=`(x4 = x2 * 2)]
+#&gt;     mpg
+#&gt;   &lt;dbl&gt;
+#&gt; 1  22.8
+#&gt; 2  24.4
+#&gt; 3  22.8
+#&gt; 4  32.4
+#&gt; 5  30.4
+#&gt; 6  33.9
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='kw'>x2</span> <span class='kw'>=</span> <span class='no'>x</span> * <span class='fl'>2</span>, <span class='kw'>x4</span> <span class='kw'>=</span> <span class='no'>x2</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 12]
-#&gt; Call:   copy(`_DT1`)[, `:=`(x2 = x * 2)][, .(x2, x4 = x2 * 2)]
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>, <span class='no'>cyl</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>cyl</span> <span class='kw'>==</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 2]
+#&gt; Call:   `_DT1`[, .(mpg, cyl)][cyl == 4, ]
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>x</span> <span class='kw'>==</span> <span class='fl'>1</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>x2</span> <span class='kw'>=</span> <span class='no'>x</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 12]
-#&gt; Call:   `_DT1`[x == 1, ][, `:=`(x2 = x * 2)]
+#&gt;     mpg   cyl
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  22.8     4
+#&gt; 2  24.4     4
+#&gt; 3  22.8     4
+#&gt; 4  32.4     4
+#&gt; 5  30.4     4
+#&gt; 6  33.9     4
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div><div class='input'>
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>cyl2</span> <span class='kw'>=</span> <span class='no'>cyl</span> * <span class='fl'>2</span>, <span class='kw'>cyl4</span> <span class='kw'>=</span> <span class='no'>cyl2</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 13]
+#&gt; Call:   copy(`_DT1`)[, `:=`(cyl2 = cyl * 2)][, `:=`(cyl4 = cyl2 * 2)]
+#&gt; 
+#&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb  cyl2  cyl4
+#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  21       6   160   110  3.9   2.62  16.5     0     1     4     4    12    24
+#&gt; 2  21       6   160   110  3.9   2.88  17.0     0     1     4     4    12    24
+#&gt; 3  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1     8    16
+#&gt; 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1    12    24
+#&gt; 5  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2    16    32
+#&gt; 6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1    12    24
+#&gt; 
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='kw'>cyl2</span> <span class='kw'>=</span> <span class='no'>cyl</span> * <span class='fl'>2</span>, <span class='kw'>vs2</span> <span class='kw'>=</span> <span class='no'>vs</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 11]
+#&gt; Call:   `_DT1`[, .(cyl2 = cyl * 2, vs2 = vs * 2)]
+#&gt; 
+#&gt;    cyl2   vs2
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1    12     0
+#&gt; 2    12     0
+#&gt; 3     8     2
+#&gt; 4    12     2
+#&gt; 5    16     0
+#&gt; 6    12     2
+#&gt; 
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>cyl</span> <span class='kw'>==</span> <span class='fl'>8</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>cyl2</span> <span class='kw'>=</span> <span class='no'>cyl</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 12]
+#&gt; Call:   `_DT1`[cyl == 8, ][, `:=`(cyl2 = cyl * 2)]
+#&gt; 
+#&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb  cyl2
+#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2    16
+#&gt; 2  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4    16
+#&gt; 3  16.4     8  276.   180  3.07  4.07  17.4     0     0     3     3    16
+#&gt; 4  17.3     8  276.   180  3.07  3.73  17.6     0     0     3     3    16
+#&gt; 5  15.2     8  276.   180  3.07  3.78  18       0     0     3     3    16
+#&gt; 6  10.4     8  472    205  2.93  5.25  18.0     0     0     3     4    16
+#&gt; 
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'>
 <span class='no'>by_cyl</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>)
-<span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
-#&gt; Call:   `_DT1`[, .(x = mean(x)), by = .(cyl)]
+<span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
+#&gt; Call:   `_DT1`[, .(mpg = mean(mpg)), by = .(cyl)]
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div><div class='input'><span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>mpg</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 12]
-#&gt; Call:   `_DT1`[, `:=`(x = mean(x)), by = .(mpg)]
+#&gt;     cyl   mpg
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1     6  19.7
+#&gt; 2     4  26.7
+#&gt; 3     8  15.1
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div><div class='input'><span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mpg</span> <span class='kw'>&lt;</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>mpg</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>hp</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>hp</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 11]
+#&gt; Call:   copy(`_DT1`)[, `:=`(mpg = mean(mpg)), by = .(cyl)]
+#&gt; 
+#&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  19.7     6   160   110  3.9   2.62  16.5     0     1     4     4
+#&gt; 2  19.7     6   160   110  3.9   2.88  17.0     0     1     4     4
+#&gt; 3  26.7     4   108    93  3.85  2.32  18.6     1     1     4     1
+#&gt; 4  19.7     6   258   110  3.08  3.22  19.4     1     0     3     1
+#&gt; 5  15.1     8   360   175  3.15  3.44  17.0     0     0     3     2
+#&gt; 6  19.7     6   225   105  2.76  3.46  20.2     1     0     3     1
+#&gt; 
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mpg</span> <span class='kw'>&lt;</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>mpg</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>hp</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>hp</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
 #&gt; Call:   `_DT1`[, .SD[mpg &lt; mean(mpg), .(hp = mean(hp))], by = .(cyl)]
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as.tibble() to access results</div></pre>
+#&gt;     cyl    hp
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1     6 132. 
+#&gt; 2     4  91.2
+#&gt; 3     8 246. 
+#&gt; 
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
