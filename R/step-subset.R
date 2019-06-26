@@ -124,11 +124,16 @@ filter.dtplyr_step <- function(.data, ...) {
   step_subset(.data, i = i)
 }
 
+#' @importFrom dplyr arrange
 #' @export
 arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   dots <- capture_dots(...)
   if (.by_group) {
     dots <- c(syms(.data$groups), dots)
+  }
+
+  if (length(dots) == 0) {
+    return(.data)
   }
 
   # Order without grouping then restore

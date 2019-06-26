@@ -296,39 +296,6 @@ mutate.data.table <- function(.data, ...) {
   .data[]
 }
 
-# Arrange ----------------------------------------------------------------------
-
-#' @importFrom dplyr arrange
-#' @export
-arrange.grouped_dt <- function(.data, ..., .by_group = FALSE) {
-  if (.by_group) {
-    dots <- quos(!!!groups(.data), ...)
-  } else {
-    dots <- quos(...)
-  }
-
-  arrange_impl(.data, dots)
-}
-#' @export
-arrange.tbl_dt <- function(.data, ...) {
-  tbl_dt(NextMethod(), copy = FALSE)
-}
-#' @export
-arrange.data.table <- function(.data, ...) {
-  dots <- quos(...)
-
-  arrange_impl(.data, dots)
-}
-
-arrange_impl <- function(.data, dots) {
-  exprs <- lapply(dots, get_expr)
-  env <- common_env(dots)
-
-  i <- as.call(c(quote(order), exprs))
-
-  dt_subset(.data, i, , env = env)
-}
-
 # Select -----------------------------------------------------------------------
 
 # not exported from dplyr

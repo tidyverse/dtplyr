@@ -80,6 +80,11 @@ test_that("arrange doesn't use, but still preserves, grouping", {
   expect_equal(dt_call(step2), expr(DT[order(x, y), ]))
 })
 
+test_that("empty arrange returns input unchanged", {
+  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
+  expect_true(identical(arrange(dt), dt))
+})
+
 test_that("select and summarise changes grouping", {
   dt <- lazy_dt(data.table(x = 1, y = 1, z = 1))
   gt <- group_by(dt, x)
