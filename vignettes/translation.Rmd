@@ -78,7 +78,7 @@ dt %>% transmute(a2 = a * 2) %>% show_query()
 dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
 
-Note that dplyr never modifies the input data, so here it automatically `copy()`s the input data.table.
+Note that dplyr never modifies the input data, so here it automatically `copy()`s the input data.table. 
 
 `mutate()` allows to refer to variables that you just created. data.tables `:=` doesn't support that out of the box, so we automatically chain together as many `[` as needed:
 
@@ -133,4 +133,29 @@ dt %>% select(-a) %>% filter(a == 1) %>% show_query()
 
 Note that `filter()` and `mutate()` can't be combined because `dt[a == 1, .(b2 := b * 2)]` modifies the selected rows in place.
 
+However, dtplyr does strive to avoid needless copies, so it won't explicitly copy if there's already an implicit copy produced by `[`, `head()` or similar:
+
+```{r}
+dt %>% filter(x == 1) %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
+```
+
 Over time, as I learn more about data.table, I hope to expand the set of these simplifications.
+
+# Performance
+
+There are two components to the performance of dtplyr: how long it takes to generate the translation, and how well translation performs. Given my exploration so far, I'm reasonably confident that we're generating high-quality data.table code, so most of the cost should be in the translation itself. 
+
+The following code briefly explores the performance of a few different translations. A signficant amount of work is done by the dplyr verbs, so we benchmark the whole process. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data. (The only exception is use of `mutate()` will also generate a single copy of the input data.)
+
+```{r}
+bench::mark(
+  filter = dt %>% filter(a == b, c == d),
+  mutate = dt %>% mutate(a = a * 2, a4 = a2 * 2, a8 = a4 * 2) %>% show_query(),
+  summarise = dt %>% group_by(a) %>% summarise(b = mean(b)) %>% show_query(),
+  check = FALSE
+)[1:6]
+```
+
+These translations all take less than a millisecond, which suggests that the performance overhead of dtplyr should be negligible. 
+
+
