@@ -13,18 +13,11 @@ new_step_call <- function(parent,
     parent = parent,
     vars = vars,
     groups = groups,
+    implicit_copy = TRUE,
     fun = fun,
     args = args,
     class = "dtplyr_step_call"
   )
-}
-
-dt_needs_copy.dtplyr_step_call <- function(x) {
-  dt_needs_copy(x$parent)
-}
-
-dt_implicit_copy.dtplyr_step_call <- function(x) {
-  TRUE
 }
 
 dt_call.dtplyr_step_call <- function(x, needs_copy = dt_needs_copy(x)) {

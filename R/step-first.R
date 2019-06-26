@@ -41,6 +41,8 @@ new_step_first <- function(parent, name = NULL, env = caller_env()) {
   new_step(parent,
     vars = names(parent),
     groups = character(),
+    implicit_copy = FALSE,
+    needs_copy = FALSE,
     name = sym(name),
     env = env,
     class = "dtplyr_step_first"
@@ -53,14 +55,6 @@ dt_call.dtplyr_step_first <- function(x, needs_copy = FALSE) {
   } else {
     x$name
   }
-}
-
-dt_implicit_copy.dtplyr_step_first <- function(x) {
-  FALSE
-}
-
-dt_needs_copy.dtplyr_step_first <- function(x) {
-  FALSE
 }
 
 unique_name <- local({

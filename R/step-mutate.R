@@ -8,6 +8,7 @@ new_step_mutate <- function(parent,
     parent,
     vars = vars,
     groups = groups,
+    needs_copy = !parent$implicit_copy,
     new_vars = new_vars,
     class = "dtplyr_step_mutate"
   )
@@ -22,10 +23,6 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = dt_needs_copy(x)) {
     out$by <- call2(".", !!!syms(x$groups))
   }
   out
-}
-
-dt_needs_copy.dtplyr_step_mutate <- function(x) {
-  !dt_implicit_copy(x$parent)
 }
 
 # dplyr methods -----------------------------------------------------------

@@ -15,6 +15,7 @@ new_step_subset <- function(parent,
     groups = groups,
     i = i,
     j = j,
+    implicit_copy = is.null(i) || is.null(j),
     class = "dtplyr_step_subset"
   )
 }
@@ -69,14 +70,6 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = dt_needs_copy(x)) {
 
     call2("[", dt_call(x$parent, needs_copy), , j, by = by)
   }
-}
-
-dt_needs_copy.dtplyr_step_subset <- function(x) {
-  dt_needs_copy(x$parent)
-}
-
-dt_implicit_copy.dtplyr_step_subset <- function(x) {
-  !is.null(x$i) || !is.null(x$j)
 }
 
 # dplyr methods -----------------------------------------------------------

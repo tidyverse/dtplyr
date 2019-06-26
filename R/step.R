@@ -1,6 +1,8 @@
 new_step <- function(parent,
                      vars = parent$vars,
                      groups = parent$groups,
+                     implicit_copy = parent$implicit_copy,
+                     needs_copy = parent$needs_copy,
                      env = caller_env(),
                      ...,
                      class = character()) {
@@ -14,6 +16,8 @@ new_step <- function(parent,
       parent = parent,
       vars = vars,
       groups = groups,
+      implicit_copy = implicit_copy,
+      needs_copy = needs_copy,
       env = env,
       ...
     ),
@@ -53,18 +57,6 @@ dt_eval <- function(x) {
   quo <- new_quosure(dt_call(x), env)
 
   eval_tidy(quo)
-}
-
-dt_needs_copy <- function(x) {
-  UseMethod("dt_needs_copy")
-}
-
-dt_implicit_copy <- function(x) {
-  UseMethod("dt_implicit_copy")
-}
-
-dt_implicit_copy.dtplyr_step <- function(x) {
-  dt_implicit_copy(x$parent)
 }
 
 dt_source <- function(x) {

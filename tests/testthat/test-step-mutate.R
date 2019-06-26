@@ -20,6 +20,29 @@ test_that("generates single calls as expect", {
   expect_equal(dt_call(grouped), expr(copy(DT)[, `:=`(x2 = x * 2), by = .(x)]))
 })
 
+# copies ------------------------------------------------------------------
+
+test_that("need to copy when there's a mutate", {
+  dt <- lazy_dt(data.table(x = 1))
+
+  expect_false(dt %>% .$needs_copy)
+  expect_false(dt %>% filter(x == 1) %>% .$needs_copy)
+  expect_false(dt %>% head() %>% .$needs_copy)
+
+  expect_true(dt %>% mutate(y = 1) %>% .$needs_copy)
+  expect_true(dt %>% mutate(y = 1) %>% filter(x == 1) %>% .$needs_copy)
+  expect_true(dt %>% mutate(y = 1) %>% head() %>% .$needs_copy)
+})
+
+test_that("unless there's already an implicit copy", {
+  dt <- lazy_dt(data.table(x = 1))
+
+  expect_true(dt %>% filter(x == 1) %>% .$implicit_copy)
+  expect_false(dt %>% filter(x == 1) %>% mutate(y = 1) %>% .$needs_copy)
+
+  expect_true(dt %>% head() %>% .$implicit_copy)
+  expect_false(dt %>% head() %>% mutate(y = 1) %>% .$needs_copy)
+})
 
 # dplyr verbs -------------------------------------------------------------
 
