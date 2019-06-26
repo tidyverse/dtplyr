@@ -219,38 +219,6 @@ common_env <- function (dots){
   env
 }
 
-# Mutate -----------------------------------------------------------------------
-
-#' @export
-mutate.grouped_dt <- function(.data, ...) {
-  grouped_dt(NextMethod(), groups(.data), copy = FALSE)
-}
-#' @export
-mutate.tbl_dt <- function(.data, ...) {
-  tbl_dt(NextMethod(), copy = FALSE)
-}
-
-#' @importFrom dplyr mutate
-#' @export
-mutate.data.table <- function(.data, ...) {
-  dots <- quos(..., .named = TRUE)
-  names <- names(dots)
-
-  # Never want to modify in place
-  .data <- data.table::copy(.data)
-
-  for(i in seq_along(dots)) {
-    # For each new variable, generate a call of the form df[, new := expr]
-    j <- substitute(lhs := rhs, list(lhs = names[[i]], rhs = get_expr(dots[[i]])))
-
-    env <- common_env(dots[i])
-
-    .data <- dt_subset(.data, , j,  env)
-  }
-
-  # Need to use this syntax to make the output visible (#11).
-  .data[]
-}
 
 # Select -----------------------------------------------------------------------
 

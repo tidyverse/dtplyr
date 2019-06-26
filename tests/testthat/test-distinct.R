@@ -109,6 +109,7 @@ test_that("empty grouped distinct equivalent to empty ungrouped", {
 })
 
 test_that("distinct on a new, mutated variable is equivalent to mutate followed by distinct", {
+  skip_if_dtplyr()
   df <- data.table(g = c(1, 2), x = c(1, 2))
 
   df1 <- df %>% distinct(aa = g * 2)
