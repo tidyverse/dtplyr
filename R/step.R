@@ -1,3 +1,12 @@
+# We use a hybrid approach where most of the computation is done on
+# construction. This avoids the deeply recursive approach of dbplyr, which
+# should improve performance because we're not repeatedly re-computing the
+# same values.
+#
+# dt_call() is managed separately because it involves much more code (which
+# which dilute the intent of the constructor), and should only be called
+# relatively few times.
+
 new_step <- function(parent,
                      vars = parent$vars,
                      groups = parent$groups,
