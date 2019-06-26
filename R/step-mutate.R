@@ -14,7 +14,7 @@ new_step_mutate <- function(parent,
   )
 }
 
-dt_call.dtplyr_step_mutate <- function(x, needs_copy = dt_needs_copy(x)) {
+dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
   # i is always empty because we never mutate a subset
   j <- call2(":=", !!!x$new_vars)
   out <- call2("[", dt_call(x$parent, needs_copy), , j)

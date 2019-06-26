@@ -40,12 +40,41 @@ dim.dtplyr_step <- function(x) {
 }
 
 #' @export
+tbl_vars.dtplyr_step <- function(x) {
+  x$vars
+}
+
+#' @export
+as.data.table.dtplyr_step <- function(x, keep.rownames = FALSE, key = NULL, ...) {
+  dt_eval(x)
+}
+
+#' @export
+as.data.frame.dtplyr_step <- function(x, ...) {
+  as.data.frame(dt_eval(x))
+}
+
+#' @export
+#' @importFrom tibble as_tibble
+as_tibble.dtplyr_step <- function(x, ...) {
+  as_tibble(dt_eval(x))
+}
+
+#' @export
+#' @importFrom dplyr collect
+collect.dtplyr_step <- function(x, ...) {
+  dt_eval(x)
+}
+
+#' @export
 print.dtplyr_step <- function(x, ...) {
   cat_line(crayon::bold("Source: "), "local data table ", dplyr::dim_desc(x))
   cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
   cat_line()
+  print(as_tibble(head(x)))
+  cat_line()
   cat_line(crayon::silver(
-    "# Use as.data.table()/as.data.frame()/as.tibble() to access results"
+    "# Use as.data.table()/as.data.frame()/as_tibble() to access results"
   ))
 
   invisible(x)
@@ -60,22 +89,22 @@ show_query.dtplyr_step <- function(x) {
 is_step <- function(x) inherits(x, "dtplyr_step")
 
 dt_eval <- function(x) {
-  dt <- dt_source(x)
-
-  env <- env(x$env, `_DT` = dt)
+  env <- as_environment(dt_sources(x), x$env)
   quo <- new_quosure(dt_call(x), env)
 
   eval_tidy(quo)
 }
 
-dt_source <- function(x) {
-  while (!is.data.table(x)) {
-    x <- x$parent
-  }
-  x
+# Returns a named list of data.tables: most just dispatch to their
+# parent. The only exceptions are dt_step_first() and the two-table verbs.
+dt_sources <- function(x) {
+  UseMethod("dt_sources")
+}
+dt_sources.dtplyr_step <- function(x) {
+  dt_sources(x$parent)
 }
 
-dt_call <- function(x, needs_copy = dt_needs_copy(x)) {
+dt_call <- function(x, needs_copy = x$needs_copy) {
   UseMethod("dt_call")
 }
 

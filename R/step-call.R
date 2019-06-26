@@ -20,7 +20,7 @@ new_step_call <- function(parent,
   )
 }
 
-dt_call.dtplyr_step_call <- function(x, needs_copy = dt_needs_copy(x)) {
+dt_call.dtplyr_step_call <- function(x, needs_copy = x$needs_copy) {
   call2(x$fun, dt_call(x$parent, needs_copy), !!!x$args)
 }
 

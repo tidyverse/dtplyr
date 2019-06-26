@@ -17,15 +17,15 @@
 #' mtcars2
 #' mtcars2 %>% select(mpg:cyl)
 #' mtcars2 %>% select(x = mpg, y = cyl)
-#' mtcars2 %>% filter(x == 1) %>% select(mpg)
-#' mtcars2 %>% select(mpg) %>% filter(x == 1)
-#' mtcars2 %>% mutate(x2 = x * 2, x4 = x2 * 2)
-#' mtcars2 %>% transmute(x2 = x * 2, x4 = x2 * 2)
-#' mtcars2 %>% filter(x == 1) %>% mutate(x2 = x * 2)
+#' mtcars2 %>% filter(cyl == 4) %>% select(mpg)
+#' mtcars2 %>% select(mpg, cyl) %>% filter(cyl == 4)
+#' mtcars2 %>% mutate(cyl2 = cyl * 2, cyl4 = cyl2 * 2)
+#' mtcars2 %>% transmute(cyl2 = cyl * 2, vs2 = vs * 2)
+#' mtcars2 %>% filter(cyl == 8) %>% mutate(cyl2 = cyl * 2)
 #'
 #' by_cyl <- mtcars2 %>% group_by(cyl)
-#' by_cyl %>% summarise(x = mean(x))
-#' by_cyl %>% group_by(mpg) %>% mutate(x = mean(x))
+#' by_cyl %>% summarise(mpg = mean(mpg))
+#' by_cyl %>% mutate(mpg = mean(mpg))
 #' by_cyl %>% filter(mpg < mean(mpg)) %>% summarise(hp = mean(hp))
 lazy_dt <- function(x, name = NULL) {
   new_step_first(as.data.table(x), name = name)
@@ -55,6 +55,10 @@ dt_call.dtplyr_step_first <- function(x, needs_copy = FALSE) {
   } else {
     x$name
   }
+}
+
+dt_sources.dtplyr_step_first <- function(x) {
+  stats::setNames(list(x$parent), as.character(x$name))
 }
 
 unique_name <- local({

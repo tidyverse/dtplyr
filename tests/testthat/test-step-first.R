@@ -11,7 +11,7 @@ test_that("constructor has sensible defaults", {
 
 test_that("doesn't need copy", {
   dt <- lazy_dt(mtcars)
-  expect_false(dt_needs_copy(dt))
+  expect_false(dt$needs_copy)
 })
 
 test_that("dt_call() copies if requested", {

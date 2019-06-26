@@ -55,7 +55,7 @@ can_merge_subset <- function(x) {
   is.null(x$j)
 }
 
-dt_call.dtplyr_step_subset <- function(x, needs_copy = dt_needs_copy(x)) {
+dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
   i <- if (is.null(x$i)) missing_arg() else x$i
   j <- if (is.null(x$j)) missing_arg() else x$j
 

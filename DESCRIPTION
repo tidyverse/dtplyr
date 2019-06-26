@@ -24,6 +24,7 @@ Imports:
     ellipsis,
     methods,
     rlang,
+    tibble,
     tidyselect
 Suggests:
     bench,
