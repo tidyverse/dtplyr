@@ -15,7 +15,8 @@ dt_call.dtplyr_step_group <- function(x, needs_copy = x$needs_copy) {
 
 #' @export
 group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
-  prep <- dplyr::group_by_prepare(.data, ..., add = add)
+  dots <- capture_dots(...)
+  prep <- dplyr::group_by_prepare(.data, !!!dots, add = add)
 
   step_group(
     prep$data,

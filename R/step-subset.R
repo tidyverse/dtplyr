@@ -104,6 +104,7 @@ rename.dtplyr_step <- function(.data, ...) {
   )
 }
 
+#' @importFrom dplyr summarise
 #' @export
 summarise.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
@@ -113,7 +114,7 @@ summarise.dtplyr_step <- function(.data, ...) {
     vars = union(.data$groups, names(dots)),
     j = call2(".", !!!dots)
   )
-  step_group(out, groups = tail(.data$groups, -1))
+  step_group(out, groups = head(.data$groups, -1))
 }
 
 # exported onLoad

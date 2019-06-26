@@ -240,28 +240,6 @@ filter.data.table <- function(.data, ...) {
   .data[indices[!is.na(indices)]]
 }
 
-# Summarise --------------------------------------------------------------------
-
-#' @importFrom dplyr summarise
-#' @export
-summarise.grouped_dt <- function(.data, ...) {
-  grouped_dt(NextMethod(), drop_last(groups(.data)), copy = FALSE)
-}
-#' @export
-summarise.tbl_dt <- function(.data, ...) {
-  tbl_dt(NextMethod(), copy = FALSE)
-}
-#' @export
-summarise.data.table <- function(.data, ...) {
-  dots <- quos(..., .named = TRUE)
-
-  env <- common_env(dots)
-  exprs <- lapply(dots, get_expr)
-
-  j <- as.call(c(quote(list), exprs))
-
-  dt_subset(.data, , j, env = env)
-}
 
 # Mutate -----------------------------------------------------------------------
 

@@ -87,19 +87,6 @@ test_that("negating empty match returns everything", {
 
 # Select variables -----------------------------------------------
 
-test_that("select can be before group_by (#309)", {
-  df <- data.table(
-    id = c(1, 1, 2, 2, 2, 3, 3, 4, 4, 5),
-    year = c(2013, 2013, 2012, 2013, 2013, 2013, 2012, 2012, 2013, 2013),
-    var1 = rnorm(10)
-  )
-  dfagg <- df %>%
-    group_by(id, year) %>%
-    select(id, year, var1) %>%
-    summarise(var1 = mean(var1))
-  expect_equal(names(dfagg), c("id", "year", "var1"))
-})
-
 test_that("rename errors with invalid grouped data frame (#640)", {
   skip_if_dtplyr()
   df <- data.table(a = 1:3, b = 2:4, d = 3:5) %>% group_by(a, b)

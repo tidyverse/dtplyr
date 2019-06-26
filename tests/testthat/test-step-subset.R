@@ -69,7 +69,7 @@ test_that("simple calls generate expected translations", {
   )
 })
 
-test_that("select and summarise changes grouping", {
+test_that("select changes grouping", {
   dt <- lazy_dt(data.table(x = 1, y = 1, z = 1))
   gt <- group_by(dt, x)
 
@@ -115,5 +115,16 @@ test_that("arrange doesn't use, but still preserves, grouping", {
 test_that("empty arrange returns input unchanged", {
   dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
   expect_true(identical(arrange(dt), dt))
+})
+
+
+# summarise ---------------------------------------------------------------
+
+test_that("summarise peels off layer of grouping", {
+  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1))
+  gt <- group_by(dt, x, y)
+
+  expect_equal(summarise(gt)$groups, "x")
+  expect_equal(summarise(summarise(gt))$groups, character())
 })
 
