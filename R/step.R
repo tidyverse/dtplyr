@@ -109,6 +109,6 @@ dt_call <- function(x, needs_copy = x$needs_copy) {
 }
 
 capture_dots <- function(..., vars, .named = TRUE) {
-  enexprs(...)
+  enexprs(..., .named = .named)
 }
 

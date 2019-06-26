@@ -16,12 +16,10 @@ dt_call.dtplyr_step_group <- function(x, needs_copy = x$needs_copy) {
 #' @export
 group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
   dots <- capture_dots(...)
-  prep <- dplyr::group_by_prepare(.data, !!!dots, add = add)
+  # TODO: handle mutate semantics
+  # prep <- dplyr::group_by_prepare(.data, !!!dots, add = add)
 
-  step_group(
-    prep$data,
-    groups = prep$group_names
-  )
+  step_group(.data, groups = names(dots))
 }
 
 #' @export

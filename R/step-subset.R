@@ -121,7 +121,7 @@ summarise.dtplyr_step <- function(.data, ...) {
 
 # exported onLoad
 filter.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(...)
+  dots <- capture_dots(..., .named = FALSE)
 
   i <- Reduce(function(x, y) call2("&", x, y), dots)
   step_subset(.data, i = i)
@@ -130,7 +130,7 @@ filter.dtplyr_step <- function(.data, ...) {
 #' @importFrom dplyr arrange
 #' @export
 arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
-  dots <- capture_dots(...)
+  dots <- capture_dots(..., .named = FALSE)
   if (.by_group) {
     dots <- c(syms(.data$groups), dots)
   }

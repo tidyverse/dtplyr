@@ -70,6 +70,7 @@ nest_vars <- function(.data, dots, all_vars, transmute = FALSE) {
     vars <- syms(set_names(all_new_vars))
     vars[names(dots)] <- dots
     names(vars)[!names(vars) %in% names(dots)] <- ""
+    vars <- simplify_names(vars)
 
     step_subset(.data, j = call2(".", !!!vars))
   } else {
