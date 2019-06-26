@@ -72,3 +72,12 @@ test_that("converts other types if requested", {
   expect_error(left_join(dt1, x, by = "x"), "copy")
   expect_s3_class(left_join(dt1, x, by = "x", copy = TRUE), "dtplyr_step_join")
 })
+
+test_that("mutates inside joins are copied as needed", {
+  dt <- data.table(x = 1)
+  lhs <- lazy_dt(dt, "dt1") %>% mutate(y = x + 1)
+  rhs <- lazy_dt(dt, "dt2") %>% mutate(z = x + 1)
+
+  collect(inner_join(lhs, rhs, by = "x"))
+  expect_named(dt, "x")
+})
