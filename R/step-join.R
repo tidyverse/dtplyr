@@ -128,5 +128,7 @@ auto_copy.dtplyr_step <- function(x, y, copy = FALSE, ...) {
 }
 
 # Needed to test auto_copy
+#' @export
 tbl_vars.foo <- function(x) "x"
-as.data.frame.foo <- function(x) data.frame(x = 1:10)
+#' @export
+as.data.frame.foo <- function(x, ...) data.frame(x = 1:10)
