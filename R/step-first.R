@@ -55,6 +55,10 @@ dt_call.dtplyr_step_first <- function(x, needs_copy = FALSE) {
   }
 }
 
+dt_implicit_copy.dtplyr_step_first <- function(x) {
+  FALSE
+}
+
 dt_needs_copy.dtplyr_step_first <- function(x) {
   FALSE
 }

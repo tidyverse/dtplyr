@@ -59,6 +59,14 @@ dt_needs_copy <- function(x) {
   UseMethod("dt_needs_copy")
 }
 
+dt_implicit_copy <- function(x) {
+  UseMethod("dt_implicit_copy")
+}
+
+dt_implicit_copy.dtplyr_step <- function(x) {
+  dt_implicit_copy(x$parent)
+}
+
 dt_source <- function(x) {
   while (!is.data.table(x)) {
     x <- x$parent

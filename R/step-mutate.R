@@ -25,15 +25,8 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = dt_needs_copy(x)) {
 }
 
 dt_needs_copy.dtplyr_step_mutate <- function(x) {
-  if (inherits(x$parent, "dtplyr_step_first")) {
-    TRUE
-  } else if (inherits(x$parent, "dtplyr_step_subset")) {
-    FALSE
-  } else {
-    dt_needs_copy(x$parent)
-  }
+  !dt_implicit_copy(x$parent)
 }
-
 
 # dplyr methods -----------------------------------------------------------
 

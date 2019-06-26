@@ -23,10 +23,13 @@ dt_needs_copy.dtplyr_step_call <- function(x) {
   dt_needs_copy(x$parent)
 }
 
+dt_implicit_copy.dtplyr_step_call <- function(x) {
+  TRUE
+}
+
 dt_call.dtplyr_step_call <- function(x, needs_copy = dt_needs_copy(x)) {
   call2(x$fun, dt_call(x$parent, needs_copy), !!!x$args)
 }
-
 
 # dplyr verbs -------------------------------------------------------------
 

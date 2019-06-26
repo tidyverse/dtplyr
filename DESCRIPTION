@@ -26,6 +26,7 @@ Imports:
     rlang,
     tidyselect
 Suggests:
+    bench,
     covr,
     Lahman,
     nycflights13,

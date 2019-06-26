@@ -75,6 +75,10 @@ dt_needs_copy.dtplyr_step_subset <- function(x) {
   dt_needs_copy(x$parent)
 }
 
+dt_implicit_copy.dtplyr_step_subset <- function(x) {
+  !is.null(x$i) || !is.null(x$j)
+}
+
 # dplyr methods -----------------------------------------------------------
 
 #' @export
