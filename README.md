@@ -23,7 +23,10 @@ computation is performed until you explicitly request it with
 `as.data.table()`, `as.data.frame()` or `as_tibble()`. This has a
 considerable advantage over the previous version (which eagerly
 evaluated each step) because it allows dtplyr to generate significantly
-more performant translations.
+more performant translations. (See
+[table.express](https://github.com/asardaes/table.express) and
+[rqdatatable](https://github.com/WinVector/rqdatatable/) for related
+work.)
 
 See `vignette("translation")` for details of the current translations.
 
