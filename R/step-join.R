@@ -1,4 +1,4 @@
-step_join <- function(x, y, on, style) {
+step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   stopifnot(is_step(x))
   stopifnot(is_step(y))
   stopifnot(is.character(on))
@@ -8,6 +8,7 @@ step_join <- function(x, y, on, style) {
     implicit_copy = TRUE,
     parent2 = y,
     on = on,
+    suffix = suffix,
     style = style,
     class = "dtplyr_step_join"
   )
@@ -24,14 +25,21 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
   on <- call2(".", !!!syms(x$on))
   by <- as.character(x$on)
 
-  switch(x$style,
+  call <- switch(x$style,
     inner = call2("merge", lhs, rhs, all = FALSE, by = by),
     full  = call2("merge", lhs, rhs, all = TRUE, by = by),
-    left  = call2("[", lhs, rhs, on = on),
+    left  = call2("merge", lhs, rhs, all.x = TRUE, all.y = FALSE, by = by),
     semi = call2("[", lhs, call2("unique", call2("[", lhs, rhs, which = TRUE, nomatch = 0L, on = on))),
     anti  = call2("[", lhs, call2("!", rhs), on = on),
     abort("Invalid style")
   )
+
+  # Hack on suffix if not the default
+  if (is_call(call, "merge") && !identical(x$suffix, c(".x", ".y"))) {
+    call$suffixes <- x$suffix
+  }
+
+  call
 }
 
 # dplyr verbs -------------------------------------------------------------
@@ -42,7 +50,7 @@ left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
   by <- dtplyr_common_by(by, x, y)
   y <- dtplyr_auto_copy(x, y, copy = copy)
 
-  step_join(x, y, on = by, style = "left")
+  step_join(x, y, on = by, style = "left", suffix = suffix)
 }
 
 #' @importFrom dplyr right_join
@@ -51,7 +59,7 @@ right_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = 
   by <- dtplyr_common_by(by, y, x)
   y <- dtplyr_auto_copy(x, y, copy = copy)
 
-  step_join(y, x, on = by, style = "left")
+  step_join(y, x, on = by, style = "left", suffix = suffix)
 }
 
 #' @importFrom dplyr inner_join
@@ -60,7 +68,7 @@ inner_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = 
   by <- dtplyr_common_by(by, x, y)
   y <- dtplyr_auto_copy(x, y, copy = copy)
 
-  step_join(x, y, on = by, style = "inner")
+  step_join(x, y, on = by, style = "inner", suffix = suffix)
 }
 
 #' @importFrom dplyr full_join
@@ -69,7 +77,7 @@ full_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
   by <- dtplyr_common_by(by, x, y)
   y <- dtplyr_auto_copy(x, y, copy = copy)
 
-  step_join(x, y, on = by, style = "full")
+  step_join(x, y, on = by, style = "full", suffix = suffix)
 }
 
 #' @importFrom dplyr anti_join

@@ -18,12 +18,12 @@ test_that("simple usage generates expected translation", {
 
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% show_query(),
-    expr(dt1[dt2, on = .(x)])
+    expr(merge(dt1, dt2, all.x = TRUE, all.y = FALSE, by = "x"))
   )
 
   expect_equal(
     dt1 %>% right_join(dt2, by = "x") %>% show_query(),
-    expr(dt2[dt1, on = .(x)])
+    expr(merge(dt2, dt1, all.x = TRUE, all.y = FALSE, by = "x"))
   )
 
   expect_equal(
@@ -44,6 +44,16 @@ test_that("simple usage generates expected translation", {
   expect_equal(
     dt1 %>% semi_join(dt2, by = "x") %>% show_query(),
     expr(dt1[unique(dt1[dt2, which = TRUE, nomatch = 0L, on = .(x)])])
+  )
+})
+
+test_that("can override suffixes", {
+  dt1 <- lazy_dt(data.frame(x = 1, y = 2, a = 3), "dt1")
+  dt2 <- lazy_dt(data.frame(x = 1, y = 2, b = 4), "dt2")
+
+  expect_equal(
+    dt1 %>% left_join(dt2, by = "x", suffix = c("X", "Y")) %>% show_query(),
+    expr(merge(dt1, dt2, all.x = TRUE, all.y = FALSE, by = "x", suffixes = !!c("X", "Y")))
   )
 })
 
