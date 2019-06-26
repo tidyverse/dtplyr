@@ -134,14 +134,3 @@ named_args <- function(args) {
 
   named != 0
 }
-
-# Set operations ---------------------------------------------------------------
-
-#' @export
-distinct.grouped_dt <- function(.data, ...) {
-
-  dist <- distinct_vars(.data, quos(!!!groups(.data), ..., .named = TRUE))
-
-  grouped_dt(unique(dist$data, by = dist$vars), groups(.data), copy = FALSE)
-}
-

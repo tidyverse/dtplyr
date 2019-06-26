@@ -24,6 +24,7 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 
 # dplyr methods -----------------------------------------------------------
 
+#' @importFrom dplyr mutate
 #' @export
 mutate.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
@@ -72,7 +73,7 @@ nest_vars <- function(.data, dots, all_vars, transmute = FALSE) {
     names(vars)[!names(vars) %in% names(dots)] <- ""
     vars <- simplify_names(vars)
 
-    step_subset(.data, j = call2(".", !!!vars))
+    step_subset(.data, vars = all_new_vars, j = call2(".", !!!vars))
   } else {
     step_mutate(.data, dots)
   }

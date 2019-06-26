@@ -106,6 +106,23 @@ The primary exception is grouped `filter()`, which requires the use of `.SD` ()
 dt %>% group_by(a) %>% filter(b < mean(b)) %>% show_query()
 ```
 
+## Distinct
+
+`distinct()` is translated to some form of `unique()`:
+
+```{r}
+dt %>% distinct() %>% show_query()
+dt %>% distinct(a, b) %>% show_query()
+dt %>% distinct(a, b, .keep_all = TRUE) %>% show_query()
+```
+
+`distinct()` on a computed column uses an intermediate step:
+
+```{r}
+dt %>% distinct(c = a + b) %>% show_query()
+dt %>% distinct(c = a + b, .keep_all = TRUE) %>% show_query()
+```
+
 # Combinations
 
 dtplyr tries to generate generate data.table code as close to what you'd write by hand as possible, as this tends to unlock data.tables tremendous speed. For example, if you `filter()` and then `select()`, dtplyr generates a single `[`:
