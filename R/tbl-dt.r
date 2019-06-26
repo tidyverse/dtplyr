@@ -219,28 +219,6 @@ common_env <- function (dots){
   env
 }
 
-# registered onLoad
-#' @importFrom dplyr filter
-filter.grouped_dt <- function(.data, ...) {
-  grouped_dt(NextMethod(), groups(.data), copy = FALSE)
-}
-filter.tbl_dt <- function(.data, ...) {
-  tbl_dt(NextMethod(), copy = FALSE)
-}
-filter.data.table <- function(.data, ...) {
-  dots <- quos(...)
-  env <- common_env(dots)
-
-  # http://stackoverflow.com/questions/16573995/subset-by-group-with-data-table
-  # expr <- lapply(dots, `[[`, "expr")
-  expr <- lapply(dots, get_expr)
-  j <- substitute(list(`_row` = .I[expr]), list(expr = and_expr(expr)))
-  indices <- dt_subset(.data, , j, env)$`_row`
-
-  .data[indices[!is.na(indices)]]
-}
-
-
 # Mutate -----------------------------------------------------------------------
 
 #' @export
