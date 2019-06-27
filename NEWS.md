@@ -12,6 +12,9 @@
     extremely inefficient so offered little of data.table's impressive speed,
     and was used by very few people.
 
+*   dtplyr provides methods for data.tables that warning you that they use the
+    data frame implementation and you should use `lazy_dt()` (#77)
+
 * Joins now pass `...` on to data table's merge method (#41).
 
 * Convert from lazyeval to tidy eval (@christophsax).
