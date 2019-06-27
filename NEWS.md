@@ -1,9 +1,16 @@
 # dtplyr 0.0.3.9000
+(To be release as dtplyr 1.0.0)
 
-* Converted from eager approach to lazy approach. You now must use `lazy_dt()`
-  to begin a translation pipeline, and must use `collect()`, `as.data.table()`, 
-  `as.data.frame()`, or `as_tibble()` to finish the translation and actually
-  perform the computation.
+*   Converted from eager approach to lazy approach. You now must use `lazy_dt()`
+    to begin a translation pipeline, and must use `collect()`, `as.data.table()`, 
+    `as.data.frame()`, or `as_tibble()` to finish the translation and actually
+    perform the computation (#38).
+    
+    This represents a complete overhaul of the package replacing the eager 
+    evaluation used in the previous releases. This unfortunately breaks all
+    existing code that used dtplyr, but frankly the previous version was 
+    extremely inefficient so offered little of data.table's impressive speed,
+    and was used by very few people.
 
 * Joins now pass `...` on to data table's merge method (#41).
 
