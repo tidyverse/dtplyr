@@ -87,6 +87,18 @@ collect.dtplyr_step <- function(x, ...) {
 }
 
 #' @export
+#' @importFrom dplyr pull
+pull.dtplyr_step <- function(.data, var = -1) {
+  expr <- enquo(var)
+  var <- dplyr:::find_var(expr, .data$vars)
+
+  .data <- ungroup(.data)
+  .data <- select(.data, !! sym(var))
+  .data <- collect(.data)
+  .data[[1]]
+}
+
+#' @export
 print.dtplyr_step <- function(x, ...) {
   cat_line(crayon::bold("Source: "), "local data table ", dplyr::dim_desc(x))
   cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
