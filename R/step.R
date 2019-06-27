@@ -44,6 +44,24 @@ tbl_vars.dtplyr_step <- function(x) {
   x$vars
 }
 
+#' @importFrom dplyr groups
+#' @export
+groups.dtplyr_step <- function(x) {
+  syms(x$groups)
+}
+
+#' @importFrom dplyr group_size
+#' @export
+group_size.dtplyr_step <- function(x) {
+  collect(summarise(x, n = .N))$n
+}
+
+#' @importFrom dplyr n_groups
+#' @export
+n_groups.dtplyr_step <- function(x) {
+  length(group_size(x))
+}
+
 #' @export
 as.data.table.dtplyr_step <- function(x, keep.rownames = FALSE, key = NULL, ...) {
   dt_eval(x)
