@@ -106,6 +106,14 @@ The primary exception is grouped `filter()`, which requires the use of `.SD` ()
 dt %>% group_by(a) %>% filter(b < mean(b)) %>% show_query()
 ```
 
+Unlike the data.frame backend, `group_by()` does not sort the output in group order by default. If you want this behaviour, you can use `key_by()` instead:
+
+```{r}
+dt %>% key_by(a) %>% summarise(b = mean(b)) %>% show_query()
+```
+
+Because this does one upfront sort, it should generate more efficient code when performing repeated actions on the same groups.
+
 ## Distinct
 
 `distinct()` is translated to some form of `unique()`:
