@@ -1,4 +1,4 @@
-step_call <- function(parent, fun, args = list()) {
+step_call <- function(parent, fun, args = list(), in_place = FALSE) {
 
   stopifnot(is_step(parent))
   stopifnot(is.character(fun))
@@ -8,7 +8,8 @@ step_call <- function(parent, fun, args = list()) {
     parent = parent,
     vars = parent$vars,
     groups = parent$groups,
-    implicit_copy = TRUE,
+    implicit_copy = !in_place,
+    needs_copy = in_place || parent$needs_copy,
     fun = fun,
     args = args,
     class = "dtplyr_step_call"
@@ -62,4 +63,34 @@ distinct.dtplyr_step <- function(.data, ..., .keep_all = FALSE) {
   args$by <- by
 
   step_call(.data, "unique", args = args)
+}
+
+#' Group by with ordering
+#'
+#' Uses [data.table::setkey()]; this guarantees that the output is sorted
+#' and typically increases performance when peforming multiple operations on
+#' the same grouping.
+#'
+#' @param .data A [lazy_dt]
+#' @param ... Variables to key by
+#' @export
+#' @examples
+#' library(dplyr)
+#' library(data.table)
+#'
+#' mtcars2 <- lazy_dt(mtcars)
+#'
+#' # group_by() doesn't order by group
+#' mtcars2 %>% group_by(cyl) %>% summarise(mpg = mean(mpg))
+#'
+#' # key_by() does
+#' mtcars2 %>% key_by(cyl) %>% summarise(mpg = mean(mpg))
+key_by <- function(.data, ...) {
+  stopifnot(is_step(.data))
+
+  dots <- unname(ensyms(...))
+  cols <- vapply(dots, as.character, character(1))
+
+  out <- step_call(.data, "setkeyv", list(cols = cols), in_place = TRUE)
+  step_group(out, cols)
 }

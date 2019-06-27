@@ -4,13 +4,17 @@
 \alias{lazy_dt}
 \title{Create a "lazy" data.table}
 \usage{
-lazy_dt(x, name = NULL)
+lazy_dt(x, name = NULL, immutable = TRUE)
 }
 \arguments{
 \item{x}{A data table (or something can can be coerced to a data table)}
 
 \item{name}{Optionally, supply a name to be used in generated expressions.
 For expert use only.}
+
+\item{immutable}{If `TRUE`, `x` is treated as immutable and will never
+be modified in place. Alternatively, set `immutable = FALSE` to state
+that it's ok for dtplyr to modify the input.}
 }
 \description{
 A lazy data.table lazy captures the intent of dplyr verbs, only actually
