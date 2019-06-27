@@ -34,39 +34,3 @@ test_that("can evaluate to any data frame type", {
 
   expect_s3_class(collect(dt), "data.table")
 })
-
-# evaluation environment --------------------------------------------------
-
-test_that("n() is equivalent to .N", {
-  dt <- lazy_dt(data.frame(g = c(1, 1, 2), x = 1:3))
-
-  expect_equal(
-    dt %>% summarise(n = n()) %>% pull(),
-    3L
-  )
-  expect_equal(
-    dt %>% group_by(g) %>% summarise(n = n()) %>% pull(),
-    c(2L, 1L)
-  )
-})
-
-test_that("row_number() is equivalent .I", {
-  dt <- lazy_dt(data.frame(g = c(1, 1, 2), x = 1:3))
-
-  expect_equal(
-    dt %>% mutate(n = row_number()) %>% pull(),
-    1:3L
-  )
-  expect_equal(
-    dt %>% group_by(g) %>% mutate(n = row_number()) %>% pull(),
-    c(1:2, 1)
-  )
-})
-
-test_that("row_number(x) is equivalent to rank", {
-  dt <- lazy_dt(data.frame(x = c(10, 30, 20)))
-  expect_equal(
-    dt %>% mutate(n = row_number(x)) %>% pull(),
-    c(1L, 3L, 2L)
-  )
-})

@@ -1,3 +1,31 @@
+dt_eval <- function(x) {
+  env <- as_environment(dt_sources(x), x$env)
+  add_dt_wrappers(env)
+  quo <- new_quosure(dt_call(x), env)
+
+  eval_tidy(quo)
+}
+
+#' @importFrom data.table frank
+add_dt_wrappers <- function(env) {
+  env$n <- function() eval(quote(.N), caller_env())
+  env$row_number <- function(x) {
+    if (missing(x)) {
+      eval(quote(seq_len(.N)), caller_env())
+    } else {
+      frank(x, ties.method = "first", na.last = "keep")
+    }
+  }
+
+  # Make sure data.table functions are available so dtplyr still works
+  # even when data.table isn't attached
+  env$setname <- data.table::setnames
+  env$copy <- data.table::copy
+  env$setkeyv <- data.table::setkeyv
+
+  invisible()
+}
+
 # These functions attempt to simulate tidy eval as much as possible within
 # data.table. The goal is to get the majority of real-world code to work,
 # without aiming for 100% compliance.

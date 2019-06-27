@@ -12,7 +12,7 @@ new_step <- function(parent,
                      groups = parent$groups,
                      implicit_copy = parent$implicit_copy,
                      needs_copy = parent$needs_copy,
-                     env = caller_env(),
+                     env = parent$env,
                      ...,
                      class = character()) {
 
@@ -119,33 +119,6 @@ show_query.dtplyr_step <- function(x) {
 
 is_step <- function(x) inherits(x, "dtplyr_step")
 
-dt_eval <- function(x) {
-  env <- as_environment(dt_sources(x), x$env)
-  add_dt_wrappers(env)
-  quo <- new_quosure(dt_call(x), env)
-
-  eval_tidy(quo)
-}
-
-#' @importFrom data.table frank
-add_dt_wrappers <- function(env) {
-  env$n <- function() eval(quote(.N), caller_env())
-  env$row_number <- function(x) {
-    if (missing(x)) {
-      eval(quote(seq_len(.N)), caller_env())
-    } else {
-      frank(x, ties.method = "first", na.last = "keep")
-    }
-  }
-
-  # Make sure data.table functions are available so dtplyr still works
-  # even when data.table isn't attached
-  env$setname <- data.table::setnames
-  env$copy <- data.table::copy
-  env$setkeyv <- data.table::setkeyv
-
-  invisible()
-}
 
 # Returns a named list of data.tables: most just dispatch to their
 # parent. The only exceptions are dt_step_first() and the two-table verbs.
