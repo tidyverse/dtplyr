@@ -26,7 +26,7 @@
 </script>
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -87,7 +87,12 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
+    
+
+    
+    
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="dtplyr" class="section level1">
 
 <!-- badges: start -->
@@ -95,11 +100,8 @@
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
-<p>dtplyr provides a dplyr backend for <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a>. It has two modes of operation:</p>
-<ul>
-<li><p>Eager [WIP]. When you use a dplyr verb directly on a data.table object, it eagerly converts the dplyr code to data.table code, runs it, and returns a new data.table. This is not very efficient because it can’t take advantage of many of data.table’s best features.</p></li>
-<li><p>Lazy. When you create a <code><a href="reference/lazy_dt.html">lazy_dt()</a></code>, no computation is performed until you explicitly request it with <code><a href="https://www.rdocumentation.org/packages/data.table/topics/as.data.table">as.data.table()</a></code>, <code><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble()</a></code>. This allows dtplyr to inspect the full sequence of operations to figure out the best translation.</p></li>
-</ul>
+<p>dtplyr provides a dplyr backend for <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a>. Compared to the previous release, this version of dtplyr focusses only on lazy evaluation triggered by use of <code><a href="reference/lazy_dt.html">lazy_dt()</a></code>. This means that no computation is performed until you explicitly request it with <code><a href="https://www.rdocumentation.org/packages/data.table/topics/as.data.table">as.data.table()</a></code>, <code><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble()</a></code>. This has a considerable advantage over the previous version (which eagerly evaluated each step) because it allows dtplyr to generate significantly more performant translations. (See <a href="https://github.com/asardaes/table.express">table.express</a> and <a href="https://github.com/WinVector/rqdatatable/">rqdatatable</a> for related work.)</p>
+<p>See <code><a href="articles/translation.html">vignette("translation")</a></code> for details of the current translations.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -110,23 +112,55 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"tidyverse/dtplyr"</span>)</a></code></pre></div>
 </div>
-<div id="why-is-dtplyr-slower-than-data-table" class="section level2">
-<h2 class="hasAnchor">
-<a href="#why-is-dtplyr-slower-than-data-table" class="anchor"></a>Why is dtplyr slower than data.table?</h2>
-<p>dtplyr will always be a bit slower than data.table, because it creates copies of objects rather than mutating in place (that’s the dplyr philosophy). Currently, dtplyr is quite a lot slower than bare data.table because the methods aren’t quite smart enough. I hope interested dplyr &amp; data.table users from the community will help me to improve the performance.</p>
-<ul>
-<li><p>To match base R semantics, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> never modifies in place; it always creates a <code><a href="https://www.rdocumentation.org/packages/data.table/topics/copy">copy()</a></code> first.</p></li>
-<li><p>Each dplyr verb must do some computation to convert dplyr syntax to data.table syntax. This takes time proportional to the complexity of the input code, not the input <em>data</em>, so should be a negligible overhead for large datasets.</p></li>
-<li><p>Some data.table expressions have no direct dplyr equivalent. For example, <code>X[Y, sum(foo*bar)]</code> selects the relevant variables <em>before</em> joining. The dplyr equivalent, <code>X %&gt;% left_join(Y) %&gt;% summarise(sum(foo * bar))</code>, carries along all variables in the join.</p></li>
-</ul>
-</div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>To use dtplyr, I recommend loading dplyr, dtplyr, and data.table:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(data.table)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dtplyr)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(data.table)</a></code></pre></div>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>Then use <code><a href="reference/lazy_dt.html">lazy_dt()</a></code> to create a “lazy” data table that tracks the operations performed to it.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">mtcars2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/lazy_dt.html">lazy_dt</a></span>(mtcars)</a></code></pre></div>
+<p>You can preview the transformation (including the generated data.table code) by printing the result:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">mtcars2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(wt <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">l100k =</span> <span class="fl">235.21</span> <span class="op">/</span><span class="st"> </span>mpg ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># liters / 100 km</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(cyl) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">l100k =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(l100k))</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; Source: local data table [?? x 2]</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; Call:   `_DT1`[wt &lt; 5, ][, `:=`(l100k = 235.21/mpg)][, .(l100k = mean(l100k)), </span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;     by = .(cyl)]</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;     cyl l100k</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; 1     6 12.0 </span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; 2     4  9.05</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; 3     8 14.9 </span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</span></a></code></pre></div>
+<p>But generally you should reserve this only for debugging and use <code><a href="https://www.rdocumentation.org/packages/data.table/topics/as.data.table">as.data.table()</a></code>, <code><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame()</a></code>, or <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble()</a></code> to indicate that you’re done with the transformation and want to access the results:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">mtcars2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(wt <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">l100k =</span> <span class="fl">235.21</span> <span class="op">/</span><span class="st"> </span>mpg ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># liters / 100 km</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(cyl) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">l100k =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(l100k)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>()</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; # A tibble: 3 x 2</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;     cyl l100k</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; 1     6 12.0 </span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; 2     4  9.05</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; 3     8 14.9</span></a></code></pre></div>
+</div>
+<div id="why-is-dtplyr-slower-than-data-table" class="section level2">
+<h2 class="hasAnchor">
+<a href="#why-is-dtplyr-slower-than-data-table" class="anchor"></a>Why is dtplyr slower than data.table?</h2>
+<p>There are three primary reasons that dtplyr will always be somewhat slower than data.table:</p>
+<ul>
+<li><p>Each dplyr verb must do some computation to convert dplyr syntax to data.table syntax. This takes time proportional to the complexity of the input code, not the input <em>data</em>, so should be a negligible overhead for large datasets.</p></li>
+<li><p>Some data.table expressions have no direct dplyr equivalent. For example, <code>X[Y, sum(foo*bar)]</code> selects the relevant variables <em>before</em> joining. The dplyr equivalent, <code>X %&gt;% left_join(Y) %&gt;% summarise(sum(foo * bar))</code>, carries along all variables in the join. Similarly, there’s no efficient way to express cross- or rolling-joins with dplyr verbs.</p></li>
+<li><p>To match dplyr semantics, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> does not modify in place by default. This means that most expression involving <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> needs to make a copy that would not be necessary if you were using data.table directly. (You can opt out of this behaviour with <code>immutable = FALSE</code>) )</p></li>
+</ul>
 </div>
 </div>
   </div>
@@ -159,7 +193,7 @@
 </ul>
 </div>
 
-  <div class="dev-status">
+      <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=dtplyr"><img src="https://www.r-pkg.org/badges/version/dtplyr" alt="CRAN status"></a></li>
@@ -168,7 +202,9 @@
 </ul>
 </div>
 </div>
+
 </div>
+
 
       <footer><div class="tidyverse">
   <p>dtplyr is a part of the <strong>tidyverse</strong>, an ecosystem of packages designed with common APIs and a shared philosophy. Learn more at <a href="https://tidyverse.org">tidyverse.org</a>.</p>

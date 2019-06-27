@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A grouped data table. — grouped_dt • dtplyr</title>
+<title>Group by with ordering — key_by • dtplyr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -31,11 +31,11 @@
 
 
 
-<meta property="og:title" content="A grouped data table. — grouped_dt" />
+<meta property="og:title" content="Group by with ordering — key_by" />
 
-<meta property="og:description" content="The easiest way to create a grouped data table is to call the group_by
-method on a data table or tbl: this will take care of capturing
-the unevalated expressions for you." />
+<meta property="og:description" content="Uses [data.table::setkey()]; this guarantees that the output is sorted
+and typically increases performance when peforming multiple operations on
+the same grouping." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,56 +124,65 @@ the unevalated expressions for you." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A grouped data table.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/grouped-dt.r'><code>R/grouped-dt.r</code></a></small>
-    <div class="hidden name"><code>grouped_dt.Rd</code></div>
+    <h1>Group by with ordering</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-call.R'><code>R/step-call.R</code></a></small>
+    <div class="hidden name"><code>key_by.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The easiest way to create a grouped data table is to call the <code>group_by</code>
-method on a data table or tbl: this will take care of capturing
-the unevalated expressions for you.</p>
+    <p>Uses [data.table::setkey()]; this guarantees that the output is sorted
+and typically increases performance when peforming multiple operations on
+the same grouping.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>grouped_dt</span>(<span class='no'>data</span>, <span class='no'>vars</span>, <span class='kw'>copy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>is.grouped_dt</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>key_by</span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>a tbl or data frame.</p></td>
+      <th>.data</th>
+      <td><p>A [lazy_dt]</p></td>
     </tr>
     <tr>
-      <th>vars</th>
-      <td><p>a list of quoted variables.</p></td>
-    </tr>
-    <tr>
-      <th>copy</th>
-      <td><p>If <code>TRUE</code>, will make copy of input.</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>an object to check</p></td>
+      <th>...</th>
+      <td><p>Variables to key by</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>, <span class='kw'>warn.conflicts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='st'>"nycflights13"</span>)) {
-<span class='no'>flights_dt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tbl_dt.html'>tbl_dt</a></span>(<span class='no'>flights</span>)
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_size.html'>group_size</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>flights_dt</span>, <span class='no'>year</span>, <span class='no'>month</span>, <span class='no'>day</span>))
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_size.html'>group_size</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>flights_dt</span>, <span class='no'>dest</span>))
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>data.table</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘data.table’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:dplyr’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    between, first, last</span></div><div class='input'>
+<span class='no'>mtcars2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span>(<span class='no'>mtcars</span>)
 
-<span class='no'>monthly</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>flights_dt</span>, <span class='no'>month</span>)
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='no'>monthly</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/n.html'>n</a></span>(), <span class='kw'>delay</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>arr_delay</span>))
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: nycflights13</span></div><div class='output co'>#&gt;        n delay
-#&gt; 1 336776    NA</div></pre>
+<span class='co'># group_by() doesn't order by group</span>
+<span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
+#&gt; Call:   `_DT1`[, .(mpg = mean(mpg)), by = .(cyl)]
+#&gt; 
+#&gt;     cyl   mpg
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1     6  19.7
+#&gt; 2     4  26.7
+#&gt; 3     8  15.1
+#&gt; 
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'>
+<span class='co'># key_by() does</span>
+<span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'>key_by</span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
+#&gt; Call:   setkeyv(copy(`_DT1`), cols = "cyl")[, .(mpg = mean(mpg)), by = .(cyl)]
+#&gt; 
+#&gt;     cyl   mpg
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1     4  26.7
+#&gt; 2     6  19.7
+#&gt; 3     8  15.1
+#&gt; 
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
