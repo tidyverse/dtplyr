@@ -151,6 +151,38 @@ slice.dtplyr_step <- function(.data, ...) {
   step_subset(.data, i = i)
 }
 
+#' @importFrom dplyr sample_n
+#' @export
+sample_n.dtplyr_step <- function(tbl,
+                                 size,
+                                 replace = FALSE,
+                                 weight = NULL
+                                 ) {
+  weight <- enexpr(weight)
+  step_subset(tbl, i = sample_call(size, replace, weight))
+}
+
+#' @importFrom dplyr sample_frac
+#' @export
+sample_frac.dtplyr_step <- function(tbl,
+                                    size = 1,
+                                    replace = FALSE,
+                                    weight = NULL
+                                    ) {
+  weight <- enexpr(weight)
+  step_subset(tbl, i = sample_call(expr(.N * !!size), replace, weight))
+}
+
+sample_call <- function(size, replace = FALSE, weight = NULL) {
+  call <- expr(sample(.N, !!size))
+
+  if (replace) {
+    call$replace <- TRUE
+  }
+  call$prob <- weight
+  call
+}
+
 # helpers ------------------------------------------------------------------
 
 rename_groups <- function(groups, vars) {

@@ -165,3 +165,27 @@ test_that("can slice when grouped", {
     expr(DT[, .SD[1, ], by = .(x)])
   )
 })
+
+# sample ------------------------------------------------------------------
+
+test_that("basic usage generates expected calls", {
+  dt <- lazy_dt(data.table(x = 1:5, y = 1), "DT")
+
+  expect_equal(
+    dt %>% sample_n(3) %>% show_query(),
+    expr(DT[sample(.N, 3), ])
+  )
+  expect_equal(
+    dt %>% sample_frac(0.5) %>% show_query(),
+    expr(DT[sample(.N, .N * 0.5), ])
+  )
+
+  expect_equal(
+    dt %>% sample_n(3, replace = TRUE) %>% show_query(),
+    expr(DT[sample(.N, 3, replace = TRUE), ])
+  )
+  expect_equal(
+    dt %>% sample_n(3, weight = y) %>% show_query(),
+    expr(DT[sample(.N, 3, prob = y), ])
+  )
+})
