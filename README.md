@@ -23,12 +23,17 @@ computation is performed until you explicitly request it with
 `as.data.table()`, `as.data.frame()` or `as_tibble()`. This has a
 considerable advantage over the previous version (which eagerly
 evaluated each step) because it allows dtplyr to generate significantly
-more performant translations. (See
-[table.express](https://github.com/asardaes/table.express) and
-[rqdatatable](https://github.com/WinVector/rqdatatable/) for related
-work.)
+more performant translations.
 
-See `vignette("translation")` for details of the current translations.
+This is a large change that breaks all existing uses of dtplyr. But
+frankly, dtplyr was pretty useless before because it did such a bad job
+of generating data.table code. Fortunately few people used it for this
+reason, making a
+
+See `vignette("translation")` for details of the current translations,
+and [table.express](https://github.com/asardaes/table.express) and
+[rqdatatable](https://github.com/WinVector/rqdatatable/) for related
+work.
 
 ## Installation
 
@@ -68,7 +73,7 @@ code) by printing the result:
 ``` r
 mtcars2 %>% 
   filter(wt < 5) %>% 
-  mutate(l100k = 235.21 / mpg ) %>% # liters / 100 km
+  mutate(l100k = 235.21 / mpg) %>% # liters / 100 km
   group_by(cyl) %>% 
   summarise(l100k = mean(l100k))
 #> Source: local data table [?? x 2]
@@ -102,6 +107,13 @@ mtcars2 %>%
 #> 2     4  9.05
 #> 3     8 14.9
 ```
+
+Note that this doesn’t generate exactly the same results as when applied
+to a data.frame, because data.table doesn’t sort groups by default. If
+you do want sorted groups, you can instead use `key_by()`, but it’s
+worth remembering that dtplyr is a translation layer, so like
+[dbplyr](http://dbplyr.tidyverse.org/) it can’t guarantee that the
+results are exactly equal.
 
 ## Why is dtplyr slower than data.table?
 
