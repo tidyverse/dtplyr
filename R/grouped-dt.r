@@ -92,45 +92,4 @@ ungroup.grouped_dt <- function(x, ...) {
 
 # Do ---------------------------------------------------------------------------
 
-#' @export
-do.grouped_dt <- function(.data, ...) {
 
-  dots <- quos(...)
-  env <- common_env(dots)
-  named <- named_args(dots)
-
-  if (!named) {
-    j <- get_expr(dots[[1]])
-  } else {
-    exprs <- lapply(dots, function(x) call("list", get_expr(x)))
-    j <- as.call(c(quote(list), exprs))
-  }
-
-  out <- dt_subset(.data, , j, env = env, sd_cols = names(.data))
-
-  if (!named) {
-    grouped_dt(out, groups(.data))
-  } else {
-    tbl_dt(out)
-  }
-}
-
-named_args <- function(args) {
-  # Arguments must either be all named or all unnamed.
-  named <- sum(names2(args) != "")
-  if (!(named == 0 || named == length(args))) {
-    stop("Arguments to do() must either be all named or all unnamed",
-      call. = FALSE)
-  }
-  if (named == 0 && length(args) > 1) {
-    stop("Can only supply single unnamed argument to do()", call. = FALSE)
-  }
-
-  # Check for old syntax
-  if (named == 1 && names(args) == ".f") {
-    stop("do syntax changed in dplyr 0.2. Please see documentation for details",
-      call. = FALSE)
-  }
-
-  named != 0
-}

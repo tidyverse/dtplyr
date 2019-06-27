@@ -204,3 +204,21 @@ test_that("basic usage generates expected calls", {
     expr(DT[sample(.N, 3, prob = y), ])
   )
 })
+
+
+# do ----------------------------------------------------------------------
+
+test_that("basic operation as expected", {
+  dt <- lazy_dt(data.frame(g = c(1, 1, 2), x = 1:3), "DT")
+
+  expect_equal(
+    dt %>% do(y = ncol(.SD)) %>% show_query(),
+    expr(DT[, .(y = .(ncol(.SD)))])
+  )
+
+  expect_equal(
+    dt %>% group_by(g) %>% do(y = ncol(.SD)) %>% show_query(),
+    expr(DT[, .(y = .(ncol(.SD))), by = .(g)])
+  )
+})
+
