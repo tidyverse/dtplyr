@@ -169,11 +169,13 @@ sample_frac.dtplyr_step <- function(tbl,
                                     replace = FALSE,
                                     weight = NULL
                                     ) {
+  .N <- NULL # silence R CMD check
   weight <- enexpr(weight)
   step_subset(tbl, i = sample_call(expr(.N * !!size), replace, weight))
 }
 
 sample_call <- function(size, replace = FALSE, weight = NULL) {
+  .N <- NULL # silence R CMD check
   call <- expr(sample(.N, !!size))
 
   if (replace) {

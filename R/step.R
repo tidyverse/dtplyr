@@ -53,6 +53,7 @@ groups.dtplyr_step <- function(x) {
 #' @importFrom dplyr group_size
 #' @export
 group_size.dtplyr_step <- function(x) {
+  .N <- NULL # silence R CMD check
   collect(summarise(x, n = .N))$n
 }
 
