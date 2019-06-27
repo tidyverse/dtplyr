@@ -7,10 +7,6 @@ step_group <- function(parent, groups = parent$groups) {
   )
 }
 
-dt_call.dtplyr_step_group <- function(x, needs_copy = x$needs_copy) {
-  dt_call(x$parent, needs_copy)
-}
-
 # dplyr methods -----------------------------------------------------------
 
 #' @importFrom dplyr group_by

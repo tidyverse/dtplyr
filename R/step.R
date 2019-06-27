@@ -127,6 +127,9 @@ dt_sources.dtplyr_step <- function(x) {
 dt_call <- function(x, needs_copy = x$needs_copy) {
   UseMethod("dt_call")
 }
+dt_call.dtplyr_step <- function(x, needs_copy = x$needs_copy) {
+  dt_call(x$parent, needs_copy)
+}
 
 capture_dots <- function(..., vars, .named = TRUE) {
   dots <- enexprs(..., .named = .named)
