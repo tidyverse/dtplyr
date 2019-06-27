@@ -32,6 +32,27 @@ tail.dtplyr_step <- function(x, n = 6L, ...) {
   step_call(x, "tail", args = list(n = n))
 }
 
+#' @importFrom dplyr rename
+#' @export
+rename.dtplyr_step <- function(.data, ...) {
+  vars <- tidyselect::vars_rename(.data$vars, ...)
+  vars <- vars[vars != names(vars)]
+
+  if (length(vars) == 0) {
+    return(.data)
+  }
+
+  out <- step_call(.data,
+    "setnames",
+    args = list(unname(vars), names(vars)),
+    in_place = TRUE
+  )
+
+  groups <- rename_groups(.data$groups, vars)
+  step_group(out, groups)
+}
+
+
 #' @importFrom dplyr distinct
 #' @export
 distinct.dtplyr_step <- function(.data, ..., .keep_all = FALSE) {

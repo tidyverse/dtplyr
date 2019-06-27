@@ -96,20 +96,6 @@ select.dtplyr_step <- function(.data, ...) {
   step_group(out, groups)
 }
 
-#' @importFrom dplyr rename
-#' @export
-rename.dtplyr_step <- function(.data, ...) {
-  vars <- tidyselect::vars_rename(.data$vars, ...)
-
-  groups <- rename_groups(.data$groups, vars)
-  vars <- simplify_names(vars)
-
-  j <- call2(".", !!!syms(vars))
-
-  out <- step_subset_j(.data, vars = vars, groups = character(), j = j)
-  step_group(out, groups)
-}
-
 #' @importFrom dplyr summarise
 #' @export
 summarise.dtplyr_step <- function(.data, ...) {

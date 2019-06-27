@@ -15,6 +15,30 @@ test_that("simple calls generate expected results", {
 })
 
 
+# rename ------------------------------------------------------------------
+
+test_that("simple calls generate expected translations", {
+  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
+
+  expect_equal(
+    dt %>% rename(b = y) %>% show_query(),
+    expr(setnames(copy(DT), "y", "b"))
+  )
+})
+
+test_that("empty rename returns original", {
+  dt <- data.table(x = 1, y = 1, z = 1)
+  lz <- lazy_dt(dt, "DT")
+
+  expect_equal(lz %>% rename() %>% show_query(), expr(DT))
+})
+
+test_that("renames grouping vars", {
+  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1))
+  gt <- group_by(dt, x)
+  expect_equal(rename(gt, y = x)$groups, "y")
+})
+
 # distinct ----------------------------------------------------------------
 
 test_that("no input uses all variables", {

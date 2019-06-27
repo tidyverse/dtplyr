@@ -39,11 +39,6 @@ test_that("simple calls generate expected translations", {
   )
 
   expect_equal(
-    dt %>% rename(b = y) %>% show_query(),
-    expr(DT[, .(x, b = y, z)])
-  )
-
-  expect_equal(
     dt %>% summarise(x = mean(x)) %>% show_query(),
     expr(DT[, .(x = mean(x))])
   )
@@ -126,7 +121,6 @@ test_that("renames grouping vars", {
   gt <- group_by(dt, x)
 
   expect_equal(select(gt, y = x)$groups, "y")
-  expect_equal(rename(gt, y = x)$groups, "y")
 })
 
 test_that("empty select returns no columns", {
@@ -143,14 +137,6 @@ test_that("empty select returns no columns", {
     dt[, "x"]
   )
 })
-
-test_that("empty returns original", {
-  dt <- data.table(x = 1, y = 1, z = 1)
-  lz <- lazy_dt(dt, "DT")
-
-  expect_equal(lz %>% rename() %>% collect(), dt)
-})
-
 
 # slice -------------------------------------------------------------------
 
