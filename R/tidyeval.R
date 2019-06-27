@@ -61,40 +61,26 @@ dt_squash <- function(x, env, vars) {
   } else if (is_quosure(x)) {
     dt_squash(get_expr(x), get_env(x), vars = vars)
   } else if (is_call(x)) {
-    if (inherits(x[[1]], "inline_colwise_function")) {
-      dot_var <- vars[[attr(x, "position")]]
-      replace_dot(attr(x[[1]], "formula")[[2]], dot_var)
-    } else if (is.function(x[[1]])) {
-      x[[1]] <- find_fun(x[[1]])
-      x
+    if (is.function(x[[1]])) {
+      simplify_function_call(x, vars)
     } else {
       x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env)
       x
     }
-
   } else {
     abort("Invalid input")
   }
 }
 
-find_fun <- function(fun) {
-  if (is_lambda(fun)) {
-    body <- body(fun)
-    if (!is_call(body)) {
-      return(fun)
-    }
-
-    fun_name <- body[[1]]
-    if (!is_symbol(fun_name)) {
-      return(fun)
-    }
-
-    as.character(fun_name)
-  } else if (is.function(fun)) {
-    fun_name(fun)
+simplify_function_call <- function(x, vars) {
+  if (inherits(x[[1]], "inline_colwise_function")) {
+    dot_var <- vars[[attr(x, "position")]]
+    replace_dot(attr(x[[1]], "formula")[[2]], dot_var)
+  } else {
+    x[[1]] <- fun_name(x[[1]])
+    x
   }
 }
-
 
 replace_dot <- function(call, var) {
   if (is_symbol(call, ".")) {
@@ -106,7 +92,6 @@ replace_dot <- function(call, var) {
     call
   }
 }
-
 
 has_gforce <- c(
   "min", "max", "mean", "median", "var", "sd", "sum", "prod",

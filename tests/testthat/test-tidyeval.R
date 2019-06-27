@@ -95,3 +95,14 @@ test_that("scoped verbs produce nice output", {
     expr(DT[, .(x = mean(x))])
   )
 })
+
+# fun_name ----------------------------------------------------------------
+
+test_that("finds name of functions with GForce implementations", {
+  expect_equal(fun_name(mean), expr(mean))
+
+  # unless overridden
+  mean <- function() {}
+  expect_equal(fun_name(mean), mean)
+})
+
