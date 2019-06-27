@@ -13,8 +13,12 @@ step_group <- function(parent, groups = parent$groups) {
 #' @export
 group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
   dots <- capture_dots(.data, ...)
-  # TODO: handle mutate semantics
-  # prep <- dplyr::group_by_prepare(.data, !!!dots, add = add)
+
+  existing <- vapply(dots, is_symbol, logical(1))
+  if (!all(existing)) {
+    .data <- mutate(.data, !!!dots[!existing])
+    dots[!existing] <- syms(names(dots[!existing]))
+  }
 
   step_group(.data, groups = names(dots))
 }
