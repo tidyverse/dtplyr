@@ -54,7 +54,6 @@ groups.dtplyr_step <- function(x) {
 #' @importFrom dplyr group_size
 #' @export
 group_size.dtplyr_step <- function(x) {
-  .N <- NULL # silence R CMD check
   collect(summarise(x, n = .N))$n
 }
 
@@ -163,8 +162,3 @@ dt_call <- function(x, needs_copy = x$needs_copy) {
 dt_call.dtplyr_step <- function(x, needs_copy = x$needs_copy) {
   dt_call(x$parent, needs_copy)
 }
-
-capture_dots <- function(..., vars, .named = TRUE) {
-  dots <- enexprs(..., .named = .named)
-}
-

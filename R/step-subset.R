@@ -99,7 +99,7 @@ select.dtplyr_step <- function(.data, ...) {
 #' @importFrom dplyr summarise
 #' @export
 summarise.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(...)
+  dots <- capture_dots(.data, ...)
 
   if (length(dots) == 0) {
     if (length(.data$groups) == 0) {
@@ -121,7 +121,7 @@ summarise.dtplyr_step <- function(.data, ...) {
 
 # exported onLoad
 filter.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(..., .named = FALSE)
+  dots <- capture_dots(.data, ..., .named = FALSE)
 
   i <- Reduce(function(x, y) call2("&", x, y), dots)
   step_subset(.data, i = i)
@@ -130,7 +130,7 @@ filter.dtplyr_step <- function(.data, ...) {
 #' @importFrom dplyr arrange
 #' @export
 arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
-  dots <- capture_dots(..., .named = FALSE)
+  dots <- capture_dots(.data, ..., .named = FALSE)
   if (.by_group) {
     dots <- c(syms(.data$groups), dots)
   }
@@ -148,7 +148,7 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
 #' @importFrom dplyr slice
 #' @export
 slice.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(..., .named = FALSE)
+  dots <- capture_dots(.data, ..., .named = FALSE)
 
   if (length(dots) == 0) {
     i <- NULL
@@ -179,13 +179,11 @@ sample_frac.dtplyr_step <- function(tbl,
                                     replace = FALSE,
                                     weight = NULL
                                     ) {
-  .N <- NULL # silence R CMD check
   weight <- enexpr(weight)
   step_subset(tbl, i = sample_call(expr(.N * !!size), replace, weight))
 }
 
 sample_call <- function(size, replace = FALSE, weight = NULL) {
-  .N <- NULL # silence R CMD check
   call <- expr(sample(.N, !!size))
 
   if (replace) {
@@ -206,7 +204,7 @@ do.dtplyr_step <- function(.data, ...) {
   # * doesn't set .SDcols so `.SD` will only refer to non-groups
   # * can duplicating group vars (#5)
 
-  dots <- capture_dots(...)
+  dots <- capture_dots(.data, ...)
 
   if (any(names2(dots) == "")) {
     # I can't see any way to figure out what the variables are

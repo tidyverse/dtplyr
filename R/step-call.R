@@ -58,7 +58,7 @@ rename.dtplyr_step <- function(.data, ...) {
 #' @importFrom dplyr distinct
 #' @export
 distinct.dtplyr_step <- function(.data, ..., .keep_all = FALSE) {
-  dots <- capture_dots(...)
+  dots <- capture_dots(.data, ...)
 
   if (length(dots) > 0) {
     only_syms <- all(vapply(dots, is_symbol, logical(1)))

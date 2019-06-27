@@ -27,7 +27,7 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 #' @importFrom dplyr mutate
 #' @export
 mutate.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(...)
+  dots <- capture_dots(.data, ...)
 
   nest_vars(.data, dots, .data$vars, transmute = FALSE)
 }
@@ -35,7 +35,7 @@ mutate.dtplyr_step <- function(.data, ...) {
 #' @importFrom dplyr transmute
 #' @export
 transmute.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(...)
+  dots <- capture_dots(.data, ...)
 
   nest_vars(.data, dots, .data$vars, transmute = TRUE)
 }

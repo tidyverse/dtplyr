@@ -12,7 +12,7 @@ step_group <- function(parent, groups = parent$groups) {
 #' @importFrom dplyr group_by
 #' @export
 group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
-  dots <- capture_dots(...)
+  dots <- capture_dots(.data, ...)
   # TODO: handle mutate semantics
   # prep <- dplyr::group_by_prepare(.data, !!!dots, add = add)
 

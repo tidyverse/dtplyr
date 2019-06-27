@@ -38,7 +38,7 @@ lazy_dt <- function(x, name = NULL, immutable = TRUE) {
     x <- as.data.table(x)
   }
 
-  step_first(x, name = name, immutable = immutable)
+  step_first(x, name = name, immutable = immutable, env = caller_env())
 }
 
 step_first <- function(parent, name = NULL, immutable = TRUE, env = caller_env()) {
