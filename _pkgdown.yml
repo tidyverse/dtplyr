@@ -5,3 +5,6 @@ template:
 
 home:
   strip_header: true
+  links:
+  - text: Learn more about data.table
+    href: https://github.com/Rdatatable/data.table/wiki

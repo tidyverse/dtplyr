@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 dtplyr provides a dplyr backend for [data.table](https://github.com/Rdatatable/data.table/wiki). Compared to the previous release, this version of dtplyr focusses only on lazy evaluation triggered by use of `lazy_dt()`. This means that no computation is performed until you explicitly request it with `as.data.table()`, `as.data.frame()` or `as_tibble()`. This has a considerable advantage over the previous version (which eagerly evaluated each step) because it allows dtplyr to generate significantly more performant translations.
 
-This is a large change that breaks all existing uses of dtplyr. But frankly, dtplyr was pretty useless before because it did such a bad job of generating data.table code. Fortunately few people used it for this reason, making a 
+This is a large change that breaks all existing uses of dtplyr. But frankly, dtplyr was pretty useless before because it did such a bad job of generating data.table code. Fortunately few people used it for this reason, making a major overhaul possible.
 
 See `vignette("translation")` for details of the current translations, and  [table.express](https://github.com/asardaes/table.express) and [rqdatatable](https://github.com/WinVector/rqdatatable/) for related work.
 

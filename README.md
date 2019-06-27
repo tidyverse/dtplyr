@@ -28,7 +28,7 @@ more performant translations.
 This is a large change that breaks all existing uses of dtplyr. But
 frankly, dtplyr was pretty useless before because it did such a bad job
 of generating data.table code. Fortunately few people used it for this
-reason, making a
+reason, making a major overhaul possible.
 
 See `vignette("translation")` for details of the current translations,
 and [table.express](https://github.com/asardaes/table.express) and
