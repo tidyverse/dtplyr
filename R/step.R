@@ -127,7 +127,7 @@ dt_eval <- function(x) {
   eval_tidy(quo)
 }
 
-# Needs to be an env
+#' @importFrom data.table frank
 add_dt_wrappers <- function(env) {
   env$n <- function() eval(quote(.N), caller_env())
   env$row_number <- function(x) {
