@@ -101,11 +101,21 @@ select.dtplyr_step <- function(.data, ...) {
 summarise.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(...)
 
-  out <- step_subset_j(
-    .data,
-    vars = union(.data$groups, names(dots)),
-    j = call2(".", !!!dots)
-  )
+  if (length(dots) == 0) {
+    if (length(.data$groups) == 0) {
+      out <- step_subset_j(.data, vars = character(), j = 0L)
+    } else {
+      # Acts like distinct on grouping vars
+      out <- distinct(.data, !!!syms(.data$groups))
+    }
+  } else {
+    out <- step_subset_j(
+      .data,
+      vars = union(.data$groups, names(dots)),
+      j = call2(".", !!!dots)
+    )
+  }
+
   step_group(out, groups = head(.data$groups, -1))
 }
 

@@ -114,6 +114,21 @@ test_that("summarise peels off layer of grouping", {
   expect_equal(summarise(summarise(gt))$groups, character())
 })
 
+test_that("empty summarise returns unique groups", {
+  dt <- lazy_dt(data.table(x = c(1, 1, 2), y = 1, z = 1), "DT")
+
+  expect_equal(
+    dt %>% group_by(x) %>% summarise() %>% show_query(),
+    expr(unique(DT[, .(x)]))
+  )
+
+  # If no groups, return null data.table
+  expect_equal(
+    dt %>% summarise() %>% show_query(),
+    expr(DT[, 0L])
+  )
+})
+
 # select/rename ------------------------------------------------------------------
 
 test_that("renames grouping vars", {
