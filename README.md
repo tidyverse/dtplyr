@@ -28,7 +28,7 @@ more performant translations.
 This is a large change that breaks all existing uses of dtplyr. But
 frankly, dtplyr was pretty useless before because it did such a bad job
 of generating data.table code. Fortunately few people used it for this
-reason, making a
+reason, making a major overhaul possible.
 
 See `vignette("translation")` for details of the current translations,
 and [table.express](https://github.com/asardaes/table.express) and
@@ -52,7 +52,7 @@ devtools::install_github("tidyverse/dtplyr")
 
 ## Usage
 
-To use dtplyr, I recommend loading dplyr, dtplyr, and data.table:
+To use dtplyr, I recommend loading data.table, dtplyr, and dplyr:
 
 ``` r
 library(data.table)
@@ -61,7 +61,7 @@ library(dplyr, warn.conflicts = FALSE)
 ```
 
 Then use `lazy_dt()` to create a “lazy” data table that tracks the
-operations performed to it.
+operations performed on it.
 
 ``` r
 mtcars2 <- lazy_dt(mtcars)
@@ -89,7 +89,7 @@ mtcars2 %>%
 #> # Use as.data.table()/as.data.frame()/as_tibble() to access results
 ```
 
-But generally you should reserve this only for debugging and use
+But generally you should reserve this only for debugging, and use
 `as.data.table()`, `as.data.frame()`, or `as_tibble()` to indicate that
 you’re done with the transformation and want to access the results:
 
@@ -136,4 +136,4 @@ slower than data.table:
     default. This means that most expression involving `mutate()` needs
     to make a copy that would not be necessary if you were using
     data.table directly. (You can opt out of this behaviour with
-    `immutable = FALSE`) )
+    `immutable = FALSE`).
