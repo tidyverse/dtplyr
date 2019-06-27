@@ -22,11 +22,13 @@ dt_call.dtplyr_step_call <- function(x, needs_copy = x$needs_copy) {
 
 # dplyr verbs -------------------------------------------------------------
 
+#' @importFrom utils head
 #' @export
 head.dtplyr_step <- function(x, n = 6L, ...) {
   step_call(x, "head", args = list(n = n))
 }
 
+#' @importFrom utils tail
 #' @export
 tail.dtplyr_step <- function(x, n = 6L, ...) {
   step_call(x, "tail", args = list(n = n))

@@ -39,6 +39,7 @@ dim.dtplyr_step <- function(x) {
   c(NA, length(x$vars))
 }
 
+#' @importFrom dplyr tbl_vars
 #' @export
 tbl_vars.dtplyr_step <- function(x) {
   x$vars

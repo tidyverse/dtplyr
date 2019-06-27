@@ -13,6 +13,7 @@ dt_call.dtplyr_step_group <- function(x, needs_copy = x$needs_copy) {
 
 # dplyr methods -----------------------------------------------------------
 
+#' @importFrom dplyr group_by
 #' @export
 group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
   dots <- capture_dots(...)
@@ -22,6 +23,7 @@ group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
   step_group(.data, groups = names(dots))
 }
 
+#' @importFrom dplyr ungroup
 #' @export
 ungroup.dtplyr_step <- function(.data, ...) {
   step_group(.data, groups = character())
