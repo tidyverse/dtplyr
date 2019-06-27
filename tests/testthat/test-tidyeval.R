@@ -38,7 +38,6 @@ test_that("can process many expressions in one go", {
   expect_equal(dots$x, quote(x + 10))
 })
 
-
 # evaluation --------------------------------------------------------------
 
 test_that("can access functions in local env", {
@@ -84,3 +83,15 @@ test_that("row_number(x) is equivalent to rank", {
   )
 })
 
+test_that("scoped verbs produce nice output", {
+  dt <- lazy_dt(data.table(x = 1:5), "DT")
+
+  expect_equal(
+    dt %>% summarise_all(mean) %>% show_query(),
+    expr(DT[, .(x = mean(x))])
+  )
+  expect_equal(
+    dt %>% summarise_all(~ mean(.)) %>% show_query(),
+    expr(DT[, .(x = mean(x))])
+  )
+})
