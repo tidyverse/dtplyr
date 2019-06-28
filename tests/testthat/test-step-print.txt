@@ -1,4 +1,4 @@
-Source: local data table [?? x 11]
+Source: local data table [32 x 11]
 Call:   DT
 
     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
