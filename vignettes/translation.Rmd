@@ -78,7 +78,7 @@ dt %>% transmute(a2 = a * 2) %>% show_query()
 dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
 
-Note that dplyr doesn't modifies the input data (unless you set `immutable = FALSE`), so here it automatically `copy()`s the input data.table. 
+Note that dplyr will not doesnthe input data by default, see below for more details
 
 `mutate()` allows to refer to variables that you just created. data.tables `:=` doesn't support that out of the box, so we automatically chain together as many `[` as needed:
 
@@ -133,13 +133,13 @@ dt %>% distinct(c = a + b, .keep_all = TRUE) %>% show_query()
 
 # Combinations
 
-dtplyr tries to generate generate data.table code as close to what you'd write by hand as possible, as this tends to unlock data.tables tremendous speed. For example, if you `filter()` and then `select()`, dtplyr generates a single `[`:
+dtplyr tries to generate generate data.table code as close as possible to what you'd write by hand, as this tends to unlock data.table's tremendous speed. For example, if you `filter()` and then `select()`, dtplyr generates a single `[`:
 
 ```{r}
 dt %>% filter(a == 1) %>% select(-a) %>% show_query()
 ```
 
-And similarly for filtering and summarising:
+And similarly when combining filtering and summarising:
 
 ```{r}
 dt %>% 
@@ -156,15 +156,28 @@ dt %>% select(-a) %>% filter(a == 1) %>% show_query()
 
 ```
 
-Note that `filter()` and `mutate()` can't be combined because `dt[a == 1, .(b2 := b * 2)]` modifies the selected rows in place.
+Similarly, a `filter()` and `mutate()` can't be combined because `dt[a == 1, .(b2 := b * 2)]` would modifies the selected rows in place.
 
-However, dtplyr does strive to avoid needless copies, so it won't explicitly copy if there's already an implicit copy produced by `[`, `head()` or similar:
+# Copies
+
+By default dtplyr avoids mutating the input data, automatically creating a `copy()` if needed:
+
+```{r}
+dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
+```
+
+You can opt out of this copy by setting `immutable = FALSE` on construction:
+
+```{r}
+dt_inplace <- lazy_dt(df, immutable = FALSE)
+dt_inplace %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
+```
+
+Note that dtplyr does it's best to avoid needless copies, so it won't explicitly copy if there's already an implicit copy produced by `[`, `head()` or similar:
 
 ```{r}
 dt %>% filter(x == 1) %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
-
-Over time, as I learn more about data.table, I hope to expand the set of these simplifications.
 
 # Joins
 
