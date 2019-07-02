@@ -114,7 +114,7 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2">dt &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lazy_dt.html">lazy_dt</a></span>(df)</a></code></pre></div>
 <p>When we print it out, it tells us that it’s a local data table with four rows. It also prints the call that dtplyr will evaluate when we execute the lazy table. In this case it’s very simple:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">dt</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; Source: local data table [?? x 4]</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; Source: local data table [0 x 4]</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; Call:   `_DT1`</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; # … with 4 variables: a &lt;int&gt;, b &lt;int&gt;, c &lt;int&gt;, d &lt;int&gt;</span></a>
@@ -266,9 +266,9 @@
 <a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt; # A tibble: 3 x 6</span></a>
 <a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></a>
 <a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; 1 filter        295µs    328µs     2913.      280B     17.5</span></a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; 2 mutate        718µs    774µs     1268.      280B     15.0</span></a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; 3 summarise     705µs    757µs     1287.      280B     15.0</span></a></code></pre></div>
+<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; 1 filter        292µs    319µs     3077.      280B     17.9</span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; 2 mutate        719µs    767µs     1287.      280B     15.2</span></a>
+<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; 3 summarise     706µs    764µs     1292.      280B     15.1</span></a></code></pre></div>
 <p>These translations all take less than a millisecond, which suggests that the performance overhead of dtplyr should be negligible.</p>
 </div>
   </div>
