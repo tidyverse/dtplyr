@@ -14,6 +14,11 @@ test_that("simple calls generate expected results", {
   )
 })
 
+test_that("vars set correctly", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
+  expect_equal(dt %>% head() %>% .$vars, c("x", "y"))
+})
+
 
 # rename ------------------------------------------------------------------
 
@@ -24,6 +29,11 @@ test_that("simple calls generate expected translations", {
     dt %>% rename(b = y) %>% show_query(),
     expr(setnames(copy(DT), "y", "b"))
   )
+})
+
+test_that("vars set correctly", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
+  expect_equal(dt %>% rename(a = x) %>% .$vars, c("a", "y"))
 })
 
 test_that("empty rename returns original", {
@@ -48,6 +58,8 @@ test_that("no input uses all variables", {
     dt %>% distinct() %>% show_query(),
     expr(unique(dt))
   )
+
+  expect_equal(dt %>% distinct() %>% .$vars, c("x", "y"))
 })
 
 test_that("uses supplied variables", {
@@ -57,6 +69,7 @@ test_that("uses supplied variables", {
     dt %>% distinct(y) %>% show_query(),
     expr(unique(dt[, .(y)]))
   )
+  expect_equal(dt %>% distinct(y) %>% .$vars, "y")
 
   expect_equal(
     dt %>% group_by(x) %>% distinct(y) %>% show_query(),
@@ -72,6 +85,8 @@ test_that("doesn't duplicate variables", {
     expr(unique(dt[, .(x)]))
   )
 
+  expect_equal(dt %>% distinct(x, x) %>% .$vars, "x")
+
   expect_equal(
     dt %>% group_by(x) %>% distinct(x) %>% show_query(),
     expr(unique(dt[, .(x)]))
@@ -84,6 +99,7 @@ test_that("keeps all variables if requested", {
     dt %>% distinct(y, .keep_all = TRUE) %>% show_query(),
     expr(unique(dt, by = "y"))
   )
+  expect_equal(dt %>% distinct(y, .keep_all = TRUE) %>% .$vars, c("x", "y", "z"))
 
   expect_equal(
     dt %>% group_by(x) %>% distinct(y, .keep_all = TRUE) %>% show_query(),

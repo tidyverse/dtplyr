@@ -3,10 +3,18 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   stopifnot(is_step(y))
   stopifnot(is.character(on))
 
+  style <- match.arg(style, c("inner", "full", "left", "semi", "anti"))
+  if (style %in% c("semi", "anti")) {
+    vars <- x$vars
+  } else {
+    vars <- union(x$vars, y$vars)
+  }
+
   new_step(
     parent = x,
     implicit_copy = TRUE,
     parent2 = y,
+    vars = vars,
     on = on,
     suffix = suffix,
     style = style,

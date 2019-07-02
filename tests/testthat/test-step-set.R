@@ -19,3 +19,11 @@ test_that("basic ops generate expected translation", {
     expr(fsetdiff(dt1, dt2))
   )
 })
+
+test_that("vars set correctly", {
+  # data.table functions require the inputs to have same columns
+  dt1 <- lazy_dt(data.frame(x = 1, y = 2), "dt1")
+  dt2 <- lazy_dt(data.frame(x = 2, y = 2), "dt2")
+
+  expect_equal(dt1 %>% union(dt2) %>% .$vars, c("x", "y"))
+})

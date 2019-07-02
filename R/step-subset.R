@@ -94,6 +94,7 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 #' @export
 select.dtplyr_step <- function(.data, ...) {
   vars <- tidyselect::vars_select(.data$vars, ..., .include = .data$groups)
+  new_vars <- names(vars)
 
   if (length(vars) == 0) {
     j <- 0L
@@ -104,7 +105,7 @@ select.dtplyr_step <- function(.data, ...) {
     j <- call2(".", !!!syms(vars))
   }
 
-  out <- step_subset_j(.data, vars = vars, groups = character(), j = j)
+  out <- step_subset_j(.data, vars = new_vars, groups = character(), j = j)
   step_group(out, groups)
 }
 

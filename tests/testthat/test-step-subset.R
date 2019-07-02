@@ -109,6 +109,11 @@ test_that("empty arrange returns input unchanged", {
   expect_true(identical(arrange(dt), dt))
 })
 
+test_that("vars set correctly", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
+  expect_equal(dt %>% arrange(x) %>% .$vars, c("x", "y"))
+})
+
 # summarise ---------------------------------------------------------------
 
 test_that("summarise peels off layer of grouping", {
@@ -117,6 +122,12 @@ test_that("summarise peels off layer of grouping", {
 
   expect_equal(summarise(gt)$groups, "x")
   expect_equal(summarise(summarise(gt))$groups, character())
+})
+
+test_that("vars set correctly", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
+  expect_equal(dt %>% summarise(z = mean(x)) %>% .$vars, "z")
+  expect_equal(dt %>% group_by(y) %>% summarise(z = mean(x)) %>% .$vars, c("y", "z"))
 })
 
 test_that("empty summarise returns unique groups", {
@@ -157,6 +168,12 @@ test_that("empty select returns no columns", {
     dt[, "x"]
   )
 })
+
+test_that("vars set correctly", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
+  expect_equal(dt %>% select(a = x, y) %>% .$vars, c("a", "y"))
+})
+
 
 # slice -------------------------------------------------------------------
 

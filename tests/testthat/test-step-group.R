@@ -19,3 +19,8 @@ test_that("grouping can compute new variables if needed", {
     expr(copy(DT)[, `:=`(xy = x + y)][, .(x = mean(x)), keyby = .(xy)])
   )
 })
+
+test_that("vars set correctly", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
+  expect_equal(dt %>% group_by(x) %>% .$vars, c("x", "y"))
+})

@@ -1,4 +1,4 @@
-step_call <- function(parent, fun, args = list(), in_place = FALSE) {
+step_call <- function(parent, fun, args = list(), vars = parent$vars, in_place = FALSE) {
 
   stopifnot(is_step(parent))
   stopifnot(is.character(fun))
@@ -6,7 +6,7 @@ step_call <- function(parent, fun, args = list(), in_place = FALSE) {
 
   new_step(
     parent = parent,
-    vars = parent$vars,
+    vars = vars,
     groups = parent$groups,
     implicit_copy = !in_place,
     needs_copy = in_place || parent$needs_copy,
@@ -38,6 +38,7 @@ tail.dtplyr_step <- function(x, n = 6L, ...) {
 #' @export
 rename.dtplyr_step <- function(.data, ...) {
   vars <- tidyselect::vars_rename(.data$vars, ...)
+  new_vars <- names(vars)
   vars <- vars[vars != names(vars)]
 
   if (length(vars) == 0) {
@@ -47,6 +48,7 @@ rename.dtplyr_step <- function(.data, ...) {
   out <- step_call(.data,
     "setnames",
     args = list(unname(vars), names(vars)),
+    vars = new_vars,
     in_place = TRUE
   )
 
