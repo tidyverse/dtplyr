@@ -45,7 +45,7 @@ test_that("simple calls generate expected translations", {
 
   expect_equal(
     dt %>% arrange(x) %>% show_query(),
-    expr(DT[order(x), ])
+    expr(DT[order(x)])
   )
 
   expect_equal(
@@ -55,12 +55,12 @@ test_that("simple calls generate expected translations", {
 
   expect_equal(
     dt %>% filter(x > 1) %>% show_query(),
-    expr(DT[x > 1, ])
+    expr(DT[x > 1])
   )
 
   expect_equal(
     dt %>% filter(x > 1, y > 2) %>% show_query(),
-    expr(DT[x > 1 & y > 2, ])
+    expr(DT[x > 1 & y > 2])
   )
 })
 
@@ -73,7 +73,7 @@ test_that("can merge iff j-generating call comes after i", {
   )
   expect_equal(
     dt %>% select(x = y) %>% filter(x > 1) %>% show_query(),
-    expr(DT[, .(x = y)][x > 1, ])
+    expr(DT[, .(x = y)][x > 1])
   )
 
   expect_equal(
@@ -82,7 +82,7 @@ test_that("can merge iff j-generating call comes after i", {
   )
   expect_equal(
     dt %>% summarise(y = mean(x)) %>% filter(x > 1) %>% show_query(),
-    expr(DT[, .(y = mean(x))][x > 1, ])
+    expr(DT[, .(y = mean(x))][x > 1])
   )
 })
 
@@ -93,10 +93,10 @@ test_that("arrange doesn't use, but still preserves, grouping", {
 
   step <- arrange(dt, y)
   expect_equal(step$groups, "x")
-  expect_equal(dt_call(step), expr(DT[order(y), ]))
+  expect_equal(dt_call(step), expr(DT[order(y)]))
 
   step2 <- arrange(dt, y, .by_group = TRUE)
-  expect_equal(dt_call(step2), expr(DT[order(x, y), ]))
+  expect_equal(dt_call(step2), expr(DT[order(x, y)]))
 })
 
 test_that("empty arrange returns input unchanged", {
@@ -164,11 +164,11 @@ test_that("can slice", {
   )
   expect_equal(
     dt %>% slice(1:4) %>% show_query(),
-    expr(DT[1:4, ])
+    expr(DT[1:4])
   )
   expect_equal(
     dt %>% slice(1, 2, 3) %>% show_query(),
-    expr(DT[c(1, 2, 3), ])
+    expr(DT[c(1, 2, 3)])
   )
 })
 
@@ -177,7 +177,7 @@ test_that("can slice when grouped", {
 
   expect_equal(
     dt %>% group_by(x) %>% slice(1) %>% show_query(),
-    expr(DT[, .SD[1, ], by = .(x)])
+    expr(DT[, .SD[1], by = .(x)])
   )
 })
 
@@ -188,20 +188,20 @@ test_that("basic usage generates expected calls", {
 
   expect_equal(
     dt %>% sample_n(3) %>% show_query(),
-    expr(DT[sample(.N, 3), ])
+    expr(DT[sample(.N, 3)])
   )
   expect_equal(
     dt %>% sample_frac(0.5) %>% show_query(),
-    expr(DT[sample(.N, .N * 0.5), ])
+    expr(DT[sample(.N, .N * 0.5)])
   )
 
   expect_equal(
     dt %>% sample_n(3, replace = TRUE) %>% show_query(),
-    expr(DT[sample(.N, 3, replace = TRUE), ])
+    expr(DT[sample(.N, 3, replace = TRUE)])
   )
   expect_equal(
     dt %>% sample_n(3, weight = y) %>% show_query(),
-    expr(DT[sample(.N, 3, prob = y), ])
+    expr(DT[sample(.N, 3, prob = y)])
   )
 })
 
