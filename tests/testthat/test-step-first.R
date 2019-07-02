@@ -15,7 +15,7 @@ test_that("doesn't need copy", {
 })
 
 test_that("mutable object never needs copy", {
-  dt <- lazy_dt(mtcars, immutable = FALSE)
+  dt <- lazy_dt(as.data.table(mtcars), immutable = FALSE)
   expect_false(dt$needs_copy)
   expect_false(dt %>% mutate(x = 1) %>% .$needs_copy)
 })

@@ -155,7 +155,6 @@ Note however, that `select()`ing and then `filter()`ing must generate two separa
 
 ```{r}
 dt %>% select(-a) %>% filter(a == 1) %>% show_query()
-
 ```
 
 Similarly, a `filter()` and `mutate()` can't be combined because `dt[a == 1, .(b2 := b * 2)]` would modifies the selected rows in place.
@@ -168,10 +167,12 @@ By default dtplyr avoids mutating the input data, automatically creating a `copy
 dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
 
-This is the default in order to match the existing dplyr interface. However, you can choose to opt out of this copy, and take advantage of data.tables reference semantics (for more details see `vignette("datatable-reference-semantics")`. Do this by setting `immutable = FALSE` on construction:
+This is the default in order to match the existing dplyr interface. However, you can choose to opt out of this copy, and take advantage of data.tables reference semantics (for more details see `vignette("datatable-reference-semantics")`. Do this by setting `immutable = FALSE` on construction. This only makes sense when the input is already a data table:
 
 ```{r}
-dt_inplace <- lazy_dt(df, immutable = FALSE)
+dt2 <- data.table(a = 1:10)
+
+dt_inplace <- lazy_dt(dt2, immutable = FALSE)
 dt_inplace %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
 
