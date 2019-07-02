@@ -239,7 +239,7 @@
 <a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#&gt; `_DT1`[!`_DT2`, on = .(a)]</span></a></code></pre></div>
 <p>Semi joins are little more complex:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">semi_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; `_DT1`[unique(`_DT1`[`_DT2`, which = TRUE, nomatch = 0L, on = .(a)])]</span></a></code></pre></div>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; `_DT1`[unique(`_DT1`[`_DT2`, which = TRUE, nomatch = NULL, on = .(a)])]</span></a></code></pre></div>
 </div>
 <div id="set-operations" class="section level1">
 <h1 class="hasAnchor">
@@ -266,9 +266,9 @@
 <a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt; # A tibble: 3 x 6</span></a>
 <a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></a>
 <a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; 1 filter        292µs    319µs     3077.      280B     17.9</span></a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; 2 mutate        719µs    767µs     1287.      280B     15.2</span></a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; 3 summarise     706µs    764µs     1292.      280B     15.1</span></a></code></pre></div>
+<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; 1 filter        291µs    316µs     3114.      280B     17.9</span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; 2 mutate        707µs    750µs     1314.      280B     15.0</span></a>
+<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; 3 summarise     697µs    748µs     1319.      280B     15.0</span></a></code></pre></div>
 <p>These translations all take less than a millisecond, which suggests that the performance overhead of dtplyr should be negligible.</p>
 </div>
   </div>
