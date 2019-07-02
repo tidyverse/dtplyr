@@ -1,8 +1,8 @@
 test_that("tbl metadata as expected", {
   dt <- lazy_dt(data.table(x = c(1, 1, 1, 2, 2, 3)), "DT")
 
-  expect_equal(dim(dt), c(NA, 1))
-  expect_equal(tbl_vars(dt), "x")
+  expect_equal(dim(dt), c(6, 1))
+  expect_equal(as.character(tbl_vars(dt)), "x")
   expect_equal(show_query(dt), expr(DT))
 })
 

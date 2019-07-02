@@ -41,6 +41,11 @@ lazy_dt <- function(x, name = NULL, immutable = TRUE) {
   step_first(x, name = name, immutable = immutable, env = caller_env())
 }
 
+#' @export
+dim.dtplyr_step_first <- function(x) {
+  dim(x$parent)
+}
+
 step_first <- function(parent, name = NULL, immutable = TRUE, env = caller_env()) {
   stopifnot(is.data.table(parent))
 
