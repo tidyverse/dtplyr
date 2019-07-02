@@ -129,13 +129,13 @@
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(cyl) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">l100k =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(l100k))</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; Source: local data table [?? x 2]</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; Call:   `_DT1`[wt &lt; 5, ][, `:=`(l100k = 235.21/mpg)][, .(l100k = mean(l100k)), </span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;     by = .(cyl)]</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; Call:   `_DT1`[wt &lt; 5][, `:=`(l100k = 235.21/mpg)][, .(l100k = mean(l100k)), </span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;     keyby = .(cyl)]</span></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;     cyl l100k</span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; 1     6 12.0 </span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; 2     4  9.05</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; 1     4  9.05</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; 2     6 12.0 </span></a>
 <a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; 3     8 14.9 </span></a>
 <a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</span></a></code></pre></div>
@@ -149,10 +149,9 @@
 <a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; # A tibble: 3 x 2</span></a>
 <a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;     cyl l100k</span></a>
 <a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; 1     6 12.0 </span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; 2     4  9.05</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; 1     4  9.05</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; 2     6 12.0 </span></a>
 <a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; 3     8 14.9</span></a></code></pre></div>
-<p>Note that this doesn’t generate exactly the same results as when applied to a data.frame, because data.table doesn’t sort groups by default. If you do want sorted groups, you can instead use <code><a href="reference/key_by.html">key_by()</a></code>, but it’s worth remembering that dtplyr is a translation layer, so like <a href="http://dbplyr.tidyverse.org/">dbplyr</a> it can’t guarantee that the results are exactly equal.</p>
 </div>
 <div id="why-is-dtplyr-slower-than-data-table" class="section level2">
 <h2 class="hasAnchor">
