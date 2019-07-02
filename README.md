@@ -77,13 +77,13 @@ mtcars2 %>%
   group_by(cyl) %>% 
   summarise(l100k = mean(l100k))
 #> Source: local data table [?? x 2]
-#> Call:   `_DT1`[wt < 5, ][, `:=`(l100k = 235.21/mpg)][, .(l100k = mean(l100k)), 
-#>     by = .(cyl)]
+#> Call:   `_DT1`[wt < 5][, `:=`(l100k = 235.21/mpg)][, .(l100k = mean(l100k)), 
+#>     keyby = .(cyl)]
 #> 
 #>     cyl l100k
 #>   <dbl> <dbl>
-#> 1     6 12.0 
-#> 2     4  9.05
+#> 1     4  9.05
+#> 2     6 12.0 
 #> 3     8 14.9 
 #> 
 #> # Use as.data.table()/as.data.frame()/as_tibble() to access results
@@ -103,17 +103,10 @@ mtcars2 %>%
 #> # A tibble: 3 x 2
 #>     cyl l100k
 #>   <dbl> <dbl>
-#> 1     6 12.0 
-#> 2     4  9.05
+#> 1     4  9.05
+#> 2     6 12.0 
 #> 3     8 14.9
 ```
-
-Note that this doesn’t generate exactly the same results as when applied
-to a data.frame, because data.table doesn’t sort groups by default. If
-you do want sorted groups, you can instead use `key_by()`, but it’s
-worth remembering that dtplyr is a translation layer, so like
-[dbplyr](http://dbplyr.tidyverse.org/) it can’t guarantee that the
-results are exactly equal.
 
 ## Why is dtplyr slower than data.table?
 

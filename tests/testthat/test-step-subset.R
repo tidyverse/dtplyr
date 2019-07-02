@@ -17,10 +17,10 @@ test_that("generates expected calls", {
   expect_equal(dt_call(ungrouped), expr(DT[i, j]))
 
   with_i <- step_subset(first, i = quote(i), j = quote(j), groups = "x")
-  expect_equal(dt_call(with_i), expr(DT[, .SD[i, j], by = .(x)]))
+  expect_equal(dt_call(with_i), expr(DT[, .SD[i, j], keyby = .(x)]))
 
   without_i <- step_subset(first, j = quote(j), groups = "x")
-  expect_equal(dt_call(without_i), expr(DT[, j, by = .(x)]))
+  expect_equal(dt_call(without_i), expr(DT[, j, keyby = .(x)]))
 })
 
 # dplyr methods -----------------------------------------------------------
@@ -182,7 +182,7 @@ test_that("can slice when grouped", {
 
   expect_equal(
     dt %>% group_by(x) %>% slice(1) %>% show_query(),
-    expr(DT[, .SD[1], by = .(x)])
+    expr(DT[, .SD[1], keyby = .(x)])
   )
 })
 
@@ -223,7 +223,7 @@ test_that("basic operation as expected", {
 
   expect_equal(
     dt %>% group_by(g) %>% do(y = ncol(.)) %>% show_query(),
-    expr(DT[, .(y = .(ncol(.SD))), by = .(g)])
+    expr(DT[, .(y = .(ncol(.SD))), keyby = .(g)])
   )
 })
 

@@ -81,8 +81,6 @@ mtcars2 %>%
   as_tibble()
 ```
 
-Note that this doesn't generate exactly the same results as when applied to a data.frame, because data.table doesn't sort groups by default. If you do want sorted groups, you can instead use `key_by()`, but it's worth remembering that dtplyr is a  translation layer, so like [dbplyr](http://dbplyr.tidyverse.org/) it can't guarantee that the results are exactly equal.
-
 ## Why is dtplyr slower than data.table?
 
 There are three primary reasons that dtplyr will always be somewhat slower than data.table:

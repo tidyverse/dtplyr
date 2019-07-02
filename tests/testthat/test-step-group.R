@@ -16,6 +16,6 @@ test_that("grouping can compute new variables if needed", {
 
   expect_equal(
     dt %>% group_by(xy = x + y) %>% summarise(x = mean(x)) %>% show_query(),
-    expr(copy(DT)[, `:=`(xy = x + y)][, .(x = mean(x)), by = .(xy)])
+    expr(copy(DT)[, `:=`(xy = x + y)][, .(x = mean(x)), keyby = .(xy)])
   )
 })

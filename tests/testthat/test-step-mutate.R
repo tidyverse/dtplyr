@@ -45,7 +45,7 @@ test_that("generates single calls as expect", {
 
   expect_equal(
     dt %>% group_by(x) %>% mutate(x2 = x * 2) %>% show_query(),
-    expr(copy(DT)[, `:=`(x2 = x * 2), by = .(x)])
+    expr(copy(DT)[, `:=`(x2 = x * 2), keyby = .(x)])
   )
 
   expect_equal(

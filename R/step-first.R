@@ -15,6 +15,12 @@
 #'   `immutable = FALSE` to allow dtplyr to modify the input object.
 #' @param name Optionally, supply a name to be used in generated expressions.
 #'   For expert use only.
+#' @param key_by Set keys for data frame with [dplyr::select()] semantics.
+#'   This uses [data.table::setkey()] to sort the table and build up an index.
+#'   This will considerably improve performance for subsets, summaries, and
+#'   joins that use the keys.
+#'
+#'   See `vignette("datatable-keys-fast-subset")` for more details.
 #' @export
 #' @examples
 #' library(dplyr)
@@ -33,12 +39,24 @@
 #' by_cyl %>% summarise(mpg = mean(mpg))
 #' by_cyl %>% mutate(mpg = mean(mpg))
 #' by_cyl %>% filter(mpg < mean(mpg)) %>% summarise(hp = mean(hp))
-lazy_dt <- function(x, name = NULL, immutable = TRUE) {
+lazy_dt <- function(x, name = NULL, immutable = TRUE, key_by = NULL) {
   if (!is.data.table(x)) {
     if (!immutable) {
       abort("`immutable` must be `FALSE` when `x` is not already a data table.")
     }
     x <- as.data.table(x)
+    copied <- TRUE
+  } else {
+    copied <- FALSE
+  }
+
+  key_by <- enquo(key_by)
+  key_vars <- unname(tidyselect::vars_select(names(x), !!key_by))
+  if (length(key_vars)) {
+    if (immutable && !copied) {
+      x <- copy(x)
+    }
+    setkeyv(x, key_vars)
   }
 
   step_first(x, name = name, immutable = immutable, env = caller_env())

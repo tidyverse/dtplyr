@@ -96,7 +96,7 @@ dt %>% transmute(a2 = a * 2, b2 = b * 2, a4 = a2 * 2) %>% show_query()
 
 ## Grouping
 
-Just like in dplyr, `group_by()` doesn't do anything by itself, but instead modifies the operation of downstream verbs. This generally just involves using the `by` argument:
+Just like in dplyr, `group_by()` doesn't do anything by itself, but instead modifies the operation of downstream verbs. This generally just involves using the `keyby` argument:
 
 ```{r}
 dt %>% group_by(a) %>% summarise(b = mean(b)) %>% show_query()
@@ -107,14 +107,6 @@ The primary exception is grouped `filter()`, which requires the use of `.SD`:
 ```{r}
 dt %>% group_by(a) %>% filter(b < mean(b)) %>% show_query()
 ```
-
-Unlike the data.frame backend, `group_by()` does not sort the output in group order by default. If you want this behaviour, you can use `key_by()` instead:
-
-```{r}
-dt %>% key_by(a) %>% summarise(b = mean(b)) %>% show_query()
-```
-
-Because this does one upfront sort, it should generate more efficient code when performing repeated actions on the same groups.
 
 ## Distinct
 

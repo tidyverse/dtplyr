@@ -9,9 +9,16 @@ test_that("constructor has sensible defaults", {
   expect_match(as.character(step$name), "_DT")
 })
 
+
+# mutability --------------------------------------------------------------
+
 test_that("doesn't need copy", {
   dt <- lazy_dt(mtcars)
   expect_false(dt$needs_copy)
+})
+
+test_that("mutable object must be a data table", {
+  expect_error(lazy_dt(mtcars, immutable = FALSE), "not already a data table")
 })
 
 test_that("mutable object never needs copy", {
@@ -32,4 +39,19 @@ test_that("lazy_dt doesn't copy input", {
   lz <- lazy_dt(dt)
 
   expect_equal(address(dt), address(lz$parent))
+})
+
+# keys --------------------------------------------------------------------
+
+test_that("can set keys", {
+  dt <- lazy_dt(mtcars, key_by = cyl)
+  expect_equal(key(dt$parent), "cyl")
+})
+
+test_that("setting doesn't modify data.table", {
+  dt1 <- data.table(x = c(5, 1, 2))
+  dt2 <- lazy_dt(dt1, key_by = x)
+
+  expect_equal(key(dt1$parent), NULL)
+  expect_equal(key(dt2$parent), "x")
 })

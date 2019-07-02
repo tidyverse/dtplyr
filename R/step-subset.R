@@ -76,14 +76,14 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
     by <- call2(".", !!!syms(x$groups))
 
     if (is.null(x$i)) {
-      call2("[", parent, , x$j, by = by)
+      call2("[", parent, , x$j, keyby = by)
     } else {
       if (is.null(x$j)) {
         j <- call2("[", expr(.SD), x$i)
       } else {
         j <- call2("[", expr(.SD), x$i, x$j)
       }
-      call2("[", parent, , j, by = by)
+      call2("[", parent, , j, keyby = by)
     }
   }
 }
