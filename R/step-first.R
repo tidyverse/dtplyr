@@ -56,7 +56,7 @@ lazy_dt <- function(x, name = NULL, immutable = TRUE, key_by = NULL) {
     if (immutable && !copied) {
       x <- copy(x)
     }
-    setkeyv(x, key_vars)
+    data.table::setkeyv(x, key_vars)
   }
 
   step_first(x, name = name, immutable = immutable, env = caller_env())
