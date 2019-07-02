@@ -49,30 +49,20 @@ test_that("generates single calls as expect", {
   )
 
   expect_equal(
-    dt %>% transmute(x) %>% show_query(),
-    expr(DT[, .(x)])
-  )
-
-  expect_equal(
     dt %>% transmute(x2 = x * 2) %>% show_query(),
     expr(DT[, .(x2 = x * 2)])
   )
 })
 
-test_that("mutate generates multiple steps if needed", {
+test_that("mutate generates compound expression if needed", {
   dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
 
   expect_equal(
     dt %>% mutate(x2 = x * 2, x4 = x2 * 2) %>% show_query(),
-    expr(copy(DT)[, `:=`(x2 = x * 2)][, `:=`(x4 = x2 * 2)])
-  )
-})
-
-test_that("transmute generates multiple steps if needed", {
-  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
-
-  expect_equal(
-    dt %>% transmute(x2 = x * 2, x4 = x2 * 2) %>% show_query(),
-    expr(copy(DT)[, `:=`(x2 = x * 2)][, .(x2, x4 = x2 * 2)])
+    expr(copy(DT)[, c("x2", "x4") := {
+      x2 <- x * 2
+      x4 <- x2 * 2
+      .(x2, x4)
+    }])
   )
 })

@@ -1,4 +1,4 @@
-step_mutate <- function(parent, new_vars = list()) {
+step_mutate <- function(parent, new_vars = list(), nested = FALSE) {
   vars <- union(parent$vars, names(new_vars))
 
   new_step(
@@ -7,13 +7,22 @@ step_mutate <- function(parent, new_vars = list()) {
     groups = parent$groups,
     needs_copy = !parent$implicit_copy,
     new_vars = new_vars,
+    nested = nested,
     class = "dtplyr_step_mutate"
   )
 }
 
 dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
   # i is always empty because we never mutate a subset
-  j <- call2(":=", !!!x$new_vars)
+  if (!x$nested) {
+    j <- call2(":=", !!!x$new_vars)
+  } else {
+    assign <- Map(function(x, y) call2("<-", x, y), syms(names(x$new_vars)), x$new_vars)
+    output <- call2(".", !!!syms(names(x$new_vars)))
+    expr <- call2("{", !!!assign, output)
+    j <- call2(":=", call2("c", !!!names(x$new_vars)), expr)
+  }
+
   out <- call2("[", dt_call(x$parent, needs_copy), , j)
 
   if (length(x$groups) > 0) {
@@ -29,21 +38,11 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 mutate.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(.data, ...)
 
-  nest_vars(.data, dots, .data$vars, transmute = FALSE)
+  nested <- nested_vars(.data, dots, .data$vars)
+  step_mutate(.data, dots, nested)
 }
 
-#' @importFrom dplyr transmute
-#' @export
-transmute.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(.data, ...)
-
-  nest_vars(.data, dots, .data$vars, transmute = TRUE)
-}
-
-
-# For each expression, check if it uses any newly created variables.
-# If so, nest the mutate()
-nest_vars <- function(.data, dots, all_vars, transmute = FALSE) {
+nested_vars <- function(.data, dots, all_vars) {
   new_vars <- character()
   all_new_vars <- unique(names(dots))
 
@@ -53,37 +52,19 @@ nest_vars <- function(.data, dots, all_vars, transmute = FALSE) {
     used_vars <- all_names(get_expr(dots[[i]]))
 
     if (any(used_vars %in% new_vars)) {
-      .data <- step_mutate(.data, dots[new_vars])
-      all_vars <- c(all_vars, setdiff(new_vars, all_vars))
-      new_vars <- cur_var
-      init <- i
+      return(TRUE)
     } else {
       new_vars <- c(new_vars, cur_var)
     }
   }
 
-  if (init != 0L) {
-    dots <- dots[-seq2(1L, init - 1)]
-  }
-
-  if (transmute) {
-    # Final step needs to include all variable names
-    vars <- syms(set_names(all_new_vars))
-    vars[names(dots)] <- dots
-    names(vars)[!names(vars) %in% names(dots)] <- ""
-    vars <- simplify_names(vars)
-
-    step_subset(.data, vars = all_new_vars, j = call2(".", !!!vars))
-  } else {
-    step_mutate(.data, dots)
-  }
+  FALSE
 }
 
 # Helpers -----------------------------------------------------------------
 
 all_names <- function(x) {
   if (is.name(x)) return(as.character(x))
-  if (is_quosure(x)) return(all_names(quo_get_expr(x)))
   if (!is.call(x)) return(NULL)
 
   unique(unlist(lapply(x[-1], all_names), use.names = FALSE))

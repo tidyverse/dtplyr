@@ -108,6 +108,7 @@ select.dtplyr_step <- function(.data, ...) {
   step_group(out, groups)
 }
 
+
 #' @importFrom dplyr summarise
 #' @export
 summarise.dtplyr_step <- function(.data, ...) {
@@ -129,6 +130,22 @@ summarise.dtplyr_step <- function(.data, ...) {
   }
 
   step_group(out, groups = head(.data$groups, -1))
+}
+
+#' @importFrom dplyr transmute
+#' @export
+transmute.dtplyr_step <- function(.data, ...) {
+  dots <- capture_dots(.data, ...)
+  nested <- nested_vars(.data, dots, .data$vars)
+
+  if (!nested) {
+    j <- call2(".", !!!dots)
+  } else {
+    assign <- Map(function(x, y) call2("<-", x, y), syms(names(dots)), dots)
+    output <- call2(".", !!!syms(set_names(names(dots))))
+    j <- call2("{", !!!assign, output)
+  }
+  step_subset_j(.data, vars = names(dots), j = j)
 }
 
 # exported onLoad

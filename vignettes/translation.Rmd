@@ -31,7 +31,7 @@ This document assumes that you're familiar with the basics of data.table; if you
 To get started, I'll create a simple lazy frame. The actual data doesn't matter here since we're just looking at the translation:
 
 ```{r}
-df <- data.frame(a = integer(), b = integer(), c = integer(), d = integer())
+df <- data.frame(a = 1:5, b = 1:5, c = 1:5, d = 1:5)
 dt <- lazy_dt(df)
 ```
 
@@ -80,9 +80,9 @@ dt %>% transmute(a2 = a * 2) %>% show_query()
 dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
 
-Note that dplyr will not doesnthe input data by default, see below for more details
+Note that dplyr will not doesn't copy the input data by default, see below for more details
 
-`mutate()` allows to refer to variables that you just created. data.tables `:=` doesn't support that out of the box, so we automatically chain together as many `[` as needed:
+`mutate()` allows to refer to variables that you just created using an "extended `j` expression:
 
 ```{r}
 dt %>% mutate(a2 = a * 2, b2 = b * 2, a4 = a2 * 2) %>% show_query()

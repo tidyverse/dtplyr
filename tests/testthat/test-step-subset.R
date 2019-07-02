@@ -44,6 +44,11 @@ test_that("simple calls generate expected translations", {
   )
 
   expect_equal(
+    dt %>% transmute(x) %>% show_query(),
+    expr(DT[, .(x = x)])
+  )
+
+  expect_equal(
     dt %>% arrange(x) %>% show_query(),
     expr(DT[order(x)])
   )
@@ -219,6 +224,22 @@ test_that("basic operation as expected", {
   expect_equal(
     dt %>% group_by(g) %>% do(y = ncol(.)) %>% show_query(),
     expr(DT[, .(y = .(ncol(.SD))), by = .(g)])
+  )
+})
+
+
+# transmute ---------------------------------------------------------------
+
+test_that("transmute generates compound expression if needed", {
+  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
+
+  expect_equal(
+    dt %>% transmute(x2 = x * 2, x4 = x2 * 2) %>% show_query(),
+    expr(DT[, {
+      x2 <- x * 2
+      x4 <- x2 * 2
+      .(x2 = x2, x4 = x4)
+    }])
   )
 })
 
