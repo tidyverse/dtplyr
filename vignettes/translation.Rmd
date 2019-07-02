@@ -24,6 +24,8 @@ library(data.table)
 library(dplyr)
 ```
 
+This document assumes that you're familiar with the basics of data.table; if you're not, I recommend starting at `vignette("datatable-intro.html)`.
+
 # The basics
 
 To get started, I'll create a simple lazy frame. The actual data doesn't matter here since we're just looking at the translation:
@@ -100,7 +102,7 @@ Just like in dplyr, `group_by()` doesn't do anything by itself, but instead modi
 dt %>% group_by(a) %>% summarise(b = mean(b)) %>% show_query()
 ```
 
-The primary exception is grouped `filter()`, which requires the use of `.SD` ()
+The primary exception is grouped `filter()`, which requires the use of `.SD`:
 
 ```{r}
 dt %>% group_by(a) %>% filter(b < mean(b)) %>% show_query()
@@ -166,7 +168,7 @@ By default dtplyr avoids mutating the input data, automatically creating a `copy
 dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
 
-You can opt out of this copy by setting `immutable = FALSE` on construction:
+This is the default in order to match the existing dplyr interface. However, you can choose to opt out of this copy, and take advantage of data.tables reference semantics (for more details see `vignette("datatable-reference-semantics")`. Do this by setting `immutable = FALSE` on construction:
 
 ```{r}
 dt_inplace <- lazy_dt(df, immutable = FALSE)
