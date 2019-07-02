@@ -29,7 +29,7 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
     inner = call2("merge", lhs, rhs, all = FALSE, by = by),
     full  = call2("merge", lhs, rhs, all = TRUE, by = by),
     left  = call2("merge", lhs, rhs, all.x = TRUE, all.y = FALSE, by = by),
-    semi = call2("[", lhs, call2("unique", call2("[", lhs, rhs, which = TRUE, nomatch = 0L, on = on))),
+    semi = call2("[", lhs, call2("unique", call2("[", lhs, rhs, which = TRUE, nomatch = NULL, on = on))),
     anti  = call2("[", lhs, call2("!", rhs), on = on),
     abort("Invalid style")
   )
