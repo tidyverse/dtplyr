@@ -125,11 +125,7 @@ slower than data.table:
     overhead should be under 1ms per dplyr verb.
 
   - Some data.table expressions have no direct dplyr equivalent. For
-    example, `X[Y, sum(foo*bar)]` selects the relevant variables
-    *before* joining. The dplyr equivalent, `X %>% left_join(Y) %>%
-    summarise(sum(foo * bar))`, carries along all variables in the join.
-    Similarly, there’s no efficient way to express cross- or
-    rolling-joins with dplyr verbs.
+    example, way to express cross- or rolling-joins with dplyr verbs.
 
   - To match dplyr semantics, `mutate()` does not modify in place by
     default. This means that most expressions involving `mutate()` must

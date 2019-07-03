@@ -47,6 +47,16 @@ test_that("simple usage generates expected translation", {
   )
 })
 
+test_that("simple left joins use [", {
+  dt1 <- lazy_dt(data.frame(x = 1, a = 3), "dt1")
+  dt2 <- lazy_dt(data.frame(x = 1, b = 4), "dt2")
+
+  expect_equal(
+    dt1 %>% left_join(dt2, by = "x") %>% show_query(),
+    expr(dt1[dt2, on = .(x)])
+  )
+})
+
 test_that("correctly determines vars", {
   dt1 <- lazy_dt(data.frame(x = 1, y = 2, a = 3), "dt1")
   dt2 <- lazy_dt(data.frame(x = 1, y = 2, b = 4), "dt2")
@@ -54,7 +64,6 @@ test_that("correctly determines vars", {
   expect_equal(dt1 %>% left_join(dt2, by = "x") %>% .$vars, c("x", "y", "a", "b"))
   expect_equal(dt1 %>% semi_join(dt2, by = "x") %>% .$vars, c("x", "y", "a"))
 })
-
 
 test_that("can override suffixes", {
   dt1 <- lazy_dt(data.frame(x = 1, y = 2, a = 3), "dt1")
@@ -79,7 +88,7 @@ test_that("converts other types if requested", {
   x <- structure(10, class = "foo")
 
   expect_error(left_join(dt1, x, by = "x"), "copy")
-  expect_s3_class(left_join(dt1, x, by = "x", copy = TRUE), "dtplyr_step_join")
+  expect_s3_class(left_join(dt1, x, by = "x", copy = TRUE), "dtplyr_step_subset")
 })
 
 test_that("mutates inside joins are copied as needed", {

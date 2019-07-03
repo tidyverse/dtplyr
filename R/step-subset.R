@@ -2,12 +2,14 @@ step_subset <- function(parent,
                         vars = parent$vars,
                         groups = parent$groups,
                         i = NULL,
-                        j = NULL
+                        j = NULL,
+                        on = character()
                         ) {
 
   stopifnot(is_step(parent))
-  stopifnot(is.null(i) || is_expression(i))
+  stopifnot(is.null(i) || is_expression(i) || is_step(i))
   stopifnot(is.null(j) || is_expression(j))
+  stopifnot(is.character(on))
 
   new_step(
     parent = parent,
@@ -15,7 +17,8 @@ step_subset <- function(parent,
     groups = groups,
     i = i,
     j = j,
-    implicit_copy = is.null(i) || is.null(j),
+    on = on,
+    implicit_copy = !is.null(i) || !is.null(j),
     class = "dtplyr_step_subset"
   )
 }
@@ -28,9 +31,11 @@ step_subset_j <- function(parent,
                           j = NULL) {
   if (can_merge_subset(parent)) {
     i <- parent$i
+    on <- parent$on
     parent <- parent$parent
   } else {
     i <- NULL
+    on <- character()
   }
 
   step_subset(
@@ -38,7 +43,8 @@ step_subset_j <- function(parent,
     vars = vars,
     groups = groups,
     i = i,
-    j = j
+    j = j,
+    on = on
   )
 }
 
@@ -55,37 +61,52 @@ can_merge_subset <- function(x) {
   is.null(x$j)
 }
 
+dt_sources.dtplyr_step_subset <- function(x) {
+  # TODO: need to throw error if same name refers to different tables.
+  if (is_step(x$i)) {
+    utils::modifyList(dt_sources(x$parent), dt_sources(x$i))
+  } else {
+    dt_sources(x$parent)
+  }
+}
+
 dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
   if (is.null(x$i) && is.null(x$j)) {
     return(dt_call(x$parent))
   }
 
+  i <- if (is_step(x$i)) dt_call(x$i) else x$i
+
   parent <- dt_call(x$parent, needs_copy)
 
   if (length(x$groups) == 0) {
-    if (is.null(x$i) && is.null(x$j)) {
-      parent
-    } else if (is.null(x$i) && !is.null(x$j)) {
-      call2("[", parent, , x$j)
-    } else if (!is.null(x$i) && is.null(x$j)) {
-      call2("[", parent, x$i)
+    if (is.null(i) && is.null(x$j)) {
+      out <- parent
+    } else if (is.null(i) && !is.null(x$j)) {
+      out <- call2("[", parent, , x$j)
+    } else if (!is.null(i) && is.null(x$j)) {
+      out <- call2("[", parent, i)
     } else {
-      call2("[", parent, x$i, x$j)
+      out <- call2("[", parent, i, x$j)
     }
   } else {
     by <- call2(".", !!!syms(x$groups))
 
-    if (is.null(x$i)) {
-      call2("[", parent, , x$j, keyby = by)
+    if (is.null(i)) {
+      out <- call2("[", parent, , x$j, keyby = by)
     } else {
       if (is.null(x$j)) {
-        j <- call2("[", expr(.SD), x$i)
+        j <- call2("[", expr(.SD), i)
       } else {
-        j <- call2("[", expr(.SD), x$i, x$j)
+        j <- call2("[", expr(.SD), i, x$j)
       }
-      call2("[", parent, , j, keyby = by)
+      out <- call2("[", parent, , j, keyby = by)
     }
   }
+  if (length(x$on) > 0) {
+    out$on <- call2(".", !!!syms(x$on))
+  }
+  out
 }
 
 # dplyr methods -----------------------------------------------------------

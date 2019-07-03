@@ -125,18 +125,21 @@ dt %>% distinct(c = a + b, .keep_all = TRUE) %>% show_query()
 
 ### Joins
 
-Mutating joins use `merge()`:
+Most joins use `merge()`:
 
 ```{r}
 dt2 <- lazy_dt(data.frame(a = 1))
 
-dt %>% left_join(dt2, by = "a") %>% show_query()
 dt %>% right_join(dt2, by = "a") %>% show_query()
 dt %>% inner_join(dt2, by = "a") %>% show_query()
 dt %>% full_join(dt2, by = "a") %>% show_query()
 ```
 
-Converting left joins to the more idiomatic `dt[dt2]` is [planned for the future](https://github.com/tidyverse/dtplyr/issues/80).
+But `left_join()` will use the `i` position where possible:
+
+```{r}
+dt %>% left_join(dt2, by = "a") %>% show_query()
+```
 
 Anti-joins are easy to translate because data.table has a specific form for them:
 

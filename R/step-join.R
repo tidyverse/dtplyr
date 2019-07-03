@@ -58,7 +58,17 @@ left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
   by <- dtplyr_common_by(by, x, y)
   y <- dtplyr_auto_copy(x, y, copy = copy)
 
-  step_join(x, y, on = by, style = "left", suffix = suffix)
+  common_vars <- setdiff(intersect(x$vars, y$vars), by)
+  if (length(common_vars) == 0) {
+    step_subset(
+      x,
+      vars = union(x$vars, y$vars),
+      i = y,
+      on = by
+    )
+  } else {
+    step_join(x, y, on = by, style = "left", suffix = suffix)
+  }
 }
 
 #' @importFrom dplyr right_join
