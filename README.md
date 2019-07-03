@@ -16,9 +16,12 @@ coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/master/graph/badge.svg)]
 ## Overview
 
 dtplyr provides a dplyr backend for
-[data.table](https://github.com/Rdatatable/data.table/wiki). Compared to
-the previous release, this version of dtplyr focusses only on lazy
-evaluation triggered by use of `lazy_dt()`. This means that no
+[data.table](http://r-datatable.com/). The goal of dtplyr is to allow
+you to write dplyr code that is automatically translated to the
+equivalent, but usually much faster, data.table code.
+
+Compared to the previous release, this version of dtplyr focusses only
+on lazy evaluation triggered by use of `lazy_dt()`. This means that no
 computation is performed until you explicitly request it with
 `as.data.table()`, `as.data.frame()` or `as_tibble()`. This has a
 considerable advantage over the previous version (which eagerly
@@ -27,8 +30,8 @@ more performant translations.
 
 This is a large change that breaks all existing uses of dtplyr. But
 frankly, dtplyr was pretty useless before because it did such a bad job
-of generating data.table code. Fortunately few people used it for this
-reason, making a major overhaul possible.
+of generating data.table code. Fortunately few people used it, so a
+major overhaul possible.
 
 See `vignette("translation")` for details of the current translations,
 and [table.express](https://github.com/asardaes/table.express) and
@@ -52,7 +55,9 @@ devtools::install_github("tidyverse/dtplyr")
 
 ## Usage
 
-To use dtplyr, I recommend loading data.table, dtplyr, and dplyr:
+To use dtplyr, you must at least load dtplyr and dplyr. You may also
+want to load data.table so you can access the other goodies that it
+provides:
 
 ``` r
 library(data.table)
@@ -96,7 +101,7 @@ you’re done with the transformation and want to access the results:
 ``` r
 mtcars2 %>% 
   filter(wt < 5) %>% 
-  mutate(l100k = 235.21 / mpg ) %>% # liters / 100 km
+  mutate(l100k = 235.21 / mpg) %>% # liters / 100 km
   group_by(cyl) %>% 
   summarise(l100k = mean(l100k)) %>% 
   as_tibble()
@@ -116,7 +121,8 @@ slower than data.table:
   - Each dplyr verb must do some computation to convert dplyr syntax to
     data.table syntax. This takes time proportional to the complexity of
     the input code, not the input *data*, so should be a negligible
-    overhead for large datasets.
+    overhead for large datasets. Initial benchmarks suggest that the
+    overhead should be under 1ms per dplyr verb.
 
   - Some data.table expressions have no direct dplyr equivalent. For
     example, `X[Y, sum(foo*bar)]` selects the relevant variables
@@ -126,7 +132,7 @@ slower than data.table:
     rolling-joins with dplyr verbs.
 
   - To match dplyr semantics, `mutate()` does not modify in place by
-    default. This means that most expression involving `mutate()` needs
-    to make a copy that would not be necessary if you were using
-    data.table directly. (You can opt out of this behaviour with
+    default. This means that most expressions involving `mutate()` must
+    make a copy that would not be necessary if you were using data.table
+    directly. (You can opt out of this behaviour in `lazy_dt()` with
     `immutable = FALSE`).
