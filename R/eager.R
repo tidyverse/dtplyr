@@ -61,12 +61,6 @@ sample_n.data.table <- function(.data, ...) {
 }
 
 #' @export
-summarise.data.table <- function(.data, ...) {
-  warn_data_frame_method()
-  NextMethod()
-}
-
-#' @export
 select.data.table <- function(.data, ...) {
   warn_data_frame_method()
   NextMethod()
@@ -83,7 +77,6 @@ summarise.data.table <- function(.data, ...) {
   warn_data_frame_method()
   NextMethod()
 }
-
 
 #' @export
 transmute.data.table <- function(.data, ...) {
