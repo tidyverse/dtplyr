@@ -200,6 +200,18 @@ dt %>%
   show_query()
 ```
 
+This is particularly nice when joining two tables together because you can select variables after you have joined and data.table will only carry those into the join:
+
+```{r}
+dt3 <- lazy_dt(data.frame(x = 1, y = 2))
+dt4 <- lazy_dt(data.frame(x = 1, a = 2, b = 3, c = 4, d = 5, e = 7))
+
+dt3 %>% 
+  left_join(dt4) %>% 
+  select(x, a:c) %>% 
+  show_query()
+```
+
 Note, however, that `select()`ing and then `filter()`ing must generate two separate calls to `[`, because data.table evaluates `i` before `j`.
 
 ```{r}
