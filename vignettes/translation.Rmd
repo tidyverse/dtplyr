@@ -14,9 +14,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction
+## Introduction
 
-This vignette shows the details of how dtplyr translates dplyr expressions into [data.table](https://github.com/Rdatatable/data.table/wiki) code. If you see places where you think I could generate better data.table code, please let me know!
+This vignette shows the details of how dtplyr translates dplyr expressions into the equivalent [data.table](http://r-datatable.com/) code. If you see places where you think I could generate better data.table code, please [let me know](https://github.com/tidyverse/dtplyr/issues)!
+
+This document assumes that you're familiar with the basics of data.table; if you're not, I recommend starting at `vignette("datatable-intro.html)`.
 
 ```{r setup, message = FALSE}
 library(dtplyr)
@@ -24,18 +26,18 @@ library(data.table)
 library(dplyr)
 ```
 
-This document assumes that you're familiar with the basics of data.table; if you're not, I recommend starting at `vignette("datatable-intro.html)`.
+## The basics
 
-# The basics
-
-To get started, I'll create a simple lazy frame. The actual data doesn't matter here since we're just looking at the translation:
+To get started, I'll create a simple lazy table with `lazy_dt()`:
 
 ```{r}
 df <- data.frame(a = 1:5, b = 1:5, c = 1:5, d = 1:5)
 dt <- lazy_dt(df)
 ```
 
-When we print it out, it tells us that it's a local data table with four rows. It also prints the call that dtplyr will evaluate when we execute the lazy table. In this case it's very simple: 
+The actual data doesn't matter here since we're just looking at the translation.
+
+When you print a lazy frame, it tells you that it's a local data table with four rows. It also prints the call that dtplyr will evaluate when we execute the lazy table. In this case it's very simple: 
 
 ```{r}
 dt
@@ -47,29 +49,27 @@ If we just want to see the generated code, you can use `show_query()`. I'll use 
 dt %>% show_query()
 ```
 
-
-# Simple verbs
+## Simple verbs
 
 Many dplyr verbs have a straightforward translation to either the `i` or `j` component of `[.data.table`. 
 
-
-## `i`
+### `filter()` and `arrange()`
 
 `filter()` and `arrange()` become elements of `i`:
 
 ```{r}
 dt %>% arrange(a, b, c) %>% show_query()
+
 dt %>% filter(b == c) %>% show_query()
 dt %>% filter(b == c, c == d) %>% show_query()
 ```
 
-## `j`
+### `select()`, `summarise()`, `transmute()`
 
 `select()`, `rename()`, `summarise()` and `transmute()` all become elements of `j`:
 
 ```{r}
 dt %>% select(a:b) %>% show_query()
-dt %>% rename(x = a, y = b) %>% show_query()
 dt %>% summarise(a = mean(a)) %>% show_query()
 dt %>% transmute(a2 = a * 2) %>% show_query()
 ```
@@ -94,23 +94,21 @@ dt %>% mutate(a2 = a * 2, b2 = b * 2, a4 = a2 * 2) %>% show_query()
 dt %>% transmute(a2 = a * 2, b2 = b * 2, a4 = a2 * 2) %>% show_query()
 ```
 
-## Grouping
+## Other calls
 
-Just like in dplyr, `group_by()` doesn't do anything by itself, but instead modifies the operation of downstream verbs. This generally just involves using the `keyby` argument:
+Other verbs require calls to other functions:
 
-```{r}
-dt %>% group_by(a) %>% summarise(b = mean(b)) %>% show_query()
-```
+### `rename()`
 
-The primary exception is grouped `filter()`, which requires the use of `.SD`:
+`rename()` uses `setnames()`:
 
 ```{r}
-dt %>% group_by(a) %>% filter(b < mean(b)) %>% show_query()
+dt %>% rename(x = a, y = b) %>% show_query()
 ```
 
-## Distinct
+### `distinct()`
 
-`distinct()` is translated to some form of `unique()`:
+`distinct()` uses `unique()`:
 
 ```{r}
 dt %>% distinct() %>% show_query()
@@ -118,65 +116,16 @@ dt %>% distinct(a, b) %>% show_query()
 dt %>% distinct(a, b, .keep_all = TRUE) %>% show_query()
 ```
 
-`distinct()` on a computed column uses an intermediate step:
+`distinct()` on a computed column uses an intermediate mutate:
 
 ```{r}
 dt %>% distinct(c = a + b) %>% show_query()
 dt %>% distinct(c = a + b, .keep_all = TRUE) %>% show_query()
 ```
 
-# Combinations
+### Joins
 
-dtplyr tries to generate generate data.table code as close as possible to what you'd write by hand, as this tends to unlock data.table's tremendous speed. For example, if you `filter()` and then `select()`, dtplyr generates a single `[`:
-
-```{r}
-dt %>% filter(a == 1) %>% select(-a) %>% show_query()
-```
-
-And similarly when combining filtering and summarising:
-
-```{r}
-dt %>% 
-  group_by(a) %>% 
-  filter(b < mean(b)) %>% 
-  summarise(c = max(c)) %>% 
-  show_query()
-```
-
-Note however, that `select()`ing and then `filter()`ing must generate two separate calls to `[`, because data.table evaluates `i` before `j`.
-
-```{r}
-dt %>% select(-a) %>% filter(a == 1) %>% show_query()
-```
-
-Similarly, a `filter()` and `mutate()` can't be combined because `dt[a == 1, .(b2 := b * 2)]` would modifies the selected rows in place.
-
-# Copies
-
-By default dtplyr avoids mutating the input data, automatically creating a `copy()` if needed:
-
-```{r}
-dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
-```
-
-This is the default in order to match the existing dplyr interface. However, you can choose to opt out of this copy, and take advantage of data.tables reference semantics (for more details see `vignette("datatable-reference-semantics")`. Do this by setting `immutable = FALSE` on construction. This only makes sense when the input is already a data table:
-
-```{r}
-dt2 <- data.table(a = 1:10)
-
-dt_inplace <- lazy_dt(dt2, immutable = FALSE)
-dt_inplace %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
-```
-
-Note that dtplyr does it's best to avoid needless copies, so it won't explicitly copy if there's already an implicit copy produced by `[`, `head()` or similar:
-
-```{r}
-dt %>% filter(x == 1) %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
-```
-
-# Joins
-
-dtplyr converts mutating joins to `merge()`:
+Mutating joins use `merge()`:
 
 ```{r}
 dt2 <- lazy_dt(data.frame(a = 1))
@@ -187,7 +136,7 @@ dt %>% inner_join(dt2, by = "a") %>% show_query()
 dt %>% full_join(dt2, by = "a") %>% show_query()
 ```
 
-I don't currently convert left joins to the more idiomatic `dt[dt2]` because I haven't yet figured out how to handle the `suffixes` argument. This is a shame because there's a big advantage of the `dt[dt2]` form: you can combine it with a `j` argument for efficient summaries, e.g. `dt[dt2, sum(x * y)]`.
+Converting left joins to the more idiomatic `dt[dt2]` is [planned for the future](https://github.com/tidyverse/dtplyr/issues/80).
 
 Anti-joins are easy to translate because data.table has a specific form for them:
 
@@ -201,7 +150,7 @@ Semi joins are little more complex:
 dt %>% semi_join(dt2, by = "a") %>% show_query()
 ```
 
-# Set operations
+### Set operations
 
 Set operations use the fast data table alternatives:
 
@@ -211,11 +160,92 @@ dt %>% setdiff(dt2) %>% show_query()
 dt %>% union(dt2) %>% show_query()
 ```
 
-# Performance
+## Grouping
 
-There are two components to the performance of dtplyr: how long it takes to generate the translation, and how well translation performs. Given my exploration so far, I'm reasonably confident that we're generating high-quality data.table code, so most of the cost should be in the translation itself. 
+Just like in dplyr, `group_by()` doesn't do anything by itself, but instead modifies the operation of downstream verbs. This generally just involves using the `keyby` argument:
 
-The following code briefly explores the performance of a few different translations. A signficant amount of work is done by the dplyr verbs, so we benchmark the whole process. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data. (The only exception is use of `mutate()` will also generate a single copy of the input data.)
+```{r}
+dt %>% group_by(a) %>% summarise(b = mean(b)) %>% show_query()
+```
+
+(Currently there's no way to use `by` instead of `keyby`, but that is planned [for the future](https://github.com/tidyverse/dtplyr/issues/85).)
+
+The primary exception is grouped `filter()`, which requires the use of `.SD`:
+
+```{r}
+dt %>% group_by(a) %>% filter(b < mean(b)) %>% show_query()
+```
+
+## Combinations
+
+dtplyr tries to generate generate data.table code as close as possible to what you'd write by hand, as this tends to unlock data.table's tremendous speed. For example, if you `filter()` and then `select()`, dtplyr generates a single `[`:
+
+```{r}
+dt %>% 
+  filter(a == 1) %>% 
+  select(-a) %>% 
+  show_query()
+```
+
+And similarly when combining filtering and summarising:
+
+```{r}
+dt %>% 
+  group_by(a) %>% 
+  filter(b < mean(b)) %>% 
+  summarise(c = max(c)) %>% 
+  show_query()
+```
+
+Note, however, that `select()`ing and then `filter()`ing must generate two separate calls to `[`, because data.table evaluates `i` before `j`.
+
+```{r}
+dt %>% 
+  select(-a) %>% 
+  filter(a == 1) %>% 
+  show_query()
+```
+
+Similarly, a `filter()` and `mutate()` can't be combined because `dt[a == 1, .(b2 := b * 2)]` would modify the selected rows in place:
+
+```{r}
+dt %>% 
+  filter(a == 1) %>% 
+  mutate(b2 = b * 2) %>% 
+  show_query()
+```
+
+## Copies
+
+By default dtplyr avoids mutating the input data, automatically creating a `copy()` if needed:
+
+```{r}
+dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
+```
+
+Note that dtplyr does it's best to avoid needless copies, so it won't explicitly copy if there's already an implicit copy produced by `[`, `head()`, `merge()` or similar:
+
+```{r}
+dt %>% 
+  filter(x == 1) %>% 
+  mutate(a2 = a * 2, b2 = b * 2) %>% 
+  show_query()
+```
+
+You can choose to opt out of this copy, and take advantage of data.table's reference semantics (see `vignette("datatable-reference-semantics")` for more details). Do this by setting `immutable = FALSE` on construction:
+
+```{r}
+dt2 <- data.table(a = 1:10)
+
+dt_inplace <- lazy_dt(dt2, immutable = FALSE)
+dt_inplace %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
+```
+
+## Performance
+
+There are two components to the performance of dtplyr: how long it takes to generate the translation, and how well the translation performs. Given my explorations so far, I'm reasonably confident that we're generating high-quality data.table code, so most of the cost should be in the translation itself. 
+
+The following code briefly explores the performance of a few different translations. A signficant amount of work is done by the dplyr verbs, so we benchmark the whole process. 
 
 ```{r}
 bench::mark(
@@ -226,6 +256,6 @@ bench::mark(
 )[1:6]
 ```
 
-These translations all take less than a millisecond, which suggests that the performance overhead of dtplyr should be negligible. 
+These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data[^copy].
 
-
+[^copy]: Unless a copy is performed.
