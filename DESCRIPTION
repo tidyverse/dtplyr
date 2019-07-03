@@ -25,8 +25,6 @@ Imports:
     crayon,
     data.table (>= 1.9.6),
     dplyr (>= 0.8.1),
-    ellipsis,
-    methods,
     rlang,
     tibble,
     tidyselect
@@ -34,8 +32,6 @@ Suggests:
     bench,
     covr,
     knitr,
-    Lahman,
-    nycflights13,
     rmarkdown,
     testthat (>= 2.1.0)
 VignetteBuilder: 
