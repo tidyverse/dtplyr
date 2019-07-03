@@ -1,4 +1,4 @@
-#' Create a "lazy" data.table
+#' Create a "lazy" data.table for use with dplyr verbs
 #'
 #' @description
 #' A lazy data.table lazy captures the intent of dplyr verbs, only actually
@@ -7,7 +7,7 @@
 #' This allows dtplyr to convert dplyr verbs into as few data.table expressions
 #' as possible, which leads to a high performance translation.
 #'
-#' See `vignette("translation")` for the detail of the translation.
+#' See `vignette("translation")` for the details of the translation.
 #'
 #' @param x A data table (or something can can be coerced to a data table).
 #' @param immutable If `TRUE`, `x` is treated as immutable and will never
@@ -15,8 +15,10 @@
 #'   `immutable = FALSE` to allow dtplyr to modify the input object.
 #' @param name Optionally, supply a name to be used in generated expressions.
 #'   For expert use only.
-#' @param key_by Set keys for data frame with [dplyr::select()] semantics.
-#'   This uses [data.table::setkey()] to sort the table and build up an index.
+#' @param key_by Set keys for data frame, using [select()] semantics (e.g.
+#'   `key_by = c(key1, key2)`.
+#'
+#'   This uses [data.table::setkey()] to sort the table and build an index.
 #'   This will considerably improve performance for subsets, summaries, and
 #'   joins that use the keys.
 #'
