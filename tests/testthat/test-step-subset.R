@@ -145,6 +145,11 @@ test_that("empty summarise returns unique groups", {
   )
 })
 
+test_that("if for unsupported resummarise", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
+  expect_error(dt %>% summarise(x = mean(x), x2 = sd(x)), "mutate")
+})
+
 # select/rename ------------------------------------------------------------------
 
 test_that("renames grouping vars", {
