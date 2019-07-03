@@ -6,8 +6,9 @@
 \alias{dtplyr-package}
 \title{dtplyr: Data Table Back-End for 'dplyr'}
 \description{
-This implements the data table back-end for 'dplyr'
-    so that you can seamlessly use data table and 'dplyr' together.
+Provides a dplyr backend for data.table. 
+  The goal of dtplyr is to allow you to write dplyr code that is automatically 
+  translated to the equivalent, but usually much faster, data.table code.
 }
 \seealso{
 Useful links:
