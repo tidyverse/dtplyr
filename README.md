@@ -20,13 +20,13 @@ dtplyr provides a dplyr backend for
 you to write dplyr code that is automatically translated to the
 equivalent, but usually much faster, data.table code.
 
-Compared to the previous release, this version of dtplyr focusses only
-on lazy evaluation triggered by use of `lazy_dt()`. This means that no
-computation is performed until you explicitly request it with
-`as.data.table()`, `as.data.frame()` or `as_tibble()`. This has a
-considerable advantage over the previous version (which eagerly
-evaluated each step) because it allows dtplyr to generate significantly
-more performant translations.
+Compared to the previous release, this version of dtplyr is a complete
+rewrite that focusses only on lazy evaluation triggered by use of
+`lazy_dt()`. This means that no computation is performed until you
+explicitly request it with `as.data.table()`, `as.data.frame()` or
+`as_tibble()`. This has a considerable advantage over the previous
+version (which eagerly evaluated each step) because it allows dtplyr to
+generate significantly more performant translations.
 
 This is a large change that breaks all existing uses of dtplyr. But
 frankly, dtplyr was pretty useless before because it did such a bad job
