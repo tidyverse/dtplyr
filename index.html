@@ -162,7 +162,7 @@
 <p>There are three primary reasons that dtplyr will always be somewhat slower than data.table:</p>
 <ul>
 <li><p>Each dplyr verb must do some computation to convert dplyr syntax to data.table syntax. This takes time proportional to the complexity of the input code, not the input <em>data</em>, so should be a negligible overhead for large datasets. Initial benchmarks suggest that the overhead should be under 1ms per dplyr verb.</p></li>
-<li><p>Some data.table expressions have no direct dplyr equivalent. For example, <code>X[Y, sum(foo*bar)]</code> selects the relevant variables <em>before</em> joining. The dplyr equivalent, <code>X %&gt;% left_join(Y) %&gt;% summarise(sum(foo * bar))</code>, carries along all variables in the join. Similarly, there’s no efficient way to express cross- or rolling-joins with dplyr verbs.</p></li>
+<li><p>Some data.table expressions have no direct dplyr equivalent. For example, way to express cross- or rolling-joins with dplyr verbs.</p></li>
 <li><p>To match dplyr semantics, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> does not modify in place by default. This means that most expressions involving <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> must make a copy that would not be necessary if you were using data.table directly. (You can opt out of this behaviour in <code><a href="reference/lazy_dt.html">lazy_dt()</a></code> with <code>immutable = FALSE</code>).</p></li>
 </ul>
 </div>
