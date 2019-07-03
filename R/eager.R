@@ -1,4 +1,4 @@
-# nocov begin
+# nocov start
 
 warn_data_frame_method <- function() {
   warn(strwrap(paste0(
