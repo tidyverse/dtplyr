@@ -11,6 +11,8 @@ status](https://www.r-pkg.org/badges/version/dtplyr)](https://cran.r-project.org
 status](https://travis-ci.org/tidyverse/dtplyr.svg?branch=master)](https://travis-ci.org/tidyverse/dtplyr)
 [![Codecov test
 coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyverse/dtplyr?branch=master)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 ## Overview
@@ -32,6 +34,10 @@ This is a large change that breaks all existing uses of dtplyr. But
 frankly, dtplyr was pretty useless before because it did such a bad job
 of generating data.table code. Fortunately few people used it, so a
 major overhaul possible.
+
+dtplyr is currently marked as experimental because it has little usage
+in the wild. I expect that it will rapidly move towards maturing after a
+few weeks of feedback from users.
 
 See `vignette("translation")` for details of the current translations,
 and [table.express](https://github.com/asardaes/table.express) and
