@@ -44,7 +44,7 @@ dt_squash <- function(x, env, vars) {
         # data table pronouns are bound to NULL
         x
       } else if (!var %in% vars && env_has(env, var, inherit = TRUE)) {
-        if (identical(env, globalenv())) {
+        if (is_global(env)) {
           # This is slightly dangerous because the variable might be modified
           # between creation and execution, but it seems like a reasonable
           # tradeoff in order to get a more natural translation.
@@ -75,6 +75,19 @@ dt_squash <- function(x, env, vars) {
   } else {
     abort("Invalid input")
   }
+}
+
+is_global <- function(env) {
+  if (identical(env, globalenv())) {
+    return(TRUE)
+  }
+
+  # Heuristic for inside pipe
+  if (identical(env_names(env), ".") && identical(env_parent(env), globalenv())) {
+    return(TRUE)
+  }
+
+  FALSE
 }
 
 simplify_function_call <- function(x, vars) {
