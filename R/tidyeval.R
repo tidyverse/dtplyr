@@ -8,15 +8,6 @@ dt_eval <- function(x) {
 
 #' @importFrom data.table frank
 add_dt_wrappers <- function(env) {
-  env$n <- function() eval(quote(.N), caller_env())
-  env$row_number <- function(x) {
-    if (missing(x)) {
-      eval(quote(seq_len(.N)), caller_env())
-    } else {
-      frank(x, ties.method = "first", na.last = "keep")
-    }
-  }
-
   # Make sure data.table functions are available so dtplyr still works
   # even when data.table isn't attached
   env$setname <- data.table::setnames
@@ -53,7 +44,14 @@ dt_squash <- function(x, env, vars) {
         # data table pronouns are bound to NULL
         x
       } else if (!var %in% vars && env_has(env, var, inherit = TRUE)) {
-        eval(x, env)
+        if (identical(env, globalenv())) {
+          # This is slightly dangerous because the variable might be modified
+          # between creation and execution, but it seems like a reasonable
+          # tradeoff in order to get a more natural translation.
+          sym(paste0("..", var))
+        } else {
+          eval(x, env)
+        }
       } else {
         x
       }
@@ -61,7 +59,14 @@ dt_squash <- function(x, env, vars) {
   } else if (is_quosure(x)) {
     dt_squash(get_expr(x), get_env(x), vars = vars)
   } else if (is_call(x)) {
-    if (is.function(x[[1]])) {
+    if (is_call(x, "n", n = 0)) {
+      quote(.N)
+    } else if (is_call(x, "row_number", n = 0)) {
+      quote(seq_len(.N))
+    } else if (is_call(x, "row_number", n = 1)) {
+      arg <- dt_squash(x[[2]], vars = vars, env = env)
+      expr(frank(!!arg, ties.method = "first", na.last = "keep"))
+    } else if (is.function(x[[1]])) {
       simplify_function_call(x, vars)
     } else {
       x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env)

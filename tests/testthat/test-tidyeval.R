@@ -14,6 +14,13 @@ test_that("existing non-variables get inlined", {
   expect_equal(capture_dot(dt, x + m), quote(x + m))
 })
 
+test_that("unless we're operating in the global environment", {
+  dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
+  quo <- new_quosure(quote(x + n), globalenv())
+
+  expect_equal(capture_dot(dt, !!quo), quote(x + ..n))
+})
+
 test_that("using environment of inlined quosures", {
   dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
 
