@@ -328,9 +328,9 @@
 <a class="sourceLine" id="cb28-7" data-line-number="7"><span class="co">#&gt; # A tibble: 3 x 6</span></a>
 <a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></a>
 <a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; 1 filter        383µs    418µs     2349.      280B     12.6</span></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; 2 mutate        826µs    899µs     1098.      280B     13.2</span></a>
-<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; 3 summarise     902µs    967µs     1016.      280B     12.7</span></a></code></pre></div>
+<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; 1 filter        375µs    408µs     2389.      280B     18.2</span></a>
+<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; 2 mutate        789µs    854µs     1138.      280B     15.1</span></a>
+<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; 3 summarise     796µs    851µs     1159.      280B     15.2</span></a></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
