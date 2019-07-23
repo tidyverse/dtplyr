@@ -44,7 +44,7 @@
 lazy_dt <- function(x, name = NULL, immutable = TRUE, key_by = NULL) {
   if (!is.data.table(x)) {
     if (!immutable) {
-      abort("`immutable` must be `FALSE` when `x` is not already a data table.")
+      abort("`immutable` must be `TRUE` when `x` is not already a data table.")
     }
     x <- as.data.table(x)
     copied <- TRUE
