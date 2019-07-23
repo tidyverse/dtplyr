@@ -35,7 +35,7 @@ as possible, which leads to a high performance translation.
 See \code{vignette("translation")} for the details of the translation.
 }
 \examples{
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 
 mtcars2 <- lazy_dt(mtcars)
 mtcars2

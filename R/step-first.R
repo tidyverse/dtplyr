@@ -25,7 +25,7 @@
 #'   See `vignette("datatable-keys-fast-subset")` for more details.
 #' @export
 #' @examples
-#' library(dplyr)
+#' library(dplyr, warn.conflicts = FALSE)
 #'
 #' mtcars2 <- lazy_dt(mtcars)
 #' mtcars2
