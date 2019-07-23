@@ -103,10 +103,13 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>dtplyr provides a dplyr backend for <a href="http://r-datatable.com/">data.table</a>. The goal of dtplyr is to allow you to write dplyr code that is automatically translated to the equivalent, but usually much faster, data.table code.</p>
-<p>Compared to the previous release, this version of dtplyr is a complete rewrite that focusses only on lazy evaluation triggered by use of <code><a href="reference/lazy_dt.html">lazy_dt()</a></code>. This means that no computation is performed until you explicitly request it with <code><a href="https://www.rdocumentation.org/packages/data.table/topics/as.data.table">as.data.table()</a></code>, <code><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble()</a></code>. This has a considerable advantage over the previous version (which eagerly evaluated each step) because it allows dtplyr to generate significantly more performant translations.</p>
-<p>This is a large change that breaks all existing uses of dtplyr. But frankly, dtplyr was pretty useless before because it did such a bad job of generating data.table code. Fortunately few people used it, so a major overhaul possible.</p>
-<p>dtplyr is currently marked as experimental because it has little usage in the wild. I expect that it will rapidly move towards maturing after a few weeks of feedback from users.</p>
+<p>Compared to the previous release, this version of dtplyr is a complete rewrite that focusses only on lazy evaluation triggered by use of <code><a href="reference/lazy_dt.html">lazy_dt()</a></code>. This means that no computation is performed until you explicitly request it with <code><a href="https://www.rdocumentation.org/packages/data.table/topics/as.data.table">as.data.table()</a></code>, <code><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble()</a></code>. This has a considerable advantage over the previous version (which eagerly evaluated each step) because it allows dtplyr to generate significantly more performant translations. This is a large change that breaks all existing uses of dtplyr. But frankly, dtplyr was pretty useless before because it did such a bad job of generating data.table code. Fortunately few people used it, so a major overhaul possible.</p>
 <p>See <code><a href="articles/translation.html">vignette("translation")</a></code> for details of the current translations, and <a href="https://github.com/asardaes/table.express">table.express</a> and <a href="https://github.com/WinVector/rqdatatable/">rqdatatable</a> for related work.</p>
+</div>
+<div id="development-status" class="section level2">
+<h2 class="hasAnchor">
+<a href="#development-status" class="anchor"></a>Development status</h2>
+<p>dtplyr is currently marked as experimental because it has had little usage in the wild. I expect that it will rapidly move towards maturing after a few weeks of feedback from users.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
