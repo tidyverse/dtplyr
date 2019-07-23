@@ -123,7 +123,7 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>To use dtplyr, you must at least load dtplyr and dplyr. You may also want to load data.table so you can access the other goodies that it provides:</p>
+<p>To use dtplyr, you must at least load dtplyr and dplyr. You may also want to load <a href="http://r-datatable.com/">data.table</a> so you can access the other goodies that it provides:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(data.table)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dtplyr)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr, <span class="dt">warn.conflicts =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
@@ -165,8 +165,8 @@
 <a href="#why-is-dtplyr-slower-than-data-table" class="anchor"></a>Why is dtplyr slower than data.table?</h2>
 <p>There are three primary reasons that dtplyr will always be somewhat slower than data.table:</p>
 <ul>
-<li><p>Each dplyr verb must do some computation to convert dplyr syntax to data.table syntax. This takes time proportional to the complexity of the input code, not the input <em>data</em>, so should be a negligible overhead for large datasets. Initial benchmarks suggest that the overhead should be under 1ms per dplyr verb.</p></li>
-<li><p>Some data.table expressions have no direct dplyr equivalent. For example, way to express cross- or rolling-joins with dplyr verbs.</p></li>
+<li><p>Each dplyr verb must do some work to convert dplyr syntax to data.table syntax. This takes time proportional to the complexity of the input code, not the input <em>data</em>, so should be a negligible overhead for large datasets. <a href="https://dtplyr.tidyverse.org/articles/translation.html#performance">Initial benchmarks</a> suggest that the overhead should be under 1ms per dplyr call.</p></li>
+<li><p>Some data.table expressions have no direct dplyr equivalent. For example, there’s no way to express cross- or rolling-joins with dplyr.</p></li>
 <li><p>To match dplyr semantics, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> does not modify in place by default. This means that most expressions involving <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> must make a copy that would not be necessary if you were using data.table directly. (You can opt out of this behaviour in <code><a href="reference/lazy_dt.html">lazy_dt()</a></code> with <code>immutable = FALSE</code>).</p></li>
 </ul>
 </div>
