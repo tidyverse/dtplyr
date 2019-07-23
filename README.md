@@ -63,8 +63,8 @@ devtools::install_github("tidyverse/dtplyr")
 ## Usage
 
 To use dtplyr, you must at least load dtplyr and dplyr. You may also
-want to load data.table so you can access the other goodies that it
-provides:
+want to load [data.table](http://r-datatable.com/) so you can access the
+other goodies that it provides:
 
 ``` r
 library(data.table)
@@ -125,14 +125,16 @@ mtcars2 %>%
 There are three primary reasons that dtplyr will always be somewhat
 slower than data.table:
 
-  - Each dplyr verb must do some computation to convert dplyr syntax to
+  - Each dplyr verb must do some work to convert dplyr syntax to
     data.table syntax. This takes time proportional to the complexity of
     the input code, not the input *data*, so should be a negligible
-    overhead for large datasets. Initial benchmarks suggest that the
-    overhead should be under 1ms per dplyr verb.
+    overhead for large datasets. [Initial
+    benchmarks](https://dtplyr.tidyverse.org/articles/translation.html#performance)
+    suggest that the overhead should be under 1ms per dplyr call.
 
   - Some data.table expressions have no direct dplyr equivalent. For
-    example, way to express cross- or rolling-joins with dplyr verbs.
+    example, there’s no way to express cross- or rolling-joins with
+    dplyr.
 
   - To match dplyr semantics, `mutate()` does not modify in place by
     default. This means that most expressions involving `mutate()` must
