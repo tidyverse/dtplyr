@@ -80,9 +80,9 @@ dt %>% transmute(a2 = a * 2) %>% show_query()
 dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
 
-Note that dplyr will not doesn't copy the input data by default, see below for more details
+Note that dplyr will not copy the input data by default, see below for more details.
 
-`mutate()` allows to refer to variables that you just created using an "extended `j` expression:
+`mutate()` allows to refer to variables that you just created using an "extended `j`" expression:
 
 ```{r}
 dt %>% mutate(a2 = a * 2, b2 = b * 2, a4 = a2 * 2) %>% show_query()
@@ -147,7 +147,7 @@ Anti-joins are easy to translate because data.table has a specific form for them
 dt %>% anti_join(dt2, by = "a") %>% show_query()
 ```
 
-Semi joins are little more complex:
+Semi-joins are little more complex:
 
 ```{r}
 dt %>% semi_join(dt2, by = "a") %>% show_query()
@@ -155,7 +155,7 @@ dt %>% semi_join(dt2, by = "a") %>% show_query()
 
 ### Set operations
 
-Set operations use the fast data table alternatives:
+Set operations use the fast data.table alternatives:
 
 ```{r}
 dt %>% intersect(dt2) %>% show_query()
@@ -238,7 +238,7 @@ By default dtplyr avoids mutating the input data, automatically creating a `copy
 dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 ```
 
-Note that dtplyr does it's best to avoid needless copies, so it won't explicitly copy if there's already an implicit copy produced by `[`, `head()`, `merge()` or similar:
+Note that dtplyr does its best to avoid needless copies, so it won't explicitly copy if there's already an implicit copy produced by `[`, `head()`, `merge()` or similar:
 
 ```{r}
 dt %>% 
