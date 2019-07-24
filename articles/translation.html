@@ -102,7 +102,7 @@
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p>This vignette shows the details of how dtplyr translates dplyr expressions into the equivalent <a href="http://r-datatable.com/">data.table</a> code. If you see places where you think I could generate better data.table code, please <a href="https://github.com/tidyverse/dtplyr/issues">let me know</a>!</p>
-<p>This document assumes that you’re familiar with the basics of data.table; if you’re not, I recommend starting at <code>vignette("datatable-intro.html)</code>.</p>
+<p>This document assumes that you’re familiar with the basics of data.table; if you’re not, I recommend starting at <code>vignette("datatable-intro.html")</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dtplyr)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(data.table)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a></code></pre></div>
@@ -328,9 +328,9 @@
 <a class="sourceLine" id="cb28-7" data-line-number="7"><span class="co">#&gt; # A tibble: 3 x 6</span></a>
 <a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></a>
 <a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; 1 filter        363µs    388µs     2522.      280B     17.9</span></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; 2 mutate        775µs    815µs     1210.      280B     17.3</span></a>
-<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; 3 summarise     772µs    813µs     1204.      280B     17.4</span></a></code></pre></div>
+<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; 1 filter        371µs    398µs     2471.      280B     18.0</span></a>
+<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; 2 mutate        783µs    835µs     1180.      280B     17.4</span></a>
+<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; 3 summarise     790µs    829µs     1188.      280B     15.1</span></a></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
