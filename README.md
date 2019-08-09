@@ -31,7 +31,7 @@ version (which eagerly evaluated each step) because it allows dtplyr to
 generate significantly more performant translations. This is a large
 change that breaks all existing uses of dtplyr. But frankly, dtplyr was
 pretty useless before because it did such a bad job of generating
-data.table code. Fortunately few people used it, so a major overhaul
+data.table code. Fortunately few people used it, so a major overhaul was
 possible.
 
 See `vignette("translation")` for details of the current translations,
