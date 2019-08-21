@@ -67,7 +67,7 @@ dt_squash <- function(x, env, vars, j = TRUE) {
       arg <- dt_squash(x[[2]], vars = vars, env = env, j = j)
       expr(frank(!!arg, ties.method = "first", na.last = "keep"))
     } else if (is.function(x[[1]])) {
-      simplify_function_call(x, vars)
+      simplify_function_call(x, env, vars = vars, j = j)
     } else {
       x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env, j = j)
       x
@@ -90,13 +90,14 @@ is_global <- function(env) {
   FALSE
 }
 
-simplify_function_call <- function(x, vars) {
+simplify_function_call <- function(x, env, vars, j = TRUE) {
   if (inherits(x[[1]], "inline_colwise_function")) {
     dot_var <- vars[[attr(x, "position")]]
-    replace_dot(attr(x[[1]], "formula")[[2]], dot_var)
+    out <- replace_dot(attr(x[[1]], "formula")[[2]], dot_var)
+    dt_squash(out, env, vars = vars, j = j)
   } else {
     x[[1]] <- fun_name(x[[1]])
-    x
+    dt_squash(x, env, vars = vars, j = j)
   }
 }
 
@@ -115,6 +116,7 @@ has_gforce <- c(
   "min", "max", "mean", "median", "var", "sd", "sum", "prod",
   "first", "last", "head", "tail"
 )
+dplyr_trans <- c("n", "row_number")
 
 fun_name <- function(fun) {
   pkg_env <- baseenv()
@@ -124,6 +126,13 @@ fun_name <- function(fun) {
       next
 
     fun_x <- env_get(pkg_env, x, inherit = TRUE)
+    if (identical(fun, fun_x))
+      return(sym(x))
+  }
+
+  dplyr_env <- pkg_env("dplyr")
+  for (x in dplyr_trans) {
+    fun_x <- env_get(dplyr_env, x, inherit = TRUE)
     if (identical(fun, fun_x))
       return(sym(x))
   }

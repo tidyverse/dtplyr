@@ -104,6 +104,15 @@ test_that("scoped verbs produce nice output", {
     dt %>% summarise_all(~ mean(.)) %>% show_query(),
     expr(DT[, .(x = mean(x))])
   )
+
+  expect_equal(
+    dt %>% summarise_all(row_number) %>% show_query(),
+    expr(DT[, .(x = frank(x, ties.method = "first", na.last = "keep"))])
+  )
+  expect_equal(
+    dt %>% summarise_all(~ n()) %>% show_query(),
+    expr(DT[, .(x = .N)])
+  )
 })
 
 # fun_name ----------------------------------------------------------------
