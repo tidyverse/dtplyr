@@ -32,5 +32,5 @@ test_that("can evaluate to any data frame type", {
   expect_s3_class(as.data.table(dt), "data.table")
   expect_s3_class(as_tibble(dt), "tbl_df")
 
-  expect_s3_class(collect(dt), "data.table")
+  expect_s3_class(collect(dt), "tbl_df")
 })

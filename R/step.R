@@ -82,7 +82,8 @@ as_tibble.dtplyr_step <- function(x, ...) {
 #' @export
 #' @importFrom dplyr collect
 collect.dtplyr_step <- function(x, ...) {
-  dt_eval(x)
+  # for consistency with dbplyr::collect()
+  as_tibble(x)
 }
 
 #' @export
