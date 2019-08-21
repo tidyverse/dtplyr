@@ -175,7 +175,13 @@ transmute.dtplyr_step <- function(.data, ...) {
 filter.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(.data, ..., .j = FALSE)
 
-  i <- Reduce(function(x, y) call2("&", x, y), dots)
+  if (length(dots) == 1 && is_symbol(dots[[1]])) {
+    # Suppress data.table warning when filteirng with a logical variable
+    i <- call2("(", dots[[1]])
+  } else {
+    i <- Reduce(function(x, y) call2("&", x, y), dots)
+  }
+
   step_subset(.data, i = i)
 }
 

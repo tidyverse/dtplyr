@@ -57,6 +57,10 @@ test_that("simple calls generate expected translations", {
     dt %>% filter() %>% show_query(),
     expr(DT)
   )
+  expect_equal(
+    dt %>% filter(x) %>% show_query(),
+    expr(DT[(x)])
+  )
 
   expect_equal(
     dt %>% filter(x > 1) %>% show_query(),
