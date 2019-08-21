@@ -173,7 +173,7 @@ transmute.dtplyr_step <- function(.data, ...) {
 
 # exported onLoad
 filter.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(.data, ..., .named = FALSE)
+  dots <- capture_dots(.data, ..., .j = FALSE)
 
   i <- Reduce(function(x, y) call2("&", x, y), dots)
   step_subset(.data, i = i)
@@ -182,7 +182,7 @@ filter.dtplyr_step <- function(.data, ...) {
 #' @importFrom dplyr arrange
 #' @export
 arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
-  dots <- capture_dots(.data, ..., .named = FALSE)
+  dots <- capture_dots(.data, ..., .j = FALSE)
   if (.by_group) {
     dots <- c(syms(.data$groups), dots)
   }
@@ -200,7 +200,7 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
 #' @importFrom dplyr slice
 #' @export
 slice.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(.data, ..., .named = FALSE)
+  dots <- capture_dots(.data, ..., .j = FALSE)
 
   if (length(dots) == 0) {
     i <- NULL

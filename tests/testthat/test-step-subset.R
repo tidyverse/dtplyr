@@ -69,6 +69,17 @@ test_that("simple calls generate expected translations", {
   )
 })
 
+test_that("doesn't inline external variables", {
+  dt <- lazy_dt(data.table(x = 1), "DT")
+  l <- c(1, 10)
+
+  expect_equal(
+    dt %>% filter(x %in% l) %>% show_query(),
+    quote(DT[x %in% l])
+  )
+})
+
+
 test_that("can merge iff j-generating call comes after i", {
   dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
 

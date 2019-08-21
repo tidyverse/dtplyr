@@ -12,6 +12,9 @@ test_that("existing non-variables get inlined", {
   n <- 10
   expect_equal(capture_dot(dt, x + n), quote(x + 10))
   expect_equal(capture_dot(dt, x + m), quote(x + m))
+
+  # except when not in j
+  expect_equal(capture_dot(dt, x + n, j = FALSE), quote(x + n))
 })
 
 test_that("unless we're operating in the global environment", {

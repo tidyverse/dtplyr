@@ -21,18 +21,18 @@ add_dt_wrappers <- function(env) {
 # data.table. The goal is to get the majority of real-world code to work,
 # without aiming for 100% compliance.
 
-capture_dots <- function(.data, ..., .named = TRUE) {
-  dots <- enquos(..., .named = .named)
-  dots <- lapply(dots, dt_squash, vars = .data$vars)
+capture_dots <- function(.data, ..., .j = TRUE) {
+  dots <- enquos(..., .named = .j)
+  dots <- lapply(dots, dt_squash, vars = .data$vars, j = .j)
   dots
 }
 
-capture_dot <- function(.data, x) {
-  dt_squash(enquo(x), vars = .data$vars)
+capture_dot <- function(.data, x, j = TRUE) {
+  dt_squash(enquo(x), vars = .data$vars, j = j)
 }
 
 # squash quosures
-dt_squash <- function(x, env, vars) {
+dt_squash <- function(x, env, vars, j = TRUE) {
   if (is_atomic(x)) {
     x
   } else if (is_symbol(x)) {
@@ -43,7 +43,7 @@ dt_squash <- function(x, env, vars) {
       if (nchar(x) > 0 && substr(var, 1, 1) == ".") {
         # data table pronouns are bound to NULL
         x
-      } else if (!var %in% vars && env_has(env, var, inherit = TRUE)) {
+      } else if (j && !var %in% vars && env_has(env, var, inherit = TRUE)) {
         if (is_global(env)) {
           # This is slightly dangerous because the variable might be modified
           # between creation and execution, but it seems like a reasonable
@@ -57,19 +57,19 @@ dt_squash <- function(x, env, vars) {
       }
     }
   } else if (is_quosure(x)) {
-    dt_squash(get_expr(x), get_env(x), vars = vars)
+    dt_squash(get_expr(x), get_env(x), vars = vars, j = j)
   } else if (is_call(x)) {
     if (is_call(x, "n", n = 0)) {
       quote(.N)
     } else if (is_call(x, "row_number", n = 0)) {
       quote(seq_len(.N))
     } else if (is_call(x, "row_number", n = 1)) {
-      arg <- dt_squash(x[[2]], vars = vars, env = env)
+      arg <- dt_squash(x[[2]], vars = vars, env = env, j = j)
       expr(frank(!!arg, ties.method = "first", na.last = "keep"))
     } else if (is.function(x[[1]])) {
       simplify_function_call(x, vars)
     } else {
-      x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env)
+      x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env, j = j)
       x
     }
   } else {
