@@ -61,9 +61,9 @@ left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
   common_vars <- setdiff(intersect(x$vars, y$vars), by)
   if (length(common_vars) == 0) {
     step_subset(
-      x,
+      y,
       vars = union(x$vars, y$vars),
-      i = y,
+      i = x,
       on = by
     )
   } else {

@@ -5,7 +5,7 @@ test_that("dt_sources captures all tables", {
 
   out <- dt1 %>% left_join(dt2, by = "x") %>% left_join(dt3, by = "x")
   expect_equal(
-    dt_sources(out),
+    dt_sources(out)[c("dt1", "dt2", "dt3")],
     list(dt1 = dt1$parent, dt2 = dt2$parent, dt3 = dt3$parent)
   )
 })
@@ -48,12 +48,16 @@ test_that("simple usage generates expected translation", {
 })
 
 test_that("simple left joins use [", {
-  dt1 <- lazy_dt(data.frame(x = 1, a = 3), "dt1")
-  dt2 <- lazy_dt(data.frame(x = 1, b = 4), "dt2")
+  dt1 <- lazy_dt(data.frame(x = 1:2, a = 3), "dt1")
+  dt2 <- lazy_dt(data.frame(x = 2:3, b = 4), "dt2")
 
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% show_query(),
-    expr(dt1[dt2, on = .(x)])
+    expr(dt2[dt1, on = .(x)])
+  )
+  expect_equal(
+    dt1 %>% left_join(dt2, by = "x") %>% pull(x),
+    dt1 %>% pull(x)
   )
 })
 
