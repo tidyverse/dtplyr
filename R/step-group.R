@@ -20,7 +20,8 @@ group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
     dots[!existing] <- syms(names(dots[!existing]))
   }
 
-  step_group(.data, groups = names(dots))
+  groups <- c(if (add) .data$groups, names(dots))
+  step_group(.data, groups)
 }
 
 #' @importFrom dplyr ungroup
