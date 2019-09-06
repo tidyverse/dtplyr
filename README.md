@@ -17,8 +17,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 ## Overview
 
-dtplyr provides a dplyr backend for
-[data.table](http://r-datatable.com/). The goal of dtplyr is to allow
+dtplyr provides a [data.table](http://r-datatable.com/) backend for 
+dplyr. The goal of dtplyr is to allow
 you to write dplyr code that is automatically translated to the
 equivalent, but usually much faster, data.table code.
 
