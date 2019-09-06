@@ -12,7 +12,7 @@ Authors@R:
              email = "hadley@rstudio.com"),
       person(given = "RStudio",
              role = "cph"))
-Description: Provides a dplyr backend for data.table.  The goal
+Description: Provides a data.table backend for dplyr.  The goal
     of dtplyr is to allow you to write dplyr code that is automatically
     translated to the equivalent, but usually much faster, data.table
     code.
