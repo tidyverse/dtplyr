@@ -8,21 +8,24 @@
 
 <title>Create a "lazy" data.table for use with dplyr verbs — lazy_dt • dtplyr</title>
 
+
 <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,7 +35,6 @@
 
 
 <meta property="og:title" content="Create a "lazy" data.table for use with dplyr verbs — lazy_dt" />
-
 <meta property="og:description" content="A lazy data.table lazy captures the intent of dplyr verbs, only actually
 performing computation when requested (with collect(), pull(),
 as.data.frame(), data.table::as.data.table(), or tibble::as_tibble()).
@@ -43,23 +45,18 @@ See vignette(&quot;translation&quot;) for the details of the translation." />
 
 
 
+
 <!-- mathjax -->
-<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<!-- google analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script>
-<script>
- window.dataLayer = window.dataLayer || [];
- function gtag(){dataLayer.push(arguments);}
- gtag('js', new Date());
 
- gtag('config', 'UA-115082821-1');
-</script>
+
   </head>
 
   <body>
@@ -87,7 +84,7 @@ See vignette(&quot;translation&quot;) for the details of the translation." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -111,7 +108,7 @@ See vignette(&quot;translation&quot;) for the details of the translation." />
 </li>
         <li>
   <a href="https://github.com/tidyverse/dtplyr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,6 +119,7 @@ See vignette(&quot;translation&quot;) for the details of the translation." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -133,18 +131,16 @@ See vignette(&quot;translation&quot;) for the details of the translation." />
     </div>
 
     <div class="ref-description">
-    
     <p>A lazy data.table lazy captures the intent of dplyr verbs, only actually
 performing computation when requested (with <code>collect()</code>, <code>pull()</code>,
-<code><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame()</a></code>, <code><a href='https://www.rdocumentation.org/packages/data.table/topics/as.data.table'>data.table::as.data.table()</a></code>, or <code><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>tibble::as_tibble()</a></code>).
+<code><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame()</a></code>, <code><a href='https://rdrr.io/pkg/data.table/man/as.data.table.html'>data.table::as.data.table()</a></code>, or <code><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>tibble::as_tibble()</a></code>).
 This allows dtplyr to convert dplyr verbs into as few data.table expressions
 as possible, which leads to a high performance translation.</p>
 <p>See <code><a href='../articles/translation.html'>vignette("translation")</a></code> for the details of the translation.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>lazy_dt</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>immutable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -167,16 +163,16 @@ be modified by any code generated by dtplyr. Alternatively, you can set
       <th>key_by</th>
       <td><p>Set keys for data frame, using <code>select()</code> semantics (e.g.
 <code>key_by = c(key1, key2)</code>.</p>
-<p>This uses <code><a href='https://www.rdocumentation.org/packages/data.table/topics/setkey'>data.table::setkey()</a></code> to sort the table and build an index.
+<p>This uses <code><a href='https://rdrr.io/pkg/data.table/man/setkey.html'>data.table::setkey()</a></code> to sort the table and build an index.
 This will considerably improve performance for subsets, summaries, and
 joins that use the keys.</p>
 <p>See <code>vignette("datatable-keys-fast-subset")</code> for more details.</p></td>
     </tr>
     </table>
-    
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>, <span class='kw'>warn.conflicts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>, <span class='kw'>warn.conflicts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='no'>mtcars2</span> <span class='kw'>&lt;-</span> <span class='fu'>lazy_dt</span>(<span class='no'>mtcars</span>)
 <span class='no'>mtcars2</span></div><div class='output co'>#&gt; Source: local data table [32 x 11]
@@ -281,7 +277,7 @@ joins that use the keys.</p>
 #&gt; 
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'>
 <span class='no'>by_cyl</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>)
-<span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
+<span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
 #&gt; Call:   `_DT1`[, .(mpg = mean(mpg)), keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl   mpg
@@ -290,7 +286,7 @@ joins that use the keys.</p>
 #&gt; 2     6  19.7
 #&gt; 3     8  15.1
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 11]
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 11]
 #&gt; Call:   copy(`_DT1`)[, `:=`(mpg = mean(mpg)), keyby = .(cyl)]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
@@ -302,7 +298,7 @@ joins that use the keys.</p>
 #&gt; 5  26.7     4  75.7    52  4.93  1.62  18.5     1     1     4     2
 #&gt; 6  26.7     4  71.1    65  4.22  1.84  19.9     1     1     4     1
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mpg</span> <span class='kw'>&lt;</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>mpg</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>hp</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>hp</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mpg</span> <span class='kw'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>mpg</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>hp</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>hp</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
 #&gt; Call:   `_DT1`[, .SD[mpg &lt; mean(mpg), .(hp = mean(hp))], keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl    hp
@@ -317,12 +313,12 @@ joins that use the keys.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="tidyverse">
@@ -335,11 +331,14 @@ joins that use the keys.</p>
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
