@@ -12,15 +12,15 @@ status](https://travis-ci.org/tidyverse/dtplyr.svg?branch=master)](https://travi
 [![Codecov test
 coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyverse/dtplyr?branch=master)
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
 ## Overview
 
-dtplyr provides a [data.table](http://r-datatable.com/) backend for 
-dplyr. The goal of dtplyr is to allow
-you to write dplyr code that is automatically translated to the
-equivalent, but usually much faster, data.table code.
+dtplyr provides a [data.table](http://r-datatable.com/) backend for
+dplyr. The goal of dtplyr is to allow you to write dplyr code that is
+automatically translated to the equivalent, but usually much faster,
+data.table code.
 
 Compared to the previous release, this version of dtplyr is a complete
 rewrite that focusses only on lazy evaluation triggered by use of
@@ -38,12 +38,6 @@ See `vignette("translation")` for details of the current translations,
 and [table.express](https://github.com/asardaes/table.express) and
 [rqdatatable](https://github.com/WinVector/rqdatatable/) for related
 work.
-
-## Development status
-
-dtplyr is currently marked as experimental because it has had little
-usage in the wild. I expect that it will rapidly move towards maturing
-after a few weeks of feedback from users.
 
 ## Installation
 
