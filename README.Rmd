@@ -49,7 +49,7 @@ devtools::install_github("tidyverse/dtplyr")
 
 To use dtplyr, you must at least load dtplyr and dplyr. You may also want to load [data.table](http://r-datatable.com/) so you can access the other goodies that it provides:
 
-```{r}
+```{r setup}
 library(data.table)
 library(dtplyr)
 library(dplyr, warn.conflicts = FALSE)
