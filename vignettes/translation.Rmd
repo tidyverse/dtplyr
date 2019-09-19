@@ -216,8 +216,8 @@ Note, however, that `select()`ing and then `filter()`ing must generate two separ
 
 ```{r}
 dt %>% 
-  select(-a) %>% 
-  filter(a == 1) %>% 
+  select(X = a, Y = b) %>% 
+  filter(X == 1) %>% 
   show_query()
 ```
 
