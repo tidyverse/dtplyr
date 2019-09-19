@@ -31,12 +31,14 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
   lhs <- dt_call(x$parent, needs_copy)
   rhs <- dt_call(x$parent2)
   on <- call2(".", !!!syms(x$on))
-  by <- as.character(x$on)
+
+  by.x <- as.character(x$on)
+  by.y <- ifelse(names(x$on) == "", by.x, names(x$on))
 
   call <- switch(x$style,
-    inner = call2("merge", lhs, rhs, all = FALSE, by = by),
-    full  = call2("merge", lhs, rhs, all = TRUE, by = by),
-    left  = call2("merge", lhs, rhs, all.x = TRUE, all.y = FALSE, by = by),
+    inner = call2("merge", lhs, rhs, all = FALSE, by.x = by.x, by.y = by.y),
+    full  = call2("merge", lhs, rhs, all = TRUE, by.x = by.x, by.y = by.y),
+    left  = call2("merge", lhs, rhs, all.x = TRUE, all.y = FALSE, by.x = by.x, by.y = by.y),
     semi = call2("[", lhs, call2("unique", call2("[", lhs, rhs, which = TRUE, nomatch = NULL, on = on))),
     anti  = call2("[", lhs, call2("!", rhs), on = on),
     abort("Invalid style")
@@ -77,7 +79,17 @@ right_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = 
   by <- dtplyr_common_by(by, y, x)
   y <- dtplyr_auto_copy(x, y, copy = copy)
 
-  step_join(y, x, on = by, style = "left", suffix = suffix)
+  common_vars <- setdiff(intersect(x$vars, y$vars), by)
+  if (length(common_vars) == 0) {
+    step_subset(
+      x,
+      vars = union(x$vars, y$vars),
+      i = y,
+      on = by
+    )
+  } else {
+    step_join(y, x, on = by, style = "left", suffix = suffix)
+  }
 }
 
 #' @importFrom dplyr inner_join
