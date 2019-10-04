@@ -63,24 +63,19 @@ n_groups.dtplyr_step <- function(x) {
   length(group_size(x))
 }
 
+#' Force computation of a lazy data.table
+#'
+#' * `collect()` returns a tibble, grouped if needed
+#' * `compute()` returns a new [lazy_dt]
+#' * `as.data.table()` returns a data.table
+#' * `as.data.frame()` returns a data frame
+#' * `as_tibble()` returns a tibble
+#'
 #' @export
-as.data.table.dtplyr_step <- function(x, keep.rownames = FALSE, key = NULL, ...) {
-  dt_eval(x)
-}
-
-#' @export
-as.data.frame.dtplyr_step <- function(x, ...) {
-  as.data.frame(dt_eval(x))
-}
-
-#' @export
-#' @importFrom tibble as_tibble
-as_tibble.dtplyr_step <- function(x, ...) {
-  as_tibble(dt_eval(x))
-}
-
-#' @export
+#' @param x A [lazy_dt]
+#' @param ... Arguments used by other methods.
 #' @importFrom dplyr collect
+#' @rdname collect
 collect.dtplyr_step <- function(x, ...) {
   # for consistency with dbplyr::collect()
   out <- as_tibble(x)
@@ -92,6 +87,7 @@ collect.dtplyr_step <- function(x, ...) {
   out
 }
 
+#' @rdname collect
 #' @export
 #' @importFrom dplyr compute
 compute.dtplyr_step <- function(x, ...) {
@@ -102,6 +98,26 @@ compute.dtplyr_step <- function(x, ...) {
   }
 
   out
+}
+
+#' @rdname collect
+#' @export
+#' @param keep.rownames Ignored as dplyr never preseres rownames.
+as.data.table.dtplyr_step <- function(x, keep.rownames = FALSE, ...) {
+  dt_eval(x)
+}
+
+#' @rdname collect
+#' @export
+as.data.frame.dtplyr_step <- function(x, ...) {
+  as.data.frame(dt_eval(x))
+}
+
+#' @rdname collect
+#' @export
+#' @importFrom tibble as_tibble
+as_tibble.dtplyr_step <- function(x, ...) {
+  as_tibble(dt_eval(x))
 }
 
 #' @export
