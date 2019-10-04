@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • dtplyr</title>
+<title>Modify a lazy_dt in place — group_modify.dtplyr_step • dtplyr</title>
 
 
 <!-- jquery -->
@@ -34,7 +34,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Modify a lazy_dt in place — group_modify.dtplyr_step" />
+<meta property="og:description" content="group_modify() applies .f to each group, returning a modified
+lazy_dt(). This function is a little less flexible than the data.frame
+method due to the constraints of the code generation that dtplyr uses." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -53,7 +57,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -116,54 +120,78 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Modify a lazy_dt in place</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-modify.R'><code>R/step-modify.R</code></a></small>
+    <div class="hidden name"><code>group_modify.dtplyr_step.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p><code>group_modify()</code> applies <code>.f</code> to each group, returning a modified
+<code><a href='lazy_dt.html'>lazy_dt()</a></code>. This function is a little less flexible than the data.frame
+method due to the constraints of the code generation that dtplyr uses.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
+<span class='fu'>group_modify</span>(<span class='no'>.tbl</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="dtplyr-package.html">dtplyr-package</a></code> </p>
-        </td>
-        <td><p>dtplyr: Data Table Back-End for 'dplyr'</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="group_modify.dtplyr_step.html">group_modify(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Modify a lazy_dt in place</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lazy_dt.html">lazy_dt()</a></code> </p>
-        </td>
-        <td><p>Create a "lazy" data.table for use with dplyr verbs</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.tbl</th>
+      <td><p>A <a href='lazy_dt.html'>lazy_dt</a></p></td>
+    </tr>
+    <tr>
+      <th>.f</th>
+      <td><p>The name of a two argument function. The first argument is passed
+<code>.SD</code>,the data.table representing the current group; the second argument
+is passed <code>.BY</code>, a list giving the current values of the grouping
+variables. The function should return a list or data.table.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to <code>.f</code></p></td>
+    </tr>
+    <tr>
+      <th>keep</th>
+      <td><p>Not supported for <a href='lazy_dt.html'>lazy_dt</a>.</p></td>
+    </tr>
     </table>
-  </div>
 
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
+<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify</a></span>(<span class='no'>head</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 11]
+#&gt; Call:   `_DT1`[, head(.SD, .BY, n = ~2L), keyby = .(cyl)]
+#&gt; 
+#&gt;     cyl   mpg  disp    hp  drat    wt  qsec    vs    am  gear  carb
+#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1     4  22.8  108     93  3.85  2.32  18.6     1     1     4     1
+#&gt; 2     4  24.4  147.    62  3.69  3.19  20       1     0     4     2
+#&gt; 3     6  21    160    110  3.9   2.62  16.5     0     1     4     4
+#&gt; 4     6  21    160    110  3.9   2.88  17.0     0     1     4     4
+#&gt; 5     8  18.7  360    175  3.15  3.44  17.0     0     0     3     2
+#&gt; 6     8  14.3  360    245  3.21  3.57  15.8     0     0     3     4
+#&gt; 
+#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

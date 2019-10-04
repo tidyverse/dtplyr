@@ -176,7 +176,7 @@ joins that use the keys.</p>
 
 <span class='no'>mtcars2</span> <span class='kw'>&lt;-</span> <span class='fu'>lazy_dt</span>(<span class='no'>mtcars</span>)
 <span class='no'>mtcars2</span></div><div class='output co'>#&gt; Source: local data table [32 x 11]
-#&gt; Call:   `_DT1`
+#&gt; Call:   `_DT2`
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -188,7 +188,7 @@ joins that use the keys.</p>
 #&gt; 6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1
 #&gt; 
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>:<span class='no'>cyl</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 2]
-#&gt; Call:   `_DT1`[, .(mpg, cyl)]
+#&gt; Call:   `_DT2`[, .(mpg, cyl)]
 #&gt; 
 #&gt;     mpg   cyl
 #&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -200,7 +200,7 @@ joins that use the keys.</p>
 #&gt; 6  18.1     6
 #&gt; 
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>mpg</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>cyl</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 2]
-#&gt; Call:   `_DT1`[, .(x = mpg, y = cyl)]
+#&gt; Call:   `_DT2`[, .(x = mpg, y = cyl)]
 #&gt; 
 #&gt;       x     y
 #&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -212,7 +212,7 @@ joins that use the keys.</p>
 #&gt; 6  18.1     6
 #&gt; 
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>cyl</span> <span class='kw'>==</span> <span class='fl'>4</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 1]
-#&gt; Call:   `_DT1`[cyl == 4, .(mpg)]
+#&gt; Call:   `_DT2`[cyl == 4, .(mpg)]
 #&gt; 
 #&gt;     mpg
 #&gt;   &lt;dbl&gt;
@@ -224,7 +224,7 @@ joins that use the keys.</p>
 #&gt; 6  33.9
 #&gt; 
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mpg</span>, <span class='no'>cyl</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>cyl</span> <span class='kw'>==</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 2]
-#&gt; Call:   `_DT1`[, .(mpg, cyl)][cyl == 4]
+#&gt; Call:   `_DT2`[, .(mpg, cyl)][cyl == 4]
 #&gt; 
 #&gt;     mpg   cyl
 #&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -236,7 +236,7 @@ joins that use the keys.</p>
 #&gt; 6  33.9     4
 #&gt; 
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>cyl2</span> <span class='kw'>=</span> <span class='no'>cyl</span> * <span class='fl'>2</span>, <span class='kw'>cyl4</span> <span class='kw'>=</span> <span class='no'>cyl2</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 13]
-#&gt; Call:   copy(`_DT1`)[, `:=`(c("cyl2", "cyl4"), {
+#&gt; Call:   copy(`_DT2`)[, `:=`(c("cyl2", "cyl4"), {
 #&gt;     cyl2 &lt;- cyl * 2
 #&gt;     cyl4 &lt;- cyl2 * 2
 #&gt;     .(cyl2, cyl4)
@@ -252,7 +252,7 @@ joins that use the keys.</p>
 #&gt; 6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1    12    24
 #&gt; 
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span>(<span class='kw'>cyl2</span> <span class='kw'>=</span> <span class='no'>cyl</span> * <span class='fl'>2</span>, <span class='kw'>vs2</span> <span class='kw'>=</span> <span class='no'>vs</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 2]
-#&gt; Call:   `_DT1`[, .(cyl2 = cyl * 2, vs2 = vs * 2)]
+#&gt; Call:   `_DT2`[, .(cyl2 = cyl * 2, vs2 = vs * 2)]
 #&gt; 
 #&gt;    cyl2   vs2
 #&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -264,7 +264,7 @@ joins that use the keys.</p>
 #&gt; 6    12     2
 #&gt; 
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>cyl</span> <span class='kw'>==</span> <span class='fl'>8</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>cyl2</span> <span class='kw'>=</span> <span class='no'>cyl</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 12]
-#&gt; Call:   `_DT1`[cyl == 8][, `:=`(cyl2 = cyl * 2)]
+#&gt; Call:   `_DT2`[cyl == 8][, `:=`(cyl2 = cyl * 2)]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb  cyl2
 #&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -278,7 +278,7 @@ joins that use the keys.</p>
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'>
 <span class='no'>by_cyl</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars2</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>)
 <span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
-#&gt; Call:   `_DT1`[, .(mpg = mean(mpg)), keyby = .(cyl)]
+#&gt; Call:   `_DT2`[, .(mpg = mean(mpg)), keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl   mpg
 #&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -287,7 +287,7 @@ joins that use the keys.</p>
 #&gt; 3     8  15.1
 #&gt; 
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>mpg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>mpg</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 11]
-#&gt; Call:   copy(`_DT1`)[, `:=`(mpg = mean(mpg)), keyby = .(cyl)]
+#&gt; Call:   copy(`_DT2`)[, `:=`(mpg = mean(mpg)), keyby = .(cyl)]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -299,7 +299,7 @@ joins that use the keys.</p>
 #&gt; 6  26.7     4  71.1    65  4.22  1.84  19.9     1     1     4     1
 #&gt; 
 #&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div><div class='input'><span class='no'>by_cyl</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>mpg</span> <span class='kw'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>mpg</span>)) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>hp</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>hp</span>))</div><div class='output co'>#&gt; Source: local data table [?? x 2]
-#&gt; Call:   `_DT1`[, .SD[mpg &lt; mean(mpg), .(hp = mean(hp))], keyby = .(cyl)]
+#&gt; Call:   `_DT2`[, .SD[mpg &lt; mean(mpg), .(hp = mean(hp))], keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl    hp
 #&gt;   &lt;dbl&gt; &lt;dbl&gt;
