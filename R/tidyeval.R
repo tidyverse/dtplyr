@@ -96,7 +96,11 @@ simplify_function_call <- function(x, env, vars, j = TRUE) {
     out <- replace_dot(attr(x[[1]], "formula")[[2]], dot_var)
     dt_squash(out, env, vars = vars, j = j)
   } else {
-    x[[1]] <- fun_name(x[[1]])
+    name <- fun_name(x[[1]])
+    if (is.null(name)) {
+      return(x)
+    }
+    x[[1]] <- name
     dt_squash(x, env, vars = vars, j = j)
   }
 }
@@ -137,5 +141,5 @@ fun_name <- function(fun) {
       return(sym(x))
   }
 
-  fun
+  NULL
 }

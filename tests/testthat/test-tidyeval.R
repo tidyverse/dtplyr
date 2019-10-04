@@ -115,6 +115,14 @@ test_that("scoped verbs produce nice output", {
   )
 })
 
+test_that("non-Gforce verbs work", {
+  dt <- lazy_dt(data.table(x = 1:2), "DT")
+  add <- function(x) sum(x)
+
+  expect_equal(dt %>% summarise_at(vars(x), add) %>% pull(), 3)
+  expect_equal(dt %>% mutate_at(vars(x), add) %>% pull(), c(3, 3))
+})
+
 # fun_name ----------------------------------------------------------------
 
 test_that("finds name of functions with GForce implementations", {
@@ -122,6 +130,6 @@ test_that("finds name of functions with GForce implementations", {
 
   # unless overridden
   mean <- function() {}
-  expect_equal(fun_name(mean), mean)
+  expect_equal(fun_name(mean), NULL)
 })
 
