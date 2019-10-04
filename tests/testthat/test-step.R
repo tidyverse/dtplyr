@@ -43,3 +43,10 @@ test_that("compute returns lazy_dt", {
   expect_s3_class(dt2, "dtplyr_step")
   expect_equal(as.character(tbl_vars(dt2)), "n")
 })
+
+test_that("collect and compute return grouped data", {
+  dt <- group_by(lazy_dt(data.table(x = 1, y = 1), "DT"), x)
+
+  expect_equal(dt %>% compute() %>% group_vars(), "x")
+  expect_equal(dt %>% collect() %>% group_vars(), "x")
+})

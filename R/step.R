@@ -83,13 +83,25 @@ as_tibble.dtplyr_step <- function(x, ...) {
 #' @importFrom dplyr collect
 collect.dtplyr_step <- function(x, ...) {
   # for consistency with dbplyr::collect()
-  as_tibble(x)
+  out <- as_tibble(x)
+
+  if (length(x$groups) > 0) {
+    out <- group_by(out, !!!syms(x$groups))
+  }
+
+  out
 }
 
 #' @export
 #' @importFrom dplyr compute
 compute.dtplyr_step <- function(x, ...) {
-  lazy_dt(dt_eval(x))
+  out <- lazy_dt(dt_eval(x))
+
+  if (length(x$groups) > 0) {
+    out <- step_group(out, x$groups)
+  }
+
+  out
 }
 
 #' @export
