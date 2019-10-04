@@ -87,6 +87,12 @@ collect.dtplyr_step <- function(x, ...) {
 }
 
 #' @export
+#' @importFrom dplyr compute
+compute.dtplyr_step <- function(x, ...) {
+  lazy_dt(dt_eval(x))
+}
+
+#' @export
 #' @importFrom dplyr pull
 pull.dtplyr_step <- function(.data, var = -1) {
   expr <- enquo(var)
