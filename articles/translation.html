@@ -186,7 +186,7 @@
 <h3 class="hasAnchor">
 <a href="#rename" class="anchor"></a><code>rename()</code>
 </h3>
-<p><code><a href="https://dplyr.tidyverse.org/reference/select.html">rename()</a></code> uses <code><a href="https://rdrr.io/pkg/data.table/man/setattr.html">setnames()</a></code>:</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/select.html">rename()</a></code> uses <code><a href="https://Rdatatable.gitlab.io/data.table/reference/setattr.html">setnames()</a></code>:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">x =</span> a, <span class="dt">y =</span> b) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; setnames(copy(`_DT1`), c("a", "b"), c("x", "y"))</span></a></code></pre></div>
 </div>
@@ -194,7 +194,7 @@
 <h3 class="hasAnchor">
 <a href="#distinct" class="anchor"></a><code>distinct()</code>
 </h3>
-<p><code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> uses <code><a href="https://rdrr.io/pkg/data.table/man/duplicated.html">unique()</a></code>:</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> uses <code><a href="https://Rdatatable.gitlab.io/data.table/reference/duplicated.html">unique()</a></code>:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt; unique(`_DT1`)</span></a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>(a, b) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
@@ -210,7 +210,7 @@
 <div id="joins" class="section level3">
 <h3 class="hasAnchor">
 <a href="#joins" class="anchor"></a>Joins</h3>
-<p>Most joins use <code><a href="https://rdrr.io/pkg/data.table/man/merge.html">merge()</a></code>:</p>
+<p>Most joins use <code><a href="https://Rdatatable.gitlab.io/data.table/reference/merge.html">merge()</a></code>:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">dt2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lazy_dt.html">lazy_dt</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">a =</span> <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">right_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
@@ -233,11 +233,11 @@
 <h3 class="hasAnchor">
 <a href="#set-operations" class="anchor"></a>Set operations</h3>
 <p>Set operations use the fast data.table alternatives:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/data.table/man/setops.html">intersect</a></span>(dt2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">intersect</a></span>(dt2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
 <a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; fintersect(`_DT1`, `_DT2`)</span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/data.table/man/setops.html">setdiff</a></span>(dt2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">setdiff</a></span>(dt2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
 <a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co">#&gt; fsetdiff(`_DT1`, `_DT2`)</span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/data.table/man/setops.html">union</a></span>(dt2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">union</a></span>(dt2) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
 <a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt; funion(`_DT1`, `_DT2`)</span></a></code></pre></div>
 </div>
 </div>
@@ -294,17 +294,17 @@
 <div id="copies" class="section level2">
 <h2 class="hasAnchor">
 <a href="#copies" class="anchor"></a>Copies</h2>
-<p>By default dtplyr avoids mutating the input data, automatically creating a <code><a href="https://rdrr.io/pkg/data.table/man/copy.html">copy()</a></code> if needed:</p>
+<p>By default dtplyr avoids mutating the input data, automatically creating a <code><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html">copy()</a></code> if needed:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">a2 =</span> a <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">b2 =</span> b <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
 <a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt; copy(`_DT1`)[, `:=`(a2 = a * 2, b2 = b * 2)]</span></a></code></pre></div>
-<p>Note that dtplyr does its best to avoid needless copies, so it won’t explicitly copy if there’s already an implicit copy produced by <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code>, <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>, <code><a href="https://rdrr.io/pkg/data.table/man/merge.html">merge()</a></code> or similar:</p>
+<p>Note that dtplyr does its best to avoid needless copies, so it won’t explicitly copy if there’s already an implicit copy produced by <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code>, <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>, <code><a href="https://Rdatatable.gitlab.io/data.table/reference/merge.html">merge()</a></code> or similar:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(x <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">a2 =</span> a <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">b2 =</span> b <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb26-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
 <a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#&gt; `_DT1`[x == 1][, `:=`(a2 = a * 2, b2 = b * 2)]</span></a></code></pre></div>
 <p>You can choose to opt out of this copy, and take advantage of data.table’s reference semantics (see <code>vignette("datatable-reference-semantics")</code> for more details). Do this by setting <code>immutable = FALSE</code> on construction:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">dt2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/data.table/man/data.table.html">data.table</a></span>(<span class="dt">a =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">dt2 &lt;-<span class="st"> </span><span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html">data.table</a></span>(<span class="dt">a =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb27-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb27-3" data-line-number="3">dt_inplace &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lazy_dt.html">lazy_dt</a></span>(dt2, <span class="dt">immutable =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb27-4" data-line-number="4">dt_inplace <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">a2 =</span> a <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">b2 =</span> b <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
@@ -324,9 +324,9 @@
 <a class="sourceLine" id="cb28-7" data-line-number="7"><span class="co">#&gt; # A tibble: 3 x 6</span></a>
 <a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></a>
 <a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; 1 filter        352µs    387µs     2531.      280B     20.3</span></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; 2 mutate        777µs    838µs     1176.      280B     17.3</span></a>
-<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; 3 summarise     774µs    839µs     1169.      280B     17.2</span></a></code></pre></div>
+<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; 1 filter        343µs    384µs     2568.      280B     20.3</span></a>
+<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; 2 mutate        776µs    823µs     1199.      280B     17.3</span></a>
+<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; 3 summarise     778µs    831µs     1187.      280B     17.3</span></a></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
