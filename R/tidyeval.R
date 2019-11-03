@@ -67,10 +67,10 @@ dt_squash <- function(x, env, vars, j = TRUE) {
       arg <- dt_squash(x[[2]], vars = vars, env = env, j = j)
       expr(frank(!!arg, ties.method = "first", na.last = "keep"))
     } else if (is_call(x, "if_else")) {
-      x[[1L]] = quote(fifelse)
+      x[[1L]] <- quote(fifelse)
       x
     } else if (is_call(x, 'coalesce')) {
-      x[[1L]] = quote(fcoalesce)
+      x[[1L]] <- quote(fcoalesce)
       x
     } else if (is.function(x[[1]])) {
       simplify_function_call(x, env, vars = vars, j = j)
