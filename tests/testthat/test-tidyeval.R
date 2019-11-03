@@ -113,6 +113,16 @@ test_that("scoped verbs produce nice output", {
     dt %>% summarise_all(~ n()) %>% show_query(),
     expr(DT[, .(x = .N)])
   )
+
+  # mask if_else & coalesce with data.table versions, #112
+  expect_equal(
+    dt %>% summarise_all(~if_else(. > 0, -1, 1)) %>% show_query(),
+    expr(DT[ , .(x = fifelse(x > 0, -1, 1))])
+  )
+  expect_equal(
+    dt %>% summarise_all(~coalesce(., 1)) %>% show_query(),
+    expr(DT[ , .(x = fcoalesce(x, 1))])
+  )
 })
 
 test_that("non-Gforce verbs work", {

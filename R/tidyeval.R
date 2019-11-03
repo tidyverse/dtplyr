@@ -6,7 +6,7 @@ dt_eval <- function(x) {
   eval_tidy(quo)
 }
 
-#' @importFrom data.table frank
+#' @importFrom data.table frank fifelse fcoalesce
 add_dt_wrappers <- function(env) {
   # Make sure data.table functions are available so dtplyr still works
   # even when data.table isn't attached
@@ -66,6 +66,12 @@ dt_squash <- function(x, env, vars, j = TRUE) {
     } else if (is_call(x, "row_number", n = 1)) {
       arg <- dt_squash(x[[2]], vars = vars, env = env, j = j)
       expr(frank(!!arg, ties.method = "first", na.last = "keep"))
+    } else if (is_call(x, "if_else")) {
+      x[[1L]] <- quote(fifelse)
+      x
+    } else if (is_call(x, 'coalesce')) {
+      x[[1L]] <- quote(fcoalesce)
+      x
     } else if (is.function(x[[1]])) {
       simplify_function_call(x, env, vars = vars, j = j)
     } else {
