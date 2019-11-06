@@ -12,3 +12,5 @@
 ^pkgdown$
 ^\.covrignore$
 ^README\.Rmd$
+^\.github$
+^LICENSE\.md$

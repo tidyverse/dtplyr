@@ -101,3 +101,7 @@ There are three primary reasons that dtplyr will always be somewhat slower than 
   (You can opt out of this behaviour in `lazy_dt()` with `immutable = FALSE`).
 
 [benchmark]: https://dtplyr.tidyverse.org/articles/translation.html#performance
+
+## Code of Conduct
+
+Please note that the dtplyr project is released with a [Contributor Code of Conduct](https://dtplyr.tidyverse.org/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
