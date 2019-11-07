@@ -36,9 +36,9 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
   by.y <- ifelse(names(x$on) == "", by.x, names(x$on))
 
   call <- switch(x$style,
-    inner = call2("merge", lhs, rhs, all = FALSE, by.x = by.x, by.y = by.y),
-    full  = call2("merge", lhs, rhs, all = TRUE, by.x = by.x, by.y = by.y),
-    left  = call2("merge", lhs, rhs, all.x = TRUE, all.y = FALSE, by.x = by.x, by.y = by.y),
+    inner = call2("merge", lhs, rhs, all = FALSE, by.x = by.x, by.y = by.y, allow.cartesian = TRUE),
+    full  = call2("merge", lhs, rhs, all = TRUE, by.x = by.x, by.y = by.y, allow.cartesian = TRUE),
+    left  = call2("merge", lhs, rhs, all.x = TRUE, all.y = FALSE, by.x = by.x, by.y = by.y, allow.cartesian = TRUE),
     semi = call2("[", lhs, call2("unique", call2("[", lhs, rhs, which = TRUE, nomatch = NULL, on = on))),
     anti  = call2("[", lhs, call2("!", rhs), on = on),
     abort("Invalid style")

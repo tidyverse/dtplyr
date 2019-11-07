@@ -18,22 +18,22 @@ test_that("simple usage generates expected translation", {
 
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% show_query(),
-    expr(merge(dt1, dt2, all.x = TRUE, all.y = FALSE, by.x = "x", by.y = "x"))
+    expr(merge(dt1, dt2, all.x = TRUE, all.y = FALSE, by.x = "x", by.y = "x", allow.cartesian = TRUE))
   )
 
   expect_equal(
     dt1 %>% right_join(dt2, by = "x") %>% show_query(),
-    expr(merge(dt2, dt1, all.x = TRUE, all.y = FALSE, by.x = "x", by.y = "x"))
+    expr(merge(dt2, dt1, all.x = TRUE, all.y = FALSE, by.x = "x", by.y = "x", allow.cartesian = TRUE))
   )
 
   expect_equal(
     dt1 %>% inner_join(dt2, by = "x") %>% show_query(),
-    expr(merge(dt1, dt2, all = FALSE, by.x = "x", by.y = "x"))
+    expr(merge(dt1, dt2, all = FALSE, by.x = "x", by.y = "x", allow.cartesian = TRUE))
   )
 
   expect_equal(
     dt1 %>% full_join(dt2, by = "x") %>% show_query(),
-    expr(merge(dt1, dt2, all = TRUE, by.x = "x", by.y = "x"))
+    expr(merge(dt1, dt2, all = TRUE, by.x = "x", by.y = "x", allow.cartesian = TRUE))
   )
 
   expect_equal(
@@ -53,7 +53,7 @@ test_that("named by converted to by.x and by.y", {
 
   expect_equal(
     dt1 %>% inner_join(dt2, by = c('a1' = 'a2')) %>% show_query(),
-    expr(merge(dt1, dt2, all = FALSE, by.x = "a1", by.y = "a2"))
+    expr(merge(dt1, dt2, all = FALSE, by.x = "a1", by.y = "a2", allow.cartesian = TRUE))
   )
 })
 
@@ -63,7 +63,7 @@ test_that("simple left joins use [", {
 
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% show_query(),
-    expr(dt2[dt1, on = .(x)])
+    expr(dt2[dt1, on = .(x), allow.cartesian = TRUE])
   )
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% pull(x),
@@ -86,7 +86,13 @@ test_that("can override suffixes", {
 
   expect_equal(
     dt1 %>% left_join(dt2, by = "x", suffix = c("X", "Y")) %>% show_query(),
-    expr(merge(dt1, dt2, all.x = TRUE, all.y = FALSE, by.x = "x", by.y = "x", suffixes = !!c("X", "Y")))
+    expr(merge(
+      dt1, dt2,
+      all.x = TRUE, all.y = FALSE,
+      by.x = "x", by.y = "x",
+      allow.cartesian = TRUE,
+      suffixes = !!c("X", "Y")
+    ))
   )
 })
 
@@ -113,4 +119,11 @@ test_that("mutates inside joins are copied as needed", {
 
   collect(inner_join(lhs, rhs, by = "x"))
   expect_named(dt, "x")
+})
+
+test_that("performs cartesian joins as needed", {
+  x <- lazy_dt(data.frame(x = c(2, 2, 2), y = 1:3))
+  y <- lazy_dt(data.frame(x = c(2, 2, 2), z = 1:3))
+  out <- collect(left_join(x, y))
+  expect_equal(nrow(out), 9)
 })
