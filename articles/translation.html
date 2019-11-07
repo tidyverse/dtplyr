@@ -220,14 +220,14 @@
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">dt2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/lazy_dt.html">lazy_dt</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">a =</span> <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">right_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co">#&gt; `_DT1`[`_DT2`, on = .(a)]</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co">#&gt; `_DT1`[`_DT2`, on = .(a), allow.cartesian = TRUE]</span></a>
 <a class="sourceLine" id="cb13-5" data-line-number="5">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt; merge(`_DT1`, `_DT2`, all = FALSE, by.x = "a", by.y = "a")</span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt; merge(`_DT1`, `_DT2`, all = FALSE, by.x = "a", by.y = "a", allow.cartesian = TRUE)</span></a>
 <a class="sourceLine" id="cb13-7" data-line-number="7">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">full_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt; merge(`_DT1`, `_DT2`, all = TRUE, by.x = "a", by.y = "a")</span></a></code></pre></div>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt; merge(`_DT1`, `_DT2`, all = TRUE, by.x = "a", by.y = "a", allow.cartesian = TRUE)</span></a></code></pre></div>
 <p>But <code><a href="https://dplyr.tidyverse.org/reference/join.html">left_join()</a></code> will use the <code>i</code> position where possible:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co">#&gt; `_DT2`[`_DT1`, on = .(a)]</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co">#&gt; `_DT2`[`_DT1`, on = .(a), allow.cartesian = TRUE]</span></a></code></pre></div>
 <p>Anti-joins are easy to translate because data.table has a specific form for them:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">anti_join</a></span>(dt2, <span class="dt">by =</span> <span class="st">"a"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; `_DT1`[!`_DT2`, on = .(a)]</span></a></code></pre></div>
@@ -283,7 +283,7 @@
 <a class="sourceLine" id="cb22-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(x, a<span class="op">:</span>c) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb22-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span>()</a>
 <a class="sourceLine" id="cb22-8" data-line-number="8"><span class="co">#&gt; Joining, by = "x"</span></a>
-<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">#&gt; `_DT4`[`_DT3`, .(x, a, b, c), on = .(x)]</span></a></code></pre></div>
+<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">#&gt; `_DT4`[`_DT3`, .(x, a, b, c), on = .(x), allow.cartesian = TRUE]</span></a></code></pre></div>
 <p>Note, however, that <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>ing and then <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>ing must generate two separate calls to <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code>, because data.table evaluates <code>i</code> before <code>j</code>.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">dt <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="dt">X =</span> a, <span class="dt">Y =</span> b) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -330,9 +330,9 @@
 <a class="sourceLine" id="cb28-7" data-line-number="7"><span class="co">#&gt; # A tibble: 3 x 6</span></a>
 <a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></a>
 <a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; 1 filter        419µs    482µs     2030.      280B     16.3</span></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; 2 mutate        901µs    987µs      995.      280B     17.9</span></a>
-<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; 3 summarise     865µs    950µs     1036.      280B     15.4</span></a></code></pre></div>
+<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; 1 filter        392µs    439µs     2216.      280B     18.1</span></a>
+<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; 2 mutate        851µs    931µs     1027.      280B     17.4</span></a>
+<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; 3 summarise     811µs    899µs     1066.      280B     15.1</span></a></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
