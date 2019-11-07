@@ -89,3 +89,12 @@ distinct.dtplyr_step <- function(.data, ..., .keep_all = FALSE) {
 
   step_call(.data, "unique", args = args)
 }
+
+
+#' @export
+unique.dtplyr_step <- function(x, incomparables = FALSE, ...) {
+  if (!missing(incomparables)) {
+    abort("`incomparables` not supported by `unique.dtplyr_step()`")
+  }
+  distinct(x)
+}

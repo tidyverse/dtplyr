@@ -120,3 +120,11 @@ test_that("can compute distinct computed variables", {
     expr(unique(copy(dt)[, `:=`(z = x + y)], by = "z"))
   )
 })
+
+
+# unique ------------------------------------------------------------------
+
+test_that("unique is an alias for distinct", {
+  dt <- lazy_dt(data.table(x = c(1, 1)))
+  expect_equal(unique(dt), distinct(dt))
+})
