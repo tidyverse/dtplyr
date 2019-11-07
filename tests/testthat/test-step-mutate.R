@@ -71,3 +71,8 @@ test_that("vars set correctly", {
   dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
   expect_equal(dt %>% mutate(z = 1) %>% .$vars, c("x", "y", "z"))
 })
+
+test_that("emtpy mutate returns input", {
+  dt <- lazy_dt(data.frame(x = 1))
+  expect_equal(mutate(dt), dt)
+})

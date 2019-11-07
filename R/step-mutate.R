@@ -36,6 +36,10 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 #' @importFrom dplyr mutate
 #' @export
 mutate.dtplyr_step <- function(.data, ...) {
+  if (missing(...)) {
+    return(.data)
+  }
+
   dots <- capture_dots(.data, ...)
 
   nested <- nested_vars(.data, dots, .data$vars)
