@@ -24,6 +24,7 @@
 #'
 #'   See `vignette("datatable-keys-fast-subset")` for more details.
 #' @export
+#' @aliases tbl_dt
 #' @examples
 #' library(dplyr, warn.conflicts = FALSE)
 #'

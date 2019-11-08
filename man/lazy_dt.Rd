@@ -2,6 +2,7 @@
 % Please edit documentation in R/step-first.R
 \name{lazy_dt}
 \alias{lazy_dt}
+\alias{tbl_dt}
 \title{Create a "lazy" data.table for use with dplyr verbs}
 \usage{
 lazy_dt(x, name = NULL, immutable = TRUE, key_by = NULL)
