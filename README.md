@@ -135,3 +135,7 @@ slower than data.table:
     make a copy that would not be necessary if you were using data.table
     directly. (You can opt out of this behaviour in `lazy_dt()` with
     `immutable = FALSE`).
+
+## Code of Conduct
+
+Please note that the dtplyr project is released with a [Contributor Code of Conduct](https://dtplyr.tidyverse.org/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
