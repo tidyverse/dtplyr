@@ -81,11 +81,11 @@ step_pivot_wider <- function(parent, new_vars = list(), nested = FALSE, id_cols 
 
 dt_call.dtplyr_step_pivot_wider <- function(x, needs_copy = x$needs_copy) {
   if(length(x$pivot_on_vars) == 0)  {
-    l_formula <- str2lang(".")
+    l_formula <- parse_expr(".")
   } else {
-    l_formula <- str2lang(paste0(x$pivot_on_vars, collapse = "+"))
+    l_formula <- parse_expr(paste0(x$pivot_on_vars, collapse = "+"))
   }
-  r_formula <- str2lang(x$names_from)
+  r_formula <- parse_expr(x$names_from)
   p_formula <- new_formula(l_formula, r_formula)
   out <- call2("dcast",
     data = dt_call(x$parent, x$needs_copy),
