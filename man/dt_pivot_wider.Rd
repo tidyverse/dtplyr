@@ -19,25 +19,13 @@ variables that is directly related.}
 \item{names_from, values_from}{A pair of arguments describing which column
 (or columns) to get the name of the output column (\code{name_from}), and
 which column (or columns) to get the cell values from (\code{values_from}).
-
 If \code{values_from} contains multiple values, the value will be added to the
 front of the output column.}
 
 \item{names_prefix}{Not supported by data.table backed tables.}
 
-\item{names_sep, names_pattern}{If \code{names_to} contains multiple values,
-these arguments control how the column name is broken up.
-
-\code{names_sep} takes the same specification as \code{\link[=separate]{separate()}}, and can either
-be a numeric vector (specifying positions to break on), or a single string
-(specifying a regular expression to split on).
-
-\code{names_pattern} takes the same specification as \code{\link[=extract]{extract()}}, a regular
-expression containing matching groups (\code{()}).
-
-If these arguments do not give you enough control, use
-\code{pivot_longer_spec()} to create a spec object and process manually as
-needed.}
+\item{names_sep}{Can either be a numeric vector (specifying positions to break on),
+or a single string (specifying a regular expression to split on).}
 
 \item{names_repair}{What happen if the output has invalid column names?
 The default, \code{"check_unique"} is to error if the columns are duplicated.
@@ -52,22 +40,6 @@ should be filled in with when missing.}
 applied to the \code{value} in each cell in the output. You will typically
 use this when the combination of \code{id_cols} and \code{value} column does not
 uniquely identify an observation.}
-
-\item{cols}{Columns to pivot into longer format. This takes a tidyselect
-specification.}
-
-\item{names_to}{A string specifying the name of the column to create
-from the data stored in the column names of \code{data}.
-Can be a character vector, creating multiple columns, if \code{names_sep}
-or \code{names_pattern} is provided.}
-
-\item{names_sep}{If \code{names_from} or \code{values_from} contains multiple
-variables, this will be used to join their values together into a single
-string to use as a column name.}
-
-\item{names_prefix}{String added to the start of every variable name. This is
-particularly useful if \code{names_from} is a numeric vector and you want to
-create syntactic variable names.}
 }
 \description{
 Pivot data from long to wide
