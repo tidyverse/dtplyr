@@ -12,20 +12,17 @@
     extremely inefficient so offered little of data.table's impressive speed,
     and was used by very few people.
 
-*   dtplyr provides methods for data.tables that warning you that they use the
-    data frame implementation and you should use `lazy_dt()` (#77)
+* dtplyr provides methods for data.tables that warning you that they use the
+  data frame implementation and you should use `lazy_dt()` (#77)
 
 * Joins now pass `...` on to data.table's merge method (#41).
 
-* Convert from lazyeval to tidy eval (@christophsax).
-
 * `ungroup()` now copies it's input (@christophsax, #54).
-
-* Scoped verbs now work (@christophsax, #43, #51).
 
 * `mutate()` preserves grouping (@christophsax, #17).
 
-* `if_else` and `coalesce` are mapped to data.table's `fifelse` and `fcoalesce`, respectively (@michaelchirico, #112)
+* `if_else()` and `coalesce()` are mapped to data.table's `fifelse()` and 
+  `fcoalesce()` respectively (@michaelchirico, #112)
 
 # dtplyr 0.0.3
 
