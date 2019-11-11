@@ -1,5 +1,4 @@
-# dtplyr 0.0.3.9000
-(To be release as dtplyr 1.0.0)
+# dtplyr 1.0.0
 
 *   Converted from eager approach to lazy approach. You now must use `lazy_dt()`
     to begin a translation pipeline, and must use `collect()`, `as.data.table()`, 
