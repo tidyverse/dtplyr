@@ -3,6 +3,7 @@
 \name{lazy_dt}
 \alias{lazy_dt}
 \alias{tbl_dt}
+\alias{grouped_dt}
 \title{Create a "lazy" data.table for use with dplyr verbs}
 \usage{
 lazy_dt(x, name = NULL, immutable = TRUE, key_by = NULL)
