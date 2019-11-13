@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `rename` now works without `data.table` attached, as intended (@michaelchirico, #123).
+
 # dtplyr 1.0.0
 
 *   Converted from eager approach to lazy approach. You now must use `lazy_dt()`
@@ -23,7 +25,7 @@
 * `mutate()` preserves grouping (@christophsax, #17).
 
 * `if_else()` and `coalesce()` are mapped to data.table's `fifelse()` and 
-  `fcoalesce()` respectively (@michaelchirico, #112)
+  `fcoalesce()` respectively (@michaelchirico, #112).
 
 # dtplyr 0.0.3
 
