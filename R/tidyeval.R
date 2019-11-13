@@ -66,10 +66,10 @@ dt_squash <- function(x, env, vars, j = TRUE) {
     } else if (is_call(x, "row_number", n = 1)) {
       arg <- dt_squash(x[[2]], vars = vars, env = env, j = j)
       expr(frank(!!arg, ties.method = "first", na.last = "keep"))
-    } else if (is_call(x, "if_else")) {
+    } else if (is_call(x, "if_else") && .global$DT_VERSION >= '1.12.4') {
       x[[1L]] <- quote(fifelse)
       x
-    } else if (is_call(x, 'coalesce')) {
+    } else if (is_call(x, 'coalesce') && .global$DT_VERSION >= '1.12.4') {
       x[[1L]] <- quote(fcoalesce)
       x
     } else if (is.function(x[[1]])) {

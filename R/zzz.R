@@ -1,4 +1,7 @@
 # nocov start
+.global = new.env(parent = emptyenv())
+setPackageName("dtplyr", .global)
+
 .onLoad <- function(...) {
   register_s3_method("dplyr", "filter", "data.table")
 
@@ -6,6 +9,8 @@
   register_s3_method("dplyr", "intersect", "dtplyr_step")
   register_s3_method("dplyr", "setdiff", "dtplyr_step")
   register_s3_method("dplyr", "union", "dtplyr_step")
+
+  .global$DT_VERSION = format(utils::packageVersion('data.table'))
 }
 
 register_s3_method <- function(pkg, generic, class, fun = NULL) {
