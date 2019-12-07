@@ -174,7 +174,7 @@ dt %>% group_by(a) %>% summarise(b = mean(b)) %>% show_query()
 You may use `by` instead of `keyby` if you set `key = FALSE`:
 
 ```{r}
-dt %>% group_by(a, key = FALSE) %>% summarise(b = mean(b) %>% show_query())
+dt %>% group_by(a, key = FALSE) %>% summarise(b = mean(b)) %>% show_query()
 ```
 
 Often, there won't be too much of a difference between these, but for larger grouped operations, the overhead of reordering data may become significant. In these situations, using `key = FALSE` becomes preferable.
