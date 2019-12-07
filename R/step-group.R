@@ -8,10 +8,6 @@ step_group <- function(parent, groups = parent$groups, keyed = parent$keyed) {
   )
 }
 
-#' Helper type to handle keyby/by
-#'
-#' @param x The previous step
-#' @return A list containing either keyby or by
 by_struct <- function(x) {
   if (length(x$groups) > 0) {
     group_call <- call2(".", !!!syms(x$groups))
@@ -38,14 +34,14 @@ as.list.by_struct <- function(x) {
   ret
 }
 
-link_by_struct <- function(step, struct) {
+link_by_struct <- function(call, struct) {
   stopifnot(inherits(struct, "by_struct"))
 
   if (!is.null(struct$call)) {
-    step[[struct$with]] <- struct$call
+    call[[struct$with]] <- struct$call
   }
 
-  step
+  call
 }
 
 # dplyr methods -----------------------------------------------------------
