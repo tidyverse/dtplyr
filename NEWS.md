@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+*    `group_by()` now has a `key` parameter which, if set to `FALSE`, sets the 
+      data.table translation to use `by` rather than `keyby` (#85).
+
 # dtplyr 1.0.0
 
 *   Converted from eager approach to lazy approach. You now must use `lazy_dt()`
