@@ -94,7 +94,6 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
       out <- call2("[", parent, i, x$j)
     }
   } else {
-      #     by <- call2(".", !!!syms(x$groups))
     by <- by_struct(x)
 
     if (is.null(i)) {

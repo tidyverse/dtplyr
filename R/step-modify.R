@@ -12,11 +12,6 @@ dt_call.dtplyr_step_modify <- function(x, needs_copy = x$needs_copy) {
   j <- call2(x$fun, quote(.SD), quote(.BY), !!!x$args)
   out <- call2("[", dt_call(x$parent, needs_copy), , j)
 
-  #   if (length(x$groups) > 0) {
-  #     out$keyby <- call2(".", !!!syms(x$groups))
-  #   }
-  #   out
-
   link_by_struct(out, by_struct(x))
 }
 
