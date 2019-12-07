@@ -171,7 +171,13 @@ Just like in dplyr, `group_by()` doesn't do anything by itself, but instead modi
 dt %>% group_by(a) %>% summarise(b = mean(b)) %>% show_query()
 ```
 
-(Currently there's no way to use `by` instead of `keyby`, but that is planned [for the future](https://github.com/tidyverse/dtplyr/issues/85).)
+You may use `by` instead of `keyby` if you set `key = FALSE`:
+
+```{r}
+dt %>% group_by(a, key = FALSE) %>% summarise(b = mean(b)) %>% show_query()
+```
+
+Often, there won't be too much of a difference between these, but for larger grouped operations, the overhead of reordering data may become significant. In these situations, using `key = FALSE` becomes preferable.
 
 The primary exception is grouped `filter()`, which requires the use of `.SD`:
 

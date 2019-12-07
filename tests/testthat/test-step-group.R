@@ -34,3 +34,23 @@ test_that("vars set correctly", {
   dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
   expect_equal(dt %>% group_by(x) %>% .$vars, c("x", "y"))
 })
+
+test_that("`key` switches between keyby= and by=", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3), "DT")
+  dt1 <- lazy_dt(mtcars, "DT1")
+
+  expect_equal(
+    dt %>% group_by(xy = x + y, key = FALSE) %>% summarize(x = mean(x)) %>% show_query(),
+    expr(copy(DT)[, `:=`(xy = x + y)][, .(x = mean(x)), by = .(xy)])
+  )
+
+  expect_equal(
+    dt1 %>% group_by(cyl, key = FALSE) %>% summarize(mean_mpg = mean(mpg)) %>% show_query(),
+    expr(DT1[, .(mean_mpg = mean(mpg)), by = .(cyl)])
+  )
+
+  expect_equal(
+    dt1 %>% group_by(cyl) %>% summarize(mean_mpg = mean(mpg)) %>% show_query(),
+    expr(DT1[, .(mean_mpg = mean(mpg)), keyby = .(cyl)])
+  )
+})
