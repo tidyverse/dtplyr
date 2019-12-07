@@ -25,10 +25,11 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 
   out <- call2("[", dt_call(x$parent, needs_copy), , j)
 
-  if (length(x$groups) > 0) {
-    out$keyby <- call2(".", !!!syms(x$groups))
-  }
-  out
+  #   if (length(x$groups) > 0) {
+  #     out$keyby <- call2(".", !!!syms(x$groups))
+  #   }
+  #   out
+  link_by_struct(out, by_struct(x))
 }
 
 # dplyr methods -----------------------------------------------------------
