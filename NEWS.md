@@ -1,7 +1,7 @@
 # dtplyr (development version)
 
-*    `group_by()` now has a `key` parameter which, if set to `FALSE`, sets the 
-      data.table translation to use `by` rather than `keyby` (#85).
+* `group_by()` now has an `arrange` parameter which, if set to `FALSE`, sets the 
+  data.table translation to use `by` rather than `keyby` (#85).
 
 # dtplyr 1.0.0
 
@@ -21,7 +21,7 @@
 
 * Joins now pass `...` on to data.table's merge method (#41).
 
-* `ungroup()` now copies it's input (@christophsax, #54).
+* `ungroup()` now copies its input (@christophsax, #54).
 
 * `mutate()` preserves grouping (@christophsax, #17).
 
