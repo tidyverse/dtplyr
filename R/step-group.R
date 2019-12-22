@@ -1,10 +1,10 @@
-step_group <- function(parent, groups = parent$groups, keyed = parent$keyed) {
+step_group <- function(parent, groups = parent$groups, keyby = parent$keyby) {
   new_step(
     parent,
     vars = parent$vars,
     groups = groups,
     class = "dtplyr_step_group",
-    keyed = if (!is.null(keyed)) keyed else TRUE
+    keyby = keyby
   )
 }
 
@@ -44,11 +44,23 @@ link_by_struct <- function(call, struct) {
   call
 }
 
+add_grouping_parameter <- function(call, groups, keyby) {
+  if (length(groups) == 0) {
+    return(call)
+  }
+
+  using <- if (isTRUE(keyby) || is.null(keyby)) "keyby" else "by"
+
+  call[[using]] <- call2(".", !!!syms(groups))
+
+  call
+}
+
 # dplyr methods -----------------------------------------------------------
 
 #' @importFrom dplyr group_by
 #' @export
-group_by.dtplyr_step <- function(.data, ..., add = FALSE, key = TRUE) {
+group_by.dtplyr_step <- function(.data, ..., add = FALSE, arrange = TRUE) {
   dots <- capture_dots(.data, ...)
 
   existing <- vapply(dots, is_symbol, logical(1))
@@ -58,9 +70,9 @@ group_by.dtplyr_step <- function(.data, ..., add = FALSE, key = TRUE) {
   }
 
   groups <- c(if (add) .data$groups, names(dots))
-  keyed <- if (!is.null(.data$keyed)) .data$keyed && key else key
+  arranged <- if (!is.null(.data$keyby)) .data$keyby && arrange else arrange
 
-  step_group(.data, groups, keyed)
+  step_group(.data, groups, arranged)
 }
 
 #' @importFrom dplyr ungroup

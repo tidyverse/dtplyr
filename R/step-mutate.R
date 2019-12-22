@@ -5,6 +5,7 @@ step_mutate <- function(parent, new_vars = list(), nested = FALSE) {
     parent,
     vars = vars,
     groups = parent$groups,
+    keyby = parent$keyby,
     needs_copy = !parent$implicit_copy,
     new_vars = new_vars,
     nested = nested,
@@ -25,7 +26,7 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 
   out <- call2("[", dt_call(x$parent, needs_copy), , j)
 
-  link_by_struct(out, by_struct(x))
+  add_grouping_parameter(out, x$groups, x$keyby)
 }
 
 # dplyr methods -----------------------------------------------------------

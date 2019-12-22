@@ -40,12 +40,12 @@ test_that("`key` switches between keyby= and by=", {
   dt1 <- lazy_dt(mtcars, "DT1")
 
   expect_equal(
-    dt %>% group_by(xy = x + y, key = FALSE) %>% summarize(x = mean(x)) %>% show_query(),
+    dt %>% group_by(xy = x + y, arrange = FALSE) %>% summarize(x = mean(x)) %>% show_query(),
     expr(copy(DT)[, `:=`(xy = x + y)][, .(x = mean(x)), by = .(xy)])
   )
 
   expect_equal(
-    dt1 %>% group_by(cyl, key = FALSE) %>% summarize(mean_mpg = mean(mpg)) %>% show_query(),
+    dt1 %>% group_by(cyl, arrange = FALSE) %>% summarize(mean_mpg = mean(mpg)) %>% show_query(),
     expr(DT1[, .(mean_mpg = mean(mpg)), by = .(cyl)])
   )
 

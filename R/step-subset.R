@@ -1,7 +1,7 @@
 step_subset <- function(parent,
                         vars = parent$vars,
                         groups = parent$groups,
-                        keyed = parent$keyed,
+                        keyby = parent$keyby,
                         i = NULL,
                         j = NULL,
                         on = character()
@@ -16,7 +16,7 @@ step_subset <- function(parent,
     parent = parent,
     vars = vars,
     groups = groups,
-    keyed = keyed,
+    keyby = keyby,
     i = i,
     j = j,
     on = on,
@@ -30,7 +30,7 @@ step_subset <- function(parent,
 step_subset_j <- function(parent,
                           vars = parent$vars,
                           groups = parent$groups,
-                          keyed = parent$keyed,
+                          keyby = parent$keyby,
                           j = NULL) {
   if (can_merge_subset(parent)) {
     i <- parent$i
@@ -45,7 +45,7 @@ step_subset_j <- function(parent,
     parent,
     vars = vars,
     groups = groups,
-    keyed = keyed,
+    keyby = keyby,
     i = i,
     j = j,
     on = on
@@ -97,15 +97,17 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
     by <- by_struct(x)
 
     if (is.null(i)) {
-      out <- call2("[", parent, , x$j, !!!as.list(by))
+      out <- call2("[", parent, , x$j)
     } else {
       if (is.null(x$j)) {
         j <- call2("[", expr(.SD), i)
       } else {
         j <- call2("[", expr(.SD), i, x$j)
       }
-      out <- call2("[", parent, , j, !!!as.list(by))
+      out <- call2("[", parent, , j)
     }
+
+    out <- add_grouping_parameter(out, x$groups, x$keyby)
   }
   if (length(x$on) > 0) {
     out$on <- call2(".", !!!syms(x$on))
