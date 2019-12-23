@@ -1,21 +1,22 @@
-step_group <- function(parent, groups = parent$groups, keyby = parent$keyby) {
+step_group <- function(parent, groups = parent$groups, arrange = parent$arrange) {
   new_step(
     parent,
     vars = parent$vars,
     groups = groups,
     class = "dtplyr_step_group",
-    keyby = keyby
+    arrange = arrange
   )
 }
 
-add_grouping_parameter <- function(call, groups, keyby) {
-  if (length(groups) == 0) {
+add_grouping_param <- function(call, step) {
+  if (length(step$groups) == 0) {
     return(call)
   }
+  
+  arrange <- if (!is.null(step$arrange)) step$arrange else TRUE
+  using <- if (isTRUE(arrange)) "keyby" else "by"
 
-  using <- if (isTRUE(keyby) || is.null(keyby)) "keyby" else "by"
-
-  call[[using]] <- call2(".", !!!syms(groups))
+  call[[using]] <- call2(".", !!!syms(step$groups))
 
   call
 }
@@ -34,7 +35,7 @@ group_by.dtplyr_step <- function(.data, ..., add = FALSE, arrange = TRUE) {
   }
 
   groups <- c(if (add) .data$groups, names(dots))
-  arranged <- if (!is.null(.data$keyby)) .data$keyby && arrange else arrange
+  arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
 
   step_group(.data, groups, arranged)
 }
