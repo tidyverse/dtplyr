@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* Better handling for `.data` and `.env` pronouns (#138).
+
 * dplyr verbs now work with `NULL` inputs (#129).
 
 * `lazy_dt()` objects now have a useful `glimpse()` method (#132).

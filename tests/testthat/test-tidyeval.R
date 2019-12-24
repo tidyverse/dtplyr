@@ -58,6 +58,18 @@ test_that("can access functions in local env", {
   expect_equal(dt %>% summarise(n = f()) %>% pull(), 100)
 })
 
+test_that("can disambiguate using .data and .env", {
+  dt <- lazy_dt(data.frame(x = 1))
+  x <- 2
+
+  out <- dt %>% summarise(data = .data$x, env = .env$x) %>% as_tibble()
+  expect_equal(out, tibble(data = 1, env = 2))
+
+  var <- "x"
+  out <- dt %>% summarise(data = .data[[var]], env = .env[[var]]) %>% collect()
+  expect_equal(out, tibble(data = 1, env = 2))
+})
+
 # dplyr verbs -------------------------------------------------------------
 
 test_that("n() is equivalent to .N", {

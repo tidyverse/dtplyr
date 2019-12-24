@@ -117,7 +117,9 @@ as.data.frame.dtplyr_step <- function(x, ...) {
 #' @export
 #' @importFrom tibble as_tibble
 as_tibble.dtplyr_step <- function(x, ...) {
-  as_tibble(dt_eval(x))
+  out <- as_tibble(dt_eval(x))
+  attr(out, ".internal.selfref") <- NULL
+  out
 }
 
 #' @export
