@@ -1,6 +1,7 @@
 test_that("simple expressions left as is", {
   dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
 
+  expect_equal(capture_dot(dt, NULL), NULL)
   expect_equal(capture_dot(dt, 10), 10)
   expect_equal(capture_dot(dt, x), quote(x))
   expect_equal(capture_dot(dt, x + y), quote(x + y))

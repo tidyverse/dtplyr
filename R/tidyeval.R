@@ -33,7 +33,7 @@ capture_dot <- function(.data, x, j = TRUE) {
 
 # squash quosures
 dt_squash <- function(x, env, vars, j = TRUE) {
-  if (is_atomic(x)) {
+  if (is_atomic(x) || is_null(x)) {
     x
   } else if (is_symbol(x)) {
     if (identical(x, quote(.))) {
