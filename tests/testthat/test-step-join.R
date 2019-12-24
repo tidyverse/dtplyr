@@ -51,10 +51,19 @@ test_that("named by converted to by.x and by.y", {
   dt1 <- lazy_dt(data.frame(a1 = 1:3, z = 1), "dt1")
   dt2 <- lazy_dt(data.frame(a2 = 1:3, z = 2), "dt2")
 
+  out_inner <- inner_join(dt1, dt2, by = c('a1' = 'a2'))
   expect_equal(
-    dt1 %>% inner_join(dt2, by = c('a1' = 'a2')) %>% show_query(),
+    out_inner %>% show_query(),
     expr(merge(dt1, dt2, all = FALSE, by.x = "a1", by.y = "a2", allow.cartesian = TRUE))
   )
+  expect_setequal(tbl_vars(out_inner), c("a1", "z.x", "z.y"))
+
+  out_left <- left_join(dt1, dt2, by = c('a1' = 'a2'))
+  expect_equal(
+    out_left %>% show_query(),
+    expr(merge(dt1, dt2, all.x = TRUE, all.y = FALSE, by.x = "a1", by.y = "a2", allow.cartesian = TRUE))
+  )
+  expect_setequal(tbl_vars(out_left), c("a1", "z.x", "z.y"))
 })
 
 test_that("simple left joins use [", {

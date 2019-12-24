@@ -1,6 +1,6 @@
 # dtplyr (development version)
 
-* joins do better job at determining output variables in the presence of duplicated outputs (#128).
+* joins do better job at determining output variables in the presence of duplicated outputs (#128). When joining based on different variables in x and y, joins consistently preserve column from x, not y (#137).
 
 * `rename()` now works without `data.table` attached, as intended (@michaelchirico, #123).
 
