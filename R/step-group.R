@@ -12,7 +12,7 @@ add_grouping_param <- function(call, step) {
   if (length(step$groups) == 0) {
     return(call)
   }
-  
+
   arrange <- if (!is.null(step$arrange)) step$arrange else TRUE
   using <- if (isTRUE(arrange)) "keyby" else "by"
 
@@ -23,7 +23,13 @@ add_grouping_param <- function(call, step) {
 
 # dplyr methods -----------------------------------------------------------
 
+#' @inheritParams dplyr::group_by
+#' @param arrange If `TRUE`, will automatically arrange the output of
+#'   subsequent grouped operations by group. If `FALSE`, output order will be
+#'   left unchanged. In the generated data.table code this switches between
+#'   using the `keyby` (`TRUE`) and `by` (`FALSE`) arguments.
 #' @importFrom dplyr group_by
+#' @rdname single_table
 #' @export
 group_by.dtplyr_step <- function(.data, ..., add = FALSE, arrange = TRUE) {
   dots <- capture_dots(.data, ...)
