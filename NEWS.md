@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `lazy_dt()` objects now have a useful `glimpse()` method (#132).
+
 * `group_by()` now has an `arrange` parameter which, if set to `FALSE`, sets the 
   data.table translation to use `by` rather than `keyby` (#85).
 

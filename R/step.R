@@ -146,6 +146,12 @@ print.dtplyr_step <- function(x, ...) {
   invisible(x)
 }
 
+#' @importFrom dplyr glimpse
+#' @export
+glimpse.dtplyr_step <- function(x, width = NULL, ...) {
+  glimpse(collect(x), width = width, ...)
+}
+
 #' @importFrom dplyr show_query
 #' @export
 show_query.dtplyr_step <- function(x) {

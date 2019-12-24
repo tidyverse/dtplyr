@@ -20,9 +20,13 @@ test_that("group metadata as expected", {
   expect_equal(n_groups(gt), 3)
 })
 
-test_that("has useful print method", {
+test_that("has useful display methods", {
   dt <- lazy_dt(mtcars, "DT")
-  expect_known_output(print(dt), test_path("test-step-print.txt"))
+
+  verify_output(test_path("test-step-print.txt"), {
+    print(dt)
+    glimpse(dt)
+  })
 })
 
 test_that("can evaluate to any data frame type", {
