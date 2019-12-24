@@ -7,7 +7,7 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   if (style %in% c("semi", "anti")) {
     vars <- x$vars
   } else {
-    vars <- union(x$vars, y$vars)
+    vars <- join_vars(x$vars, y$vars, on, suffix)
   }
 
   new_step(
@@ -62,12 +62,7 @@ left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
 
   common_vars <- setdiff(intersect(x$vars, y$vars), by)
   if (length(common_vars) == 0) {
-    step_subset(
-      y,
-      vars = union(x$vars, y$vars),
-      i = x,
-      on = by
-    )
+    step_subset(y, vars = union(x$vars, y$vars), i = x, on = by)
   } else {
     step_join(x, y, on = by, style = "left", suffix = suffix)
   }
@@ -81,12 +76,7 @@ right_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = 
 
   common_vars <- setdiff(intersect(x$vars, y$vars), by)
   if (length(common_vars) == 0) {
-    step_subset(
-      x,
-      vars = union(x$vars, y$vars),
-      i = y,
-      on = by
-    )
+    step_subset(x, vars = union(x$vars, y$vars), i = y, on = by)
   } else {
     step_join(y, x, on = by, style = "left", suffix = suffix)
   }
@@ -143,6 +133,18 @@ dtplyr_auto_copy <- function(x, y, copy = copy) {
   } else {
     dplyr::auto_copy(x, y, copy = copy)
   }
+}
+
+join_vars <- function(x, y, on, suffixes) {
+  y <- setdiff(y, on)
+  vars <- union(x, y)
+
+  both <- intersect(x, y)
+  if (length(both) > 0) {
+    vars <- c(setdiff(vars, both), paste0(both, suffixes[[1]]), paste0(both, suffixes[[2]]))
+  }
+
+  vars
 }
 
 #' @importFrom dplyr same_src

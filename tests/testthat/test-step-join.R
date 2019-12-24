@@ -75,8 +75,18 @@ test_that("correctly determines vars", {
   dt1 <- lazy_dt(data.frame(x = 1, y = 2, a = 3), "dt1")
   dt2 <- lazy_dt(data.frame(x = 1, y = 2, b = 4), "dt2")
 
-  expect_equal(dt1 %>% left_join(dt2, by = "x") %>% .$vars, c("x", "y", "a", "b"))
-  expect_equal(dt1 %>% semi_join(dt2, by = "x") %>% .$vars, c("x", "y", "a"))
+  expect_setequal(
+    dt1 %>% left_join(dt2, by = c("x", "y")) %>% .$vars,
+    c("x", "y", "a", "b")
+  )
+  expect_setequal(
+    dt1 %>% left_join(dt2, by = "x") %>% .$vars,
+    c("x", "y.x", "y.y", "a", "b")
+  )
+  expect_setequal(
+    dt1 %>% semi_join(dt2, by = "x") %>% .$vars,
+    c("x", "y", "a")
+  )
 })
 
 

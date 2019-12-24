@@ -1,5 +1,6 @@
 # dtplyr (development version)
 
+* joins do better job at determining output variables in the presence of duplicated outputs (#128).
 
 * `rename()` now works without `data.table` attached, as intended (@michaelchirico, #123).
 
