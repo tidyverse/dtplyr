@@ -1,6 +1,17 @@
 # dtplyr (development version)
 
-* `rename` now works without `data.table` attached, as intended (@michaelchirico, #123).
+
+* `rename()` now works without `data.table` attached, as intended (@michaelchirico, #123).
+
+* Better handling for `.data` and `.env` pronouns (#138).
+
+* dplyr verbs now work with `NULL` inputs (#129).
+
+* `lazy_dt()` objects now have a useful `glimpse()` method (#132).
+
+* `group_by()` now has an `arrange` parameter which, if set to `FALSE`, sets the 
+  data.table translation to use `by` rather than `keyby` (#85).
+
 
 # dtplyr 1.0.0
 
@@ -20,7 +31,7 @@
 
 * Joins now pass `...` on to data.table's merge method (#41).
 
-* `ungroup()` now copies it's input (@christophsax, #54).
+* `ungroup()` now copies its input (@christophsax, #54).
 
 * `mutate()` preserves grouping (@christophsax, #17).
 

@@ -22,7 +22,7 @@ Depends:
     R (>= 3.2)
 Imports:
     crayon,
-    data.table (>= 1.9.6),
+    data.table (>= 1.12.4),
     dplyr (>= 0.8.1),
     rlang,
     tibble,
@@ -38,4 +38,4 @@ VignetteBuilder:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
