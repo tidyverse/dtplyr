@@ -143,7 +143,7 @@ join_is_simple <- function(x, y, by) {
 }
 
 join_vars <- function(x, y, on, suffixes) {
-  y <- setdiff(y, names(on))
+  y <- setdiff(y, if (is_named(on)) names(on) else on)
   vars <- union(x, y)
 
   both <- intersect(x, y)
