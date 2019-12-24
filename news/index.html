@@ -143,6 +143,7 @@
 <a href="#dtplyr-development-version" class="anchor"></a>dtplyr (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p><code>rename()</code> now works without <code>data.table</code> attached, as intended (<a href='https://github.com/michaelchirico'>@michaelchirico</a>, <a href='https://github.com/tidyverse/dtplyr/issues/123'>#123</a>).</p></li>
 <li><p>Better handling for <code>.data</code> and <code>.env</code> pronouns (<a href='https://github.com/tidyverse/dtplyr/issues/138'>#138</a>).</p></li>
 <li><p>dplyr verbs now work with <code>NULL</code> inputs (<a href='https://github.com/tidyverse/dtplyr/issues/129'>#129</a>).</p></li>
 <li><p><code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> objects now have a useful <code>glimpse()</code> method (<a href='https://github.com/tidyverse/dtplyr/issues/132'>#132</a>).</p></li>
@@ -162,7 +163,7 @@
 <li><p>Joins now pass <code>...</code> on to data.table’s merge method (<a href='https://github.com/tidyverse/dtplyr/issues/41'>#41</a>).</p></li>
 <li><p><code>ungroup()</code> now copies its input (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/tidyverse/dtplyr/issues/54'>#54</a>).</p></li>
 <li><p><code>mutate()</code> preserves grouping (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/tidyverse/dtplyr/issues/17'>#17</a>).</p></li>
-<li><p><code>if_else()</code> and <code>coalesce()</code> are mapped to data.table’s <code>fifelse()</code> and <code>fcoalesce()</code> respectively (<a href='https://github.com/michaelchirico'>@michaelchirico</a>, <a href='https://github.com/tidyverse/dtplyr/issues/112'>#112</a>)</p></li>
+<li><p><code>if_else()</code> and <code>coalesce()</code> are mapped to data.table’s <code>fifelse()</code> and <code>fcoalesce()</code> respectively (<a href='https://github.com/michaelchirico'>@michaelchirico</a>, <a href='https://github.com/tidyverse/dtplyr/issues/112'>#112</a>).</p></li>
 </ul>
 </div>
     <div id="dtplyr-0-0-3" class="section level1">
