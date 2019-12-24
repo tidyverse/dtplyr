@@ -10,7 +10,7 @@ dt_eval <- function(x) {
 add_dt_wrappers <- function(env) {
   # Make sure data.table functions are available so dtplyr still works
   # even when data.table isn't attached
-  env$setname <- data.table::setnames
+  env$setnames <- data.table::setnames
   env$copy <- data.table::copy
   env$setkeyv <- data.table::setkeyv
 

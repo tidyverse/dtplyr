@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+
+* `rename()` now works without `data.table` attached, as intended (@michaelchirico, #123).
+
 * Better handling for `.data` and `.env` pronouns (#138).
 
 * dplyr verbs now work with `NULL` inputs (#129).
@@ -8,6 +11,7 @@
 
 * `group_by()` now has an `arrange` parameter which, if set to `FALSE`, sets the 
   data.table translation to use `by` rather than `keyby` (#85).
+
 
 # dtplyr 1.0.0
 
@@ -32,7 +36,7 @@
 * `mutate()` preserves grouping (@christophsax, #17).
 
 * `if_else()` and `coalesce()` are mapped to data.table's `fifelse()` and 
-  `fcoalesce()` respectively (@michaelchirico, #112)
+  `fcoalesce()` respectively (@michaelchirico, #112).
 
 # dtplyr 0.0.3
 
