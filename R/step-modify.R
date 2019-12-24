@@ -1,6 +1,8 @@
 step_modify <- function(parent, fun, args) {
   new_step(
     parent,
+    groups = parent$groups,
+    arrange = parent$arrange,
     implicit_copy = TRUE,
     fun = fun,
     args = args,
@@ -12,10 +14,7 @@ dt_call.dtplyr_step_modify <- function(x, needs_copy = x$needs_copy) {
   j <- call2(x$fun, quote(.SD), quote(.BY), !!!x$args)
   out <- call2("[", dt_call(x$parent, needs_copy), , j)
 
-  if (length(x$groups) > 0) {
-    out$keyby <- call2(".", !!!syms(x$groups))
-  }
-  out
+  add_grouping_param(out, x)
 }
 
 # dplyr methods -----------------------------------------------------------

@@ -1,17 +1,37 @@
-step_group <- function(parent, groups = parent$groups) {
+step_group <- function(parent, groups = parent$groups, arrange = parent$arrange) {
   new_step(
     parent,
     vars = parent$vars,
     groups = groups,
-    class = "dtplyr_step_group"
+    class = "dtplyr_step_group",
+    arrange = arrange
   )
+}
+
+add_grouping_param <- function(call, step) {
+  if (length(step$groups) == 0) {
+    return(call)
+  }
+
+  arrange <- if (!is.null(step$arrange)) step$arrange else TRUE
+  using <- if (isTRUE(arrange)) "keyby" else "by"
+
+  call[[using]] <- call2(".", !!!syms(step$groups))
+
+  call
 }
 
 # dplyr methods -----------------------------------------------------------
 
+#' @inheritParams dplyr::group_by
+#' @param arrange If `TRUE`, will automatically arrange the output of
+#'   subsequent grouped operations by group. If `FALSE`, output order will be
+#'   left unchanged. In the generated data.table code this switches between
+#'   using the `keyby` (`TRUE`) and `by` (`FALSE`) arguments.
 #' @importFrom dplyr group_by
+#' @rdname single_table
 #' @export
-group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
+group_by.dtplyr_step <- function(.data, ..., add = FALSE, arrange = TRUE) {
   dots <- capture_dots(.data, ...)
 
   existing <- vapply(dots, is_symbol, logical(1))
@@ -21,7 +41,9 @@ group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
   }
 
   groups <- c(if (add) .data$groups, names(dots))
-  step_group(.data, groups)
+  arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
+
+  step_group(.data, groups, arranged)
 }
 
 #' @importFrom dplyr ungroup
@@ -29,3 +51,4 @@ group_by.dtplyr_step <- function(.data, ..., add = FALSE) {
 ungroup.dtplyr_step <- function(.data, ...) {
   step_group(.data, groups = character())
 }
+
