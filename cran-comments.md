@@ -14,17 +14,7 @@ Compatibility with dplyr 0.8.0.
 
 ## revdepcheck results
 
-We checked 3 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 4 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 1 new problems
+ * We saw 0 new problems
  * We failed to check 0 packages
-
-Issues with CRAN packages are summarised below.
-
-### New problems
-(This reports the first line of each new failure)
-
-* ndjson
-  checking whether the package can be loaded ... ERROR
-  Maintainer was notified Sept 8 2019.
-
