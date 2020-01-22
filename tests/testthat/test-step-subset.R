@@ -179,13 +179,13 @@ test_that("empty select returns no columns", {
   lz <- lazy_dt(dt, "DT")
   expect_equal(
     lz %>% select() %>% collect(),
-    dt[, 0]
+    tibble()
   )
 
   # unless it's grouped
   expect_equal(
     lz %>% group_by(x) %>% select() %>% collect(),
-    dt[, "x"]
+    group_by(tibble(x = 1), x)
   )
 })
 
