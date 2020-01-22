@@ -24,6 +24,7 @@ add_grouping_param <- function(call, step) {
 # dplyr methods -----------------------------------------------------------
 
 #' @inheritParams dplyr::group_by
+#' @param .data A data.table
 #' @param arrange If `TRUE`, will automatically arrange the output of
 #'   subsequent grouped operations by group. If `FALSE`, output order will be
 #'   left unchanged. In the generated data.table code this switches between

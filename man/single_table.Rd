@@ -8,15 +8,18 @@
 \method{group_by}{dtplyr_step}(.data, ..., add = FALSE, arrange = TRUE)
 }
 \arguments{
-\item{.data}{a tbl}
+\item{.data}{A data.table}
 
-\item{...}{Variables to group by. All tbls accept variable names.
-Some tbls will accept functions of variables. Duplicated groups
-will be silently dropped.}
+\item{...}{In \code{group_by()}, variables or computations to group by.
+In \code{ungroup()}, variables to remove from the grouping.}
 
-\item{add}{When \code{add = FALSE}, the default, \code{group_by()} will
+\item{add}{When \code{FALSE}, the default, \code{group_by()} will
 override existing groups. To add to the existing groups, use
-\code{add = TRUE}.}
+\code{.add = TRUE}.
+
+This argument was previously called \code{add}, but that prevented
+creating a new grouping variable called \code{add}, and conflicts with
+our naming conventions.}
 
 \item{arrange}{If \code{TRUE}, will automatically arrange the output of
 subsequent grouped operations by group. If \code{FALSE}, output order will be
