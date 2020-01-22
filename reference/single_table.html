@@ -155,19 +155,21 @@ data.table instantiation.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.data</th>
-      <td><p>a tbl</p></td>
+      <td><p>A data.table</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Variables to group by. All tbls accept variable names.
-Some tbls will accept functions of variables. Duplicated groups
-will be silently dropped.</p></td>
+      <td><p>In <code>group_by()</code>, variables or computations to group by.
+In <code>ungroup()</code>, variables to remove from the grouping.</p></td>
     </tr>
     <tr>
       <th>add</th>
-      <td><p>When <code>add = FALSE</code>, the default, <code>group_by()</code> will
+      <td><p>When <code>FALSE</code>, the default, <code>group_by()</code> will
 override existing groups. To add to the existing groups, use
-<code>add = TRUE</code>.</p></td>
+<code>.add = TRUE</code>.</p>
+<p>This argument was previously called <code>add</code>, but that prevented
+creating a new grouping variable called <code>add</code>, and conflicts with
+our naming conventions.</p></td>
     </tr>
     <tr>
       <th>arrange</th>
