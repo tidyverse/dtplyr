@@ -57,8 +57,8 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
 #' @importFrom dplyr left_join
 #' @export
 left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
-  by <- dtplyr_common_by(by, x, y)
   y <- dtplyr_auto_copy(x, y, copy = copy)
+  by <- dtplyr_common_by(by, x, y)
 
   if (join_is_simple(x$vars, y$vars, by)) {
     step_subset(y, vars = union(x$vars, y$vars), i = x, on = by)
@@ -70,8 +70,8 @@ left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
 #' @importFrom dplyr right_join
 #' @export
 right_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
-  by <- dtplyr_common_by(by, y, x)
   y <- dtplyr_auto_copy(x, y, copy = copy)
+  by <- dtplyr_common_by(by, y, x)
 
   if (join_is_simple(x$vars, y$vars, by)) {
     step_subset(x, vars = union(x$vars, y$vars), i = y, on = by)
@@ -83,8 +83,8 @@ right_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = 
 #' @importFrom dplyr inner_join
 #' @export
 inner_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
-  by <- dtplyr_common_by(by, x, y)
   y <- dtplyr_auto_copy(x, y, copy = copy)
+  by <- dtplyr_common_by(by, x, y)
 
   step_join(x, y, on = by, style = "inner", suffix = suffix)
 }
@@ -92,8 +92,8 @@ inner_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = 
 #' @importFrom dplyr full_join
 #' @export
 full_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
-  by <- dtplyr_common_by(by, x, y)
   y <- dtplyr_auto_copy(x, y, copy = copy)
+  by <- dtplyr_common_by(by, x, y)
 
   step_join(x, y, on = by, style = "full", suffix = suffix)
 }
@@ -101,8 +101,8 @@ full_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
 #' @importFrom dplyr anti_join
 #' @export
 anti_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE) {
-  by <- dtplyr_common_by(by, x, y)
   y <- dtplyr_auto_copy(x, y, copy = copy)
+  by <- dtplyr_common_by(by, x, y)
 
   step_join(x, y, on = by, style = "anti")
 }
@@ -110,8 +110,8 @@ anti_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE) {
 #' @importFrom dplyr semi_join
 #' @export
 semi_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE) {
-  by <- dtplyr_common_by(by, x, y)
   y <- dtplyr_auto_copy(x, y, copy = copy)
+  by <- dtplyr_common_by(by, x, y)
 
   step_join(x, y, on = by, style = "semi")
 }
