@@ -8,15 +8,13 @@
   duplicated outputs (#128). When joining based on different variables in `x` 
   and `y`, joins consistently preserve column from `x`, not `y` (#137).
 
+* `lazy_dt()` objects now have a useful `glimpse()` method (#132).
+
 * `group_by()` now has an `arrange` parameter which, if set to `FALSE`, sets 
   the data.table translation to use `by` rather than `keyby` (#85).
 
 * `rename()` now works without `data.table` attached, as intended 
   (@michaelchirico, #123).
-
-* `lazy_dt()` objects now have a useful `glimpse()` method (#132).
-
-
 
 # dtplyr 1.0.0
 
