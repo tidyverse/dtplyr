@@ -51,6 +51,12 @@ groups.dtplyr_step <- function(x) {
   syms(x$groups)
 }
 
+#' @importFrom dplyr group_vars
+#' @export
+group_vars.dtplyr_step <- function(x) {
+  x$groups
+}
+
 #' @importFrom dplyr group_size
 #' @export
 group_size.dtplyr_step <- function(x) {
