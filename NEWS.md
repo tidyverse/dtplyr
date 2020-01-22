@@ -1,17 +1,21 @@
 # dtplyr (development version)
 
-* joins do better job at determining output variables in the presence of duplicated outputs (#128). When joining based on different variables in x and y, joins consistently preserve column from x, not y (#137).
-
-* `rename()` now works without `data.table` attached, as intended (@michaelchirico, #123).
-
 * Better handling for `.data` and `.env` pronouns (#138).
 
 * dplyr verbs now work with `NULL` inputs (#129).
 
+* joins do better job at determining output variables in the presence of 
+  duplicated outputs (#128). When joining based on different variables in `x` 
+  and `y`, joins consistently preserve column from `x`, not `y` (#137).
+
+* `group_by()` now has an `arrange` parameter which, if set to `FALSE`, sets 
+  the data.table translation to use `by` rather than `keyby` (#85).
+
+* `rename()` now works without `data.table` attached, as intended 
+  (@michaelchirico, #123).
+
 * `lazy_dt()` objects now have a useful `glimpse()` method (#132).
 
-* `group_by()` now has an `arrange` parameter which, if set to `FALSE`, sets the 
-  data.table translation to use `by` rather than `keyby` (#85).
 
 
 # dtplyr 1.0.0
