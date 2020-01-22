@@ -46,7 +46,7 @@ test_that("empty rename returns original", {
 test_that("renames grouping vars", {
   dt <- lazy_dt(data.table(x = 1, y = 1, z = 1))
   gt <- group_by(dt, x)
-  expect_equal(rename(gt, y = x)$groups, "y")
+  expect_equal(rename(gt, a = x)$groups, "a")
 })
 
 # distinct ----------------------------------------------------------------
