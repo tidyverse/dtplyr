@@ -13,6 +13,8 @@ status](https://travis-ci.org/tidyverse/dtplyr.svg?branch=master)](https://travi
 coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyverse/dtplyr?branch=master)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![R build
+status](https://github.com/tidyverse/dtplyr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/dtplyr)
 <!-- badges: end -->
 
 ## Overview
@@ -138,4 +140,6 @@ slower than data.table:
 
 ## Code of Conduct
 
-Please note that the dtplyr project is released with a [Contributor Code of Conduct](https://dtplyr.tidyverse.org/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the dtplyr project is released with a [Contributor Code
+of Conduct](https://dtplyr.tidyverse.org/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.
