@@ -39,6 +39,11 @@ test_that("simple calls generate expected translations", {
   )
 
   expect_equal(
+    dt %>% relocate(x, .after = z) %>% show_query(),
+    expr(DT[, .(y, z, x)])
+  )
+
+  expect_equal(
     dt %>% summarise(x = mean(x)) %>% show_query(),
     expr(DT[, .(x = mean(x))])
   )
