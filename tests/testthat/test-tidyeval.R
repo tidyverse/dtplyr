@@ -49,6 +49,12 @@ test_that("can process many expressions in one go", {
   expect_equal(dots$x, quote(x + 10))
 })
 
+test_that("can use anonymous functions", {
+  dt <- lazy_dt(data.frame(x = 1:2, y = 1))
+  dot <- capture_dot(dt, x = sapply(x, function(x) x))
+  expect_equal(dot, quote(sapply(x, function(x) x)))
+})
+
 # evaluation --------------------------------------------------------------
 
 test_that("can access functions in local env", {

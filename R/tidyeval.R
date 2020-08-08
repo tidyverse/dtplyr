@@ -72,7 +72,6 @@ dt_squash <- function(x, env, vars, j = TRUE) {
         return(sym(paste0("..", var)))
       }
     }
-
     if (is_call(x, "n", n = 0)) {
       quote(.N)
     } else if (is_call(x, "row_number", n = 0)) {
@@ -86,7 +85,7 @@ dt_squash <- function(x, env, vars, j = TRUE) {
     } else if (is_call(x, 'coalesce')) {
       x[[1L]] <- quote(fcoalesce)
       x
-    } else if (is.function(x[[1]])) {
+    } else if (is.function(x[[1]]) || identical(deparse(x[[1]]), "function")) {
       simplify_function_call(x, env, vars = vars, j = j)
     } else {
       x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env, j = j)
