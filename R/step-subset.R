@@ -150,20 +150,17 @@ relocate.dtplyr_step <- function(.data, ..., .before = NULL, .after = NULL) {
   has_after <- !quo_is_null(.after)
   if (has_before && has_after) {
     abort("Must supply only one of `.before` and `.after`.")
-  }
-  else if (has_before) {
+  } else if (has_before) {
     where <- min(unname(tidyselect::eval_select(.before, data = vars)))
     if (!where %in% to_move) {
       to_move <- c(to_move, where)
     }
-  }
-  else if (has_after) {
-   where <- max(unname(tidyselect::eval_select(.after, data = vars)))
-   if (!where %in% to_move) {
-     to_move <- c(where, to_move)
-   }
-  }
-  else {
+  } else if (has_after) {
+    where <- max(unname(tidyselect::eval_select(.after, data = vars)))
+    if (!where %in% to_move) {
+      to_move <- c(where, to_move)
+    }
+  } else {
     where <- 1L
     if (!where %in% to_move) {
       to_move <- union(to_move, where)
