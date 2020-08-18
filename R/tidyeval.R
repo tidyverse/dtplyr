@@ -72,6 +72,7 @@ dt_squash <- function(x, env, vars, j = TRUE) {
         return(sym(paste0("..", var)))
       }
     }
+
     if (is_call(x, "n", n = 0)) {
       quote(.N)
     } else if (is_call(x, "row_number", n = 0)) {
