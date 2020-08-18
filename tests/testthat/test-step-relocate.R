@@ -38,11 +38,18 @@ test_that("All columns move before (after) columns in .before (.after)", {
   )
 })
 
-# test_that("don't lose non-contiguous variables", {
-#   dt <- tibble(a = 1, b = 1, c = 1, d = 1, e = 1)
-#   expect_named(relocate(dt, b, .after = c(a, c, e)), c("a", "c", "d", "e", "b"))
-#   expect_named(relocate(dt, e, .before = c(b, d)), c("a", "e", "b", "c", "d"))
-# })
+test_that("extra variables in .before/.after unaffected", {
+  dt <- lazy_dt(data.table(a = 1, b = 1, c = 1, d = 1, e = 1), "DT")
+
+  expect_equal(
+    dt %>% relocate(b, .after = c(a, c, e)) %>% show_query(),
+    expr(DT[, .(a, c, d, e, b)])
+  )
+  expect_equal(
+    dt %>% relocate(e, .before = c(b, d)) %>% show_query(),
+    expr(DT[, .(a, e, b, c, d)])
+  )
+})
 
 test_that("no .before/.after moves to front", {
   dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
