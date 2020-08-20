@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* Anonymous functions work in `mutate()` and `summarise()` (@smingerson, #155)
+
 # dtplyr 1.0.1
 
 * Better handling for `.data` and `.env` pronouns (#138).
