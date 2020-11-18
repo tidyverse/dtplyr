@@ -15,7 +15,7 @@ Authors@R:
 Description: Provides a data.table backend for 'dplyr'. The goal of 'dtplyr' 
     is to allow you to write 'dplyr' code that is automatically translated to 
     the equivalent, but usually much faster, data.table code.
-License: GPL-3
+License: MIT + file LICENSE
 URL: https://github.com/tidyverse/dtplyr
 BugReports: https://github.com/tidyverse/dtplyr/issues
 Depends: 
