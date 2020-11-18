@@ -18,6 +18,8 @@
 * `rename()` now works without `data.table` attached, as intended 
   (@michaelchirico, #123).
 
+* dtplyr has been re-licensed as MIT (#165).  
+
 # dtplyr 1.0.0
 
 *   Converted from eager approach to lazy approach. You now must use `lazy_dt()`
