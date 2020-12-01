@@ -2,11 +2,7 @@ Package: dtplyr
 Title: Data Table Back-End for 'dplyr'
 Version: 1.0.1.9000
 Authors@R: 
-    c(person(given = "Lionel",
-             family = "Henry",
-             role = "aut",
-             email = "lionel@rstudio.com"),
-      person(given = "Hadley",
+    c(person(given = "Hadley",
              family = "Wickham",
              role = "cre",
              email = "hadley@rstudio.com"),
@@ -38,4 +34,4 @@ VignetteBuilder:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
