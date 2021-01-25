@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# dtplyr
+# dtplyr <a href='https://dtplyr.tidyverse.org'><img src='man/figures/logo.png' align="right" height="138" /></a>
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/dtplyr)](https://cran.r-project.org/package=dtplyr)
