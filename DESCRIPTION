@@ -8,9 +8,10 @@ Authors@R:
              email = "hadley@rstudio.com"),
       person(given = "RStudio",
              role = "cph"))
-Description: Provides a data.table backend for 'dplyr'. The goal of 'dtplyr' 
-    is to allow you to write 'dplyr' code that is automatically translated to 
-    the equivalent, but usually much faster, data.table code.
+Description: Provides a data.table backend for 'dplyr'. The goal
+    of 'dtplyr' is to allow you to write 'dplyr' code that is
+    automatically translated to the equivalent, but usually much faster,
+    data.table code.
 License: MIT + file LICENSE
 URL: https://github.com/tidyverse/dtplyr
 BugReports: https://github.com/tidyverse/dtplyr/issues
