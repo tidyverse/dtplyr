@@ -5,6 +5,12 @@ test_that("simple expressions left as is", {
   expect_equal(capture_dot(dt, 10), 10)
   expect_equal(capture_dot(dt, x), quote(x))
   expect_equal(capture_dot(dt, x + y), quote(x + y))
+
+  # logicals
+  expect_equal(eval(capture_dot(dt, T), globalenv()), TRUE)
+  expect_equal(eval(capture_dot(dt, F), globalenv()), FALSE)
+  expect_equal(capture_dot(dt, TRUE), TRUE)
+  expect_equal(capture_dot(dt, FALSE), FALSE)
 })
 
 test_that("existing non-variables get inlined", {

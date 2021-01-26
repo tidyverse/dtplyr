@@ -40,7 +40,10 @@ dt_squash <- function(x, env, vars, j = TRUE) {
       quote(.SD)
     } else {
       var <- as.character(x)
-      if (nchar(x) > 0 && substr(var, 1, 1) == ".") {
+
+      if (var %in% c("T", "F")) {
+        as.logical(var)
+      } else if (nchar(x) > 0 && substr(var, 1, 1) == ".") {
         # data table pronouns are bound to NULL
         x
       } else if (j && !var %in% vars && env_has(env, var, inherit = TRUE)) {
