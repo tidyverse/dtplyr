@@ -160,6 +160,7 @@
 <a href="#dtplyr-development-version" class="anchor"></a>dtplyr (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table()</a></code> always calls <code>[]</code> so that the result will print (<a href='https://github.com/tidyverse/dtplyr/issues/146'>#146</a>).</p></li>
 <li><p>Implement <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> method for compatibility with dplyr 1.0.0 (<a href='https://github.com/tidyverse/dtplyr/issues/159'>#159</a>).</p></li>
 <li><p>Anonymous functions work in <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> (<a href='https://github.com/smingerson'>@smingerson</a>, <a href='https://github.com/tidyverse/dtplyr/issues/155'>#155</a>)</p></li>
 <li><p>Environment variables used in the <code>i</code> argument of <code>[.data.table</code> are now correctly inlined when not in the global environment (<a href='https://github.com/tidyverse/dtplyr/issues/164'>#164</a>).</p></li>
