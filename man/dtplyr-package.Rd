@@ -6,9 +6,12 @@
 \alias{dtplyr-package}
 \title{dtplyr: Data Table Back-End for 'dplyr'}
 \description{
-Provides a data.table backend for 'dplyr'. The goal of 'dtplyr' 
-    is to allow you to write 'dplyr' code that is automatically translated to 
-    the equivalent, but usually much faster, data.table code.
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
+Provides a data.table backend for 'dplyr'. The goal
+    of 'dtplyr' is to allow you to write 'dplyr' code that is
+    automatically translated to the equivalent, but usually much faster,
+    data.table code.
 }
 \seealso{
 Useful links:
@@ -20,11 +23,6 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Hadley Wickham \email{hadley@rstudio.com}
-
-Authors:
-\itemize{
-  \item Lionel Henry \email{lionel@rstudio.com}
-}
 
 Other contributors:
 \itemize{
