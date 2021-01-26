@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `as.data.table()` always calls `[]` so that the result will print (#146). 
+
 * Implement `count()` method for compatibility with dplyr 1.0.0 (#159).
 
 * Anonymous functions work in `mutate()` and `summarise()` (@smingerson, #155)
