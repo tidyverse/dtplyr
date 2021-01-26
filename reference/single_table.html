@@ -164,7 +164,7 @@ data.table instantiation.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, add <span class='op'>=</span> <span class='cn'>FALSE</span>, arrange <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, .add <span class='op'>=</span> <span class='cn'>FALSE</span>, add <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Deprecated.html'>deprecated</a></span><span class='op'>(</span><span class='op'>)</span>, arrange <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,6 +177,15 @@ data.table instantiation.</p>
       <th>...</th>
       <td><p>In <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by()</a></code>, variables or computations to group by.
 In <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup()</a></code>, variables to remove from the grouping.</p></td>
+    </tr>
+    <tr>
+      <th>.add</th>
+      <td><p>When <code>FALSE</code>, the default, <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by()</a></code> will
+override existing groups. To add to the existing groups, use
+<code>.add = TRUE</code>.</p>
+<p>This argument was previously called <code>add</code>, but that prevented
+creating a new grouping variable called <code>add</code>, and conflicts with
+our naming conventions.</p></td>
     </tr>
     <tr>
       <th>add</th>
