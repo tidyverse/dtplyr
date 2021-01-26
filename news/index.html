@@ -8,33 +8,50 @@
 
 <title>Changelog • dtplyr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Changelog" />
+<meta property="og:image" content="https://dtplyr.tidyverse.org/logo.png" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -60,7 +77,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -75,7 +92,7 @@
 
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">dtplyr</a>
-        <div class="info">
+        <div class="info hidden-xs hidden-sm">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
           <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1.9000</span>
         </div>
@@ -116,8 +133,8 @@
   </ul>
 </li>
         <li>
-  <a href="https://github.com/tidyverse/dtplyr">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/tidyverse/dtplyr/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,68 +151,69 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="dtplyr-development-version" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="development version">
 <a href="#dtplyr-development-version" class="anchor"></a>dtplyr (development version)<small> Unreleased </small>
 </h1>
 </div>
-    <div id="dtplyr-1-0-1" class="section level1">
-<h1 class="page-header">
-<a href="#dtplyr-1-0-1" class="anchor"></a>dtplyr 1.0.1<small> 2020-01-23 </small>
+    <div id="dtplyr-101" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.1">
+<a href="#dtplyr-101" class="anchor"></a>dtplyr 1.0.1<small> 2020-01-23 </small>
 </h1>
 <ul>
 <li><p>Better handling for <code>.data</code> and <code>.env</code> pronouns (<a href='https://github.com/tidyverse/dtplyr/issues/138'>#138</a>).</p></li>
 <li><p>dplyr verbs now work with <code>NULL</code> inputs (<a href='https://github.com/tidyverse/dtplyr/issues/129'>#129</a>).</p></li>
 <li><p>joins do better job at determining output variables in the presence of duplicated outputs (<a href='https://github.com/tidyverse/dtplyr/issues/128'>#128</a>). When joining based on different variables in <code>x</code> and <code>y</code>, joins consistently preserve column from <code>x</code>, not <code>y</code> (<a href='https://github.com/tidyverse/dtplyr/issues/137'>#137</a>).</p></li>
-<li><p><code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> objects now have a useful <code>glimpse()</code> method (<a href='https://github.com/tidyverse/dtplyr/issues/132'>#132</a>).</p></li>
-<li><p><code>group_by()</code> now has an <code>arrange</code> parameter which, if set to <code>FALSE</code>, sets the data.table translation to use <code>by</code> rather than <code>keyby</code> (<a href='https://github.com/tidyverse/dtplyr/issues/85'>#85</a>).</p></li>
-<li><p><code>rename()</code> now works without <code>data.table</code> attached, as intended (<a href='https://github.com/michaelchirico'>@michaelchirico</a>, <a href='https://github.com/tidyverse/dtplyr/issues/123'>#123</a>).</p></li>
+<li><p><code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> objects now have a useful <code><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse()</a></code> method (<a href='https://github.com/tidyverse/dtplyr/issues/132'>#132</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> now has an <code>arrange</code> parameter which, if set to <code>FALSE</code>, sets the data.table translation to use <code>by</code> rather than <code>keyby</code> (<a href='https://github.com/tidyverse/dtplyr/issues/85'>#85</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> now works without <code>data.table</code> attached, as intended (<a href='https://github.com/michaelchirico'>@michaelchirico</a>, <a href='https://github.com/tidyverse/dtplyr/issues/123'>#123</a>).</p></li>
+<li><p>dtplyr has been re-licensed as MIT (<a href='https://github.com/tidyverse/dtplyr/issues/165'>#165</a>).</p></li>
 </ul>
 </div>
-    <div id="dtplyr-1-0-0" class="section level1">
-<h1 class="page-header">
-<a href="#dtplyr-1-0-0" class="anchor"></a>dtplyr 1.0.0<small> 2019-11-12 </small>
+    <div id="dtplyr-100" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0">
+<a href="#dtplyr-100" class="anchor"></a>dtplyr 1.0.0<small> 2019-11-12 </small>
 </h1>
 <ul>
 <li>
-<p>Converted from eager approach to lazy approach. You now must use <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> to begin a translation pipeline, and must use <code>collect()</code>, <code>as.data.table()</code>, <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code>, or <code>as_tibble()</code> to finish the translation and actually perform the computation (<a href='https://github.com/tidyverse/dtplyr/issues/38'>#38</a>).</p>
+<p>Converted from eager approach to lazy approach. You now must use <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> to begin a translation pipeline, and must use <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code>, <code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table()</a></code>, <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code>, or <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> to finish the translation and actually perform the computation (<a href='https://github.com/tidyverse/dtplyr/issues/38'>#38</a>).</p>
 <p>This represents a complete overhaul of the package replacing the eager evaluation used in the previous releases. This unfortunately breaks all existing code that used dtplyr, but frankly the previous version was extremely inefficient so offered little of data.table’s impressive speed, and was used by very few people.</p>
 </li>
 <li><p>dtplyr provides methods for data.tables that warning you that they use the data frame implementation and you should use <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/77'>#77</a>)</p></li>
 <li><p>Joins now pass <code>...</code> on to data.table’s merge method (<a href='https://github.com/tidyverse/dtplyr/issues/41'>#41</a>).</p></li>
-<li><p><code>ungroup()</code> now copies its input (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/tidyverse/dtplyr/issues/54'>#54</a>).</p></li>
-<li><p><code>mutate()</code> preserves grouping (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/tidyverse/dtplyr/issues/17'>#17</a>).</p></li>
-<li><p><code>if_else()</code> and <code>coalesce()</code> are mapped to data.table’s <code>fifelse()</code> and <code>fcoalesce()</code> respectively (<a href='https://github.com/michaelchirico'>@michaelchirico</a>, <a href='https://github.com/tidyverse/dtplyr/issues/112'>#112</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> now copies its input (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/tidyverse/dtplyr/issues/54'>#54</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> preserves grouping (<a href='https://github.com/christophsax'>@christophsax</a>, <a href='https://github.com/tidyverse/dtplyr/issues/17'>#17</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/coalesce.html">coalesce()</a></code> are mapped to data.table’s <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">fifelse()</a></code> and <code><a href="https://Rdatatable.gitlab.io/data.table/reference/coalesce.html">fcoalesce()</a></code> respectively (<a href='https://github.com/michaelchirico'>@michaelchirico</a>, <a href='https://github.com/tidyverse/dtplyr/issues/112'>#112</a>).</p></li>
 </ul>
 </div>
-    <div id="dtplyr-0-0-3" class="section level1">
-<h1 class="page-header">
-<a href="#dtplyr-0-0-3" class="anchor"></a>dtplyr 0.0.3<small> 2019-02-25 </small>
+    <div id="dtplyr-003" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.3">
+<a href="#dtplyr-003" class="anchor"></a>dtplyr 0.0.3<small> 2019-02-25 </small>
 </h1>
 <ul>
 <li><p>Maintenance release for CRAN checks.</p></li>
-<li><p><code>inner_join()</code>, <code>left_join()</code>, <code>right_join()</code>, and <code>full_join()</code>: new <code>suffix</code> argument which allows you to control what suffix duplicated variable names receive, as introduced in dplyr 0.5 (<a href='https://github.com/tidyverse/dtplyr/issues/40'>#40</a>, <a href='https://github.com/christophsax'>@christophsax</a>).</p></li>
-<li><p>Joins use extended <code>merge.data.table()</code> and the <code>on</code> argument, introduced in data.table 1.9.6. Avoids copy and allows joins by different keys (<a href='https://github.com/tidyverse/dtplyr/issues/20'>#20</a>, <a href='https://github.com/tidyverse/dtplyr/issues/21'>#21</a>, <a href='https://github.com/christophsax'>@christophsax</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code>: new <code>suffix</code> argument which allows you to control what suffix duplicated variable names receive, as introduced in dplyr 0.5 (<a href='https://github.com/tidyverse/dtplyr/issues/40'>#40</a>, <a href='https://github.com/christophsax'>@christophsax</a>).</p></li>
+<li><p>Joins use extended <code><a href="https://Rdatatable.gitlab.io/data.table/reference/merge.html">merge.data.table()</a></code> and the <code>on</code> argument, introduced in data.table 1.9.6. Avoids copy and allows joins by different keys (<a href='https://github.com/tidyverse/dtplyr/issues/20'>#20</a>, <a href='https://github.com/tidyverse/dtplyr/issues/21'>#21</a>, <a href='https://github.com/christophsax'>@christophsax</a>).</p></li>
 </ul>
 </div>
-    <div id="dtplyr-0-0-2" class="section level1">
-<h1 class="page-header">
-<a href="#dtplyr-0-0-2" class="anchor"></a>dtplyr 0.0.2<small> 2017-04-21 </small>
+    <div id="dtplyr-002" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.2">
+<a href="#dtplyr-002" class="anchor"></a>dtplyr 0.0.2<small> 2017-04-21 </small>
 </h1>
 <ul>
 <li>This is a compatibility release. It makes dtplyr compatible with dplyr 0.6.0 in addition to dplyr 0.5.0.</li>
 </ul>
 </div>
-    <div id="dtplyr-0-0-1" class="section level1">
-<h1 class="page-header">
-<a href="#dtplyr-0-0-1" class="anchor"></a>dtplyr 0.0.1<small> 2016-06-27 </small>
+    <div id="dtplyr-001" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.1">
+<a href="#dtplyr-001" class="anchor"></a>dtplyr 0.0.1<small> 2016-06-27 </small>
 </h1>
 <ul>
-<li><p><code>distinct()</code> gains <code>.keep_all</code> argument (<a href='https://github.com/tidyverse/dtplyr/issues/30'>#30</a>, <a href='https://github.com/tidyverse/dtplyr/issues/31'>#31</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> gains <code>.keep_all</code> argument (<a href='https://github.com/tidyverse/dtplyr/issues/30'>#30</a>, <a href='https://github.com/tidyverse/dtplyr/issues/31'>#31</a>).</p></li>
 <li><p>Slightly improve test coverage (<a href='https://github.com/tidyverse/dtplyr/issues/6'>#6</a>).</p></li>
 <li><p>Install <code>devtools</code> from GitHub on Travis (<a href='https://github.com/tidyverse/dtplyr/issues/32'>#32</a>).</p></li>
 <li><p>Joins return <code>data.table</code>. Right and full join are now implemented (<a href='https://github.com/tidyverse/dtplyr/issues/16'>#16</a>, <a href='https://github.com/tidyverse/dtplyr/issues/19'>#19</a>).</p></li>
@@ -205,18 +223,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#dtplyr-development-version">development version</a></li>
-        <li><a href="#dtplyr-1-0-1">1.0.1</a></li>
-        <li><a href="#dtplyr-1-0-0">1.0.0</a></li>
-        <li><a href="#dtplyr-0-0-3">0.0.3</a></li>
-        <li><a href="#dtplyr-0-0-2">0.0.2</a></li>
-        <li><a href="#dtplyr-0-0-1">0.0.1</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -229,7 +239,7 @@
 
 <div class="author">
   <p>
-    Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>.
+    Developed by <a href='http://hadley.nz'>Hadley Wickham</a>.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>

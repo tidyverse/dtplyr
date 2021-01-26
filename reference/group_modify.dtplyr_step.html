@@ -8,29 +8,44 @@
 
 <title>Modify a lazy_dt in place — group_modify.dtplyr_step • dtplyr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+<!--optional theme-->
+<link href="../.css" rel="stylesheet">
+
 
 
 
@@ -38,6 +53,7 @@
 <meta property="og:description" content="group_modify() applies .f to each group, returning a modified
 lazy_dt(). This function is a little less flexible than the data.frame
 method due to the constraints of the code generation that dtplyr uses." />
+<meta property="og:image" content="https://dtplyr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -64,7 +80,7 @@ method due to the constraints of the code generation that dtplyr uses." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,7 +95,7 @@ method due to the constraints of the code generation that dtplyr uses." />
 
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">dtplyr</a>
-        <div class="info">
+        <div class="info hidden-xs hidden-sm">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
           <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1.9000</span>
         </div>
@@ -120,8 +136,8 @@ method due to the constraints of the code generation that dtplyr uses." />
   </ul>
 </li>
         <li>
-  <a href="https://github.com/tidyverse/dtplyr">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/tidyverse/dtplyr/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -144,13 +160,13 @@ method due to the constraints of the code generation that dtplyr uses." />
     </div>
 
     <div class="ref-description">
-    <p><code>group_modify()</code> applies <code>.f</code> to each group, returning a modified
+    <p><code><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify()</a></code> applies <code>.f</code> to each group, returning a modified
 <code><a href='lazy_dt.html'>lazy_dt()</a></code>. This function is a little less flexible than the data.frame
 method due to the constraints of the code generation that dtplyr uses.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'>group_modify</span>(<span class='no'>.tbl</span>, <span class='no'>.f</span>, <span class='no'>...</span>, <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify</a></span><span class='op'>(</span><span class='va'>.tbl</span>, <span class='va'>.f</span>, <span class='va'>...</span>, keep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,36 +194,35 @@ variables. The function should return a list or data.table.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify</a></span>(<span class='no'>head</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</div><div class='output co'>#&gt; Source: local data table [?? x 11]
-#&gt; Call:   `_DT1`[, head(.SD, .BY, n = ~2L), keyby = .(cyl)]
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify</a></span><span class='op'>(</span><span class='va'>head</span>, n <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [?? x 11]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT1`[, head(.SD, .BY, n = ~2L), keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl   mpg  disp    hp  drat    wt  qsec    vs    am  gear  carb
-#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1     4  22.8  108     93  3.85  2.32  18.6     1     1     4     1
-#&gt; 2     4  24.4  147.    62  3.69  3.19  20       1     0     4     2
-#&gt; 3     6  21    160    110  3.9   2.62  16.5     0     1     4     4
-#&gt; 4     6  21    160    110  3.9   2.88  17.0     0     1     4     4
-#&gt; 5     8  18.7  360    175  3.15  3.44  17.0     0     0     3     2
-#&gt; 6     8  14.3  360    245  3.21  3.57  15.8     0     0     3     4
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     4  22.8  108     93  3.85  2.32  18.6     1     1     4     1
+#&gt; </span><span style='color: #555555;'>2</span><span>     4  24.4  147.    62  3.69  3.19  20       1     0     4     2
+#&gt; </span><span style='color: #555555;'>3</span><span>     6  21    160    110  3.9   2.62  16.5     0     1     4     4
+#&gt; </span><span style='color: #555555;'>4</span><span>     6  21    160    110  3.9   2.88  17.0     0     1     4     4
+#&gt; </span><span style='color: #555555;'>5</span><span>     8  18.7  360    175  3.15  3.44  17.0     0     0     3     2
+#&gt; </span><span style='color: #555555;'>6</span><span>     8  14.3  360    245  3.21  3.57  15.8     0     0     3     4
 #&gt; 
-#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</div></pre>
+#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -219,7 +234,7 @@ variables. The function should return a list or data.table.</p></td>
 
 <div class="author">
   <p>
-    Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>.
+    Developed by <a href='http://hadley.nz'>Hadley Wickham</a>.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
