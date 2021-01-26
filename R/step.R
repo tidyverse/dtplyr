@@ -125,6 +125,7 @@ as.data.frame.dtplyr_step <- function(x, ...) {
 as_tibble.dtplyr_step <- function(x, ...) {
   out <- as_tibble(dt_eval(x))
   attr(out, ".internal.selfref") <- NULL
+  attr(out, "sorted") <- NULL
   out
 }
 

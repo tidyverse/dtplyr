@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* Implement `count()` method for compatibility with dplyr 1.0.0 (#159).
+
 * Anonymous functions work in `mutate()` and `summarise()` (@smingerson, #155)
 
 * Environment variables used in the `i` argument of `[.data.table` are
