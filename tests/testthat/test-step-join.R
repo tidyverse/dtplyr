@@ -143,6 +143,6 @@ test_that("mutates inside joins are copied as needed", {
 test_that("performs cartesian joins as needed", {
   x <- lazy_dt(data.frame(x = c(2, 2, 2), y = 1:3))
   y <- lazy_dt(data.frame(x = c(2, 2, 2), z = 1:3))
-  out <- collect(left_join(x, y))
+  out <- collect(left_join(x, y, by = "x"))
   expect_equal(nrow(out), 9)
 })

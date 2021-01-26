@@ -115,9 +115,10 @@ test_that("row_number(x) is equivalent to rank", {
 test_that("scoped verbs produce nice output", {
   dt <- lazy_dt(data.table(x = 1:5), "DT")
 
+  # dplyr adds a "position" attribute to the symbol
   expect_equal(
-    dt %>% summarise_all(mean) %>% show_query(),
-    expr(DT[, .(x = mean(x))])
+    dt %>% summarise_all(mean) %>% show_query() %>% deparse(),
+    "DT[, .(x = mean(x))]"
   )
   expect_equal(
     dt %>% summarise_all(~ mean(.)) %>% show_query(),
