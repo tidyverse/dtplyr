@@ -65,6 +65,7 @@ can_merge_subset <- function(x) {
   is.null(x$j)
 }
 
+#' @export
 dt_sources.dtplyr_step_subset <- function(x) {
   # TODO: need to throw error if same name refers to different tables.
   if (is_step(x$i)) {
@@ -74,6 +75,7 @@ dt_sources.dtplyr_step_subset <- function(x) {
   }
 }
 
+#' @export
 dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
   if (is.null(x$i) && is.null(x$j)) {
     return(dt_call(x$parent))

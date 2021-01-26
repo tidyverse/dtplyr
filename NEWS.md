@@ -2,6 +2,11 @@
 
 * Anonymous functions work in `mutate()` and `summarise()` (@smingerson, #155)
 
+* Environment variables used in the `i` argument of `[.data.table` are
+  now correctly inlined when not in the global environment (#164).
+
+* `T` and `F` are correctly translated to `TRUE` and `FALSE` (#140).
+
 # dtplyr 1.0.1
 
 * Better handling for `.data` and `.env` pronouns (#138).

@@ -103,7 +103,7 @@ test_that("keeps all variables if requested", {
 
   expect_equal(
     dt %>% group_by(x) %>% distinct(y, .keep_all = TRUE) %>% show_query(),
-    expr(unique(dt, by = c("x", "y")))
+    expr(unique(dt, by = !!c("x", "y")))
   )
 })
 
