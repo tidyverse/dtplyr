@@ -55,8 +55,11 @@ test_that("can process many expressions in one go", {
 
 test_that("can use anonymous functions", {
   dt <- lazy_dt(data.frame(x = 1:2, y = 1))
-  dot <- capture_dot(dt, x = sapply(x, function(x) x))
-  expect_equal(dot, quote(sapply(x, function(x) x)))
+
+  expect_equal(
+    capture_dot(dt, x = sapply(x, function(x) x)) %>% deparse(),
+    "sapply(x, function(x) x)"
+  )
 })
 
 # evaluation --------------------------------------------------------------
