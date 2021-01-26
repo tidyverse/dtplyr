@@ -19,9 +19,6 @@ test_that("existing non-variables get inlined", {
   n <- 10
   expect_equal(capture_dot(dt, x + n), quote(x + 10))
   expect_equal(capture_dot(dt, x + m), quote(x + m))
-
-  # except when not in j
-  expect_equal(capture_dot(dt, x + n, j = FALSE), quote(x + n))
 })
 
 test_that("unless we're operating in the global environment", {
@@ -38,6 +35,7 @@ test_that("using environment of inlined quosures", {
   quo <- new_quosure(quote(x + n), env(n = 20))
 
   expect_equal(capture_dot(dt, f(!!quo)), quote(f(x + 20)))
+  expect_equal(capture_dot(dt, f(!!quo), j = FALSE), quote(f(x + 20)))
 })
 
 test_that(". gets converted to .SD", {

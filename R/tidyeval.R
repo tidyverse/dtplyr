@@ -46,12 +46,18 @@ dt_squash <- function(x, env, vars, j = TRUE) {
       } else if (nchar(x) > 0 && substr(var, 1, 1) == ".") {
         # data table pronouns are bound to NULL
         x
-      } else if (j && !var %in% vars && env_has(env, var, inherit = TRUE)) {
+      } else if (!var %in% vars && env_has(env, var, inherit = TRUE)) {
         if (is_global(env)) {
-          # This is slightly dangerous because the variable might be modified
+          # Slightly dangerous because the variable might be modified
           # between creation and execution, but it seems like a reasonable
           # tradeoff in order to get a more natural translation.
-          sym(paste0("..", var))
+          if (j) {
+            # use .. to avoid data mask
+            sym(paste0("..", var))
+          } else {
+            # i doesn't provide a data mask
+            x
+          }
         } else {
           eval(x, env)
         }

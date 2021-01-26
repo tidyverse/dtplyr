@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* Environment variables used in the `i` argument of `[.data.table` are
+  now correctly inlined when not in the global environment (#164).
+
 * `T` and `F` are correctly translated to `TRUE` and `FALSE` (#140).
 
 # dtplyr 1.0.1

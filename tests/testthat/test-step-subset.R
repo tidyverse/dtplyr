@@ -73,14 +73,18 @@ test_that("simple calls generate expected translations", {
   )
 })
 
-test_that("doesn't inline external variables", {
+test_that("inlines external variables", {
   dt <- lazy_dt(data.table(x = 1), "DT")
   l <- c(1, 10)
 
   expect_equal(
     dt %>% filter(x %in% l) %>% show_query(),
-    quote(DT[x %in% l])
+    quote(DT[x %in% !!l])
   )
+
+  # Except in the global environment
+  # But I can't figure out how to test this - it's not too important
+  # as it only affects the quality of the translation not the correctness
 })
 
 
