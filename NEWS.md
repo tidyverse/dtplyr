@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* Added translations for `cur_data()` (`.SD`), `cur_group()` (`.BY`),
+  `cur_group_id()` (`.GRP`), and `cur_group_rows() (`.I`) (#166).
+
 * `as.data.table()` always calls `[]` so that the result will print (#146). 
 
 * Implement `count()` method for compatibility with dplyr 1.0.0 (#159).

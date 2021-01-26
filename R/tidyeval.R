@@ -95,6 +95,16 @@ dt_squash <- function(x, env, vars, j = TRUE) {
     } else if (is_call(x, 'coalesce')) {
       x[[1L]] <- quote(fcoalesce)
       x
+    } else if (is_call(x, "cur_data")) {
+      quote(.SD)
+    } else if (is_call(x, "cur_data_all")) {
+      abort("`cur_data_all()` is not available in dtplyr")
+    } else if (is_call(x, "cur_group")) {
+      quote(.BY)
+    } else if (is_call(x, "cur_group_id")) {
+      quote(.GRP)
+    } else if (is_call(x, "cur_group_rows")) {
+      quote(.I)
     } else if (is.function(x[[1]]) || is_call(x, "function")) {
       simplify_function_call(x, env, vars = vars, j = j)
     } else {

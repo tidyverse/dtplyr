@@ -45,6 +45,15 @@ test_that(". gets converted to .SD", {
   expect_equal(capture_dot(dt, .SD), quote(.SD))
 })
 
+test_that("translate context functions", {
+  dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
+  expect_equal(capture_dot(dt, cur_data()), quote(.SD))
+  expect_error(capture_dot(dt, cur_data_all()), "not available")
+  expect_equal(capture_dot(dt, cur_group()), quote(.BY))
+  expect_equal(capture_dot(dt, cur_group_id()), quote(.GRP))
+  expect_equal(capture_dot(dt, cur_group_rows()), quote(.I))
+})
+
 test_that("can process many expressions in one go", {
   dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
   n <- 10
