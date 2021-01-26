@@ -183,6 +183,7 @@ NULL
 dt_sources <- function(x) {
   UseMethod("dt_sources")
 }
+#' @export
 dt_sources.dtplyr_step <- function(x) {
   dt_sources(x$parent)
 }
@@ -190,6 +191,7 @@ dt_sources.dtplyr_step <- function(x) {
 dt_call <- function(x, needs_copy = x$needs_copy) {
   UseMethod("dt_call")
 }
+#' @export
 dt_call.dtplyr_step <- function(x, needs_copy = x$needs_copy) {
   dt_call(x$parent, needs_copy)
 }

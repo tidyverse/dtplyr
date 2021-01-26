@@ -11,10 +11,12 @@ step_set <- function(x, y, style) {
   )
 }
 
+#' @export
 dt_sources.dtplyr_step_set <- function(x) {
   dt_sources.dtplyr_step_join(x)
 }
 
+#' @export
 dt_call.dtplyr_step_set <- function(x, needs_copy = x$needs_copy) {
   lhs <- dt_call(x$parent, needs_copy)
   rhs <- dt_call(x$parent2)

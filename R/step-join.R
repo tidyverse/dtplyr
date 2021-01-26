@@ -22,11 +22,13 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   )
 }
 
+#' @export
 dt_sources.dtplyr_step_join <- function(x) {
   # TODO: need to throw error if same name refers to different tables.
   utils::modifyList(dt_sources(x$parent), dt_sources(x$parent2))
 }
 
+#' @export
 dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
   lhs <- dt_call(x$parent, needs_copy)
   rhs <- dt_call(x$parent2)

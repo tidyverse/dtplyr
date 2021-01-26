@@ -88,6 +88,7 @@ step_first <- function(parent, name = NULL, immutable = TRUE, env = caller_env()
   )
 }
 
+#' @export
 dt_call.dtplyr_step_first <- function(x, needs_copy = FALSE) {
   if (needs_copy) {
     expr(copy(!!x$name))
@@ -96,6 +97,7 @@ dt_call.dtplyr_step_first <- function(x, needs_copy = FALSE) {
   }
 }
 
+#' @export
 dt_sources.dtplyr_step_first <- function(x) {
   stats::setNames(list(x$parent), as.character(x$name))
 }
