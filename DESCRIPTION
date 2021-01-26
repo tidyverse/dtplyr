@@ -16,7 +16,7 @@ License: MIT + file LICENSE
 URL: https://github.com/tidyverse/dtplyr
 BugReports: https://github.com/tidyverse/dtplyr/issues
 Depends: 
-    R (>= 3.2)
+    R (>= 3.3)
 Imports:
     crayon,
     data.table (>= 1.12.4),
