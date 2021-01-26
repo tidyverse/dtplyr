@@ -26,6 +26,7 @@ test_that("unless we're operating in the global environment", {
   quo <- new_quosure(quote(x + n), globalenv())
 
   expect_equal(capture_dot(dt, !!quo), quote(x + ..n))
+  expect_equal(capture_dot(dt, !!quo, j = FALSE), quote(x + n))
 })
 
 test_that("using environment of inlined quosures", {
