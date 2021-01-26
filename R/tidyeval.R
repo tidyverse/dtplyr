@@ -123,6 +123,8 @@ simplify_function_call <- function(x, env, vars, j = TRUE) {
     if (is.null(name)) {
       return(x)
     }
+
+    attr(x, "position") <- NULL
     x[[1]] <- name
     dt_squash(x, env, vars = vars, j = j)
   }
