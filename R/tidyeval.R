@@ -95,7 +95,7 @@ dt_squash <- function(x, env, vars, j = TRUE) {
     } else if (is_call(x, 'coalesce')) {
       x[[1L]] <- quote(fcoalesce)
       x
-    } else if (is.function(x[[1]])) {
+    } else if (is.function(x[[1]]) || is_call(x, "function")) {
       simplify_function_call(x, env, vars = vars, j = j)
     } else {
       x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env, j = j)

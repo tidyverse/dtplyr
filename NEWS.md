@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* Anonymous functions work in `mutate()` and `summarise()` (@smingerson, #155)
+
 * Environment variables used in the `i` argument of `[.data.table` are
   now correctly inlined when not in the global environment (#164).
 
