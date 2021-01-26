@@ -20,7 +20,8 @@ Depends:
 Imports:
     crayon,
     data.table (>= 1.12.4),
-    dplyr (>= 0.8.1),
+    dplyr (>= 1.0.0),
+    lifecycle,
     rlang,
     tibble,
     tidyselect
