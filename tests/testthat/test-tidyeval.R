@@ -5,6 +5,7 @@ test_that("simple expressions left as is", {
   expect_equal(capture_dot(dt, 10), 10)
   expect_equal(capture_dot(dt, x), quote(x))
   expect_equal(capture_dot(dt, x + y), quote(x + y))
+  expect_equal(capture_dot(dt, x[[1]]), quote(x[[1]]))
 
   # logicals
   expect_equal(eval(capture_dot(dt, T), globalenv()), TRUE)
@@ -84,6 +85,9 @@ test_that("can access functions in local env", {
 test_that("can disambiguate using .data and .env", {
   dt <- lazy_dt(data.frame(x = 1))
   x <- 2
+
+  expect_equal(capture_dot(dt, .data$x), quote(x))
+  expect_equal(capture_dot(dt, .env$x), quote(..x))
 
   out <- dt %>% summarise(data = .data$x, env = .env$x) %>% as_tibble()
   expect_equal(out, tibble(data = 1, env = 2))

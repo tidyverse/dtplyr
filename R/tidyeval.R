@@ -68,21 +68,18 @@ dt_squash <- function(x, env, vars, j = TRUE) {
   } else if (is_quosure(x)) {
     dt_squash(get_expr(x), get_env(x), vars = vars, j = j)
   } else if (is_call(x)) {
-    # Handle .env and .data
-    if (is_call(x, c("$", "[["), n = 2)) {
+    if (is_mask_pronoun(x)) {
       var <- x[[3]]
       if (is_call(x, "[[")) {
         var <- sym(eval(var, env))
       }
 
       if (is_symbol(x[[2]], ".data")) {
-        return(var)
+        var
       } else if (is_symbol(x[[2]], ".env")) {
-        return(sym(paste0("..", var)))
+        sym(paste0("..", var))
       }
-    }
-
-    if (is_call(x, "n", n = 0)) {
+    } else if (is_call(x, "n", n = 0)) {
       quote(.N)
     } else if (is_call(x, "row_number", n = 0)) {
       quote(seq_len(.N))
@@ -114,6 +111,10 @@ dt_squash <- function(x, env, vars, j = TRUE) {
   } else {
     abort("Invalid input")
   }
+}
+
+is_mask_pronoun <- function(x) {
+  is_call(x, c("$", "[["), n = 2) && is_symbol(x[[2]], c(".data", ".env"))
 }
 
 is_global <- function(env) {

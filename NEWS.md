@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `x[[1]]` is now translated correctly.
+
 * Added translations for `cur_data()` (`.SD`), `cur_group()` (`.BY`),
   `cur_group_id()` (`.GRP`), and `cur_group_rows() (`.I`) (#166).
 
