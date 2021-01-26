@@ -210,7 +210,7 @@ count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) 
 }
 
 # exported onLoad
-filter.dtplyr_step <- function(.data, ...) {
+filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
   dots <- capture_dots(.data, ..., .j = FALSE)
 
   if (length(dots) == 1 && is_symbol(dots[[1]])) {
