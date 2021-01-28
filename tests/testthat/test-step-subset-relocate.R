@@ -84,11 +84,11 @@ test_that("relocate() respects order specified by ...", {
 })
 
 
-test_that("relocate() does not alter grouping", {
+test_that("relocate() only not alter grouping", {
   dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
 
   expect_equal(
-  dt %>% group_by(z) %>% relocate(y, .before = x) %>% .$groups,
-  "z"
+    dt %>% group_by(x, y) %>% relocate(y, .before = x) %>% .$groups,
+    c("x", "y")
   )
 })
