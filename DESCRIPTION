@@ -2,28 +2,26 @@ Package: dtplyr
 Title: Data Table Back-End for 'dplyr'
 Version: 1.0.1.9000
 Authors@R: 
-    c(person(given = "Lionel",
-             family = "Henry",
-             role = "aut",
-             email = "lionel@rstudio.com"),
-      person(given = "Hadley",
+    c(person(given = "Hadley",
              family = "Wickham",
              role = "cre",
              email = "hadley@rstudio.com"),
       person(given = "RStudio",
              role = "cph"))
-Description: Provides a data.table backend for 'dplyr'. The goal of 'dtplyr' 
-    is to allow you to write 'dplyr' code that is automatically translated to 
-    the equivalent, but usually much faster, data.table code.
-License: GPL-3
+Description: Provides a data.table backend for 'dplyr'. The goal
+    of 'dtplyr' is to allow you to write 'dplyr' code that is
+    automatically translated to the equivalent, but usually much faster,
+    data.table code.
+License: MIT + file LICENSE
 URL: https://github.com/tidyverse/dtplyr
 BugReports: https://github.com/tidyverse/dtplyr/issues
 Depends: 
-    R (>= 3.2)
+    R (>= 3.3)
 Imports:
     crayon,
     data.table (>= 1.12.4),
     dplyr (>= 1.0.0),
+    lifecycle,
     rlang,
     tibble,
     tidyselect
@@ -32,10 +30,11 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    testthat (>= 2.1.0)
+    testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
+Config/testthat/edition: 3

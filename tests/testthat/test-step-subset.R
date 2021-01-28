@@ -78,14 +78,18 @@ test_that("simple calls generate expected translations", {
   )
 })
 
-test_that("doesn't inline external variables", {
+test_that("inlines external variables", {
   dt <- lazy_dt(data.table(x = 1), "DT")
   l <- c(1, 10)
 
   expect_equal(
     dt %>% filter(x %in% l) %>% show_query(),
-    quote(DT[x %in% l])
+    quote(DT[x %in% !!l])
   )
+
+  # Except in the global environment
+  # But I can't figure out how to test this - it's not too important
+  # as it only affects the quality of the translation not the correctness
 })
 
 
@@ -170,6 +174,52 @@ test_that("if for unsupported resummarise", {
   expect_error(dt %>% summarise(x = mean(x), x2 = sd(x)), "mutate")
 })
 
+
+# count -------------------------------------------------------------------
+
+test_that("can be used grouped or ungrouped", {
+  dt <- lazy_dt(data.table(x = c(1, 1, 1, 2)), "DT")
+
+  expect_equal(
+    dt %>% count(x) %>% collect(),
+    tibble(x = c(1, 2), n = c(3, 1))
+  )
+  expect_equal(
+    dt %>% group_by(x) %>% count() %>% collect(),
+    tibble(x = c(1, 2), n = c(3, 1))
+  )
+})
+
+test_that("can control name", {
+  dt <- lazy_dt(data.table(x = c(1, 1, 1, 2)), "DT")
+
+  expect_equal(
+    dt %>% count(x, name = "y") %>% collect(),
+    tibble(x = c(1, 2), y = c(3, 1))
+  )
+  expect_snapshot(
+    dt %>% count(name = 10) %>% collect(),
+    error = TRUE
+  )
+})
+
+
+test_that("can weight", {
+  dt <- lazy_dt(data.table(x = c(1, 1, 2), y = c(1, 2, 10)), "DT")
+  expect_equal(
+    dt %>% count(x, wt = y) %>% collect(),
+    tibble(x = c(1, 2), n = c(3, 10))
+  )
+})
+
+test_that("can sort", {
+  dt <- lazy_dt(data.table(x = c(1, 1, 2), y = c(1, 2, 10)), "DT")
+  expect_equal(
+    dt %>% count(x, wt = y, sort = TRUE) %>% collect(),
+    tibble(x = c(2, 1), n = c(10, 3))
+  )
+})
+
 # select/rename ------------------------------------------------------------------
 
 test_that("renames grouping vars", {
@@ -188,8 +238,9 @@ test_that("empty select returns no columns", {
   )
 
   # unless it's grouped
+  expect_snapshot(out <- lz %>% group_by(x) %>% select())
   expect_equal(
-    lz %>% group_by(x) %>% select() %>% collect(),
+    out %>% collect(),
     group_by(tibble(x = 1), x)
   )
 })

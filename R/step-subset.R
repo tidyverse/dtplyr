@@ -65,6 +65,7 @@ can_merge_subset <- function(x) {
   is.null(x$j)
 }
 
+#' @export
 dt_sources.dtplyr_step_subset <- function(x) {
   # TODO: need to throw error if same name refers to different tables.
   if (is_step(x$i)) {
@@ -74,6 +75,7 @@ dt_sources.dtplyr_step_subset <- function(x) {
   }
 }
 
+#' @export
 dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
   if (is.null(x$i) && is.null(x$j)) {
     return(dt_call(x$parent))
@@ -119,8 +121,11 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 #' @importFrom dplyr select
 #' @export
 select.dtplyr_step <- function(.data, ...) {
-  vars <- tidyselect::vars_select(.data$vars, ..., .include = .data$groups)
-  new_vars <- names(vars)
+  sim_data <- simulate_vars(.data)
+  locs <- tidyselect::eval_select(expr(c(...)), sim_data)
+  locs <- ensure_group_vars(locs, .data$vars, .data$groups)
+
+  vars <- set_names(.data$vars[locs], names(locs))
 
   if (length(vars) == 0) {
     j <- 0L
@@ -131,8 +136,28 @@ select.dtplyr_step <- function(.data, ...) {
     j <- call2(".", !!!syms(vars))
   }
 
-  out <- step_subset_j(.data, vars = new_vars, groups = character(), j = j)
+  out <- step_subset_j(.data, vars = names(locs), groups = character(), j = j)
   step_group(out, groups)
+}
+
+simulate_vars <- function(x) {
+  as_tibble(rep_named(x$vars, list(logical())))
+}
+
+ensure_group_vars <- function(loc, names, groups) {
+  group_loc <- match(groups, names)
+  missing <- setdiff(group_loc, loc)
+
+  if (length(missing) > 0) {
+    vars <- names[missing]
+    inform(paste0(
+      "Adding missing grouping variables: ",
+      paste0("`", names[missing], "`", collapse = ", ")
+    ))
+    loc <- c(set_names(missing, vars), loc)
+  }
+
+  loc
 }
 
 #' @importFrom dplyr relocate
@@ -178,6 +203,7 @@ relocate.dtplyr_step <- function(.data, ..., .before = NULL, .after = NULL) {
   step_group(out, groups)
 }
 
+
 #' @importFrom dplyr summarise
 #' @export
 summarise.dtplyr_step <- function(.data, ...) {
@@ -218,8 +244,39 @@ transmute.dtplyr_step <- function(.data, ...) {
   step_subset_j(.data, vars = names(dots), j = j)
 }
 
+#' @importFrom dplyr count
+#' @export
+count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) {
+  if (!missing(...)) {
+    out <- group_by(.data, ..., .add = TRUE)
+  } else {
+    out <- .data
+  }
+
+  wt <- enexpr(wt)
+  if (is.null(wt)) {
+    n <- expr(n())
+  } else {
+    n <- expr(sum(!!wt, na.rm = TRUE))
+  }
+
+  if (is.null(name)) {
+    name <- "n"
+  } else if (!is_string(name)) {
+    abort("`name` must be a string")
+  }
+
+  out <- summarise(out, !!name := !!n)
+
+  if (sort) {
+    out <- arrange(out, desc(!!sym(name)))
+  }
+
+  out
+}
+
 # exported onLoad
-filter.dtplyr_step <- function(.data, ...) {
+filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
   dots <- capture_dots(.data, ..., .j = FALSE)
 
   if (length(dots) == 1 && is_symbol(dots[[1]])) {

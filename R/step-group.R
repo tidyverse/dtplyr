@@ -32,8 +32,17 @@ add_grouping_param <- function(call, step) {
 #' @importFrom dplyr group_by
 #' @rdname single_table
 #' @export
-group_by.dtplyr_step <- function(.data, ..., add = FALSE, arrange = TRUE) {
+group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), arrange = TRUE) {
   dots <- capture_dots(.data, ...)
+
+  if (lifecycle::is_present(add)) {
+    lifecycle::deprecate_warn(
+      "1.0.0",
+      "dplyr::group_by(add = )",
+      "group_by(.add = )"
+    )
+    .add <- add
+  }
 
   existing <- vapply(dots, is_symbol, logical(1))
   if (!all(existing)) {
@@ -41,7 +50,7 @@ group_by.dtplyr_step <- function(.data, ..., add = FALSE, arrange = TRUE) {
     dots[!existing] <- syms(names(dots[!existing]))
   }
 
-  groups <- c(if (add) .data$groups, names(dots))
+  groups <- c(if (.add) .data$groups, names(dots))
   arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
 
   step_group(.data, groups, arranged)

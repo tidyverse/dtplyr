@@ -49,6 +49,11 @@ test_that("renames grouping vars", {
   expect_equal(rename(gt, a = x)$groups, "a")
 })
 
+test_that("can rename with a function", {
+  dt <- lazy_dt(data.table(x = 1, y = 1))
+  expect_equal(dt %>% rename_with(toupper) %>% .$vars, c("X", "Y"))
+})
+
 # distinct ----------------------------------------------------------------
 
 test_that("no input uses all variables", {
@@ -72,7 +77,7 @@ test_that("uses supplied variables", {
   expect_equal(dt %>% distinct(y) %>% .$vars, "y")
 
   expect_equal(
-    dt %>% group_by(x) %>% distinct(y) %>% show_query(),
+    dt %>% group_by(x) %>% distinct(x, y) %>% show_query(),
     expr(unique(dt[, .(x, y)]))
   )
 })
@@ -103,7 +108,7 @@ test_that("keeps all variables if requested", {
 
   expect_equal(
     dt %>% group_by(x) %>% distinct(y, .keep_all = TRUE) %>% show_query(),
-    expr(unique(dt, by = c("x", "y")))
+    expr(unique(dt, by = !!c("x", "y")))
   )
 })
 

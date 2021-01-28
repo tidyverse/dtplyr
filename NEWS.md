@@ -1,5 +1,26 @@
 # dtplyr (development version)
 
+* dtplyr now supports `rename_with()` (#160)
+
+* `rename()` and `select()` support dplyr 1.0.0 tidyselect syntax (apart from
+  predicate functions which can't easily work on lazily evaluted data tables).
+
+* `x[[1]]` is now translated correctly.
+
+* Added translations for `cur_data()` (`.SD`), `cur_group()` (`.BY`),
+  `cur_group_id()` (`.GRP`), and `cur_group_rows() (`.I`) (#166).
+
+* `as.data.table()` always calls `[]` so that the result will print (#146). 
+
+* Implement `count()` method for compatibility with dplyr 1.0.0 (#159).
+
+* Anonymous functions work in `mutate()` and `summarise()` (@smingerson, #155)
+
+* Environment variables used in the `i` argument of `[.data.table` are
+  now correctly inlined when not in the global environment (#164).
+
+* `T` and `F` are correctly translated to `TRUE` and `FALSE` (#140).
+
 # dtplyr 1.0.1
 
 * Better handling for `.data` and `.env` pronouns (#138).
@@ -17,6 +38,8 @@
 
 * `rename()` now works without `data.table` attached, as intended 
   (@michaelchirico, #123).
+
+* dtplyr has been re-licensed as MIT (#165).  
 
 # dtplyr 1.0.0
 

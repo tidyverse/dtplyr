@@ -110,7 +110,7 @@ compute.dtplyr_step <- function(x, ...) {
 #' @export
 #' @param keep.rownames Ignored as dplyr never preseres rownames.
 as.data.table.dtplyr_step <- function(x, keep.rownames = FALSE, ...) {
-  dt_eval(x)
+  dt_eval(x)[]
 }
 
 #' @rdname collect
@@ -125,6 +125,7 @@ as.data.frame.dtplyr_step <- function(x, ...) {
 as_tibble.dtplyr_step <- function(x, ...) {
   out <- as_tibble(dt_eval(x))
   attr(out, ".internal.selfref") <- NULL
+  attr(out, "sorted") <- NULL
   out
 }
 
@@ -183,6 +184,7 @@ NULL
 dt_sources <- function(x) {
   UseMethod("dt_sources")
 }
+#' @export
 dt_sources.dtplyr_step <- function(x) {
   dt_sources(x$parent)
 }
@@ -190,6 +192,7 @@ dt_sources.dtplyr_step <- function(x) {
 dt_call <- function(x, needs_copy = x$needs_copy) {
   UseMethod("dt_call")
 }
+#' @export
 dt_call.dtplyr_step <- function(x, needs_copy = x$needs_copy) {
   dt_call(x$parent, needs_copy)
 }

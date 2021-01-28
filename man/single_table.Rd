@@ -5,13 +5,21 @@
 \alias{group_by.dtplyr_step}
 \title{Single table operations}
 \usage{
-\method{group_by}{dtplyr_step}(.data, ..., add = FALSE, arrange = TRUE)
+\method{group_by}{dtplyr_step}(.data, ..., .add = FALSE, add = deprecated(), arrange = TRUE)
 }
 \arguments{
 \item{.data}{A data.table}
 
 \item{...}{In \code{group_by()}, variables or computations to group by.
 In \code{ungroup()}, variables to remove from the grouping.}
+
+\item{.add}{When \code{FALSE}, the default, \code{group_by()} will
+override existing groups. To add to the existing groups, use
+\code{.add = TRUE}.
+
+This argument was previously called \code{add}, but that prevented
+creating a new grouping variable called \code{add}, and conflicts with
+our naming conventions.}
 
 \item{add}{When \code{FALSE}, the default, \code{group_by()} will
 override existing groups. To add to the existing groups, use

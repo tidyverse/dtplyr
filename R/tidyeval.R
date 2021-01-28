@@ -40,15 +40,24 @@ dt_squash <- function(x, env, vars, j = TRUE) {
       quote(.SD)
     } else {
       var <- as.character(x)
-      if (nchar(x) > 0 && substr(var, 1, 1) == ".") {
+
+      if (var %in% c("T", "F")) {
+        as.logical(var)
+      } else if (nchar(x) > 0 && substr(var, 1, 1) == ".") {
         # data table pronouns are bound to NULL
         x
-      } else if (j && !var %in% vars && env_has(env, var, inherit = TRUE)) {
+      } else if (!var %in% vars && env_has(env, var, inherit = TRUE)) {
         if (is_global(env)) {
-          # This is slightly dangerous because the variable might be modified
+          # Slightly dangerous because the variable might be modified
           # between creation and execution, but it seems like a reasonable
           # tradeoff in order to get a more natural translation.
-          sym(paste0("..", var))
+          if (j) {
+            # use .. to avoid data mask
+            sym(paste0("..", var))
+          } else {
+            # i doesn't provide a data mask
+            x
+          }
         } else {
           eval(x, env)
         }
@@ -59,21 +68,18 @@ dt_squash <- function(x, env, vars, j = TRUE) {
   } else if (is_quosure(x)) {
     dt_squash(get_expr(x), get_env(x), vars = vars, j = j)
   } else if (is_call(x)) {
-    # Handle .env and .data
-    if (is_call(x, c("$", "[["), n = 2)) {
+    if (is_mask_pronoun(x)) {
       var <- x[[3]]
       if (is_call(x, "[[")) {
         var <- sym(eval(var, env))
       }
 
       if (is_symbol(x[[2]], ".data")) {
-        return(var)
+        var
       } else if (is_symbol(x[[2]], ".env")) {
-        return(sym(paste0("..", var)))
+        sym(paste0("..", var))
       }
-    }
-
-    if (is_call(x, "n", n = 0)) {
+    } else if (is_call(x, "n", n = 0)) {
       quote(.N)
     } else if (is_call(x, "row_number", n = 0)) {
       quote(seq_len(.N))
@@ -86,7 +92,17 @@ dt_squash <- function(x, env, vars, j = TRUE) {
     } else if (is_call(x, 'coalesce')) {
       x[[1L]] <- quote(fcoalesce)
       x
-    } else if (is.function(x[[1]])) {
+    } else if (is_call(x, "cur_data")) {
+      quote(.SD)
+    } else if (is_call(x, "cur_data_all")) {
+      abort("`cur_data_all()` is not available in dtplyr")
+    } else if (is_call(x, "cur_group")) {
+      quote(.BY)
+    } else if (is_call(x, "cur_group_id")) {
+      quote(.GRP)
+    } else if (is_call(x, "cur_group_rows")) {
+      quote(.I)
+    } else if (is.function(x[[1]]) || is_call(x, "function")) {
       simplify_function_call(x, env, vars = vars, j = j)
     } else {
       x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env, j = j)
@@ -95,6 +111,10 @@ dt_squash <- function(x, env, vars, j = TRUE) {
   } else {
     abort("Invalid input")
   }
+}
+
+is_mask_pronoun <- function(x) {
+  is_call(x, c("$", "[["), n = 2) && is_symbol(x[[2]], c(".data", ".env"))
 }
 
 is_global <- function(env) {
@@ -120,6 +140,8 @@ simplify_function_call <- function(x, env, vars, j = TRUE) {
     if (is.null(name)) {
       return(x)
     }
+
+    attr(x, "position") <- NULL
     x[[1]] <- name
     dt_squash(x, env, vars = vars, j = j)
   }

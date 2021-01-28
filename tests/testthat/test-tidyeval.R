@@ -5,6 +5,13 @@ test_that("simple expressions left as is", {
   expect_equal(capture_dot(dt, 10), 10)
   expect_equal(capture_dot(dt, x), quote(x))
   expect_equal(capture_dot(dt, x + y), quote(x + y))
+  expect_equal(capture_dot(dt, x[[1]]), quote(x[[1]]))
+
+  # logicals
+  expect_equal(eval(capture_dot(dt, T), globalenv()), TRUE)
+  expect_equal(eval(capture_dot(dt, F), globalenv()), FALSE)
+  expect_equal(capture_dot(dt, TRUE), TRUE)
+  expect_equal(capture_dot(dt, FALSE), FALSE)
 })
 
 test_that("existing non-variables get inlined", {
@@ -13,9 +20,6 @@ test_that("existing non-variables get inlined", {
   n <- 10
   expect_equal(capture_dot(dt, x + n), quote(x + 10))
   expect_equal(capture_dot(dt, x + m), quote(x + m))
-
-  # except when not in j
-  expect_equal(capture_dot(dt, x + n, j = FALSE), quote(x + n))
 })
 
 test_that("unless we're operating in the global environment", {
@@ -23,6 +27,7 @@ test_that("unless we're operating in the global environment", {
   quo <- new_quosure(quote(x + n), globalenv())
 
   expect_equal(capture_dot(dt, !!quo), quote(x + ..n))
+  expect_equal(capture_dot(dt, !!quo, j = FALSE), quote(x + n))
 })
 
 test_that("using environment of inlined quosures", {
@@ -32,6 +37,7 @@ test_that("using environment of inlined quosures", {
   quo <- new_quosure(quote(x + n), env(n = 20))
 
   expect_equal(capture_dot(dt, f(!!quo)), quote(f(x + 20)))
+  expect_equal(capture_dot(dt, f(!!quo), j = FALSE), quote(f(x + 20)))
 })
 
 test_that(". gets converted to .SD", {
@@ -41,12 +47,30 @@ test_that(". gets converted to .SD", {
   expect_equal(capture_dot(dt, .SD), quote(.SD))
 })
 
+test_that("translate context functions", {
+  dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
+  expect_equal(capture_dot(dt, cur_data()), quote(.SD))
+  expect_error(capture_dot(dt, cur_data_all()), "not available")
+  expect_equal(capture_dot(dt, cur_group()), quote(.BY))
+  expect_equal(capture_dot(dt, cur_group_id()), quote(.GRP))
+  expect_equal(capture_dot(dt, cur_group_rows()), quote(.I))
+})
+
 test_that("can process many expressions in one go", {
   dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
   n <- 10
   dots <- capture_dots(dt, x = x + n, y = y)
   expect_named(dots, c("x", "y"))
   expect_equal(dots$x, quote(x + 10))
+})
+
+test_that("can use anonymous functions", {
+  dt <- lazy_dt(data.frame(x = 1:2, y = 1))
+
+  expect_equal(
+    capture_dot(dt, x = sapply(x, function(x) x)) %>% deparse(),
+    "sapply(x, function(x) x)"
+  )
 })
 
 # evaluation --------------------------------------------------------------
@@ -61,6 +85,9 @@ test_that("can access functions in local env", {
 test_that("can disambiguate using .data and .env", {
   dt <- lazy_dt(data.frame(x = 1))
   x <- 2
+
+  expect_equal(capture_dot(dt, .data$x), quote(x))
+  expect_equal(capture_dot(dt, .env$x), quote(..x))
 
   out <- dt %>% summarise(data = .data$x, env = .env$x) %>% as_tibble()
   expect_equal(out, tibble(data = 1, env = 2))
