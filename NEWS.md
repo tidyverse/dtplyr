@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* dtplyr now supports `group_map()` and `group_walk()` (#108).
+
 * dtplyr now supports `relocate()` (@smingerson, #162).
 
 * dtplyr now supports `rename_with()` (#160)

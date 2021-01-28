@@ -51,3 +51,12 @@ group_modify.dtplyr_step <- function(.tbl, .f, ..., keep = FALSE) {
 
   step_modify(.tbl, fun = .f, args = args)
 }
+
+#' @importFrom dplyr group_map
+#' @export
+group_map.dtplyr_step <- function(.tbl, .f, ..., keep = FALSE) {
+  .f <- as_function(.f, caller_env())
+
+  dt <- as.data.table(.tbl)
+  dt[, list(list(.f(.SD, .BY, ...))), by = eval(.tbl$groups)]$V1
+}

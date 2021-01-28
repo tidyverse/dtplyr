@@ -6,4 +6,4 @@
 #' @export
 .datatable.aware <- TRUE
 
-globalVariables(c(".N", "desc"))
+globalVariables(c(".N", ".BY", "desc"))
