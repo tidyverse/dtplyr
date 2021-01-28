@@ -49,6 +49,11 @@ test_that("renames grouping vars", {
   expect_equal(rename(gt, a = x)$groups, "a")
 })
 
+test_that("can rename with a function", {
+  dt <- lazy_dt(data.table(x = 1, y = 1))
+  expect_equal(dt %>% rename_with(toupper) %>% .$vars, c("X", "Y"))
+})
+
 # distinct ----------------------------------------------------------------
 
 test_that("no input uses all variables", {

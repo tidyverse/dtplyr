@@ -61,6 +61,19 @@ rename.dtplyr_step <- function(.data, ...) {
   step_group(out, groups)
 }
 
+#' @importFrom dplyr rename_with
+#' @importFrom tidyselect everything
+#' @export
+rename_with.dtplyr_step <- function(.data, .fn, .cols = everything(), ...) {
+  .fn <- as_function(.fn)
+  sim_data <- simulate_vars(.data)
+  locs <- tidyselect::eval_select(enquo(.cols), sim_data)
+
+  to_change <- .data$vars[locs]
+  names(to_change) <- .fn(to_change, ...)
+
+  rename(.data, !!!to_change)
+}
 
 #' @importFrom dplyr distinct
 #' @export

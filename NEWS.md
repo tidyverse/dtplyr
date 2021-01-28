@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* dtplyr now supports `rename_with()` (#160)
+
 * `rename()` and `select()` support dplyr 1.0.0 tidyselect syntax (apart from
   predicate functions which can't easily work on lazily evaluted data tables).
 
