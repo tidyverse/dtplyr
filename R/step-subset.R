@@ -160,7 +160,6 @@ ensure_group_vars <- function(loc, names, groups) {
   loc
 }
 
-
 #' @importFrom dplyr summarise
 #' @export
 summarise.dtplyr_step <- function(.data, ...) {
