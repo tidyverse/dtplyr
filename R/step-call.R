@@ -37,8 +37,13 @@ tail.dtplyr_step <- function(x, n = 6L, ...) {
 #' @importFrom dplyr rename
 #' @export
 rename.dtplyr_step <- function(.data, ...) {
-  vars <- tidyselect::vars_rename(.data$vars, ...)
-  new_vars <- names(vars)
+  sim_data <- simulate_vars(.data)
+  locs <- tidyselect::eval_rename(expr(c(...)), sim_data)
+
+  new_vars <- .data$vars
+  new_vars[locs] <- names(locs)
+
+  vars <- set_names(.data$vars[locs], names(locs))
   vars <- vars[vars != names(vars)]
 
   if (length(vars) == 0) {

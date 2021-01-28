@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* `rename()` and `select()` support dplyr 1.0.0 tidyselect syntax (apart from
+  predicate functions which can't easily work on lazily evaluted data tables).
+
 * `x[[1]]` is now translated correctly.
 
 * Added translations for `cur_data()` (`.SD`), `cur_group()` (`.BY`),

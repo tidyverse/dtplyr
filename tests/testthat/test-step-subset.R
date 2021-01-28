@@ -233,8 +233,9 @@ test_that("empty select returns no columns", {
   )
 
   # unless it's grouped
+  expect_snapshot(out <- lz %>% group_by(x) %>% select())
   expect_equal(
-    lz %>% group_by(x) %>% select() %>% collect(),
+    out %>% collect(),
     group_by(tibble(x = 1), x)
   )
 })

@@ -121,8 +121,11 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 #' @importFrom dplyr select
 #' @export
 select.dtplyr_step <- function(.data, ...) {
-  vars <- tidyselect::vars_select(.data$vars, ..., .include = .data$groups)
-  new_vars <- names(vars)
+  sim_data <- simulate_vars(.data)
+  locs <- tidyselect::eval_select(expr(c(...)), sim_data)
+  locs <- ensure_group_vars(locs, .data$vars, .data$groups)
+
+  vars <- set_names(.data$vars[locs], names(locs))
 
   if (length(vars) == 0) {
     j <- 0L
@@ -133,8 +136,28 @@ select.dtplyr_step <- function(.data, ...) {
     j <- call2(".", !!!syms(vars))
   }
 
-  out <- step_subset_j(.data, vars = new_vars, groups = character(), j = j)
+  out <- step_subset_j(.data, vars = names(locs), groups = character(), j = j)
   step_group(out, groups)
+}
+
+simulate_vars <- function(x) {
+  as_tibble(rep_named(x$vars, list(logical())))
+}
+
+ensure_group_vars <- function(loc, names, groups) {
+  group_loc <- match(groups, names)
+  missing <- setdiff(group_loc, loc)
+
+  if (length(missing) > 0) {
+    vars <- names[missing]
+    inform(paste0(
+      "Adding missing grouping variables: ",
+      paste0("`", names[missing], "`", collapse = ", ")
+    ))
+    loc <- c(set_names(missing, vars), loc)
+  }
+
+  loc
 }
 
 
