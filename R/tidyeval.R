@@ -72,51 +72,55 @@ dt_squash <- function(x, env, vars, j = TRUE) {
     }
   } else if (is_quosure(x)) {
     dt_squash(get_expr(x), get_env(x), vars = vars, j = j)
+  } else if (is_call(x, "across")) {
+    dt_squash_across(x, env, vars, j = j)
   } else if (is_call(x)) {
-    if (is_mask_pronoun(x)) {
-      var <- x[[3]]
-      if (is_call(x, "[[")) {
-        var <- sym(eval(var, env))
-      }
-
-      if (is_symbol(x[[2]], ".data")) {
-        var
-      } else if (is_symbol(x[[2]], ".env")) {
-        sym(paste0("..", var))
-      }
-    } else if (is_call(x, "across")) {
-      dt_squash_across(x, env, vars, j = j)
-    } else if (is_call(x, "n", n = 0)) {
-      quote(.N)
-    } else if (is_call(x, "row_number", n = 0)) {
-      quote(seq_len(.N))
-    } else if (is_call(x, "row_number", n = 1)) {
-      arg <- dt_squash(x[[2]], vars = vars, env = env, j = j)
-      expr(frank(!!arg, ties.method = "first", na.last = "keep"))
-    } else if (is_call(x, "if_else")) {
-      x[[1L]] <- quote(fifelse)
-      x
-    } else if (is_call(x, 'coalesce')) {
-      x[[1L]] <- quote(fcoalesce)
-      x
-    } else if (is_call(x, "cur_data")) {
-      quote(.SD)
-    } else if (is_call(x, "cur_data_all")) {
-      abort("`cur_data_all()` is not available in dtplyr")
-    } else if (is_call(x, "cur_group")) {
-      quote(.BY)
-    } else if (is_call(x, "cur_group_id")) {
-      quote(.GRP)
-    } else if (is_call(x, "cur_group_rows")) {
-      quote(.I)
-    } else if (is.function(x[[1]]) || is_call(x, "function")) {
-      simplify_function_call(x, env, vars = vars, j = j)
-    } else {
-      x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env, j = j)
-      x
-    }
+    dt_squash_call(x, env, vars, j = j)
   } else {
     abort("Invalid input")
+  }
+}
+
+dt_squash_call <- function(x, env, vars, j = TRUE) {
+  if (is_mask_pronoun(x)) {
+    var <- x[[3]]
+    if (is_call(x, "[[")) {
+      var <- sym(eval(var, env))
+    }
+
+    if (is_symbol(x[[2]], ".data")) {
+      var
+    } else if (is_symbol(x[[2]], ".env")) {
+      sym(paste0("..", var))
+    }
+  } else if (is_call(x, "n", n = 0)) {
+    quote(.N)
+  } else if (is_call(x, "row_number", n = 0)) {
+    quote(seq_len(.N))
+  } else if (is_call(x, "row_number", n = 1)) {
+    arg <- dt_squash(x[[2]], vars = vars, env = env, j = j)
+    expr(frank(!!arg, ties.method = "first", na.last = "keep"))
+  } else if (is_call(x, "if_else")) {
+    x[[1L]] <- quote(fifelse)
+    x
+  } else if (is_call(x, 'coalesce')) {
+    x[[1L]] <- quote(fcoalesce)
+    x
+  } else if (is_call(x, "cur_data")) {
+    quote(.SD)
+  } else if (is_call(x, "cur_data_all")) {
+    abort("`cur_data_all()` is not available in dtplyr")
+  } else if (is_call(x, "cur_group")) {
+    quote(.BY)
+  } else if (is_call(x, "cur_group_id")) {
+    quote(.GRP)
+  } else if (is_call(x, "cur_group_rows")) {
+    quote(.I)
+  } else if (is.function(x[[1]]) || is_call(x, "function")) {
+    simplify_function_call(x, env, vars = vars, j = j)
+  } else {
+    x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env, j = j)
+    x
   }
 }
 
