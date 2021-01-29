@@ -23,7 +23,9 @@ dt_squash_across <- function(call, env, vars, j = j) {
   }
 
   .names <- eval(call$.names, env)
-  names(out) <- across_names(vars[locs], names(funs), .names, env)
+  if (!is.null(call$.fns)) {
+    names(out) <- across_names(vars[locs], names(funs), .names, env)
+  }
   out
 }
 
@@ -67,10 +69,6 @@ across_fun <- function(fun, env, vars, j = TRUE) {
 }
 
 across_names <- function(cols, funs, names = NULL, env = parent.frame()) {
-  if (is.null(funs)) {
-    return(cols)
-  }
-
   if (length(funs) == 1) {
     names <- names %||% "{.col}"
   } else {

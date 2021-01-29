@@ -1,7 +1,7 @@
 test_that("across() translates NULL", {
   expect_equal(
     capture_across(letters, across(a:b)),
-    exprs(a = a, b = b)
+    list(expr(a), expr(b))
   )
 })
 

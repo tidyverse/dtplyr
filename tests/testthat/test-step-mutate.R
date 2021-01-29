@@ -67,6 +67,15 @@ test_that("mutate generates compound expression if needed", {
   )
 })
 
+test_that("can use across", {
+  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
+
+  expect_equal(
+    dt %>% mutate(across(everything(), ~ . + 1)) %>% show_query(),
+    expr(copy(DT)[, `:=`(x = x + 1, y = y + 1)])
+  )
+})
+
 test_that("vars set correctly", {
   dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
   expect_equal(dt %>% mutate(z = 1) %>% .$vars, c("x", "y", "z"))
