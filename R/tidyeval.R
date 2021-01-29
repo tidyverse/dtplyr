@@ -144,7 +144,7 @@ is_global <- function(env) {
 simplify_function_call <- function(x, env, vars, j = TRUE) {
   if (inherits(x[[1]], "inline_colwise_function")) {
     dot_var <- vars[[attr(x, "position")]]
-    out <- replace_dot(attr(x[[1]], "formula")[[2]], dot_var)
+    out <- replace_dot(attr(x[[1]], "formula")[[2]], sym(dot_var))
     dt_squash(out, env, vars = vars, j = j)
   } else {
     name <- fun_name(x[[1]])
@@ -158,11 +158,11 @@ simplify_function_call <- function(x, env, vars, j = TRUE) {
   }
 }
 
-replace_dot <- function(call, var) {
-  if (is_symbol(call, ".")) {
-    sym(var)
+replace_dot <- function(call, sym) {
+  if (is_symbol(call, ".") || is_symbol(call, ".x")) {
+    sym
   } else if (is_call(call)) {
-    call[] <- lapply(call, replace_dot, var = var)
+    call[] <- lapply(call, replace_dot, sym)
     call
   } else {
     call
