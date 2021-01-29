@@ -145,6 +145,9 @@ pull.dtplyr_step <- function(.data, var = -1) {
 print.dtplyr_step <- function(x, ...) {
   cat_line(crayon::bold("Source: "), "local data table ", dplyr::dim_desc(x))
   cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
+  if (length(x$groups) > 0) {
+    cat_line(crayon::bold("Groups: "), paste(x$groups, collapse = ", "))
+  }
   cat_line()
   cat_line(format(as_tibble(head(x)))[-1]) # Hack to remove "A tibble" line
   cat_line()
