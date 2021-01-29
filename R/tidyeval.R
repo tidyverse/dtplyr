@@ -24,7 +24,12 @@ add_dt_wrappers <- function(env) {
 capture_dots <- function(.data, ..., .j = TRUE) {
   dots <- enquos(..., .named = .j)
   dots <- lapply(dots, dt_squash, vars = .data$vars, j = .j)
-  dots
+
+  # Remove names from any list elements
+  is_list <- vapply(dots, is.list, logical(1))
+  names(dots)[is_list] <- ""
+
+  unlist(dots, recursive = FALSE)
 }
 
 capture_dot <- function(.data, x, j = TRUE) {
@@ -79,6 +84,8 @@ dt_squash <- function(x, env, vars, j = TRUE) {
       } else if (is_symbol(x[[2]], ".env")) {
         sym(paste0("..", var))
       }
+    } else if (is_call(x, "across")) {
+      dt_squash_across(x, env, vars, j = j)
     } else if (is_call(x, "n", n = 0)) {
       quote(.N)
     } else if (is_call(x, "row_number", n = 0)) {
