@@ -3,8 +3,14 @@ test_that("grouping and ungrouping adjust groups field", {
 
   expect_equal(dt %>% .$groups, character())
   expect_equal(dt %>% group_by(x) %>% .$groups, "x")
+  expect_equal(dt %>% group_by(a = x) %>% .$groups, "a")
   expect_equal(dt %>% group_by(x) %>% group_by(y) %>% .$groups, "y")
   expect_equal(dt %>% group_by(x) %>% ungroup() %>% .$groups, character())
+})
+
+test_that("can use across", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
+  expect_equal(dt %>% group_by(across(everything())) %>% .$groups, c("x", "y"))
 })
 
 test_that("can add groups if requested", {
