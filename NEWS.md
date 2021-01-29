@@ -1,5 +1,9 @@
 # dtplyr (development version)
 
+* dtplyr can now translate `across()` (#154).
+
+* Objects now printing grouping if present.
+
 * dtplyr now supports `group_map()` and `group_walk()` (#108).
 
 * dtplyr now supports `relocate()` (@smingerson, #162).

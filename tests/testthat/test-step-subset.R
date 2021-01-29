@@ -88,6 +88,25 @@ test_that("inlines external variables", {
 })
 
 
+test_that("can use with across", {
+  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
+
+  expect_equal(
+    dt %>% summarise(across(x:y, mean)) %>% show_query(),
+    expr(DT[, .(x = mean(x), y = mean(y))])
+  )
+
+  expect_equal(
+    dt %>% arrange(across(x:y)) %>% show_query(),
+    expr(DT[order(x, y)])
+  )
+
+  expect_equal(
+    dt %>% filter(across(x:y, ~ . > 0)) %>% show_query(),
+    expr(DT[x > 0 & y > 0])
+  )
+})
+
 test_that("can merge iff j-generating call comes after i", {
   dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
 

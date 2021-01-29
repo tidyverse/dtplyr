@@ -23,7 +23,7 @@
 
 \item{...}{Arguments used by other methods.}
 
-\item{keep.rownames}{Ignored as dplyr never preseres rownames.}
+\item{keep.rownames}{Ignored as dplyr never preserves rownames.}
 }
 \description{
 \itemize{

@@ -21,11 +21,10 @@ test_that("group metadata as expected", {
 })
 
 test_that("has useful display methods", {
-  dt <- lazy_dt(mtcars, "DT")
-
-  verify_output(test_path("test-step-print.txt"), {
-    print(dt)
-    glimpse(dt)
+  expect_snapshot({
+    dt <- lazy_dt(mtcars, "DT")
+    dt
+    dt %>% group_by(vs, am)
   })
 })
 
