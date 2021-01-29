@@ -108,7 +108,7 @@ compute.dtplyr_step <- function(x, ...) {
 
 #' @rdname collect
 #' @export
-#' @param keep.rownames Ignored as dplyr never preseres rownames.
+#' @param keep.rownames Ignored as dplyr never preserves rownames.
 as.data.table.dtplyr_step <- function(x, keep.rownames = FALSE, ...) {
   dt_eval(x)[]
 }
