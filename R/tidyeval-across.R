@@ -68,7 +68,7 @@ across_fun <- function(fun, env, vars, j = TRUE) {
 
 across_names <- function(cols, funs, names = NULL, env = parent.frame()) {
   if (is.null(funs)) {
-    return(rep("", length(cols)))
+    return(cols)
   }
 
   if (length(funs) == 1) {
