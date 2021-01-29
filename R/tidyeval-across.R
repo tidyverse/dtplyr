@@ -5,8 +5,6 @@ dt_squash_across <- function(call, env, vars, j = j) {
   locs <- tidyselect::eval_select(call$.cols, tbl, allow_rename = FALSE)
   cols <- syms(vars)[locs]
 
-  # special case everything() to lapply(.SD)?
-
   funs <- across_funs(call$.fns, env)
 
   # Generate grid of expressions
