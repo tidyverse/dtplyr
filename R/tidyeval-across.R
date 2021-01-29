@@ -1,3 +1,8 @@
+capture_across <- function(vars, x, j = TRUE) {
+  x <- enquo(x)
+  dt_squash_across(get_expr(x), get_env(x), vars, j)
+}
+
 dt_squash_across <- function(call, env, vars, j = j) {
   call <- match.call(dplyr::across, call, expand.dots = FALSE, envir = env)
 
@@ -40,7 +45,7 @@ across_funs <- function(funs, env, vars, j = TRUE) {
     funs <- eval(funs, env)
     across_funs(funs, NULL)
   } else {
-    abort("`.fns` argument to dbplyr::across() must be a NULL, a function name, formula, or list")
+    abort("`.fns` argument to dtplyr::across() must be a NULL, a function name, formula, or list")
   }
 }
 
@@ -55,7 +60,7 @@ across_fun <- function(fun, env, vars, j = TRUE) {
     function(x, ...) expr_interp(call, child_env(emptyenv(), .x = x))
   } else {
     abort(c(
-      ".fns argument to dbplyr::across() contain a function name or a formula",
+      ".fns argument to dtplyr::across() contain a function name or a formula",
       x = paste0("Problem with ", expr_deparse(fun))
     ))
   }
@@ -63,7 +68,7 @@ across_fun <- function(fun, env, vars, j = TRUE) {
 
 across_names <- function(cols, funs, names = NULL, env = parent.frame()) {
   if (is.null(funs)) {
-    return(NULL)
+    return(rep("", length(cols)))
   }
 
   if (length(funs) == 1) {
