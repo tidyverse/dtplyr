@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* Show total rows when printing a `lazy_dt()`.
+
 * `select()` after grouped filter no longer incorrectly collapses into a single
   `[` call (#127).
 
