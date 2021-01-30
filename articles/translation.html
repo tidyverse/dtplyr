@@ -315,7 +315,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">b</span> <span class="op">&lt;</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>c <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">c</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; `_DT1`[, .SD[b &lt; mean(b), .(c = max(c))], keyby = .(a)]</span></code></pre></div>
+<span class="co">#&gt; `_DT1`[, .SD[b &lt; mean(b)], keyby = .(a)][, .(c = max(c)), keyby = .(a)]</span></code></pre></div>
 <p>This is particularly nice when joining two tables together because you can select variables after you have joined and data.table will only carry those into the join:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
@@ -379,9 +379,9 @@
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 filter        567µs  594.6µs     1626.        0B     15.1</span>
-<span class="co">#&gt; 2 mutate        982µs   1.02ms      950.        0B     17.0</span>
-<span class="co">#&gt; 3 summarise     811µs 849.47µs     1141.        0B     12.6</span></code></pre></div>
+<span class="co">#&gt; 1 filter        561µs 600.03µs     1605.        0B     15.2</span>
+<span class="co">#&gt; 2 mutate        955µs   1.03ms      881.        0B     14.8</span>
+<span class="co">#&gt; 3 summarise     818µs  859.5µs     1138.        0B     12.6</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
