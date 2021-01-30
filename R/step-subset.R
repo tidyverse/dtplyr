@@ -180,8 +180,27 @@ ensure_group_vars <- function(loc, names, groups) {
   loc
 }
 
+#' Summarise each group to one row
+#'
+#' This is a method for the dplyr [summarise()] generic. It is translated to
+#' the `j` argument of `[.data.table`.
+#'
+#' @param .data A [lazy_dt()].
+#' @inheritParams dplyr::summarise
 #' @importFrom dplyr summarise
 #' @export
+#' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' dt <- lazy_dt(mtcars)
+#'
+#' dt %>%
+#'   group_by(cyl) %>%
+#'   summarise(vs = mean(vs))
+#'
+#' dt %>%
+#'   group_by(cyl) %>%
+#'   summarise(across(disp:wt, mean))
 summarise.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(.data, ...)
   check_summarise_vars(dots)

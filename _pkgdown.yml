@@ -25,6 +25,7 @@ reference:
   - relocate.dtplyr_step
   - rename.dtplyr_step
   - select.dtplyr_step
+  - summarise.dtplyr_step
 
 - title: Two table verbs
   contents:
