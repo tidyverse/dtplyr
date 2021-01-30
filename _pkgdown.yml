@@ -9,6 +9,20 @@ home:
   - text: Learn more about data.table
     href: https://rdatatable.gitlab.io/data.table/
 
+reference:
+- title: Getting data in and out
+  contents:
+  - lazy_dt
+  - collect.dtplyr_step
+
+- title: Single table verbs
+  contents:
+  - distinct.dtplyr_step
+  - group_by.dtplyr_step
+  - group_modify.dtplyr_step
+  - head.dtplyr_step
+  - rename.dtplyr_step
+
 navbar:
   components:
     home: ~
