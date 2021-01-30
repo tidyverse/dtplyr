@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Modify a lazy_dt in place — group_modify.dtplyr_step • dtplyr</title>
+<title>Subset distinct/unique rows — distinct.dtplyr_step • dtplyr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,10 +49,9 @@
 
 
 
-<meta property="og:title" content="Modify a lazy_dt in place — group_modify.dtplyr_step" />
-<meta property="og:description" content="group_modify() applies .f to each group, returning a modified
-lazy_dt(). This function is a little less flexible than the data.frame
-method due to the constraints of the code generation that dtplyr uses." />
+<meta property="og:title" content="Subset distinct/unique rows — distinct.dtplyr_step" />
+<meta property="og:description" content="This is a method for the dplyr distinct() generic. It is translated to
+data.table::unique.data.table()." />
 <meta property="og:image" content="https://dtplyr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -154,64 +153,90 @@ method due to the constraints of the code generation that dtplyr uses." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Modify a lazy_dt in place</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-modify.R'><code>R/step-modify.R</code></a></small>
-    <div class="hidden name"><code>group_modify.dtplyr_step.Rd</code></div>
+    <h1>Subset distinct/unique rows</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-call.R'><code>R/step-call.R</code></a></small>
+    <div class="hidden name"><code>distinct.dtplyr_step.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify()</a></code> applies <code>.f</code> to each group, returning a modified
-<code><a href='lazy_dt.html'>lazy_dt()</a></code>. This function is a little less flexible than the data.frame
-method due to the constraints of the code generation that dtplyr uses.</p>
+    <p>This is a method for the dplyr <code><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct()</a></code> generic. It is translated to
+<code><a href='https://Rdatatable.gitlab.io/data.table/reference/duplicated.html'>data.table::unique.data.table()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify</a></span><span class='op'>(</span><span class='va'>.tbl</span>, <span class='va'>.f</span>, <span class='va'>...</span>, keep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, .keep_all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.tbl</th>
-      <td><p>A <a href='lazy_dt.html'>lazy_dt</a></p></td>
-    </tr>
-    <tr>
-      <th>.f</th>
-      <td><p>The name of a two argument function. The first argument is passed
-<code>.SD</code>,the data.table representing the current group; the second argument
-is passed <code>.BY</code>, a list giving the current values of the grouping
-variables. The function should return a list or data.table.</p></td>
+      <th>.data</th>
+      <td><p>A <code><a href='lazy_dt.html'>lazy_dt()</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed to <code>.f</code></p></td>
+      <td><p>&lt;<code><a href='https://dplyr.tidyverse.org/reference/dplyr_data_masking.html'>data-masking</a></code>&gt; Optional variables to use
+when determining uniqueness. If there are multiple rows for a given
+combination of inputs, only the first row will be preserved. If omitted,
+will use all variables.</p></td>
     </tr>
     <tr>
-      <th>keep</th>
-      <td><p>Not supported for <a href='lazy_dt.html'>lazy_dt</a>.</p></td>
+      <th>.keep_all</th>
+      <td><p>If <code>TRUE</code>, keep all variables in <code>.data</code>.
+If a combination of <code>...</code> is not distinct, this keeps the
+first row of values.</p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>, warn.conflicts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>100</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>100</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify</a></span><span class='op'>(</span><span class='va'>head</span>, n <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [6 x 11]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT3`[, head(.SD, .BY, n = ~2L), keyby = .(cyl)]
-#&gt; </span><span style='font-weight: bold;'>Groups: </span><span>cyl
+<span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [10 x 1]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT1`[, .(x)])
 #&gt; 
-#&gt;     cyl   mpg  disp    hp  drat    wt  qsec    vs    am  gear  carb
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     4  22.8  108     93  3.85  2.32  18.6     1     1     4     1
-#&gt; </span><span style='color: #555555;'>2</span><span>     4  24.4  147.    62  3.69  3.19  20       1     0     4     2
-#&gt; </span><span style='color: #555555;'>3</span><span>     6  21    160    110  3.9   2.62  16.5     0     1     4     4
-#&gt; </span><span style='color: #555555;'>4</span><span>     6  21    160    110  3.9   2.88  17.0     0     1     4     4
-#&gt; </span><span style='color: #555555;'>5</span><span>     8  18.7  360    175  3.15  3.44  17.0     0     0     3     2
-#&gt; </span><span style='color: #555555;'>6</span><span>     8  14.3  360    245  3.21  3.57  15.8     0     0     3     4
+#&gt;       x
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     7
+#&gt; </span><span style='color: #555555;'>2</span><span>     5
+#&gt; </span><span style='color: #555555;'>3</span><span>     6
+#&gt; </span><span style='color: #555555;'>4</span><span>     4
+#&gt; </span><span style='color: #555555;'>5</span><span>     9
+#&gt; </span><span style='color: #555555;'>6</span><span>     8
+#&gt; </span><span style='color: #555555;'># … with 4 more rows</span><span>
+#&gt; 
+#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [59 x 2]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT1`[, .(x, y)])
+#&gt; 
+#&gt;       x     y
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     7     4
+#&gt; </span><span style='color: #555555;'>2</span><span>     5     2
+#&gt; </span><span style='color: #555555;'>3</span><span>     6     9
+#&gt; </span><span style='color: #555555;'>4</span><span>     4     2
+#&gt; </span><span style='color: #555555;'>5</span><span>     6     3
+#&gt; </span><span style='color: #555555;'>6</span><span>     9     3
+#&gt; </span><span style='color: #555555;'># … with 53 more rows</span><span>
+#&gt; 
+#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span><span class='op'>(</span><span class='va'>x</span>, .keep_all <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [10 x 2]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT1`, by = "x")
+#&gt; 
+#&gt;       x     y
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     7     4
+#&gt; </span><span style='color: #555555;'>2</span><span>     5     2
+#&gt; </span><span style='color: #555555;'>3</span><span>     6     9
+#&gt; </span><span style='color: #555555;'>4</span><span>     4     2
+#&gt; </span><span style='color: #555555;'>5</span><span>     9     3
+#&gt; </span><span style='color: #555555;'>6</span><span>     8     7
+#&gt; </span><span style='color: #555555;'># … with 4 more rows</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
   </div>

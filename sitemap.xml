@@ -7,16 +7,25 @@
     <loc>https://dtplyr.tidyverse.org/reference/collect.html</loc>
   </url>
   <url>
+    <loc>https://dtplyr.tidyverse.org/reference/distinct.dtplyr_step.html</loc>
+  </url>
+  <url>
     <loc>https://dtplyr.tidyverse.org/reference/dtplyr-package.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/reference/group_by.dtplyr_step.html</loc>
   </url>
   <url>
     <loc>https://dtplyr.tidyverse.org/reference/group_modify.dtplyr_step.html</loc>
   </url>
   <url>
+    <loc>https://dtplyr.tidyverse.org/reference/head.dtplyr_step.html</loc>
+  </url>
+  <url>
     <loc>https://dtplyr.tidyverse.org/reference/lazy_dt.html</loc>
   </url>
   <url>
-    <loc>https://dtplyr.tidyverse.org/reference/single_table.html</loc>
+    <loc>https://dtplyr.tidyverse.org/reference/rename.dtplyr_step.html</loc>
   </url>
   <url>
     <loc>https://dtplyr.tidyverse.org/articles/translation.html</loc>
