@@ -37,7 +37,9 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 #' the `j` argument of `[.data.table`, using `:=` to modify "in place".
 #'
 #' @param .data A [lazy_dt()].
-#' @inheritParams dplyr::mutate
+#' @param ... <[data-masking][dplyr::dplyr_data_masking]> Name-value pairs.
+#'   The name gives the name of the column in the output, and the value should
+#'   evaluate to a vector.
 #' @importFrom dplyr mutate
 #' @export
 #' @examples

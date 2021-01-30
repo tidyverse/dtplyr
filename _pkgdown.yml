@@ -24,6 +24,7 @@ reference:
   - group_modify.dtplyr_step
   - head.dtplyr_step
   - mutate.dtplyr_step
+  - transmute.dtplyr_step
   - relocate.dtplyr_step
   - rename.dtplyr_step
   - select.dtplyr_step

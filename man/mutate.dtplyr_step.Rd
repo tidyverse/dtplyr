@@ -9,17 +9,9 @@
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
 
-\item{...}{<\code{\link[dplyr:dplyr_data_masking]{data-masking}}> Name-value pairs.
-The name gives the name of the column in the output.
-
-The value can be:
-\itemize{
-\item A vector of length 1, which will be recycled to the correct length.
-\item A vector the same length as the current group (or the whole data frame
-if ungrouped).
-\item \code{NULL}, to remove the column.
-\item A data frame or tibble, to create multiple columns in the output.
-}}
+\item{...}{<\link[dplyr:dplyr_data_masking]{data-masking}> Name-value pairs.
+The name gives the name of the column in the output, and the value should
+evaluate to a vector.}
 }
 \description{
 This is a method for the dplyr \code{\link[=mutate]{mutate()}} generic. It is translated to
