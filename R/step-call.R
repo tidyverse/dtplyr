@@ -108,8 +108,24 @@ rename_with.dtplyr_step <- function(.data, .fn, .cols = everything(), ...) {
   rename(.data, !!!to_change)
 }
 
+#' Subset distinct/unique rows
+#'
+#' This is a method for the dplyr [distinct()] generic. It is translated to
+#' [data.table::unique.data.table()].
+#'
 #' @importFrom dplyr distinct
+#' @param .data A [lazy_dt()]
+#' @inheritParams dplyr::distinct
 #' @export
+#' @examples
+#' df <- lazy_dt(data.frame(
+#'   x = sample(10, 100, replace = TRUE),
+#'   y = sample(10, 100, replace = TRUE)
+#' ))
+#'
+#' df %>% distinct(x)
+#' df %>% distinct(x, y)
+#' df %>% distinct(x, .keep_all = TRUE)
 distinct.dtplyr_step <- function(.data, ..., .keep_all = FALSE) {
   dots <- capture_dots(.data, ...)
 
