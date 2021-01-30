@@ -54,8 +54,20 @@ tail.dtplyr_step <- function(x, n = 6L, ...) {
   step_call(x, "tail", args = list(n = n))
 }
 
+
+#' Rename columns
+#'
+#' These are methods for the dplyr generics [rename()] and [rename_with()].
+#' They are both translated to [data.table::setnames()].
+#'
+#' @param .data A [lazy_dt()]
+#' @inheritParams dplyr::rename
 #' @importFrom dplyr rename
 #' @export
+#' @examples
+#' dt <- lazy_dt(data.frame(x = 1, y = 2, z = 3))
+#' dt %>% rename(new_x = x, new_y = y)
+#' dt %>% rename_with(toupper)
 rename.dtplyr_step <- function(.data, ...) {
   sim_data <- simulate_vars(.data)
   locs <- tidyselect::eval_rename(expr(c(...)), sim_data)
@@ -83,6 +95,7 @@ rename.dtplyr_step <- function(.data, ...) {
 
 #' @importFrom dplyr rename_with
 #' @importFrom tidyselect everything
+#' @rdname rename.dtplyr_step
 #' @export
 rename_with.dtplyr_step <- function(.data, .fn, .cols = everything(), ...) {
   .fn <- as_function(.fn)
