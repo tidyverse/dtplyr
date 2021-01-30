@@ -173,15 +173,6 @@ show_query.dtplyr_step <- function(x) {
 is_step <- function(x) inherits(x, "dtplyr_step")
 
 
-#' Single table operations
-#'
-#' This documents differences between standard dplyr verbs and their
-#' data.table instantiation.
-#'
-#' @order 1
-#' @name single_table
-NULL
-
 # Returns a named list of data.tables: most just dispatch to their
 # parent. The only exceptions are dt_step_first() and the two-table verbs.
 dt_sources <- function(x) {

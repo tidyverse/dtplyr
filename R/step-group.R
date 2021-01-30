@@ -23,14 +23,26 @@ add_grouping_param <- function(call, step) {
 
 # dplyr methods -----------------------------------------------------------
 
+#' Group and ungroup
+#'
+#' These are methods for dplyr's [group_by()] and [ungroup()] generics.
+#' Grouping is translated to the either `keyby` and `by` argument of
+#' `[.data.table` depending on the value of the `arrange` argument.
+#'
 #' @inheritParams dplyr::group_by
-#' @param .data A data.table
+#' @param .data A [lazy_dt()]
 #' @param arrange If `TRUE`, will automatically arrange the output of
 #'   subsequent grouped operations by group. If `FALSE`, output order will be
 #'   left unchanged. In the generated data.table code this switches between
 #'   using the `keyby` (`TRUE`) and `by` (`FALSE`) arguments.
+#' @param .add,add When `FALSE`, the default, `group_by()` will
+#'   override existing groups. To add to the existing groups, use
+#'   `.add = TRUE`.
+#'
+#'   This argument was previously called `add`, but that prevented
+#'   creating a new grouping variable called `add`, and conflicts with
+#'   our naming conventions.
 #' @importFrom dplyr group_by
-#' @rdname single_table
 #' @export
 group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), arrange = TRUE) {
   dots <- capture_dots(.data, ...)
@@ -59,6 +71,7 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
 
 #' @importFrom dplyr ungroup
 #' @export
+#' @rdname group_by.dtplyr_step
 ungroup.dtplyr_step <- function(.data, ...) {
   step_group(.data, groups = character())
 }
