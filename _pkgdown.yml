@@ -19,6 +19,7 @@ reference:
   contents:
   - arrange.dtplyr_step
   - distinct.dtplyr_step
+  - filter.dtplyr_step
   - group_by.dtplyr_step
   - group_modify.dtplyr_step
   - head.dtplyr_step

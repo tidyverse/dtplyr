@@ -270,6 +270,24 @@ count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) 
   out
 }
 
+#' Subset rows using column values
+#'
+#' This is a method for the dplyr [arrange()] generic. It is translated to
+#' the `i` argument of `[.data.table`
+#'
+#' @param .data A [lazy_dt()].
+#' @param .preserve Ignored
+#' @inheritParams dplyr::filter
+#' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' dt <- lazy_dt(mtcars)
+#' dt %>% filter(cyl == 4)
+#' dt %>% filter(vs, am)
+#'
+#' dt %>%
+#'   group_by(cyl) %>%
+#'   filter(mpg > mean(mpg))
 # exported onLoad
 filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
   dots <- capture_dots(.data, ..., .j = FALSE)
