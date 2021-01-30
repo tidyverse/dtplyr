@@ -22,14 +22,34 @@ dt_call.dtplyr_step_call <- function(x, needs_copy = x$needs_copy) {
 
 # dplyr verbs -------------------------------------------------------------
 
+#' Subset first or last rows
+#'
+#' These are methods for the base generics [head()] and [tail()]. They
+#' are not translated.
+#'
+#' @param x A [lazy_dt()]
+#' @param n Number of rows to select. Can use a negative number to instead
+#'   drop rows from the other end.
+#' @param ... Passed on to [head()]/[tail()].
 #' @importFrom utils head
 #' @export
+#' @examples
+#' dt <- lazy_dt(data.frame(x = 1:10))
+#'
+#' # first three rows
+#' head(dt, 3)
+#' # last three rows
+#' tail(dt, 3)
+#'
+#' # drop first three rows
+#' tail(dt, -3)
 head.dtplyr_step <- function(x, n = 6L, ...) {
   step_call(x, "head", args = list(n = n))
 }
 
 #' @importFrom utils tail
 #' @export
+#' @rdname head.dtplyr_step
 tail.dtplyr_step <- function(x, n = 6L, ...) {
   step_call(x, "tail", args = list(n = n))
 }
