@@ -56,7 +56,7 @@ tail.dtplyr_step <- function(x, n = 6L, ...) {
 }
 
 
-#' Rename columns
+#' Rename columns using their names
 #'
 #' These are methods for the dplyr generics [rename()] and [rename_with()].
 #' They are both translated to [data.table::setnames()].

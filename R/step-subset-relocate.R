@@ -1,4 +1,4 @@
-#' Relocate variables
+#' Relocate variables using their names
 #'
 #' This is a method for the dplyr [relocate()] generic. It is translated to
 #' the `j` argument of `[.data.table`.
@@ -8,6 +8,8 @@
 #' @importFrom dplyr relocate
 #' @export
 #' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#'
 #' dt <- lazy_dt(data.frame(x = 1, y = 2, z = 3))
 #'
 #' dt %>% relocate(z)

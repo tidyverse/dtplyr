@@ -123,8 +123,23 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 
 # dplyr methods -----------------------------------------------------------
 
+#' Subset columns using their names
+#'
+#' This is a method for the dplyr [select()] generic. It is translated to
+#' the `j` argument of `[.data.table`.
+#'
+#' @param .data A [lazy_dt()].
+#' @inheritParams dplyr::select
 #' @importFrom dplyr select
 #' @export
+#' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' dt <- lazy_dt(data.frame(x1 = 1, x2 = 2, y1 = 3, y2 = 4))
+#'
+#' dt %>% select(starts_with("x"))
+#' dt %>% select(ends_with("2"))
+#' dt %>% select(z1 = x1, z2 = x2)
 select.dtplyr_step <- function(.data, ...) {
   sim_data <- simulate_vars(.data)
   locs <- tidyselect::eval_select(expr(c(...)), sim_data)

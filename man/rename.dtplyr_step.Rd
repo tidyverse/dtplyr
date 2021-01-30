@@ -3,7 +3,7 @@
 \name{rename.dtplyr_step}
 \alias{rename.dtplyr_step}
 \alias{rename_with.dtplyr_step}
-\title{Rename columns}
+\title{Rename columns using their names}
 \usage{
 \method{rename}{dtplyr_step}(.data, ...)
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/step-subset-relocate.R
 \name{relocate.dtplyr_step}
 \alias{relocate.dtplyr_step}
-\title{Relocate variables}
+\title{Relocate variables using their names}
 \usage{
 \method{relocate}{dtplyr_step}(.data, ..., .before = NULL, .after = NULL)
 }
@@ -24,6 +24,8 @@ This is a method for the dplyr \code{\link[=relocate]{relocate()}} generic. It i
 the \code{j} argument of \verb{[.data.table}.
 }
 \examples{
+library(dplyr, warn.conflicts = FALSE)
+
 dt <- lazy_dt(data.frame(x = 1, y = 2, z = 3))
 
 dt \%>\% relocate(z)
