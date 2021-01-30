@@ -129,6 +129,16 @@ test_that("can merge iff j-generating call comes after i", {
   )
 })
 
+test_that("but not if grouped", {
+  dt <- lazy_dt(data.table(g = c(1, 1, 2, 2), y = c(1, 1, 2, 2), z = 1:4), "DT")
+  gt <- dt %>% group_by(g)
+
+  expect_equal(
+    gt %>% filter(sum(y) > 2) %>% select(g, z) %>% show_query(),
+    expr(DT[, .SD[sum(y) > 2], keyby = .(g)][, .(g, z)])
+  )
+})
+
 # arrange -----------------------------------------------------------------
 
 test_that("arrange doesn't use, but still preserves, grouping", {

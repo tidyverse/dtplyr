@@ -58,6 +58,11 @@ can_merge_subset <- function(x) {
     return(FALSE)
   }
 
+  # grouped filters have to be performed first
+  if (length(x$groups) > 0 && !is.null(x$i)) {
+    return(FALSE)
+  }
+
   # Don't need to check that groups are identical because the only
   # dplyr functions that generate expression in i are
   # filter/slice/sample/arrange/join and don't affect groups

@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* `select()` after grouped filter no longer incorrectly collapses into a single
+  `[` call (#127).
+
 * dtplyr can now translate `across()` (#154).
 
 * Objects now printing grouping if present.
