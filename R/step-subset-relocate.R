@@ -1,6 +1,18 @@
-
+#' Relocate variables
+#'
+#' This is a method for the dplyr [relocate()] generic. It is translated to
+#' the `j` argument of `[.data.table`.
+#'
+#' @param .data A [lazy_dt()].
+#' @inheritParams dplyr::relocate
 #' @importFrom dplyr relocate
 #' @export
+#' @examples
+#' dt <- lazy_dt(data.frame(x = 1, y = 2, z = 3))
+#'
+#' dt %>% relocate(z)
+#' dt %>% relocate(y, .before = x)
+#' dt %>% relocate(y, .after = y)
 relocate.dtplyr_step <- function(.data, ..., .before = NULL, .after = NULL) {
   sim_data <- simulate_vars(.data)
   to_move <- tidyselect::eval_select(expr(c(...)), sim_data)
