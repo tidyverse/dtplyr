@@ -33,3 +33,18 @@ These are methods for dplyr's \code{\link[=group_by]{group_by()}} and \code{\lin
 Grouping is translated to the either \code{keyby} and \code{by} argument of
 \verb{[.data.table} depending on the value of the \code{arrange} argument.
 }
+\examples{
+dt <- lazy_dt(mtcars)
+
+# group_by() is usually translated to `keyby` so that the groups
+# are ordered in the output
+dt \%>\%
+ group_by(cyl) \%>\%
+ summarise(mpg = mean(mpg))
+
+# use `arrange = FALSE` to instead use `by` so the original order
+# or groups is preserved
+dt \%>\%
+ group_by(cyl, arrange = FALSE) \%>\%
+ summarise(mpg = mean(mpg))
+}

@@ -44,6 +44,20 @@ add_grouping_param <- function(call, step) {
 #'   our naming conventions.
 #' @importFrom dplyr group_by
 #' @export
+#' @examples
+#' dt <- lazy_dt(mtcars)
+#'
+#' # group_by() is usually translated to `keyby` so that the groups
+#' # are ordered in the output
+#' dt %>%
+#'  group_by(cyl) %>%
+#'  summarise(mpg = mean(mpg))
+#'
+#' # use `arrange = FALSE` to instead use `by` so the original order
+#' # or groups is preserved
+#' dt %>%
+#'  group_by(cyl, arrange = FALSE) %>%
+#'  summarise(mpg = mean(mpg))
 group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), arrange = TRUE) {
   dots <- capture_dots(.data, ...)
   dots <- exprs_auto_name(dots)
