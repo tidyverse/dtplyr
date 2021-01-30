@@ -14,6 +14,10 @@ add_dt_wrappers <- function(env) {
   env$copy <- data.table::copy
   env$setkeyv <- data.table::setkeyv
 
+  env$funion <- data.table::funion
+  env$fintersect <- data.table::fintersect
+  env$fsetdiff <- data.table::fsetdiff
+
   invisible()
 }
 

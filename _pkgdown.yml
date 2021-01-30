@@ -27,6 +27,7 @@ reference:
 - title: Two table verbs
   contents:
   - left_join.dtplyr_step
+  - intersect.dtplyr_step
 
 navbar:
   components:
