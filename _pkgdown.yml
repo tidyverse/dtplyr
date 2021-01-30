@@ -21,6 +21,7 @@ reference:
   - group_by.dtplyr_step
   - group_modify.dtplyr_step
   - head.dtplyr_step
+  - mutate.dtplyr_step
   - rename.dtplyr_step
 
 - title: Two table verbs
