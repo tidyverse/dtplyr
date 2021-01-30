@@ -2,12 +2,15 @@
 % Please edit documentation in R/step-modify.R
 \name{group_modify.dtplyr_step}
 \alias{group_modify.dtplyr_step}
-\title{Modify a lazy_dt in place}
+\alias{group_map.dtplyr_step}
+\title{Apply a function to each group}
 \usage{
 \method{group_modify}{dtplyr_step}(.tbl, .f, ..., keep = FALSE)
+
+\method{group_map}{dtplyr_step}(.tbl, .f, ..., keep = FALSE)
 }
 \arguments{
-\item{.tbl}{A \link{lazy_dt}}
+\item{.tbl}{A \code{\link[=lazy_dt]{lazy_dt()}}}
 
 \item{.f}{The name of a two argument function. The first argument is passed
 \code{.SD},the data.table representing the current group; the second argument
@@ -18,16 +21,25 @@ variables. The function should return a list or data.table.}
 
 \item{keep}{Not supported for \link{lazy_dt}.}
 }
+\value{
+\code{group_map()} applies \code{.f} to each group, returning a list.
+\code{group_modify()} replaces each group with the results of \code{.f}, returning a
+modified \code{\link[=lazy_dt]{lazy_dt()}}.
+}
 \description{
-\code{group_modify()} applies \code{.f} to each group, returning a modified
-\code{\link[=lazy_dt]{lazy_dt()}}. This function is a little less flexible than the data.frame
-method due to the constraints of the code generation that dtplyr uses.
+These are methods for the dplyr \code{\link[=group_map]{group_map()}} and \code{\link[=group_modify]{group_modify()}} generics.
+They are both translated to \verb{[.data.table}.
 }
 \examples{
 library(dplyr)
 
-mtcars \%>\%
-  lazy_dt() \%>\%
+dt <- lazy_dt(mtcars)
+
+dt \%>\%
   group_by(cyl) \%>\%
   group_modify(head, n = 2L)
+
+dt \%>\%
+  group_by(cyl) \%>\%
+  group_map(head, n = 2L)
 }

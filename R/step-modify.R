@@ -19,28 +19,35 @@ dt_call.dtplyr_step_modify <- function(x, needs_copy = x$needs_copy) {
 
 # dplyr methods -----------------------------------------------------------
 
-#' Modify a lazy_dt in place
+#' Apply a function to each group
 #'
-#' `group_modify()` applies `.f` to each group, returning a modified
-#' [lazy_dt()]. This function is a little less flexible than the data.frame
-#' method due to the constraints of the code generation that dtplyr uses.
+#' These are methods for the dplyr [group_map()] and [group_modify()] generics.
+#' They are both translated to `[.data.table`.
 #'
-#' @param .tbl A [lazy_dt]
+#' @param .tbl A [lazy_dt()]
 #' @param .f The name of a two argument function. The first argument is passed
 #'   `.SD`,the data.table representing the current group; the second argument
 #'   is passed `.BY`, a list giving the current values of the grouping
 #'   variables. The function should return a list or data.table.
 #' @param ... Additional arguments passed to `.f`
 #' @param keep Not supported for [lazy_dt].
+#' @returns `group_map()` applies `.f` to each group, returning a list.
+#'   `group_modify()` replaces each group with the results of `.f`, returning a
+#'   modified [lazy_dt()].
 #' @importFrom dplyr group_modify
 #' @export
 #' @examples
 #' library(dplyr)
 #'
-#' mtcars %>%
-#'   lazy_dt() %>%
+#' dt <- lazy_dt(mtcars)
+#'
+#' dt %>%
 #'   group_by(cyl) %>%
 #'   group_modify(head, n = 2L)
+#'
+#' dt %>%
+#'   group_by(cyl) %>%
+#'   group_map(head, n = 2L)
 group_modify.dtplyr_step <- function(.tbl, .f, ..., keep = FALSE) {
   if (!missing(keep)) {
     abort("`keep` is not supported for lazy data tables")
@@ -53,6 +60,7 @@ group_modify.dtplyr_step <- function(.tbl, .f, ..., keep = FALSE) {
 }
 
 #' @importFrom dplyr group_map
+#' @rdname group_modify.dtplyr_step
 #' @export
 group_map.dtplyr_step <- function(.tbl, .f, ..., keep = FALSE) {
   .f <- as_function(.f, caller_env())
