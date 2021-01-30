@@ -23,6 +23,10 @@ reference:
   - head.dtplyr_step
   - rename.dtplyr_step
 
+- title: Two table verbs
+  contents:
+  - left_join.dtplyr_step
+
 navbar:
   components:
     home: ~

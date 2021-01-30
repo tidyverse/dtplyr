@@ -56,8 +56,32 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
 
 # dplyr verbs -------------------------------------------------------------
 
+#' Join data tables
+#'
+#' These are methods for the dplyr generics [left_join()], [right_join()],
+#' [inner_join()], [full_join()], [anti_join()], and [semi_join()]. The
+#' mutating joins (left, right, inner, and full) are translated to
+#' [data.table::merge.data.table()], except for the special cases where it's
+#' possible to translate to `[.data.table`. Semi- and anti-joins have no
+#' direct data.table equivalent.
+#'
+#' @param x,y A pair of [lazy_dt()]s.
+#' @inheritParams dplyr::left_join
 #' @importFrom dplyr left_join
 #' @export
+#' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' band_dt <- lazy_dt(dplyr::band_members)
+#' instrument_dt <- lazy_dt(dplyr::band_instruments)
+#'
+#' band_dt %>% left_join(instrument_dt)
+#' band_dt %>% right_join(instrument_dt)
+#' band_dt %>% inner_join(instrument_dt)
+#' band_dt %>% full_join(instrument_dt)
+#'
+#' band_dt %>% semi_join(instrument_dt)
+#' band_dt %>% anti_join(instrument_dt)
 left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
   y <- dtplyr_auto_copy(x, y, copy = copy)
   by <- dtplyr_common_by(by, x, y)
