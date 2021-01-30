@@ -284,8 +284,22 @@ filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
   step_subset(.data, i = i)
 }
 
+#' Arrange rows by column values
+#'
+#' This is a method for dplyr generic [arrange()]. It is translated to
+#' an [order()] call in the `i` argument of `[.data.table`.
+#'
+#' @param .data A [lazy_dt()].
+#' @inheritParams dplyr::arrange
 #' @importFrom dplyr arrange
 #' @export
+#' @examples
+#' library(dplyr, warn.conflict = FALSE)
+#'
+#' dt <- lazy_dt(mtcars)
+#' dt %>% arrange(vs, cyl)
+#' dt %>% arrange(desc(vs), cyl)
+#' dt %>% arrange(across(mpg:disp))
 arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   dots <- capture_dots(.data, ..., .j = FALSE)
   if (.by_group) {

@@ -17,6 +17,7 @@ reference:
 
 - title: Single table verbs
   contents:
+  - arrange.dtplyr_step
   - distinct.dtplyr_step
   - group_by.dtplyr_step
   - group_modify.dtplyr_step
