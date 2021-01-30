@@ -124,8 +124,8 @@ test_that("can merge iff j-generating call comes after i", {
     expr(DT[x > 1, .(y = mean(x))])
   )
   expect_equal(
-    dt %>% summarise(y = mean(x)) %>% filter(x > 1) %>% show_query(),
-    expr(DT[, .(y = mean(x))][x > 1])
+    dt %>% summarise(y = mean(x)) %>% filter(y > 1) %>% show_query(),
+    expr(DT[, .(y = mean(x))][y > 1])
   )
 })
 
