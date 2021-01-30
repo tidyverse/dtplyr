@@ -45,6 +45,7 @@ add_grouping_param <- function(call, step) {
 #' @importFrom dplyr group_by
 #' @export
 #' @examples
+#' library(dplyr, warn.conflicts = FALSE)
 #' dt <- lazy_dt(mtcars)
 #'
 #' # group_by() is usually translated to `keyby` so that the groups

@@ -23,6 +23,7 @@ This is a method for the dplyr \code{\link[=distinct]{distinct()}} generic. It i
 \code{\link[data.table:duplicated]{data.table::unique.data.table()}}.
 }
 \examples{
+library(dplyr, warn.conflicts = FALSE)
 df <- lazy_dt(data.frame(
   x = sample(10, 100, replace = TRUE),
   y = sample(10, 100, replace = TRUE)

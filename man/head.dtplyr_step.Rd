@@ -22,6 +22,7 @@ These are methods for the base generics \code{\link[=head]{head()}} and \code{\l
 are not translated.
 }
 \examples{
+library(dplyr, warn.conflicts = FALSE)
 dt <- lazy_dt(data.frame(x = 1:10))
 
 # first three rows

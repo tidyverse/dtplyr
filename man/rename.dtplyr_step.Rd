@@ -28,6 +28,7 @@ These are methods for the dplyr generics \code{\link[=rename]{rename()}} and \co
 They are both translated to \code{\link[data.table:setattr]{data.table::setnames()}}.
 }
 \examples{
+library(dplyr, warn.conflicts = FALSE)
 dt <- lazy_dt(data.frame(x = 1, y = 2, z = 3))
 dt \%>\% rename(new_x = x, new_y = y)
 dt \%>\% rename_with(toupper)

@@ -34,6 +34,7 @@ Grouping is translated to the either \code{keyby} and \code{by} argument of
 \verb{[.data.table} depending on the value of the \code{arrange} argument.
 }
 \examples{
+library(dplyr, warn.conflicts = FALSE)
 dt <- lazy_dt(mtcars)
 
 # group_by() is usually translated to `keyby` so that the groups

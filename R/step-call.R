@@ -34,6 +34,7 @@ dt_call.dtplyr_step_call <- function(x, needs_copy = x$needs_copy) {
 #' @importFrom utils head
 #' @export
 #' @examples
+#' library(dplyr, warn.conflicts = FALSE)
 #' dt <- lazy_dt(data.frame(x = 1:10))
 #'
 #' # first three rows
@@ -65,6 +66,7 @@ tail.dtplyr_step <- function(x, n = 6L, ...) {
 #' @importFrom dplyr rename
 #' @export
 #' @examples
+#' library(dplyr, warn.conflicts = FALSE)
 #' dt <- lazy_dt(data.frame(x = 1, y = 2, z = 3))
 #' dt %>% rename(new_x = x, new_y = y)
 #' dt %>% rename_with(toupper)
@@ -118,6 +120,7 @@ rename_with.dtplyr_step <- function(.data, .fn, .cols = everything(), ...) {
 #' @inheritParams dplyr::distinct
 #' @export
 #' @examples
+#' library(dplyr, warn.conflicts = FALSE)
 #' df <- lazy_dt(data.frame(
 #'   x = sample(10, 100, replace = TRUE),
 #'   y = sample(10, 100, replace = TRUE)
