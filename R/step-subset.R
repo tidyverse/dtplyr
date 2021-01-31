@@ -361,8 +361,29 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
 }
 
 
+#' Subset rows using their positions
+#'
+#' This is a method for the dplyr [slice()] generic. It is translated to
+#' the `i` argument of `[.data.table`.
+#'
 #' @importFrom dplyr slice
+#' @params .data A [lazy_dt()].
+#' @param ... Positive integers giving rows to select, or negative
+#'   integers giving rows to drop.
 #' @export
+#' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' dt <- lazy_dt(mtcars)
+#' dt %>% slice(1, 5, 10)
+#'
+#' dt %>%
+#'   group_by(cyl) %>%
+#'   slice(1)
+#'
+#' dt %>%
+#'   group_by(cyl) %>%
+#'   slice(-1)
 slice.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(.data, ..., .j = FALSE)
 
