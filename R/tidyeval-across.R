@@ -6,9 +6,9 @@ capture_across <- function(data, x, j = TRUE) {
 dt_squash_across <- function(call, env, data, j = j) {
   call <- match.call(dplyr::across, call, expand.dots = FALSE, envir = env)
 
-  tbl <- simulate_vars(data)
+  tbl <- simulate_vars(data, drop_groups = TRUE)
   locs <- tidyselect::eval_select(call$.cols, tbl, allow_rename = FALSE)
-  cols <- syms(data$vars)[locs]
+  cols <- syms(names(tbl))[locs]
 
   funs <- across_funs(call$.fns, env, data, j = j)
 
@@ -24,7 +24,7 @@ dt_squash_across <- function(call, env, data, j = j) {
 
   .names <- eval(call$.names, env)
   if (!is.null(call$.fns)) {
-    names(out) <- across_names(data$vars[locs], names(funs), .names, env)
+    names(out) <- across_names(names(tbl)[locs], names(funs), .names, env)
   }
   out
 }

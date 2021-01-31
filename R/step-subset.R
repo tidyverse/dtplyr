@@ -160,8 +160,14 @@ select.dtplyr_step <- function(.data, ...) {
   step_group(out, groups)
 }
 
-simulate_vars <- function(x) {
-  as_tibble(rep_named(x$vars, list(logical())))
+simulate_vars <- function(x, drop_groups = FALSE) {
+  if (drop_groups) {
+    vars <- setdiff(x$vars, x$groups)
+  } else {
+    vars <- x$vars
+  }
+
+  as_tibble(rep_named(vars, list(logical())))
 }
 
 ensure_group_vars <- function(loc, names, groups) {

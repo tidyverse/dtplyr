@@ -7,6 +7,19 @@ test_that("across() translates NULL", {
   )
 })
 
+test_that("across() drops groups", {
+  dt <- lazy_dt(data.frame(a = 1, b = 2))
+
+  expect_equal(
+    capture_across(group_by(dt, a), across(everything())),
+    list(expr(b))
+  )
+  expect_equal(
+    capture_across(group_by(dt, b), across(everything())),
+    list(expr(a))
+  )
+})
+
 test_that("across() translates character vectors", {
   dt <- lazy_dt(data.frame(a = 1,  b = 2))
 
