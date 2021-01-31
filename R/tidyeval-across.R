@@ -1,16 +1,16 @@
-capture_across <- function(vars, x, j = TRUE) {
+capture_across <- function(data, x, j = TRUE) {
   x <- enquo(x)
-  dt_squash_across(get_expr(x), get_env(x), vars, j)
+  dt_squash_across(get_expr(x), get_env(x), data, j)
 }
 
-dt_squash_across <- function(call, env, vars, j = j) {
+dt_squash_across <- function(call, env, data, j = j) {
   call <- match.call(dplyr::across, call, expand.dots = FALSE, envir = env)
 
-  tbl <- as_tibble(rep_named(vars, list(logical())))
+  tbl <- simulate_vars(data)
   locs <- tidyselect::eval_select(call$.cols, tbl, allow_rename = FALSE)
-  cols <- syms(vars)[locs]
+  cols <- syms(data$vars)[locs]
 
-  funs <- across_funs(call$.fns, env, vars, j = j)
+  funs <- across_funs(call$.fns, env, data, j = j)
 
   # Generate grid of expressions
   out <- vector("list", length(cols) * length(funs))
@@ -24,24 +24,24 @@ dt_squash_across <- function(call, env, vars, j = j) {
 
   .names <- eval(call$.names, env)
   if (!is.null(call$.fns)) {
-    names(out) <- across_names(vars[locs], names(funs), .names, env)
+    names(out) <- across_names(data$vars[locs], names(funs), .names, env)
   }
   out
 }
 
-across_funs <- function(funs, env, vars, j = TRUE) {
+across_funs <- function(funs, env, data, j = TRUE) {
   if (is.null(funs)) {
     list(function(x, ...) x)
   } else if (is_symbol(funs)) {
-    set_names(list(across_fun(funs, env, vars, j = j)), as.character(funs))
+    set_names(list(across_fun(funs, env, data, j = j)), as.character(funs))
   } else if (is.character(funs)) {
     names(funs)[names2(funs) == ""] <- funs
-    lapply(funs, across_fun, env, vars, j = j)
+    lapply(funs, across_fun, env, data, j = j)
   } else if (is_call(funs, "~")) {
-    set_names(list(across_fun(funs, env, vars, j = j)), expr_name(f_rhs(funs)))
+    set_names(list(across_fun(funs, env, data, j = j)), expr_name(f_rhs(funs)))
   } else if (is_call(funs, "list")) {
     args <- rlang::exprs_auto_name(funs[-1])
-    lapply(args, across_fun, env, vars, j = j)
+    lapply(args, across_fun, env, data, j = j)
   } else if (!is.null(env)) {
     # Try evaluating once, just in case
     funs <- eval(funs, env)
@@ -51,13 +51,13 @@ across_funs <- function(funs, env, vars, j = TRUE) {
   }
 }
 
-across_fun <- function(fun, env, vars, j = TRUE) {
+across_fun <- function(fun, env, data, j = TRUE) {
   if (is_symbol(fun) || is_string(fun)) {
     function(x, ...) call2(fun, x, ...)
   } else if (is_call(fun, "~")) {
     call <- f_rhs(fun)
     call <- replace_dot(call, quote(!!.x))
-    call <- dt_squash_call(call, env, vars, j = TRUE)
+    call <- dt_squash_call(call, env, data, j = TRUE)
 
     function(x, ...) expr_interp(call, child_env(emptyenv(), .x = x))
   } else {

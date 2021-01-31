@@ -27,7 +27,7 @@ add_dt_wrappers <- function(env) {
 
 capture_dots <- function(.data, ..., .j = TRUE) {
   dots <- enquos(..., .named = .j)
-  dots <- lapply(dots, dt_squash, vars = .data$vars, j = .j)
+  dots <- lapply(dots, dt_squash, data = .data, j = .j)
 
   # Remove names from any list elements
   is_list <- vapply(dots, is.list, logical(1))
@@ -37,11 +37,11 @@ capture_dots <- function(.data, ..., .j = TRUE) {
 }
 
 capture_dot <- function(.data, x, j = TRUE) {
-  dt_squash(enquo(x), vars = .data$vars, j = j)
+  dt_squash(enquo(x), data = .data, j = j)
 }
 
 # squash quosures
-dt_squash <- function(x, env, vars, j = TRUE) {
+dt_squash <- function(x, env, data, j = TRUE) {
   if (is_atomic(x) || is_null(x)) {
     x
   } else if (is_symbol(x)) {
@@ -55,7 +55,7 @@ dt_squash <- function(x, env, vars, j = TRUE) {
       } else if (nchar(x) > 0 && substr(var, 1, 1) == ".") {
         # data table pronouns are bound to NULL
         x
-      } else if (!var %in% vars && env_has(env, var, inherit = TRUE)) {
+      } else if (!var %in% data$vars && env_has(env, var, inherit = TRUE)) {
         if (is_global(env)) {
           # Slightly dangerous because the variable might be modified
           # between creation and execution, but it seems like a reasonable
@@ -75,17 +75,17 @@ dt_squash <- function(x, env, vars, j = TRUE) {
       }
     }
   } else if (is_quosure(x)) {
-    dt_squash(get_expr(x), get_env(x), vars = vars, j = j)
+    dt_squash(get_expr(x), get_env(x), data, j = j)
   } else if (is_call(x, "across")) {
-    dt_squash_across(x, env, vars, j = j)
+    dt_squash_across(x, env, data, j = j)
   } else if (is_call(x)) {
-    dt_squash_call(x, env, vars, j = j)
+    dt_squash_call(x, env, data, j = j)
   } else {
     abort("Invalid input")
   }
 }
 
-dt_squash_call <- function(x, env, vars, j = TRUE) {
+dt_squash_call <- function(x, env, data, j = TRUE) {
   if (is_mask_pronoun(x)) {
     var <- x[[3]]
     if (is_call(x, "[[")) {
@@ -102,7 +102,7 @@ dt_squash_call <- function(x, env, vars, j = TRUE) {
   } else if (is_call(x, "row_number", n = 0)) {
     quote(seq_len(.N))
   } else if (is_call(x, "row_number", n = 1)) {
-    arg <- dt_squash(x[[2]], vars = vars, env = env, j = j)
+    arg <- dt_squash(x[[2]], env, data, j = j)
     expr(frank(!!arg, ties.method = "first", na.last = "keep"))
   } else if (is_call(x, "if_else")) {
     x[[1L]] <- quote(fifelse)
@@ -121,9 +121,9 @@ dt_squash_call <- function(x, env, vars, j = TRUE) {
   } else if (is_call(x, "cur_group_rows")) {
     quote(.I)
   } else if (is.function(x[[1]]) || is_call(x, "function")) {
-    simplify_function_call(x, env, vars = vars, j = j)
+    simplify_function_call(x, env, data, j = j)
   } else {
-    x[-1] <- lapply(x[-1], dt_squash, vars = vars, env = env, j = j)
+    x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
     x
   }
 }
@@ -145,11 +145,11 @@ is_global <- function(env) {
   FALSE
 }
 
-simplify_function_call <- function(x, env, vars, j = TRUE) {
+simplify_function_call <- function(x, env, data, j = TRUE) {
   if (inherits(x[[1]], "inline_colwise_function")) {
-    dot_var <- vars[[attr(x, "position")]]
+    dot_var <- data$vars[[attr(x, "position")]]
     out <- replace_dot(attr(x[[1]], "formula")[[2]], sym(dot_var))
-    dt_squash(out, env, vars = vars, j = j)
+    dt_squash(out, env, data, j = j)
   } else {
     name <- fun_name(x[[1]])
     if (is.null(name)) {
@@ -158,7 +158,7 @@ simplify_function_call <- function(x, env, vars, j = TRUE) {
 
     attr(x, "position") <- NULL
     x[[1]] <- name
-    dt_squash(x, env, vars = vars, j = j)
+    dt_squash(x, env, data, j = j)
   }
 }
 
