@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Subset first or last rows — head.dtplyr_step • dtplyr</title>
+<title>Count observations by group — count.dtplyr_step • dtplyr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,9 +49,9 @@
 
 
 
-<meta property="og:title" content="Subset first or last rows — head.dtplyr_step" />
-<meta property="og:description" content="These are methods for the base generics head() and tail(). They
-are not translated." />
+<meta property="og:title" content="Count observations by group — count.dtplyr_step" />
+<meta property="og:description" content="This is a method for the dplyr count() generic. It is translated using
+.N in the j argument, and supplying groups to keyby as appropriate." />
 <meta property="og:image" content="https://dtplyr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -153,82 +153,97 @@ are not translated." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Subset first or last rows</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-call.R'><code>R/step-call.R</code></a></small>
-    <div class="hidden name"><code>head.dtplyr_step.Rd</code></div>
+    <h1>Count observations by group</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-subset.R'><code>R/step-subset.R</code></a></small>
+    <div class="hidden name"><code>count.dtplyr_step.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These are methods for the base generics <code><a href='https://rdrr.io/r/utils/head.html'>head()</a></code> and <code><a href='https://rdrr.io/r/utils/head.html'>tail()</a></code>. They
-are not translated.</p>
+    <p>This is a method for the dplyr <code><a href='https://dplyr.tidyverse.org/reference/count.html'>count()</a></code> generic. It is translated using
+<code>.N</code> in the <code>j</code> argument, and supplying groups to <code>keyby</code> as appropriate.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>6L</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>6L</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, wt <span class='op'>=</span> <span class='cn'>NULL</span>, sort <span class='op'>=</span> <span class='cn'>FALSE</span>, name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>.data</th>
       <td><p>A <code><a href='lazy_dt.html'>lazy_dt()</a></code></p></td>
     </tr>
     <tr>
-      <th>n</th>
-      <td><p>Number of rows to select. Can use a negative number to instead
-drop rows from the other end.</p></td>
+      <th>...</th>
+      <td><p>&lt;<code><a href='https://dplyr.tidyverse.org/reference/dplyr_data_masking.html'>data-masking</a></code>&gt; Variables to group by.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Passed on to <code><a href='https://rdrr.io/r/utils/head.html'>head()</a></code>/<code><a href='https://rdrr.io/r/utils/head.html'>tail()</a></code>.</p></td>
+      <th>wt</th>
+      <td><p>&lt;<code><a href='https://dplyr.tidyverse.org/reference/dplyr_data_masking.html'>data-masking</a></code>&gt; Frequency weights.
+Can be <code>NULL</code> or a variable:</p><ul>
+<li><p>If <code>NULL</code> (the default), counts the number of rows in each group.</p></li>
+<li><p>If a variable, computes <code><a href='https://rdrr.io/r/base/sum.html'>sum(wt)</a></code> for each group.</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>sort</th>
+      <td><p>If <code>TRUE</code>, will show the largest groups at the top.</p></td>
+    </tr>
+    <tr>
+      <th>name</th>
+      <td><p>The name of the new column in the output.</p>
+<p>If omitted, it will default to <code>n</code>. If there's already a column called <code>n</code>,
+it will error, and require you to specify the name.</p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>, warn.conflicts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='co'># first three rows</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dt</span>, <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [3 x 1]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>head(`_DT7`, n = 3)
+
+<span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span><span class='op'>)</span>
+<span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='va'>species</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [38 x 2]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT2`[, .(n = .N), keyby = .(species)]
 #&gt; 
-#&gt;       x
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     1
-#&gt; </span><span style='color: #555555;'>2</span><span>     2
-#&gt; </span><span style='color: #555555;'>3</span><span>     3
+#&gt;   species      n
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #BB0000;'>NA</span><span>           4
+#&gt; </span><span style='color: #555555;'>2</span><span> Aleena       1
+#&gt; </span><span style='color: #555555;'>3</span><span> Besalisk     1
+#&gt; </span><span style='color: #555555;'>4</span><span> Cerean       1
+#&gt; </span><span style='color: #555555;'>5</span><span> Chagrian     1
+#&gt; </span><span style='color: #555555;'>6</span><span> Clawdite     1
+#&gt; </span><span style='color: #555555;'># … with 32 more rows</span><span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='co'># last three rows</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='va'>dt</span>, <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [3 x 1]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>tail(`_DT7`, n = 3)
+#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='va'>species</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [38 x 2]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT2`[, .(n = .N), keyby = .(species)][order(desc(n))]
 #&gt; 
-#&gt;       x
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     8
-#&gt; </span><span style='color: #555555;'>2</span><span>     9
-#&gt; </span><span style='color: #555555;'>3</span><span>    10
+#&gt;   species      n
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> Human       35
+#&gt; </span><span style='color: #555555;'>2</span><span> Droid        6
+#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #BB0000;'>NA</span><span>           4
+#&gt; </span><span style='color: #555555;'>4</span><span> Gungan       3
+#&gt; </span><span style='color: #555555;'>5</span><span> Kaminoan     2
+#&gt; </span><span style='color: #555555;'>6</span><span> Mirialan     2
+#&gt; </span><span style='color: #555555;'># … with 32 more rows</span><span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
-<span class='co'># drop first three rows</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span><span class='op'>(</span><span class='va'>dt</span>, <span class='op'>-</span><span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [7 x 1]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>tail(`_DT7`, n = -3)
+#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='va'>species</span>, wt <span class='op'>=</span> <span class='va'>mass</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [38 x 2]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT2`[, .(n = sum(mass, na.rm = TRUE)), keyby = .(species)][order(desc(n))]
 #&gt; 
-#&gt;       x
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     4
-#&gt; </span><span style='color: #555555;'>2</span><span>     5
-#&gt; </span><span style='color: #555555;'>3</span><span>     6
-#&gt; </span><span style='color: #555555;'>4</span><span>     7
-#&gt; </span><span style='color: #555555;'>5</span><span>     8
-#&gt; </span><span style='color: #555555;'>6</span><span>     9
-#&gt; </span><span style='color: #555555;'># … with 1 more row</span><span>
+#&gt;   species     n
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> Human   </span><span style='text-decoration: underline;'>1</span><span>821.
+#&gt; </span><span style='color: #555555;'>2</span><span> Hutt    </span><span style='text-decoration: underline;'>1</span><span>358 
+#&gt; </span><span style='color: #555555;'>3</span><span> Droid    279 
+#&gt; </span><span style='color: #555555;'>4</span><span> Wookiee  248 
+#&gt; </span><span style='color: #555555;'>5</span><span> Kaleesh  159 
+#&gt; </span><span style='color: #555555;'>6</span><span> Gungan   148 
+#&gt; </span><span style='color: #555555;'># … with 32 more rows</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
   </div>

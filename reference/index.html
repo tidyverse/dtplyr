@@ -165,7 +165,7 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-getting-data-in-and-out" class="hasAnchor"><a href="#section-getting-data-in-and-out" class="anchor"></a>Getting data in and out</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -177,9 +177,40 @@
       <tr>
         
         <td>
+          <p><code><a href="lazy_dt.html">lazy_dt()</a></code> </p>
+        </td>
+        <td><p>Create a "lazy" data.table for use with dplyr verbs</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="collect.html">collect(<i>&lt;dtplyr_step&gt;</i>)</a></code> <code><a href="collect.html">compute(<i>&lt;dtplyr_step&gt;</i>)</a></code> <code><a href="collect.html">as.data.table(<i>&lt;dtplyr_step&gt;</i>)</a></code> <code><a href="collect.html">as.data.frame(<i>&lt;dtplyr_step&gt;</i>)</a></code> <code><a href="collect.html">as_tibble(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
         </td>
         <td><p>Force computation of a lazy data.table</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-single-table-verbs" class="hasAnchor"><a href="#section-single-table-verbs" class="anchor"></a>Single table verbs</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="arrange.dtplyr_step.html">arrange(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Arrange rows by column values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="count.dtplyr_step.html">count(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Count observations by group</p></td>
       </tr><tr>
         
         <td>
@@ -189,9 +220,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="dtplyr-package.html">dtplyr-package</a></code> </p>
+          <p><code><a href="filter.dtplyr_step.html">filter.dtplyr_step()</a></code> </p>
         </td>
-        <td><p>dtplyr: Data Table Back-End for 'dplyr'</p></td>
+        <td><p>Subset rows using column values</p></td>
       </tr><tr>
         
         <td>
@@ -201,9 +232,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="group_modify.dtplyr_step.html">group_modify(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
+          <p><code><a href="group_modify.dtplyr_step.html">group_modify(<i>&lt;dtplyr_step&gt;</i>)</a></code> <code><a href="group_modify.dtplyr_step.html">group_map(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Modify a lazy_dt in place</p></td>
+        <td><p>Apply a function to each group</p></td>
       </tr><tr>
         
         <td>
@@ -213,15 +244,70 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="lazy_dt.html">lazy_dt()</a></code> </p>
+          <p><code><a href="mutate.dtplyr_step.html">mutate(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Create a "lazy" data.table for use with dplyr verbs</p></td>
+        <td><p>Create and modify columns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="transmute.dtplyr_step.html">transmute(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Create new columns, dropping old</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="relocate.dtplyr_step.html">relocate(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Relocate variables using their names</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="rename.dtplyr_step.html">rename(<i>&lt;dtplyr_step&gt;</i>)</a></code> <code><a href="rename.dtplyr_step.html">rename_with(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Rename columns</p></td>
+        <td><p>Rename columns using their names</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="select.dtplyr_step.html">select(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Subset columns using their names</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slice.dtplyr_step.html">slice(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Subset rows using their positions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="summarise.dtplyr_step.html">summarise(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Summarise each group to one row</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-two-table-verbs" class="hasAnchor"><a href="#section-two-table-verbs" class="anchor"></a>Two table verbs</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="left_join.dtplyr_step.html">left_join(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Join data tables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="intersect.dtplyr_step.html">intersect(<i>&lt;dtplyr_step&gt;</i>)</a></code> <code><a href="intersect.dtplyr_step.html">union(<i>&lt;dtplyr_step&gt;</i>)</a></code> <code><a href="intersect.dtplyr_step.html">union_all(<i>&lt;dtplyr_step&gt;</i>)</a></code> <code><a href="intersect.dtplyr_step.html">setdiff(<i>&lt;dtplyr_step&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Set operations</p></td>
       </tr>
     </tbody>
     </table>

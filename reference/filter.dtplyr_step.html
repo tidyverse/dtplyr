@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apply a function to each group — group_modify.dtplyr_step • dtplyr</title>
+<title>Subset rows using column values — filter.dtplyr_step • dtplyr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,9 +49,9 @@
 
 
 
-<meta property="og:title" content="Apply a function to each group — group_modify.dtplyr_step" />
-<meta property="og:description" content="These are methods for the dplyr group_map() and group_modify() generics.
-They are both translated to [.data.table." />
+<meta property="og:title" content="Subset rows using column values — filter.dtplyr_step" />
+<meta property="og:description" content="This is a method for the dplyr arrange() generic. It is translated to
+the i argument of [.data.table" />
 <meta property="og:image" content="https://dtplyr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -153,92 +153,90 @@ They are both translated to [.data.table." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Apply a function to each group</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-modify.R'><code>R/step-modify.R</code></a></small>
-    <div class="hidden name"><code>group_modify.dtplyr_step.Rd</code></div>
+    <h1>Subset rows using column values</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-subset.R'><code>R/step-subset.R</code></a></small>
+    <div class="hidden name"><code>filter.dtplyr_step.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These are methods for the dplyr <code><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_map()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify()</a></code> generics.
-They are both translated to <code>[.data.table</code>.</p>
+    <p>This is a method for the dplyr <code><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange()</a></code> generic. It is translated to
+the <code>i</code> argument of <code>[.data.table</code></p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify</a></span><span class='op'>(</span><span class='va'>.tbl</span>, <span class='va'>.f</span>, <span class='va'>...</span>, keep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_map</a></span><span class='op'>(</span><span class='va'>.tbl</span>, <span class='va'>.f</span>, <span class='va'>...</span>, keep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>filter.dtplyr_step</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, .preserve <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.tbl</th>
-      <td><p>A <code><a href='lazy_dt.html'>lazy_dt()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>.f</th>
-      <td><p>The name of a two argument function. The first argument is passed
-<code>.SD</code>,the data.table representing the current group; the second argument
-is passed <code>.BY</code>, a list giving the current values of the grouping
-variables. The function should return a list or data.table.</p></td>
+      <th>.data</th>
+      <td><p>A <code><a href='lazy_dt.html'>lazy_dt()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed to <code>.f</code></p></td>
+      <td><p>&lt;<code><a href='https://dplyr.tidyverse.org/reference/dplyr_data_masking.html'>data-masking</a></code>&gt; Expressions that return a
+logical value, and are defined in terms of the variables in <code>.data</code>.
+If multiple expressions are included, they are combined with the <code>&amp;</code> operator.
+Only rows for which all conditions evaluate to <code>TRUE</code> are kept.</p></td>
     </tr>
     <tr>
-      <th>keep</th>
-      <td><p>Not supported for <a href='lazy_dt.html'>lazy_dt</a>.</p></td>
+      <th>.preserve</th>
+      <td><p>Ignored</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_map()</a></code> applies <code>.f</code> to each group, returning a list.
-<code><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify()</a></code> replaces each group with the results of <code>.f</code>, returning a
-modified <code><a href='lazy_dt.html'>lazy_dt()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>, warn.conflicts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
-
-<span class='va'>dt</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_modify</a></span><span class='op'>(</span><span class='va'>head</span>, n <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [6 x 11]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT6`[, head(.SD, .BY, n = ~2L), keyby = .(cyl)]
-#&gt; </span><span style='font-weight: bold;'>Groups: </span><span>cyl
+<span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [11 x 11]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT4`[cyl == 4]
 #&gt; 
-#&gt;     cyl   mpg  disp    hp  drat    wt  qsec    vs    am  gear  carb
+#&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     4  22.8  108     93  3.85  2.32  18.6     1     1     4     1
-#&gt; </span><span style='color: #555555;'>2</span><span>     4  24.4  147.    62  3.69  3.19  20       1     0     4     2
-#&gt; </span><span style='color: #555555;'>3</span><span>     6  21    160    110  3.9   2.62  16.5     0     1     4     4
-#&gt; </span><span style='color: #555555;'>4</span><span>     6  21    160    110  3.9   2.88  17.0     0     1     4     4
-#&gt; </span><span style='color: #555555;'>5</span><span>     8  18.7  360    175  3.15  3.44  17.0     0     0     3     2
-#&gt; </span><span style='color: #555555;'>6</span><span>     8  14.3  360    245  3.21  3.57  15.8     0     0     3     4
+#&gt; </span><span style='color: #555555;'>1</span><span>  22.8     4 108      93  3.85  2.32  18.6     1     1     4     1
+#&gt; </span><span style='color: #555555;'>2</span><span>  24.4     4 147.     62  3.69  3.19  20       1     0     4     2
+#&gt; </span><span style='color: #555555;'>3</span><span>  22.8     4 141.     95  3.92  3.15  22.9     1     0     4     2
+#&gt; </span><span style='color: #555555;'>4</span><span>  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1
+#&gt; </span><span style='color: #555555;'>5</span><span>  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2
+#&gt; </span><span style='color: #555555;'>6</span><span>  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1
+#&gt; </span><span style='color: #555555;'># … with 5 more rows</span><span>
+#&gt; 
+#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>vs</span>, <span class='va'>am</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [7 x 11]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT4`[vs &amp; am]
+#&gt; 
+#&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>  22.8     4 108      93  3.85  2.32  18.6     1     1     4     1
+#&gt; </span><span style='color: #555555;'>2</span><span>  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1
+#&gt; </span><span style='color: #555555;'>3</span><span>  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2
+#&gt; </span><span style='color: #555555;'>4</span><span>  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1
+#&gt; </span><span style='color: #555555;'>5</span><span>  27.3     4  79      66  4.08  1.94  18.9     1     1     4     1
+#&gt; </span><span style='color: #555555;'>6</span><span>  30.4     4  95.1   113  3.77  1.51  16.9     1     1     5     2
+#&gt; </span><span style='color: #555555;'># … with 1 more row</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_map.html'>group_map</a></span><span class='op'>(</span><span class='va'>head</span>, n <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt;    mpg disp  hp drat    wt  qsec vs am gear carb
-#&gt; 1:  21  160 110  3.9 2.620 16.46  0  1    4    4
-#&gt; 2:  21  160 110  3.9 2.875 17.02  0  1    4    4
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [16 x 11]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT4`[, .SD[mpg &gt; mean(mpg)], keyby = .(cyl)]
+#&gt; </span><span style='font-weight: bold;'>Groups: </span><span>cyl
 #&gt; 
-#&gt; [[2]]
-#&gt;     mpg  disp hp drat   wt  qsec vs am gear carb
-#&gt; 1: 22.8 108.0 93 3.85 2.32 18.61  1  1    4    1
-#&gt; 2: 24.4 146.7 62 3.69 3.19 20.00  1  0    4    2
+#&gt;     cyl   mpg  disp    hp  drat    wt  qsec    vs    am  gear  carb
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     4  32.4  78.7    66  4.08  2.2   19.5     1     1     4     1
+#&gt; </span><span style='color: #555555;'>2</span><span>     4  30.4  75.7    52  4.93  1.62  18.5     1     1     4     2
+#&gt; </span><span style='color: #555555;'>3</span><span>     4  33.9  71.1    65  4.22  1.84  19.9     1     1     4     1
+#&gt; </span><span style='color: #555555;'>4</span><span>     4  27.3  79      66  4.08  1.94  18.9     1     1     4     1
+#&gt; </span><span style='color: #555555;'>5</span><span>     4  30.4  95.1   113  3.77  1.51  16.9     1     1     5     2
+#&gt; </span><span style='color: #555555;'>6</span><span>     6  21   160     110  3.9   2.62  16.5     0     1     4     4
+#&gt; </span><span style='color: #555555;'># … with 10 more rows</span><span>
 #&gt; 
-#&gt; [[3]]
-#&gt;     mpg disp  hp drat   wt  qsec vs am gear carb
-#&gt; 1: 18.7  360 175 3.15 3.44 17.02  0  0    3    2
-#&gt; 2: 14.3  360 245 3.21 3.57 15.84  0  0    3    4
-#&gt; </div></span></pre>
+#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
