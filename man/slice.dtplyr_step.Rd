@@ -7,6 +7,8 @@
 \method{slice}{dtplyr_step}(.data, ...)
 }
 \arguments{
+\item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
+
 \item{...}{Positive integers giving rows to select, or negative
 integers giving rows to drop.}
 }

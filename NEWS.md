@@ -1,5 +1,9 @@
 # dtplyr (development version)
 
+* All verbs now have (very basic) documentation pointing back to the
+  dplyr generic, and providing a (very rough) description of the translation
+  accompanied with a few examples.
+
 * Show total rows when printing a `lazy_dt()`.
 
 * `select()` after grouped filter no longer incorrectly collapses into a single

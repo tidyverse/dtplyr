@@ -339,7 +339,7 @@ filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
 #' @importFrom dplyr arrange
 #' @export
 #' @examples
-#' library(dplyr, warn.conflict = FALSE)
+#' library(dplyr, warn.conflicts = FALSE)
 #'
 #' dt <- lazy_dt(mtcars)
 #' dt %>% arrange(vs, cyl)
@@ -367,7 +367,7 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
 #' the `i` argument of `[.data.table`.
 #'
 #' @importFrom dplyr slice
-#' @params .data A [lazy_dt()].
+#' @param .data A [lazy_dt()].
 #' @param ... Positive integers giving rows to select, or negative
 #'   integers giving rows to drop.
 #' @export

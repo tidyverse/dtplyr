@@ -20,7 +20,7 @@ This is a method for dplyr generic \code{\link[=arrange]{arrange()}}. It is tran
 an \code{\link[=order]{order()}} call in the \code{i} argument of \verb{[.data.table}.
 }
 \examples{
-library(dplyr, warn.conflict = FALSE)
+library(dplyr, warn.conflicts = FALSE)
 
 dt <- lazy_dt(mtcars)
 dt \%>\% arrange(vs, cyl)
