@@ -285,12 +285,14 @@ test_that("can slice", {
 })
 
 test_that("can slice when grouped", {
-  dt <- lazy_dt(data.table(x = 1:4, y = c(1, 2, 1, 2)), "DT")
+  dt1 <- lazy_dt(data.table(x = c(1, 1, 2, 2), y = c(1, 2, 3, 4)), "DT")
+  dt2 <- dt1 %>% group_by(x) %>% slice(1)
 
   expect_equal(
-    dt %>% group_by(x) %>% slice(1) %>% show_query(),
-    expr(DT[DT[, .I[1], keyby = .(x)]$V1, , keyby = .(x)])
+    dt2 %>% show_query(),
+    expr(DT[DT[, .I[1], keyby = .(x)]$V1])
   )
+  expect_equal(as_tibble(dt2), tibble(x = c(1, 2), y = c(1, 3)))
 })
 
 # sample ------------------------------------------------------------------
@@ -350,3 +352,16 @@ test_that("transmute generates compound expression if needed", {
   )
 })
 
+# filter ------------------------------------------------------------------
+
+test_that("can filter when grouped", {
+  dt1 <- lazy_dt(data.table(x = c(1, 1, 2, 2), y = c(1, 2, 3, 4)), "DT")
+  dt2 <- dt1 %>% group_by(x) %>% filter(sum(y) == 3)
+
+  expect_equal(
+    dt2 %>% show_query(),
+    expr(DT[DT[, .I[sum(y) == 3], keyby = .(x)]$V1])
+  )
+
+  expect_equal(as_tibble(dt2), tibble(x = c(1, 1), y = c(1, 2)))
+})

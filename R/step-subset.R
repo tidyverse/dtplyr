@@ -101,20 +101,20 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 
   parent <- dt_call(x$parent, needs_copy)
 
-  if (length(x$groups) == 0) {
-    if (is.null(i) && is.null(x$j)) {
-      out <- parent
-    } else if (is.null(i) && !is.null(x$j)) {
-      out <- call2("[", parent, , x$j)
-    } else if (!is.null(i) && is.null(x$j)) {
-      out <- call2("[", parent, i)
-    } else {
-      out <- call2("[", parent, i, x$j)
-    }
+  if (is.null(i) && is.null(x$j)) {
+    out <- parent
+  } else if (is.null(i) && !is.null(x$j)) {
+    out <- call2("[", parent, , x$j)
+  } else if (!is.null(i) && is.null(x$j)) {
+    out <- call2("[", parent, i)
   } else {
-    out <- call2("[", parent, i %||% missing_arg(), x$j %||% missing_arg())
+    out <- call2("[", parent, i, x$j)
+  }
+
+  if (!is.null(x$j)) {
     out <- add_grouping_param(out, x)
   }
+
   if (length(x$on) > 0) {
     out$on <- call2(".", !!!syms(x$on))
     out$allow.cartesian <- TRUE
