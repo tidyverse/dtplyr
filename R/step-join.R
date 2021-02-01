@@ -18,6 +18,7 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
     on = on,
     suffix = suffix,
     style = style,
+    locals = utils::modifyList(x$locals, y$locals),
     class = "dtplyr_step_join"
   )
 }
@@ -87,7 +88,7 @@ left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
   by <- dtplyr_common_by(by, x, y)
 
   if (join_is_simple(x$vars, y$vars, by)) {
-    step_subset(y, vars = union(x$vars, y$vars), i = x, on = by)
+    step_subset_on(y, x, i = y, on = by)
   } else {
     step_join(x, y, on = by, style = "left", suffix = suffix)
   }
@@ -100,10 +101,19 @@ right_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = 
   by <- dtplyr_common_by(by, y, x)
 
   if (join_is_simple(x$vars, y$vars, by)) {
-    step_subset(x, vars = union(x$vars, y$vars), i = y, on = by)
+    step_subset_on(x, y, i = y, on = by)
   } else {
     step_join(y, x, on = by, style = "left", suffix = suffix)
   }
+}
+
+step_subset_on <- function(x, y, i, on) {
+  step_subset(x,
+    vars = union(x$vars, y$vars),
+    i = y,
+    on = on,
+    locals = utils::modifyList(x$locals, y$locals)
+  )
 }
 
 #' @importFrom dplyr inner_join

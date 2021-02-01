@@ -1,6 +1,7 @@
 step_subset <- function(parent,
                         vars = parent$vars,
                         groups = parent$groups,
+                        locals = parent$locals,
                         arrange = parent$arrange,
                         i = NULL,
                         j = NULL,
@@ -16,6 +17,7 @@ step_subset <- function(parent,
     parent = parent,
     vars = vars,
     groups = groups,
+    locals = locals,
     arrange = arrange,
     i = i,
     j = j,
@@ -99,7 +101,7 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 
   parent <- dt_call(x$parent, needs_copy)
 
-  # if (length(x$groups) == 0) {
+  if (length(x$groups) == 0) {
     if (is.null(i) && is.null(x$j)) {
       out <- parent
     } else if (is.null(i) && !is.null(x$j)) {
@@ -109,20 +111,10 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
     } else {
       out <- call2("[", parent, i, x$j)
     }
-  # } else {
-  #   if (is.null(i)) {
-  #     out <- call2("[", parent, , x$j)
-  #   } else {
-  #     if (is.null(x$j)) {
-  #       j <- call2("[", expr(.SD), i)
-  #     } else {
-  #       j <- call2("[", expr(.SD), i, x$j)
-  #     }
-  #     out <- call2("[", parent, , j)
-  #   }
-#
-    # out <- add_grouping_param(out, x)
-  # }
+  } else {
+    out <- call2("[", parent, i %||% missing_arg(), x$j %||% missing_arg())
+    out <- add_grouping_param(out, x)
+  }
   if (length(x$on) > 0) {
     out$on <- call2(".", !!!syms(x$on))
     out$allow.cartesian <- TRUE

@@ -41,9 +41,7 @@
       dt %>% compute("DT2")
     Output
       Source: local data table [32 x 11]
-      Local assignments:
-        DT2 <- DT
-      Call:   DT2
+      Call:   DT
       
           mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
         <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>

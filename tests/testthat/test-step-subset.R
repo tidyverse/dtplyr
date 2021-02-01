@@ -17,7 +17,7 @@ test_that("generates expected calls", {
   expect_equal(dt_call(ungrouped), expr(DT[i, j]))
 
   with_i <- step_subset(first, i = quote(i), j = quote(j), groups = "x")
-  expect_equal(dt_call(with_i), expr(DT[, .SD[i, j], keyby = .(x)]))
+  expect_equal(dt_call(with_i), expr(DT[i, j, keyby = .(x)]))
 
   without_i <- step_subset(first, j = quote(j), groups = "x")
   expect_equal(dt_call(without_i), expr(DT[, j, keyby = .(x)]))
@@ -126,16 +126,6 @@ test_that("can merge iff j-generating call comes after i", {
   expect_equal(
     dt %>% summarise(y = mean(x)) %>% filter(y > 1) %>% show_query(),
     expr(DT[, .(y = mean(x))][y > 1])
-  )
-})
-
-test_that("but not if grouped", {
-  dt <- lazy_dt(data.table(g = c(1, 1, 2, 2), y = c(1, 1, 2, 2), z = 1:4), "DT")
-  gt <- dt %>% group_by(g)
-
-  expect_equal(
-    gt %>% filter(sum(y) > 2) %>% select(g, z) %>% show_query(),
-    expr(DT[, .SD[sum(y) > 2], keyby = .(g)][, .(g, z)])
   )
 })
 
@@ -299,7 +289,7 @@ test_that("can slice when grouped", {
 
   expect_equal(
     dt %>% group_by(x) %>% slice(1) %>% show_query(),
-    expr(DT[, .SD[1], keyby = .(x)])
+    expr(DT[DT[, .I[1], keyby = .(x)]$V1, , keyby = .(x)])
   )
 })
 

@@ -6,8 +6,9 @@ step_set <- function(x, y, style) {
   new_step(
     parent = x,
     parent2 = y,
+    locals = utils::modifyList(x$locals, y$locals),
     style = style,
-    class = "dtplyr_step_set"
+    class = "dtplyr_step_set",
   )
 }
 
