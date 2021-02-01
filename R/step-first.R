@@ -80,6 +80,7 @@ step_first <- function(parent, name = NULL, immutable = TRUE, env = caller_env()
   new_step(parent,
     vars = names(parent),
     groups = character(),
+    locals = list(),
     implicit_copy = !immutable,
     needs_copy = FALSE,
     name = sym(name),
@@ -100,6 +101,11 @@ dt_call.dtplyr_step_first <- function(x, needs_copy = FALSE) {
 #' @export
 dt_sources.dtplyr_step_first <- function(x) {
   stats::setNames(list(x$parent), as.character(x$name))
+}
+
+#' @export
+dt_has_computation.dtplyr_step_first <- function(x) {
+  FALSE
 }
 
 unique_name <- local({

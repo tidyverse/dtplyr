@@ -10,6 +10,7 @@
 new_step <- function(parent,
                      vars = parent$vars,
                      groups = parent$groups,
+                     locals = parent$locals,
                      implicit_copy = parent$implicit_copy,
                      needs_copy = parent$needs_copy,
                      env = parent$env,
@@ -25,6 +26,7 @@ new_step <- function(parent,
       parent = parent,
       vars = vars,
       groups = groups,
+      locals = locals,
       implicit_copy = implicit_copy,
       needs_copy = needs_copy,
       env = env,
@@ -96,14 +98,12 @@ collect.dtplyr_step <- function(x, ...) {
 #' @rdname collect
 #' @export
 #' @importFrom dplyr compute
-compute.dtplyr_step <- function(x, ...) {
-  out <- lazy_dt(dt_eval(x))
-
-  if (length(x$groups) > 0) {
-    out <- step_group(out, x$groups)
+compute.dtplyr_step <- function(x, name = unique_name(), ...) {
+  if (!dt_has_computation(x)) {
+    return(x)
   }
 
-  out
+  step_locals(x, set_names(list(dt_call(x)), name), name)
 }
 
 #' @rdname collect
@@ -146,10 +146,16 @@ print.dtplyr_step <- function(x, ...) {
   dt <- as.data.table(x)
 
   cat_line(crayon::bold("Source: "), "local data table ", dplyr::dim_desc(dt))
-  cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
   if (length(x$groups) > 0) {
     cat_line(crayon::bold("Groups: "), paste(x$groups, collapse = ", "))
   }
+  if (length(x$locals) > 0) {
+    cat_line(crayon::bold("Local assignments:"))
+    for (var in names(x$locals)) {
+      cat_line("  ", var, " <- ", expr_deparse(x$locals[[var]]))
+    }
+  }
+  cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
   cat_line()
   cat_line(format(as_tibble(dt), n = 6)[-1]) # Hack to remove "A tibble" line
   cat_line()
@@ -191,4 +197,12 @@ dt_call <- function(x, needs_copy = x$needs_copy) {
 #' @export
 dt_call.dtplyr_step <- function(x, needs_copy = x$needs_copy) {
   dt_call(x$parent, needs_copy)
+}
+
+dt_has_computation <- function(x) {
+  UseMethod("dt_has_computation")
+}
+#' @export
+dt_has_computation.dtplyr_step <- function(x, needs_copy = x$needs_copy) {
+  TRUE
 }

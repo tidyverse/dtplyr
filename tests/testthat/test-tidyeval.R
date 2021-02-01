@@ -97,6 +97,15 @@ test_that("can disambiguate using .data and .env", {
   expect_equal(out, tibble(data = 1, env = 2))
 })
 
+test_that("locals are executed before call", {
+  dt <- lazy_dt(data.frame(x = 1, y = 2))
+
+  expect_equal(
+    dt %>% step_locals(exprs(a = 1, b = 2, c = a + b), "c") %>% dt_eval(),
+    3
+  )
+})
+
 # dplyr verbs -------------------------------------------------------------
 
 test_that("n() is equivalent to .N", {

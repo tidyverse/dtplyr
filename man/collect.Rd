@@ -10,7 +10,7 @@
 \usage{
 \method{collect}{dtplyr_step}(x, ...)
 
-\method{compute}{dtplyr_step}(x, ...)
+\method{compute}{dtplyr_step}(x, name = unique_name(), ...)
 
 \method{as.data.table}{dtplyr_step}(x, keep.rownames = FALSE, ...)
 

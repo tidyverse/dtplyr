@@ -1,6 +1,11 @@
 dt_eval <- function(x) {
   env <- as_environment(dt_sources(x), x$env)
   add_dt_wrappers(env)
+
+  for (var in names(x$locals)) {
+    env[[var]] <- eval(x$locals[[var]], env)
+  }
+
   quo <- new_quosure(dt_call(x), env)
 
   eval_tidy(quo)
