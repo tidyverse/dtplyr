@@ -205,7 +205,7 @@ it will error, and require you to specify the name.</p></td>
 <span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span><span class='op'>)</span>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='va'>species</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [38 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT2`[, .(n = .N), keyby = .(species)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT4`[, .(n = .N), keyby = .(species)]
 #&gt; 
 #&gt;   species      n
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
@@ -219,7 +219,7 @@ it will error, and require you to specify the name.</p></td>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='va'>species</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [38 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT2`[, .(n = .N), keyby = .(species)][order(desc(n))]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT4`[, .(n = .N), keyby = .(species)][order(desc(n))]
 #&gt; 
 #&gt;   species      n
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
@@ -233,7 +233,7 @@ it will error, and require you to specify the name.</p></td>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='va'>species</span>, wt <span class='op'>=</span> <span class='va'>mass</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [38 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT2`[, .(n = sum(mass, na.rm = TRUE)), keyby = .(species)][order(desc(n))]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT4`[, .(n = sum(mass, na.rm = TRUE)), keyby = .(species)][order(desc(n))]
 #&gt; 
 #&gt;   species     n
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>

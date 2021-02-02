@@ -189,7 +189,7 @@ evaluate to a vector.</p></td>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='op'>(</span><span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>2</span>, b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='va'>y</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [5 x 4]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT13`)[, `:=`(a = (x + y)/2, b = sqrt(x^2 + y^2))]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT15`)[, `:=`(a = (x + y)/2, b = sqrt(x^2 + y^2))]
 #&gt; 
 #&gt;       x     y     a     b
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -205,7 +205,7 @@ evaluate to a vector.</p></td>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>1</span>, x2 <span class='op'>=</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [5 x 4]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT13`)[, `:=`(c("x1", "x2"), {
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT15`)[, `:=`(c("x1", "x2"), {
 #&gt;     x1 &lt;- x + 1
 #&gt;     x2 &lt;- x1 + 1
 #&gt;     .(x1, x2)

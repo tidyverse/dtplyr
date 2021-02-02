@@ -212,7 +212,7 @@ using the <code>keyby</code> (<code>TRUE</code>) and <code>by</code> (<code>FALS
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [3 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT5`[, .(mpg = mean(mpg)), keyby = .(cyl)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT7`[, .(mpg = mean(mpg)), keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl   mpg
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -227,7 +227,7 @@ using the <code>keyby</code> (<code>TRUE</code>) and <code>by</code> (<code>FALS
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span>, arrange <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [3 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT5`[, .(mpg = mean(mpg)), by = .(cyl)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT7`[, .(mpg = mean(mpg)), by = .(cyl)]
 #&gt; 
 #&gt;     cyl   mpg
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
