@@ -175,12 +175,14 @@ print.dtplyr_step <- function(x, ...) {
     cat_line(crayon::bold("Groups: "), paste(x$groups, collapse = ", "))
   }
   if (length(x$locals) > 0) {
-    cat_line(crayon::bold("Local assignments:"))
+    cat_line(crayon::bold("Call:"))
     for (var in names(x$locals)) {
       cat_line("  ", var, " <- ", expr_deparse(x$locals[[var]]))
     }
+    cat_line("  ", expr_text(dt_call(x)))
+  } else {
+    cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
   }
-  cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
   cat_line()
   cat_line(format(as_tibble(dt), n = 6)[-1]) # Hack to remove "A tibble" line
   cat_line()
