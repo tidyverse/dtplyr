@@ -73,17 +73,41 @@ n_groups.dtplyr_step <- function(x) {
 
 #' Force computation of a lazy data.table
 #'
-#' * `collect()` returns a tibble, grouped if needed
-#' * `compute()` returns a new [lazy_dt]
-#' * `as.data.table()` returns a data.table
-#' * `as.data.frame()` returns a data frame
-#' * `as_tibble()` returns a tibble
+#' * `collect()` returns a tibble, grouped if needed.
+#' * `compute()` generates an intermediate assignment in the translation.
+#' * `as.data.table()` returns a data.table.
+#' * `as.data.frame()` returns a data frame.
+#' * `as_tibble()` returns a tibble.
 #'
 #' @export
 #' @param x A [lazy_dt]
 #' @param ... Arguments used by other methods.
 #' @importFrom dplyr collect
-#' @rdname collect
+#' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' dt <- lazy_dt(mtcars)
+#'
+#' # Generate translation
+#' avg_mpg <- dt %>%
+#'   filter(am == 1) %>%
+#'   group_by(cyl) %>%
+#'   summarise(mpg = mean(mpg))
+#'
+#' # Show translation and temporarily compute result
+#' avg_mpg
+#'
+#' # compute and return tibble
+#' avg_mpg_tb <- as_tibble(avg_mpg)
+#' avg_mpg_tb
+#'
+#' # compute and return data.table
+#' avg_mpg_dt <- data.table::as.data.table(avg_mpg)
+#' avg_mpg_dt
+#'
+#' # modify translation to use intermediate assignment
+#' compute(avg_mpg)
+#'
 collect.dtplyr_step <- function(x, ...) {
   # for consistency with dbplyr::collect()
   out <- as_tibble(x)
@@ -95,7 +119,8 @@ collect.dtplyr_step <- function(x, ...) {
   out
 }
 
-#' @rdname collect
+#' @rdname collect.dtplyr_step
+#' @param name Name of intermediate data.table.
 #' @export
 #' @importFrom dplyr compute
 compute.dtplyr_step <- function(x, name = unique_name(), ...) {
@@ -106,20 +131,20 @@ compute.dtplyr_step <- function(x, name = unique_name(), ...) {
   step_locals(x, set_names(list(dt_call(x)), name), name)
 }
 
-#' @rdname collect
+#' @rdname collect.dtplyr_step
 #' @export
 #' @param keep.rownames Ignored as dplyr never preserves rownames.
 as.data.table.dtplyr_step <- function(x, keep.rownames = FALSE, ...) {
   dt_eval(x)[]
 }
 
-#' @rdname collect
+#' @rdname collect.dtplyr_step
 #' @export
 as.data.frame.dtplyr_step <- function(x, ...) {
   as.data.frame(dt_eval(x))
 }
 
-#' @rdname collect
+#' @rdname collect.dtplyr_step
 #' @export
 #' @importFrom tibble as_tibble
 as_tibble.dtplyr_step <- function(x, ...) {

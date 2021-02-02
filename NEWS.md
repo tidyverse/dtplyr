@@ -1,5 +1,9 @@
 # dtplyr (development version)
 
+* `compute()` now creates an intermediate assignment within the translation. 
+  This will generally have little impact on performance but it allows you to 
+  use intermediate variables to simplify complex translations.
+
 * All verbs now have (very basic) documentation pointing back to the
   dplyr generic, and providing a (very rough) description of the translation
   accompanied with a few examples.
