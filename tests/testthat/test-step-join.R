@@ -10,6 +10,14 @@ test_that("dt_sources captures all tables", {
   )
 })
 
+test_that("joins captures locals from both parents", {
+  dt1 <- lazy_dt(data.frame(x = 1)) %>% mutate(y = 1) %>% compute("D1")
+  dt2 <- lazy_dt(data.frame(x = 1)) %>% mutate(z = 1) %>% compute("D2")
+
+  expect_named(left_join(dt1, dt2, by = "x")$locals, c("D2", "D1"))
+  expect_named(inner_join(dt1, dt2, by = "x")$locals, c("D1", "D2"))
+})
+
 # dplyr verbs -------------------------------------------------------------
 
 test_that("simple usage generates expected translation", {
