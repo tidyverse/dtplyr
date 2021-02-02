@@ -224,16 +224,16 @@ Only rows for which all conditions evaluate to <code>TRUE</code> are kept.</p></
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [16 x 11]
 #&gt; </span><span style='font-weight: bold;'>Groups: </span><span>cyl
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT6`[`_DT6`[, .I[mpg &gt; mean(mpg)], keyby = .(cyl)]$V1]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT6`[`_DT6`[, .I[mpg &gt; mean(mpg)], by = .(cyl)]$V1]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1
-#&gt; </span><span style='color: #555555;'>2</span><span>  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2
-#&gt; </span><span style='color: #555555;'>3</span><span>  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1
-#&gt; </span><span style='color: #555555;'>4</span><span>  27.3     4  79      66  4.08  1.94  18.9     1     1     4     1
-#&gt; </span><span style='color: #555555;'>5</span><span>  30.4     4  95.1   113  3.77  1.51  16.9     1     1     5     2
-#&gt; </span><span style='color: #555555;'>6</span><span>  21       6 160     110  3.9   2.62  16.5     0     1     4     4
+#&gt; </span><span style='color: #555555;'>1</span><span>  21       6 160     110  3.9   2.62  16.5     0     1     4     4
+#&gt; </span><span style='color: #555555;'>2</span><span>  21       6 160     110  3.9   2.88  17.0     0     1     4     4
+#&gt; </span><span style='color: #555555;'>3</span><span>  21.4     6 258     110  3.08  3.22  19.4     1     0     3     1
+#&gt; </span><span style='color: #555555;'>4</span><span>  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1
+#&gt; </span><span style='color: #555555;'>5</span><span>  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2
+#&gt; </span><span style='color: #555555;'>6</span><span>  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1
 #&gt; </span><span style='color: #555555;'># … with 10 more rows</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
