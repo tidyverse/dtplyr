@@ -4,9 +4,16 @@ step_group <- function(parent, groups = parent$groups, arrange = parent$arrange)
     vars = parent$vars,
     groups = groups,
     class = "dtplyr_step_group",
-    arrange = arrange
+    arrange = arrange,
+    name = parent$name
   )
 }
+
+#' @export
+dt_has_computation.dtplyr_step_group <- function(x) {
+  dt_has_computation(x$parent)
+}
+
 
 add_grouping_param <- function(call, step) {
   if (length(step$groups) == 0) {

@@ -1,6 +1,7 @@
 step_subset <- function(parent,
                         vars = parent$vars,
                         groups = parent$groups,
+                        locals = parent$locals,
                         arrange = parent$arrange,
                         i = NULL,
                         j = NULL,
@@ -16,6 +17,7 @@ step_subset <- function(parent,
     parent = parent,
     vars = vars,
     groups = groups,
+    locals = locals,
     arrange = arrange,
     i = i,
     j = j,
@@ -23,6 +25,20 @@ step_subset <- function(parent,
     implicit_copy = !is.null(i) || !is.null(j),
     class = "dtplyr_step_subset"
   )
+}
+
+# Grouped i needs an intermediate assignment for maximum efficiency
+step_subset_i <- function(parent, i) {
+  if (length(parent$groups) > 0) {
+    parent <- compute(parent)
+
+    nm <- sym(parent$name)
+    i <- expr((!!nm)[, .I[!!i]])       # dt[, .I[]]
+    i <- add_grouping_param(i, parent) # dt[, .I[], keyby = ()]
+    i <- call("$", i, quote(V1))       # dt[, .I[], keyby = ()]$V1
+  }
+
+  step_subset(parent, i = i)
 }
 
 # When adding a subset that contains only j, it may be possible to merge
@@ -58,11 +74,6 @@ can_merge_subset <- function(x) {
     return(FALSE)
   }
 
-  # grouped filters have to be performed first
-  if (length(x$groups) > 0 && !is.null(x$i)) {
-    return(FALSE)
-  }
-
   # Don't need to check that groups are identical because the only
   # dplyr functions that generate expression in i are
   # filter/slice/sample/arrange/join and don't affect groups
@@ -90,30 +101,20 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 
   parent <- dt_call(x$parent, needs_copy)
 
-  if (length(x$groups) == 0) {
-    if (is.null(i) && is.null(x$j)) {
-      out <- parent
-    } else if (is.null(i) && !is.null(x$j)) {
-      out <- call2("[", parent, , x$j)
-    } else if (!is.null(i) && is.null(x$j)) {
-      out <- call2("[", parent, i)
-    } else {
-      out <- call2("[", parent, i, x$j)
-    }
+  if (is.null(i) && is.null(x$j)) {
+    out <- parent
+  } else if (is.null(i) && !is.null(x$j)) {
+    out <- call2("[", parent, , x$j)
+  } else if (!is.null(i) && is.null(x$j)) {
+    out <- call2("[", parent, i)
   } else {
-    if (is.null(i)) {
-      out <- call2("[", parent, , x$j)
-    } else {
-      if (is.null(x$j)) {
-        j <- call2("[", expr(.SD), i)
-      } else {
-        j <- call2("[", expr(.SD), i, x$j)
-      }
-      out <- call2("[", parent, , j)
-    }
+    out <- call2("[", parent, i, x$j)
+  }
 
+  if (!is.null(x$j)) {
     out <- add_grouping_param(out, x)
   }
+
   if (length(x$on) > 0) {
     out$on <- call2(".", !!!syms(x$on))
     out$allow.cartesian <- TRUE
@@ -326,13 +327,13 @@ filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
   dots <- capture_dots(.data, ..., .j = FALSE)
 
   if (length(dots) == 1 && is_symbol(dots[[1]])) {
-    # Suppress data.table warning when filteirng with a logical variable
+    # Suppress data.table warning when filtering with a logical variable
     i <- call2("(", dots[[1]])
   } else {
     i <- Reduce(function(x, y) call2("&", x, y), dots)
   }
 
-  step_subset(.data, i = i)
+  step_subset_i(.data, i)
 }
 
 #' Arrange rows by column values
@@ -401,7 +402,7 @@ slice.dtplyr_step <- function(.data, ...) {
     i <- call2("c", !!!dots)
   }
 
-  step_subset(.data, i = i)
+  step_subset_i(.data, i)
 }
 
 #' @importFrom dplyr sample_n
@@ -412,7 +413,7 @@ sample_n.dtplyr_step <- function(tbl,
                                  weight = NULL
                                  ) {
   weight <- enexpr(weight)
-  step_subset(tbl, i = sample_call(size, replace, weight))
+  step_subset_i(tbl, i = sample_call(size, replace, weight))
 }
 
 #' @importFrom dplyr sample_frac
@@ -423,7 +424,7 @@ sample_frac.dtplyr_step <- function(tbl,
                                     weight = NULL
                                     ) {
   weight <- enexpr(weight)
-  step_subset(tbl, i = sample_call(expr(.N * !!size), replace, weight))
+  step_subset_i(tbl, i = sample_call(expr(.N * !!size), replace, weight))
 }
 
 sample_call <- function(size, replace = FALSE, weight = NULL) {
