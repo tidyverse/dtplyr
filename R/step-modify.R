@@ -15,7 +15,7 @@ dt_call.dtplyr_step_modify <- function(x, needs_copy = x$needs_copy) {
   j <- call2(x$fun, quote(.SD), quote(.BY), !!!x$args)
   out <- call2("[", dt_call(x$parent, needs_copy), , j)
 
-  add_grouping_param(out, x)
+  add_grouping_param(out, x, arrange = FALSE)
 }
 
 # dplyr methods -----------------------------------------------------------

@@ -15,16 +15,15 @@ dt_has_computation.dtplyr_step_group <- function(x) {
 }
 
 
-add_grouping_param <- function(call, step) {
+add_grouping_param <- function(call, step, arrange = step$arrange) {
   if (length(step$groups) == 0) {
     return(call)
   }
 
-  arrange <- if (!is.null(step$arrange)) step$arrange else TRUE
+  arrange <- arrange %||% TRUE
   using <- if (isTRUE(arrange)) "keyby" else "by"
 
   call[[using]] <- call2(".", !!!syms(step$groups))
-
   call
 }
 

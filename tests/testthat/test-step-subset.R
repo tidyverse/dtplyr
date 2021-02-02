@@ -162,6 +162,14 @@ test_that("summarise peels off layer of grouping", {
   expect_equal(summarise(summarise(gt))$groups, character())
 })
 
+test_that("summarises sorts groups", {
+  dt <- lazy_dt(data.table(x = 2:1))
+  expect_equal(
+    dt %>% group_by(x) %>% summarise(n = n()) %>% pull(x),
+    1:2
+  )
+})
+
 test_that("vars set correctly", {
   dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
   expect_equal(dt %>% summarise(z = mean(x)) %>% .$vars, "z")
@@ -290,10 +298,19 @@ test_that("can slice when grouped", {
 
   expect_equal(
     dt2 %>% show_query(),
-    expr(DT[DT[, .I[1], keyby = .(x)]$V1])
+    expr(DT[DT[, .I[1], by = .(x)]$V1])
   )
   expect_equal(as_tibble(dt2), tibble(x = c(1, 2), y = c(1, 3)))
 })
+
+test_that("slicing doesn't sorts groups", {
+  dt <- lazy_dt(data.table(x = 2:1))
+  expect_equal(
+    dt %>% group_by(x) %>% slice(1) %>% pull(x),
+    2:1
+  )
+})
+
 
 # sample ------------------------------------------------------------------
 
@@ -360,8 +377,19 @@ test_that("can filter when grouped", {
 
   expect_equal(
     dt2 %>% show_query(),
-    expr(DT[DT[, .I[sum(y) == 3], keyby = .(x)]$V1])
+    expr(DT[DT[, .I[sum(y) == 3], by = .(x)]$V1])
   )
 
   expect_equal(as_tibble(dt2), tibble(x = c(1, 1), y = c(1, 2)))
+})
+
+test_that("grouped filter doesn't reorder", {
+  dt1 <- lazy_dt(data.frame(x = c(2, 2, 1, 1), y = 1:4), "DT")
+  dt2 <- dt1 %>% group_by(x) %>% filter(TRUE)
+
+  expect_equal(
+    dt2 %>% show_query(),
+    expr(DT[DT[, .I[TRUE], by = .(x)]$V1])
+  )
+  expect_equal(dt2 %>% as_tibble(), as_tibble(dt1))
 })

@@ -33,9 +33,9 @@ step_subset_i <- function(parent, i) {
     parent <- compute(parent)
 
     nm <- sym(parent$name)
-    i <- expr((!!nm)[, .I[!!i]])       # dt[, .I[]]
-    i <- add_grouping_param(i, parent) # dt[, .I[], keyby = ()]
-    i <- call("$", i, quote(V1))       # dt[, .I[], keyby = ()]$V1
+    i <- expr((!!nm)[, .I[!!i]])              # dt[, .I[]]
+    i <- add_grouping_param(i, parent, FALSE) # dt[, .I[], by = ()]
+    i <- call("$", i, quote(V1))              # dt[, .I[], by = ()]$V1
   }
 
   step_subset(parent, i = i)

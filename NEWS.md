@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* Grouped filter, mutate, and slice no longer affect ordering of output (#178).
+
 * Grouped filters now use a much faster translation based on `.I` rather
   than `.SD` (and involving an intermediate assignemnt) (#176). Thanks to
   suggestion from @myoung3 and @ColeMiller1.
