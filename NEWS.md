@@ -1,5 +1,9 @@
 # dtplyr (development version)
 
+* Grouped filters now use a much faster translation based on `.I` rather
+  than `.SD` (and involving an intermediate assignemnt) (#176). Thanks to
+  suggestion from @myoung3 and @ColeMiller1.
+
 * `compute()` now creates an intermediate assignment within the translation. 
   This will generally have little impact on performance but it allows you to 
   use intermediate variables to simplify complex translations.
