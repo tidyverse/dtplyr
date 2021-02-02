@@ -25,7 +25,7 @@ test_that("has useful display methods", {
     dt <- lazy_dt(mtcars, "DT")
     dt
     dt %>% group_by(vs, am)
-    dt %>% compute("DT2")
+    dt %>% mutate(y = 10) %>% compute("DT2")
   })
 })
 
