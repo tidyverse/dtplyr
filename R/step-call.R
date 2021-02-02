@@ -100,14 +100,59 @@ rename.dtplyr_step <- function(.data, ...) {
 #' @rdname rename.dtplyr_step
 #' @export
 rename_with.dtplyr_step <- function(.data, .fn, .cols = everything(), ...) {
+  if (!missing(...)) {
+    abort("`dtplyr::rename_with() doesn't support ...")
+  }
+
+  fn_expr <- enexpr(.fn)
+
+  if (is_symbol(fn_expr)) {
+    fn <- fn_expr
+  } else if (is_string(fn_expr)) {
+    fn <- sym(fn_expr)
+  } else if (is_call(fn_expr, "~")) {
+    env <- caller_env()
+    call <- dt_squash_formula(
+      fn_expr,
+      env = env,
+      data = .data,
+      j = FALSE,
+      replace = quote(x)
+    )
+    fn <- new_function(exprs(x =), call, env)
+  } else {
+    abort("`.fn` must be a function name or formula")
+  }
+  # Still have to compute the new variable names for the table metadata
+  # But this should be fast, so doing it twice shouldn't matter
   .fn <- as_function(.fn)
+
   sim_data <- simulate_vars(.data)
-  locs <- tidyselect::eval_select(enquo(.cols), sim_data)
+  locs <- unname(tidyselect::eval_select(enquo(.cols), sim_data))
+  old_vars <- .data$vars[locs]
+  new_vars <- .fn(old_vars)
 
-  to_change <- .data$vars[locs]
-  names(to_change) <- .fn(to_change, ...)
+  vars <- .data$vars
+  vars[locs] <- new_vars
 
-  rename(.data, !!!to_change)
+  if (identical(locs, seq_along(sim_data))) {
+    out <- step_call(.data,
+      "setnames",
+      args = list(fn),
+      vars = vars,
+      in_place = TRUE
+    )
+  } else {
+    out <- step_call(.data,
+      "setnames",
+      args = list(old_vars, fn),
+      vars = vars,
+      in_place = TRUE
+    )
+  }
+
+  groups <- rename_groups(.data$groups, set_names(new_vars, old_vars))
+  step_group(out, groups)
 }
 
 #' Subset distinct/unique rows

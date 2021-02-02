@@ -20,6 +20,13 @@ test_that("basic ops generate expected translation", {
   )
 })
 
+test_that("joins captures locals from both parents", {
+  dt1 <- lazy_dt(data.frame(x = 1)) %>% mutate(y = 1) %>% compute("D1")
+  dt2 <- lazy_dt(data.frame(x = 1)) %>% mutate(z = 1) %>% compute("D2")
+
+  expect_named(intersect(dt1, dt2)$locals, c("D1", "D2"))
+})
+
 test_that("vars set correctly", {
   # data.table functions require the inputs to have same columns
   dt1 <- lazy_dt(data.frame(x = 1, y = 2), "dt1")

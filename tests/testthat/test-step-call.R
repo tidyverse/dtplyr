@@ -49,9 +49,30 @@ test_that("renames grouping vars", {
   expect_equal(rename(gt, a = x)$groups, "a")
 })
 
-test_that("can rename with a function", {
+test_that("can rename with a function or formula", {
   dt <- lazy_dt(data.table(x = 1, y = 1))
+
   expect_equal(dt %>% rename_with(toupper) %>% .$vars, c("X", "Y"))
+  expect_equal(dt %>% rename_with(toupper, 1) %>% .$vars, c("X", "y"))
+
+  expect_equal(dt %>% rename_with("toupper") %>% .$vars, c("X", "Y"))
+  expect_equal(dt %>% rename_with(~ toupper(.x)) %>% .$vars, c("X", "Y"))
+})
+
+test_that("but not with anything else", {
+  dt <- lazy_dt(data.table(x = 1, y = 1))
+
+  expect_snapshot(error = TRUE, {
+    dt %>% rename_with(1)
+  })
+})
+
+test_that("rename_with generates minimal spec", {
+  dt <- lazy_dt(matrix(ncol = 26, dimnames = list(NULL, letters)), "DT")
+  expect_snapshot({
+    dt %>% rename_with(toupper) %>% show_query()
+    dt %>% rename_with(toupper, 1:3) %>% show_query()
+  })
 })
 
 # distinct ----------------------------------------------------------------

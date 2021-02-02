@@ -55,10 +55,7 @@ across_fun <- function(fun, env, data, j = TRUE) {
   if (is_symbol(fun) || is_string(fun)) {
     function(x, ...) call2(fun, x, ...)
   } else if (is_call(fun, "~")) {
-    call <- f_rhs(fun)
-    call <- replace_dot(call, quote(!!.x))
-    call <- dt_squash_call(call, env, data, j = TRUE)
-
+    call <- dt_squash_formula(fun, env, data, j = j, replace = quote(!!.x))
     function(x, ...) expr_interp(call, child_env(emptyenv(), .x = x))
   } else {
     abort(c(
@@ -66,6 +63,13 @@ across_fun <- function(fun, env, data, j = TRUE) {
       x = paste0("Problem with ", expr_deparse(fun))
     ))
   }
+}
+
+dt_squash_formula <- function(x, env, data, j = TRUE, replace = quote(!!.x)) {
+  call <- f_rhs(x)
+  call <- replace_dot(call, replace)
+  call <- dt_squash_call(call, env, data, j = j)
+  call
 }
 
 across_names <- function(cols, funs, names = NULL, env = parent.frame()) {

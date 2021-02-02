@@ -10,6 +10,7 @@ step_modify <- function(parent, fun, args) {
   )
 }
 
+#' @export
 dt_call.dtplyr_step_modify <- function(x, needs_copy = x$needs_copy) {
   j <- call2(x$fun, quote(.SD), quote(.BY), !!!x$args)
   out <- call2("[", dt_call(x$parent, needs_copy), , j)
