@@ -23,18 +23,6 @@ test_that("generates expected calls", {
   expect_equal(dt_call(without_i), expr(DT[, j, keyby = .(x)]))
 })
 
-# dplyr methods -----------------------------------------------------------
-
-test_that("simple calls generate expected translations", {
-  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
-
-  expect_equal(
-    dt %>% transmute(x) %>% show_query(),
-    expr(DT[, .(x = x)])
-  )
-})
-
-
 # do ----------------------------------------------------------------------
 
 test_that("basic operation as expected", {
@@ -51,18 +39,3 @@ test_that("basic operation as expected", {
   )
 })
 
-
-# transmute ---------------------------------------------------------------
-
-test_that("transmute generates compound expression if needed", {
-  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
-
-  expect_equal(
-    dt %>% transmute(x2 = x * 2, x4 = x2 * 2) %>% show_query(),
-    expr(DT[, {
-      x2 <- x * 2
-      x4 <- x2 * 2
-      .(x2 = x2, x4 = x4)
-    }])
-  )
-})
