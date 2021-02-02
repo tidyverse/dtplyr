@@ -22,20 +22,3 @@ test_that("generates expected calls", {
   without_i <- step_subset(first, j = quote(j), groups = "x")
   expect_equal(dt_call(without_i), expr(DT[, j, keyby = .(x)]))
 })
-
-# do ----------------------------------------------------------------------
-
-test_that("basic operation as expected", {
-  dt <- lazy_dt(data.frame(g = c(1, 1, 2), x = 1:3), "DT")
-
-  expect_equal(
-    dt %>% do(y = ncol(.)) %>% show_query(),
-    expr(DT[, .(y = .(ncol(.SD)))])
-  )
-
-  expect_equal(
-    dt %>% group_by(g) %>% do(y = ncol(.)) %>% show_query(),
-    expr(DT[, .(y = .(ncol(.SD))), keyby = .(g)])
-  )
-})
-
