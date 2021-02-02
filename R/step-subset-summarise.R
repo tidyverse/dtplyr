@@ -42,4 +42,18 @@ summarise.dtplyr_step <- function(.data, ...) {
   step_group(out, groups = head(.data$groups, -1))
 }
 
+# For each expression, check if it uses any newly created variables
+check_summarise_vars <- function(dots) {
+  for (i in seq_along(dots)) {
+    used_vars <- all_names(get_expr(dots[[i]]))
+    cur_vars <- names(dots)[seq_len(i - 1)]
 
+    if (any(used_vars %in% cur_vars)) {
+      abort(paste0(
+        "`", names(dots)[[i]], "` ",
+        "refers to a variable created earlier in this summarise().\n",
+        "Do you need an extra mutate() step?"
+      ))
+    }
+  }
+}
