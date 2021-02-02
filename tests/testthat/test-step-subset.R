@@ -39,11 +39,6 @@ test_that("simple calls generate expected translations", {
   )
 
   expect_equal(
-    dt %>% arrange(x) %>% show_query(),
-    expr(DT[order(x)])
-  )
-
-  expect_equal(
     dt %>% filter() %>% show_query(),
     expr(DT)
   )
@@ -87,11 +82,6 @@ test_that("can use with across", {
   )
 
   expect_equal(
-    dt %>% arrange(across(x:y)) %>% show_query(),
-    expr(DT[order(x, y)])
-  )
-
-  expect_equal(
     dt %>% filter(across(x:y, ~ . > 0)) %>% show_query(),
     expr(DT[x > 0 & y > 0])
   )
@@ -108,29 +98,6 @@ test_that("can merge iff j-generating call comes after i", {
     dt %>% summarise(y = mean(x)) %>% filter(y > 1) %>% show_query(),
     expr(DT[, .(y = mean(x))][y > 1])
   )
-})
-
-# arrange -----------------------------------------------------------------
-
-test_that("arrange doesn't use, but still preserves, grouping", {
-  dt <- group_by(lazy_dt(data.table(x = 1, y = 2), "DT"), x)
-
-  step <- arrange(dt, y)
-  expect_equal(step$groups, "x")
-  expect_equal(dt_call(step), expr(DT[order(y)]))
-
-  step2 <- arrange(dt, y, .by_group = TRUE)
-  expect_equal(dt_call(step2), expr(DT[order(x, y)]))
-})
-
-test_that("empty arrange returns input unchanged", {
-  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT")
-  expect_true(identical(arrange(dt), dt))
-})
-
-test_that("vars set correctly", {
-  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
-  expect_equal(dt %>% arrange(x) %>% .$vars, c("x", "y"))
 })
 
 # summarise ---------------------------------------------------------------
