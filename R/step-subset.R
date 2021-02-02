@@ -124,49 +124,6 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 
 # dplyr methods -----------------------------------------------------------
 
-#' Summarise each group to one row
-#'
-#' This is a method for the dplyr [summarise()] generic. It is translated to
-#' the `j` argument of `[.data.table`.
-#'
-#' @param .data A [lazy_dt()].
-#' @inheritParams dplyr::summarise
-#' @importFrom dplyr summarise
-#' @export
-#' @examples
-#' library(dplyr, warn.conflicts = FALSE)
-#'
-#' dt <- lazy_dt(mtcars)
-#'
-#' dt %>%
-#'   group_by(cyl) %>%
-#'   summarise(vs = mean(vs))
-#'
-#' dt %>%
-#'   group_by(cyl) %>%
-#'   summarise(across(disp:wt, mean))
-summarise.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(.data, ...)
-  check_summarise_vars(dots)
-
-  if (length(dots) == 0) {
-    if (length(.data$groups) == 0) {
-      out <- step_subset_j(.data, vars = character(), j = 0L)
-    } else {
-      # Acts like distinct on grouping vars
-      out <- distinct(.data, !!!syms(.data$groups))
-    }
-  } else {
-    out <- step_subset_j(
-      .data,
-      vars = union(.data$groups, names(dots)),
-      j = call2(".", !!!dots)
-    )
-  }
-
-  step_group(out, groups = head(.data$groups, -1))
-}
-
 #' Create new columns, dropping old
 #'
 #' This is a method for the dplyr [transmute()] generic. It is translated to
@@ -193,52 +150,6 @@ transmute.dtplyr_step <- function(.data, ...) {
     j <- call2("{", !!!assign, output)
   }
   step_subset_j(.data, vars = names(dots), j = j)
-}
-
-#' Count observations by group
-#'
-#' This is a method for the dplyr [count()] generic. It is translated using
-#' `.N` in the `j` argument, and supplying groups to `keyby` as appropriate.
-#'
-#' @param .data A [lazy_dt()]
-#' @inheritParams dplyr::count
-#' @importFrom dplyr count
-#' @export
-#' @examples
-#' library(dplyr, warn.conflicts = FALSE)
-#'
-#'
-#' dt <- lazy_dt(dplyr::starwars)
-#' dt %>% count(species)
-#' dt %>% count(species, sort = TRUE)
-#' dt %>% count(species, wt = mass, sort = TRUE)
-count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) {
-  if (!missing(...)) {
-    out <- group_by(.data, ..., .add = TRUE)
-  } else {
-    out <- .data
-  }
-
-  wt <- enexpr(wt)
-  if (is.null(wt)) {
-    n <- expr(n())
-  } else {
-    n <- expr(sum(!!wt, na.rm = TRUE))
-  }
-
-  if (is.null(name)) {
-    name <- "n"
-  } else if (!is_string(name)) {
-    abort("`name` must be a string")
-  }
-
-  out <- summarise(out, !!name := !!n)
-
-  if (sort) {
-    out <- arrange(out, desc(!!sym(name)))
-  }
-
-  out
 }
 
 #' @importFrom dplyr do
