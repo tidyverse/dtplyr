@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* dtplyr can now translate `slice_min()`, `slice_max()`, `slice_head()`,
+  `slice_tail()`, and `slice_sample()` (#174).
+
 * Grouped filter, mutate, and slice no longer affect ordering of output (#178).
 
 * Grouped filters now use a much faster translation based on `.I` rather
