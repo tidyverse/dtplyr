@@ -1,58 +1,66 @@
 # dtplyr (development version)
 
-* Passing a data.table to a dplyr generic now converts it to a `lazy_dt()`,
-  making it a little easier to move between data.table and dplyr syntax.
-  
-* dtplyr can now translate `slice_min()`, `slice_max()`, `slice_head()`,
-  `slice_tail()`, and `slice_sample()` (#174).
-
-* Grouped filter, mutate, and slice no longer affect ordering of output (#178).
-
-* Grouped filters now use a much faster translation based on `.I` rather
-  than `.SD` (and involving an intermediate assignemnt) (#176). Thanks to
-  suggestion from @myoung3 and @ColeMiller1.
-
-* `compute()` now creates an intermediate assignment within the translation. 
-  This will generally have little impact on performance but it allows you to 
-  use intermediate variables to simplify complex translations.
+## New features
 
 * All verbs now have (very basic) documentation pointing back to the
   dplyr generic, and providing a (very rough) description of the translation
   accompanied with a few examples.
 
-* Show total rows when printing a `lazy_dt()`.
+* Passing a data.table to a dplyr generic now converts it to a `lazy_dt()`,
+  making it a little easier to move between data.table and dplyr syntax.
 
-* `select()` after grouped filter no longer incorrectly collapses into a single
-  `[` call (#127).
+* dtplyr has been bought up to compatiblity with dplyr 1.0.0. This includes
+  new translations for:
 
-* dtplyr can now translate `across()` (#154).
+  * `across()` (#154).
 
-* Objects now printing grouping if present.
+  * `count()` (#159).
 
-* dtplyr now supports `group_map()` and `group_walk()` (#108).
+  * `relocate()` (@smingerson, #162).
 
-* dtplyr now supports `relocate()` (@smingerson, #162).
+  * `rename_with()` (#160)
 
-* dtplyr now supports `rename_with()` (#160)
+  * `slice_min()`, `slice_max()`, `slice_head()`, `slice_tail()`, and
+    `slice_sample()` (#174).
 
-* `rename()` and `select()` support dplyr 1.0.0 tidyselect syntax (apart from
-  predicate functions which can't easily work on lazily evaluted data tables).
+  And `rename()` and `select()` now support dplyr 1.0.0 tidyselect syntax 
+  (apart from predicate functions which can't easily work on lazily evaluated
+  data tables).
 
-* `x[[1]]` is now translated correctly.
+## Translation improvements
 
-* Added translations for `cur_data()` (`.SD`), `cur_group()` (`.BY`),
-  `cur_group_id()` (`.GRP`), and `cur_group_rows() (`.I`) (#166).
+* `compute()` now creates an intermediate assignment within the translation. 
+  This will generally have little impact on performance but it allows you to 
+  use intermediate variables to simplify complex translations.
+
+* `cur_data()` (`.SD`), `cur_group()` (`.BY`), `cur_group_id()` (`.GRP`), 
+   and `cur_group_rows() (`.I`) are now tranlsated to their data.table 
+   equivalents (#166).
+
+* `filter()` on grouped data nows use a much faster translation using on `.I`
+  rather than `.SD` (and requiring an intermediate assignment) (#176). Thanks 
+  to suggestion from @myoung3 and @ColeMiller1.
+
+* Translation of individual expressions:
+
+  * `x[[1]]` is now translated correctly.
+  
+  * Anonymous functions are now preserved (@smingerson, #155)
+  
+  * Environment variables used in the `i` argument of `[.data.table` are
+    now correctly inlined when not in the global environment (#164).
+
+  * `T` and `F` are correctly translated to `TRUE` and `FALSE` (#140).
+
+## Minor improvements and bug fixes
+
+* Grouped filter, mutate, and slice no longer affect ordering of output (#178).
 
 * `as.data.table()` always calls `[]` so that the result will print (#146). 
 
-* Implement `count()` method for compatibility with dplyr 1.0.0 (#159).
+* `print.lazy_dt()` shows total rows, and grouping, if present.
 
-* Anonymous functions work in `mutate()` and `summarise()` (@smingerson, #155)
-
-* Environment variables used in the `i` argument of `[.data.table` are
-  now correctly inlined when not in the global environment (#164).
-
-* `T` and `F` are correctly translated to `TRUE` and `FALSE` (#140).
+* `group_map()` and `group_walk()` are now translated (#108).
 
 # dtplyr 1.0.1
 
