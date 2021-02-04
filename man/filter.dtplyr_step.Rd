@@ -4,7 +4,7 @@
 \alias{filter.dtplyr_step}
 \title{Subset rows using column values}
 \usage{
-filter.dtplyr_step(.data, ..., .preserve = FALSE)
+\method{filter}{dtplyr_step}(.data, ..., .preserve = FALSE)
 }
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}

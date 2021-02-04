@@ -17,6 +17,7 @@
 #' dt %>%
 #'   group_by(cyl) %>%
 #'   filter(mpg > mean(mpg))
+#' @importFrom dplyr filter
 # exported onLoad
 filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
   dots <- capture_dots(.data, ..., .j = FALSE)

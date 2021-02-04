@@ -57,7 +57,7 @@ lazy_dt <- function(x, name = NULL, immutable = TRUE, key_by = NULL) {
   key_vars <- unname(tidyselect::vars_select(names(x), !!key_by))
   if (length(key_vars)) {
     if (immutable && !copied) {
-      x <- copy(x)
+      x <- data.table::copy(x)
     }
     data.table::setkeyv(x, key_vars)
   }
