@@ -82,7 +82,7 @@ mtcars2 %>%
   mutate(l100k = 235.21 / mpg) %>% # liters / 100 km
   group_by(cyl) %>% 
   summarise(l100k = mean(l100k))
-#> Source: local data table [?? x 2]
+#> Source: local data table [3 x 2]
 #> Call:   `_DT1`[wt < 5][, `:=`(l100k = 235.21/mpg)][, .(l100k = mean(l100k)), 
 #>     keyby = .(cyl)]
 #> 
