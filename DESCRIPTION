@@ -20,7 +20,7 @@ Depends:
 Imports:
     crayon,
     data.table (>= 1.12.4),
-    dplyr (>= 1.0.0),
+    dplyr (>= 1.0.3),
     ellipsis,
     glue,
     lifecycle,
