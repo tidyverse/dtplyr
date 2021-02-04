@@ -95,6 +95,13 @@ rename.dtplyr_step <- function(.data, ...) {
   step_group(out, groups)
 }
 
+
+#' @export
+rename.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  rename(.data, ...)
+}
+
 #' @importFrom dplyr rename_with
 #' @importFrom tidyselect everything
 #' @rdname rename.dtplyr_step
@@ -155,6 +162,12 @@ rename_with.dtplyr_step <- function(.data, .fn, .cols = everything(), ...) {
   step_group(out, groups)
 }
 
+#' @export
+rename_with.data.table <- function(.data, .fn, .cols = everything(), ...) {
+  .data <- lazy_dt(.data)
+  rename_with(.data, .fn = .fn, .cols = {{.cols}}, ...)
+}
+
 #' Subset distinct/unique rows
 #'
 #' This is a method for the dplyr [distinct()] generic. It is translated to
@@ -205,6 +218,11 @@ distinct.dtplyr_step <- function(.data, ..., .keep_all = FALSE) {
   step_call(.data, "unique", args = args)
 }
 
+#' @export
+distinct.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  distinct(.data, ...)
+}
 
 #' @export
 unique.dtplyr_step <- function(x, incomparables = FALSE, ...) {

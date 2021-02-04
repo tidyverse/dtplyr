@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* Passing a data.table to a dplyr generic now converts it to a `lazy_dt()`,
+  making it a little easier to move between data.table and dplyr syntax.
+  
 * dtplyr can now translate `slice_min()`, `slice_max()`, `slice_head()`,
   `slice_tail()`, and `slice_sample()` (#174).
 

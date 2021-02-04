@@ -75,6 +75,13 @@ test_that("rename_with generates minimal spec", {
   })
 })
 
+test_that("can rename_with() a data.table", {
+  dt <- data.table(x = 1:5, y = 1:5)
+  out <- rename_with(dt, toupper, x)
+  expect_s3_class(out, "dtplyr_step")
+  expect_named(as_tibble(out), c("X", "y"))
+})
+
 # distinct ----------------------------------------------------------------
 
 test_that("no input uses all variables", {

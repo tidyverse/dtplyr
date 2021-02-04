@@ -90,10 +90,21 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
   step_group(.data, groups, arranged)
 }
 
+#' @export
+group_by.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  group_by(.data, ...)
+}
+
 #' @importFrom dplyr ungroup
 #' @export
 #' @rdname group_by.dtplyr_step
 ungroup.dtplyr_step <- function(.data, ...) {
   step_group(.data, groups = character())
+}
+
+#' @export
+ungroup.data.table <- function(.data, ...) {
+  abort("Can't ungroup a data.table")
 }
 

@@ -31,3 +31,9 @@ filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
 
   step_subset_i(.data, i)
 }
+
+# exported onLoad
+filter.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  filter(.data, ...)
+}

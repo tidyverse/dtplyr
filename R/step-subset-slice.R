@@ -55,9 +55,6 @@
 slice.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(.data, ..., .j = FALSE)
 
-# Slice helpers -----------------------------------------------------------
-
-
   if (length(dots) == 0) {
     i <- NULL
   } else if (length(dots) == 1) {
@@ -70,6 +67,11 @@ slice.dtplyr_step <- function(.data, ...) {
   step_subset_i(.data, i)
 }
 
+#' @export
+slice.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  slice(.data, ...)
+}
 
 #' @rdname slice.dtplyr_step
 #' @importFrom dplyr slice_head
@@ -194,7 +196,6 @@ sample_int <- function(n, size, replace = FALSE, wt = NULL) {
 
 # sample_ -----------------------------------------------------------------
 
-
 #' @importFrom dplyr sample_n
 #' @export
 sample_n.dtplyr_step <- function(tbl,
@@ -206,6 +207,12 @@ sample_n.dtplyr_step <- function(tbl,
   step_subset_i(tbl, i = sample_call(size, replace, weight))
 }
 
+#' @export
+sample_n.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  sample_n(.data, ...)
+}
+
 #' @importFrom dplyr sample_frac
 #' @export
 sample_frac.dtplyr_step <- function(tbl,
@@ -215,6 +222,12 @@ sample_frac.dtplyr_step <- function(tbl,
                                     ) {
   weight <- enexpr(weight)
   step_subset_i(tbl, i = sample_call(expr(.N * !!size), replace, weight))
+}
+
+#' @export
+sample_frac.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  sample_frac(.data, ...)
 }
 
 

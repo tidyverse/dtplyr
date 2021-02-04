@@ -25,3 +25,9 @@ transmute.dtplyr_step <- function(.data, ...) {
   }
   step_subset_j(.data, vars = names(dots), j = j)
 }
+
+#' @export
+transmute.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  transmute(.data, ...)
+}

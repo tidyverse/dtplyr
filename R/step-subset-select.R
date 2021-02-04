@@ -36,6 +36,12 @@ select.dtplyr_step <- function(.data, ...) {
   step_group(out, groups)
 }
 
+#' @export
+select.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  select(.data, ...)
+}
+
 simulate_vars <- function(x, drop_groups = FALSE) {
   if (drop_groups) {
     vars <- setdiff(x$vars, x$groups)
