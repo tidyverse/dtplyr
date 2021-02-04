@@ -9,10 +9,10 @@
 * Passing a data.table to a dplyr generic now converts it to a `lazy_dt()`,
   making it a little easier to move between data.table and dplyr syntax.
 
-* dtplyr has been bought up to compatiblity with dplyr 1.0.0. This includes
+* dtplyr has been bought up to compatibility with dplyr 1.0.0. This includes
   new translations for:
 
-  * `across()` (#154).
+  * `across()`, `if_any()`, `if_all()` (#154).
 
   * `count()` (#159).
 

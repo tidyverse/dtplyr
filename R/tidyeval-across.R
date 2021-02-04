@@ -29,6 +29,30 @@ dt_squash_across <- function(call, env, data, j = j) {
   out
 }
 
+
+capture_if_all <- function(data, x, j = TRUE) {
+  x <- enquo(x)
+  dt_squash_if(get_expr(x), get_env(x), data, j)
+}
+
+dt_squash_if <- function(call, env, data, j = j, reduce = "&") {
+  call <- match.call(dplyr::if_any, call, expand.dots = FALSE, envir = env)
+
+  tbl <- simulate_vars(data, drop_groups = TRUE)
+  locs <- tidyselect::eval_select(call$.cols, tbl, allow_rename = FALSE)
+  cols <- syms(names(tbl))[locs]
+
+  fun <- across_fun(call$.fns, env, data, j = j)
+
+  out <- vector("list", length(cols))
+  for (i in seq_along(cols)) {
+    out[[i]] <- exec(fun, cols[[i]], !!!call$...)
+  }
+
+  Reduce(function(x, y) call2(reduce, x, y), out)
+}
+
+
 across_funs <- function(funs, env, data, j = TRUE) {
   if (is.null(funs)) {
     list(function(x, ...) x)
@@ -59,7 +83,7 @@ across_fun <- function(fun, env, data, j = TRUE) {
     function(x, ...) expr_interp(call, child_env(emptyenv(), .x = x))
   } else {
     abort(c(
-      ".fns argument to dtplyr::across() contain a function name or a formula",
+      ".fns argument to dtplyr::across() must contain a function name or a formula",
       x = paste0("Problem with ", expr_deparse(fun))
     ))
   }

@@ -7,6 +7,6 @@
     Code
       capture_across(dt, across(a, list(1)))
     Error <rlang_error>
-      .fns argument to dtplyr::across() contain a function name or a formula
+      .fns argument to dtplyr::across() must contain a function name or a formula
       x Problem with 1
 

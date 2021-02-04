@@ -43,6 +43,16 @@ test_that("can use with across", {
     dt %>% filter(across(x:y, ~ . > 0)) %>% show_query(),
     expr(DT[x > 0 & y > 0])
   )
+
+  expect_equal(
+    dt %>% filter(if_all(x:y, ~ . > 0)) %>% show_query(),
+    expr(DT[x > 0 & y > 0])
+  )
+  expect_equal(
+    dt %>% filter(if_any(x:y, ~ . > 0)) %>% show_query(),
+    expr(DT[x > 0 | y > 0])
+  )
+
 })
 
 test_that("can filter when grouped", {

@@ -85,3 +85,19 @@ test_that("across() gives informative errors", {
     capture_across(dt, across(a, list(1)))
   })
 })
+
+
+# if_all ------------------------------------------------------------------
+
+test_that("if_all translations names, strings, and formulas", {
+  dt <- lazy_dt(data.frame(a = 1,  b = 2))
+
+  expect_equal(capture_if_all(dt, if_all(a, is.na)), expr(is.na(a)))
+  expect_equal(capture_if_all(dt, if_all(a, "is.na")), expr(is.na(a)))
+  expect_equal(capture_if_all(dt, if_all(a, ~ is.na(.))), expr(is.na(a)))
+})
+
+test_that("if_all collapses multiple expresions", {
+  dt <- lazy_dt(data.frame(a = 1,  b = 2))
+  expect_equal(capture_if_all(dt, if_all(everything(), is.na)), expr(is.na(a) & is.na(b)))
+})

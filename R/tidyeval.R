@@ -83,6 +83,10 @@ dt_squash <- function(x, env, data, j = TRUE) {
     }
   } else if (is_quosure(x)) {
     dt_squash(get_expr(x), get_env(x), data, j = j)
+  } else if (is_call(x, "if_any")) {
+    dt_squash_if(x, env, data, j = j, reduce = "|")
+  } else if (is_call(x, "if_all")) {
+    dt_squash_if(x, env, data, j = j, reduce = "&")
   } else if (is_call(x, "across")) {
     dt_squash_across(x, env, data, j = j)
   } else if (is_call(x)) {
