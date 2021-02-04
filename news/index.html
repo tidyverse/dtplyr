@@ -159,29 +159,53 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#dtplyr-development-version" class="anchor"></a>dtplyr (development version)<small> Unreleased </small>
 </h1>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
-<li><p>Passing a data.table to a dplyr generic now converts it to a <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code>, making it a little easier to move between data.table and dplyr syntax.</p></li>
-<li><p>dtplyr can now translate <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_tail()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/174'>#174</a>).</p></li>
-<li><p>Grouped filter, mutate, and slice no longer affect ordering of output (<a href='https://github.com/tidyverse/dtplyr/issues/178'>#178</a>).</p></li>
-<li><p>Grouped filters now use a much faster translation based on <code>.I</code> rather than <code>.SD</code> (and involving an intermediate assignemnt) (<a href='https://github.com/tidyverse/dtplyr/issues/176'>#176</a>). Thanks to suggestion from <a href='https://github.com/myoung3'>@myoung3</a> and <a href='https://github.com/ColeMiller1'>@ColeMiller1</a>.</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/compute.html">compute()</a></code> now creates an intermediate assignment within the translation. This will generally have little impact on performance but it allows you to use intermediate variables to simplify complex translations.</p></li>
 <li><p>All verbs now have (very basic) documentation pointing back to the dplyr generic, and providing a (very rough) description of the translation accompanied with a few examples.</p></li>
-<li><p>Show total rows when printing a <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code>.</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> after grouped filter no longer incorrectly collapses into a single <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> call (<a href='https://github.com/tidyverse/dtplyr/issues/127'>#127</a>).</p></li>
-<li><p>dtplyr can now translate <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/154'>#154</a>).</p></li>
-<li><p>Objects now printing grouping if present.</p></li>
-<li><p>dtplyr now supports <code><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_map()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_walk()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/108'>#108</a>).</p></li>
-<li><p>dtplyr now supports <code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> (<a href='https://github.com/smingerson'>@smingerson</a>, <a href='https://github.com/tidyverse/dtplyr/issues/162'>#162</a>).</p></li>
-<li><p>dtplyr now supports <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename_with()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/160'>#160</a>)</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> support dplyr 1.0.0 tidyselect syntax (apart from predicate functions which can’t easily work on lazily evaluted data tables).</p></li>
+<li><p>Passing a data.table to a dplyr generic now converts it to a <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code>, making it a little easier to move between data.table and dplyr syntax.</p></li>
+<li>
+<p>dtplyr has been bought up to compatiblity with dplyr 1.0.0. This includes new translations for:</p>
+<ul>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/154'>#154</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/159'>#159</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> (<a href='https://github.com/smingerson'>@smingerson</a>, <a href='https://github.com/tidyverse/dtplyr/issues/162'>#162</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename_with()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/160'>#160</a>)</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_tail()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/174'>#174</a>).</p></li>
+</ul>
+<p>And <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> now support dplyr 1.0.0 tidyselect syntax (apart from predicate functions which can’t easily work on lazily evaluated data tables).</p>
+</li>
+</ul>
+</div>
+<div id="translation-improvements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#translation-improvements" class="anchor"></a>Translation improvements</h2>
+<ul>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/compute.html">compute()</a></code> now creates an intermediate assignment within the translation. This will generally have little impact on performance but it allows you to use intermediate variables to simplify complex translations.</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/context.html">cur_data()</a></code> (<code>.SD</code>), <code><a href="https://dplyr.tidyverse.org/reference/context.html">cur_group()</a></code> (<code>.BY</code>), <code><a href="https://dplyr.tidyverse.org/reference/context.html">cur_group_id()</a></code> (<code>.GRP</code>), and <code>cur_group_rows() (</code>.I`) are now tranlsated to their data.table equivalents (<a href='https://github.com/tidyverse/dtplyr/issues/166'>#166</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> on grouped data nows use a much faster translation using on <code>.I</code> rather than <code>.SD</code> (and requiring an intermediate assignment) (<a href='https://github.com/tidyverse/dtplyr/issues/176'>#176</a>). Thanks to suggestion from <a href='https://github.com/myoung3'>@myoung3</a> and <a href='https://github.com/ColeMiller1'>@ColeMiller1</a>.</p></li>
+<li>
+<p>Translation of individual expressions:</p>
+<ul>
 <li><p><code>x[[1]]</code> is now translated correctly.</p></li>
-<li><p>Added translations for <code><a href="https://dplyr.tidyverse.org/reference/context.html">cur_data()</a></code> (<code>.SD</code>), <code><a href="https://dplyr.tidyverse.org/reference/context.html">cur_group()</a></code> (<code>.BY</code>), <code><a href="https://dplyr.tidyverse.org/reference/context.html">cur_group_id()</a></code> (<code>.GRP</code>), and <code>cur_group_rows() (</code>.I`) (<a href='https://github.com/tidyverse/dtplyr/issues/166'>#166</a>).</p></li>
-<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table()</a></code> always calls <code>[]</code> so that the result will print (<a href='https://github.com/tidyverse/dtplyr/issues/146'>#146</a>).</p></li>
-<li><p>Implement <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> method for compatibility with dplyr 1.0.0 (<a href='https://github.com/tidyverse/dtplyr/issues/159'>#159</a>).</p></li>
-<li><p>Anonymous functions work in <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> (<a href='https://github.com/smingerson'>@smingerson</a>, <a href='https://github.com/tidyverse/dtplyr/issues/155'>#155</a>)</p></li>
+<li><p>Anonymous functions are now preserved (<a href='https://github.com/smingerson'>@smingerson</a>, <a href='https://github.com/tidyverse/dtplyr/issues/155'>#155</a>)</p></li>
 <li><p>Environment variables used in the <code>i</code> argument of <code>[.data.table</code> are now correctly inlined when not in the global environment (<a href='https://github.com/tidyverse/dtplyr/issues/164'>#164</a>).</p></li>
 <li><p><code>T</code> and <code>F</code> are correctly translated to <code>TRUE</code> and <code>FALSE</code> (<a href='https://github.com/tidyverse/dtplyr/issues/140'>#140</a>).</p></li>
 </ul>
+</li>
+</ul>
+</div>
+<div id="minor-improvements-and-bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
+<ul>
+<li><p>Grouped filter, mutate, and slice no longer affect ordering of output (<a href='https://github.com/tidyverse/dtplyr/issues/178'>#178</a>).</p></li>
+<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table()</a></code> always calls <code>[]</code> so that the result will print (<a href='https://github.com/tidyverse/dtplyr/issues/146'>#146</a>).</p></li>
+<li><p><code>print.lazy_dt()</code> shows total rows, and grouping, if present.</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_map()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_walk()</a></code> are now translated (<a href='https://github.com/tidyverse/dtplyr/issues/108'>#108</a>).</p></li>
+</ul>
+</div>
 </div>
     <div id="dtplyr-101" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.1">
