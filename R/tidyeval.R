@@ -22,6 +22,7 @@ add_dt_wrappers <- function(env) {
   env$funion <- data.table::funion
   env$fintersect <- data.table::fintersect
   env$fsetdiff <- data.table::fsetdiff
+  env$frankv <- data.table::frankv
 
   invisible()
 }

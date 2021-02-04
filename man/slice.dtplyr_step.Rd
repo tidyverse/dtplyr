@@ -2,31 +2,78 @@
 % Please edit documentation in R/step-subset-slice.R
 \name{slice.dtplyr_step}
 \alias{slice.dtplyr_step}
+\alias{slice_head.dtplyr_step}
+\alias{slice_tail.dtplyr_step}
+\alias{slice_min.dtplyr_step}
+\alias{slice_max.dtplyr_step}
 \title{Subset rows using their positions}
 \usage{
 \method{slice}{dtplyr_step}(.data, ...)
+
+\method{slice_head}{dtplyr_step}(.data, ..., n, prop)
+
+\method{slice_tail}{dtplyr_step}(.data, ..., n, prop)
+
+\method{slice_min}{dtplyr_step}(.data, order_by, ..., n, prop, with_ties = TRUE)
+
+\method{slice_max}{dtplyr_step}(.data, order_by, ..., n, prop, with_ties = TRUE)
 }
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
 
 \item{...}{Positive integers giving rows to select, or negative
 integers giving rows to drop.}
+
+\item{n, prop}{Provide either \code{n}, the number of rows, or \code{prop}, the
+proportion of rows to select. If neither are supplied, \code{n = 1} will be
+used.
+
+If \code{n} is greater than the number of rows in the group (or \code{prop > 1}),
+the result will be silently truncated to the group size. If the
+\code{prop}ortion of a group size is not an integer, it is rounded down.}
+
+\item{order_by}{Variable or function of variables to order by.}
+
+\item{with_ties}{Should ties be kept together? The default, \code{TRUE},
+may return more rows than you request. Use \code{FALSE} to ignore ties,
+and return the first \code{n} rows.}
 }
 \description{
-This is a method for the dplyr \code{\link[=slice]{slice()}} generic. It is translated to
-the \code{i} argument of \verb{[.data.table}.
+These are methods for the dplyr \code{\link[=slice]{slice()}}, \code{slice_head()}, \code{slice_tail()},
+\code{slice_min()}, \code{slice_max()} and \code{slice_sample()} generics. \code{slice()}
+and \code{slice_sample()} are translated to the \code{i} argument of \verb{[.data.table},
+all others are translated to the \code{j} argument.
+
+Unlike dplyr, \code{slice()} (and \code{slice()} alone) returns the same number of
+rows per group, regardless of whether or not the indices appear in each
+group.
 }
 \examples{
 library(dplyr, warn.conflicts = FALSE)
 
 dt <- lazy_dt(mtcars)
 dt \%>\% slice(1, 5, 10)
+dt \%>\% slice(-(1:4))
 
-dt \%>\%
-  group_by(cyl) \%>\%
-  slice(1)
+# First and last rows based on existing order
+dt \%>\% slice_head(n = 5)
+dt \%>\% slice_tail(n = 5)
 
-dt \%>\%
-  group_by(cyl) \%>\%
-  slice(-1)
+# Rows with minimum and maximum values of a variable
+dt \%>\% slice_min(mpg, n = 5)
+dt \%>\% slice_max(mpg, n = 5)
+
+# slice_min() and slice_max() may return more rows than requested
+# in the presence of ties. Use with_ties = FALSE to suppress
+dt \%>\% slice_min(cyl, n = 1)
+dt \%>\% slice_min(cyl, n = 1, with_ties = FALSE)
+
+# slice_sample() allows you to random select with or without replacement
+dt \%>\% slice_sample(n = 5)
+dt \%>\% slice_sample(n = 5, replace = TRUE)
+
+# you can optionally weight by a variable - this code weights by the
+# physical weight of the cars, so heavy cars are more likely to get
+# selected
+dt \%>\% slice_sample(weight_by = wt, n = 5)
 }
