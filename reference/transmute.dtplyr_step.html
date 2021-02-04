@@ -188,7 +188,7 @@ evaluate to a vector.</p></td>
 <span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='va'><a href='https://dplyr.tidyverse.org/reference/starwars.html'>starwars</a></span><span class='op'>)</span>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span><span class='va'>name</span>, sh <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>species</span>, <span class='st'>"/"</span>, <span class='va'>homeworld</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [87 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT21`[, .(name = name, sh = paste0(species, "/", homeworld))]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT24`[, .(name = name, sh = paste0(species, "/", homeworld))]
 #&gt; 
 #&gt;   name           sh            
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         

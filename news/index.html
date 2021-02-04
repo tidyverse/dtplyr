@@ -160,6 +160,7 @@
 <a href="#dtplyr-development-version" class="anchor"></a>dtplyr (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p>Passing a data.table to a dplyr generic now converts it to a <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code>, making it a little easier to move between data.table and dplyr syntax.</p></li>
 <li><p>dtplyr can now translate <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_tail()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/174'>#174</a>).</p></li>
 <li><p>Grouped filter, mutate, and slice no longer affect ordering of output (<a href='https://github.com/tidyverse/dtplyr/issues/178'>#178</a>).</p></li>
 <li><p>Grouped filters now use a much faster translation based on <code>.I</code> rather than <code>.SD</code> (and involving an intermediate assignemnt) (<a href='https://github.com/tidyverse/dtplyr/issues/176'>#176</a>). Thanks to suggestion from <a href='https://github.com/myoung3'>@myoung3</a> and <a href='https://github.com/ColeMiller1'>@ColeMiller1</a>.</p></li>
