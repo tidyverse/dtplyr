@@ -16,7 +16,7 @@
 
 \method{as.data.frame}{dtplyr_step}(x, ...)
 
-\method{as_tibble}{dtplyr_step}(x, ...)
+\method{as_tibble}{dtplyr_step}(x, ..., .name_repair = "check_unique")
 }
 \arguments{
 \item{x}{A \link{lazy_dt}}

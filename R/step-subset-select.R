@@ -49,7 +49,7 @@ simulate_vars <- function(x, drop_groups = FALSE) {
     vars <- x$vars
   }
 
-  as_tibble(rep_named(vars, list(logical())))
+  as_tibble(rep_named(vars, list(logical())), .name_repair = "minimal")
 }
 
 ensure_group_vars <- function(loc, names, groups) {

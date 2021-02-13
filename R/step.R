@@ -147,8 +147,8 @@ as.data.frame.dtplyr_step <- function(x, ...) {
 #' @rdname collect.dtplyr_step
 #' @export
 #' @importFrom tibble as_tibble
-as_tibble.dtplyr_step <- function(x, ...) {
-  out <- as_tibble(dt_eval(x))
+as_tibble.dtplyr_step <- function(x, ..., .name_repair = "check_unique") {
+  out <- as_tibble(dt_eval(x), .name_repair = .name_repair)
   attr(out, ".internal.selfref") <- NULL
   attr(out, "sorted") <- NULL
   out
@@ -184,7 +184,7 @@ print.dtplyr_step <- function(x, ...) {
     cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
   }
   cat_line()
-  cat_line(format(as_tibble(dt), n = 6)[-1]) # Hack to remove "A tibble" line
+  cat_line(format(as_tibble(dt, .name_repair = "minimal"), n = 6)[-1]) # Hack to remove "A tibble" line
   cat_line()
   cat_line(crayon::silver(
     "# Use as.data.table()/as.data.frame()/as_tibble() to access results"
