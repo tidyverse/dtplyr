@@ -147,6 +147,7 @@ as.data.frame.dtplyr_step <- function(x, ...) {
 #' @rdname collect.dtplyr_step
 #' @export
 #' @importFrom tibble as_tibble
+#' @param .name_repair Treatment of problematic column names
 as_tibble.dtplyr_step <- function(x, ..., .name_repair = "check_unique") {
   out <- as_tibble(dt_eval(x), .name_repair = .name_repair)
   attr(out, ".internal.selfref") <- NULL

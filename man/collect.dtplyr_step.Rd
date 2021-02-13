@@ -26,6 +26,8 @@
 \item{name}{Name of intermediate data.table.}
 
 \item{keep.rownames}{Ignored as dplyr never preserves rownames.}
+
+\item{.name_repair}{Treatment of problematic column names}
 }
 \description{
 \itemize{

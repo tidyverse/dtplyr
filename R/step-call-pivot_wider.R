@@ -33,12 +33,6 @@
 #'     names_sep = ".",
 #'     values_from = c(estimate, moe)
 #'   )
-#' us_rent_income_dt %>%
-#'   pivot_wider(
-#'     names_from = variable,
-#'     names_glue = "{variable}_{.value}",
-#'     values_from = c(estimate, moe)
-#'   )
 #'
 #' # Can perform aggregation with values_fn
 #' warpbreaks_dt <- lazy_dt(as_tibble(warpbreaks[c("wool", "tension", "breaks")]))
@@ -175,6 +169,8 @@ pivot_wider.dtplyr_step <- function(data,
 
   out
 }
+
+globalVariables(c(".", ".names_from", "name", "value"))
 
 #' @export
 pivot_wider.data.table <- function(data,
