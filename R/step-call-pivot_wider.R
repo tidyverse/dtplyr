@@ -1,7 +1,7 @@
 #' Pivot data from long to wide
 #'
 #' @description
-#' This is a method for the tidyr [pivot_wider()] generic. It is translated
+#' This is a method for the tidyr [pivot_wider()] generic. It is translated to
 #' [data.table::dcast()]
 #'
 #' @param data A [lazy_dt()].
@@ -57,12 +57,10 @@ pivot_wider.dtplyr_step <- function(data,
                                     ...) {
 
   sim_data <- simulate_vars(data)
-
   names_from <- names(tidyselect::eval_select(enquo(names_from), sim_data))
   values_from <- names(tidyselect::eval_select(enquo(values_from), sim_data))
 
   id_cols <- enquo(id_cols)
-
   if (quo_is_null(id_cols)) {
     sim_vars <- names(sim_data)
     id_cols <- sim_vars[!sim_vars %in% c(names_from, values_from)]
@@ -78,7 +76,7 @@ pivot_wider.dtplyr_step <- function(data,
   }
 
   if (!is.null(names_glue)) {
-    glue_vars <- mutate(data, .names_from = glue(names_glue, .envir = .SD))
+    glue_vars <- mutate(data, .names_from = glue::glue(names_glue, .envir = .SD))
     glue_vars <- unique(pull(glue_vars, .names_from))
   }
 
@@ -204,7 +202,7 @@ pivot_wider.data.table <- function(data,
 step_repair <- function(data, repair = "check_unique", in_place = TRUE) {
   sim_data <- simulate_vars(data)
   data_names <- names(sim_data)
-  repaired_names <- vec_as_names(data_names, repair = repair)
+  repaired_names <- vctrs::vec_as_names(data_names, repair = repair)
 
   if (any(data_names != repaired_names)) {
     data <- step_call(

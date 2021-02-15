@@ -81,7 +81,7 @@ to different value columns.}
 \item{...}{Additional arguments passed on to methods.}
 }
 \description{
-This is a method for the tidyr \code{\link[=pivot_wider]{pivot_wider()}} generic. It is translated
+This is a method for the tidyr \code{\link[=pivot_wider]{pivot_wider()}} generic. It is translated to
 \code{\link[data.table:dcast.data.table]{data.table::dcast()}}
 }
 \examples{
