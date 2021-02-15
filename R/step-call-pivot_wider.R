@@ -69,15 +69,17 @@ pivot_wider.dtplyr_step <- function(data,
   }
 
   if (length(names_from) > 1) {
-    new_vars <- mutate(data, .names_from = paste(!!!syms(names_from), sep = names_sep))
+    new_vars <- mutate(shallow_dt(data), .names_from = paste(!!!syms(names_from), sep = names_sep))
     new_vars <- unique(pull(new_vars, .names_from))
   } else {
     new_vars <- unique(pull(data, !!sym(names_from)))
   }
 
   if (!is.null(names_glue)) {
-    glue_vars <- mutate(data, .names_from = glue::glue(names_glue, .envir = .SD))
-    glue_vars <- unique(pull(glue_vars, .names_from))
+    glue_df <- as.data.table(distinct(ungroup(data), !!!syms(names_from)))
+    glue_df <- vctrs::vec_rep(glue_df, length(values_from))
+    glue_df$.value <- vctrs::vec_rep_each(values_from, length(new_vars))
+    glue_vars <- as.character(glue::glue_data(glue_df, names_glue))
   }
 
   if (length(values_from) > 1) {
@@ -215,4 +217,8 @@ step_repair <- function(data, repair = "check_unique", in_place = TRUE) {
   }
 
   data
+}
+
+shallow_dt <- function(x) {
+  filter(x, TRUE)
 }
