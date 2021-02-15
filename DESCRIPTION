@@ -26,7 +26,6 @@ Imports:
     lifecycle,
     rlang,
     tibble,
-    tidyr (>= 1.1.0),
     tidyselect,
     vctrs
 Suggests:
@@ -34,7 +33,8 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tidyr (>= 1.1.0)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

@@ -9,6 +9,10 @@
   register_s3_method("dplyr", "intersect", "dtplyr_step")
   register_s3_method("dplyr", "setdiff", "dtplyr_step")
   register_s3_method("dplyr", "union", "dtplyr_step")
+
+  register_s3_method("tidyr", "pivot_wider", "data.table")
+
+  register_s3_method("tidyr", "pivot_wider", "dtplyr_step")
 }
 
 register_s3_method <- function(pkg, generic, class, fun = NULL) {

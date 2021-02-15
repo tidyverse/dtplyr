@@ -1,13 +1,13 @@
 #' Pivot data from long to wide
 #'
 #' @description
-#' This is a method for the tidyr [pivot_wider()] generic. It is translated to
+#' This is a method for the tidyr `pivot_wider()` generic. It is translated to
 #' [data.table::dcast()]
 #'
 #' @param data A [lazy_dt()].
 #' @inheritParams tidyr::pivot_wider
-#' @importFrom tidyr pivot_wider
-#' @export
+#' @param values_fn A function, the default is `length()`. Note this is different
+#' behavior than `tidyr::pivot_wider()`, which returns a list column by default.
 #' @examples
 #' library(tidyr)
 #'
@@ -43,6 +43,7 @@
 #'     values_from = breaks,
 #'     values_fn = mean
 #'   )
+# exported onLoad
 pivot_wider.dtplyr_step <- function(data,
                                     id_cols = NULL,
                                     names_from = name,
@@ -170,9 +171,9 @@ pivot_wider.dtplyr_step <- function(data,
   out
 }
 
-globalVariables(c(".", ".names_from", "name", "value"))
+globalVariables(c(".", ".names_from", "name", "value", "pivot_wider"))
 
-#' @export
+# exported onLoad
 pivot_wider.data.table <- function(data,
                                    id_cols = NULL,
                                    names_from = name,

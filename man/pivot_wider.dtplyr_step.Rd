@@ -71,17 +71,13 @@ front of the output column.}
 This can be a named list if you want to apply different aggregations
 to different value columns.}
 
-\item{values_fn}{Optionally, a function applied to the \code{value} in each cell
-in the output. You will typically use this when the combination of
-\code{id_cols} and \code{value} column does not uniquely identify an observation.
-
-This can be a named list if you want to apply different aggregations
-to different value columns.}
+\item{values_fn}{A function, the default is \code{length()}. Note this is different
+behavior than \code{tidyr::pivot_wider()}, which returns a list column by default.}
 
 \item{...}{Additional arguments passed on to methods.}
 }
 \description{
-This is a method for the tidyr \code{\link[=pivot_wider]{pivot_wider()}} generic. It is translated to
+This is a method for the tidyr \code{pivot_wider()} generic. It is translated to
 \code{\link[data.table:dcast.data.table]{data.table::dcast()}}
 }
 \examples{
