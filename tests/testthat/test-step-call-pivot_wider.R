@@ -1,19 +1,27 @@
 test_that("can pivot all cols to wide", {
-  df <- lazy_dt(tibble(key = c("x", "y", "z"), val = 1:3))
+  df <- lazy_dt(tibble(key = c("x", "y", "z"), val = 1:3), "DT")
   step <- pivot_wider(df, names_from = key, values_from = val)
   pv <- collect(step)
 
   expect_equal(step$vars, c("x", "y", "z"))
   expect_equal(nrow(pv), 1)
+  expect_equal(
+    show_query(step),
+    expr(dcast(DT, formula = "... ~ key", value.var = "val")[, .(x, y, z)])
+  )
 })
 
 test_that("non-pivoted cols are preserved", {
-  df <- lazy_dt(tibble(a = 1, key = c("x", "y"), val = 1:2))
+  df <- lazy_dt(tibble(a = 1, key = c("x", "y"), val = 1:2), "DT")
   step <- pivot_wider(df, names_from = key, values_from = val)
   pv <- collect(step)
 
   expect_equal(step$vars, c("a", "x", "y"))
   expect_equal(nrow(pv), 1)
+  expect_equal(
+    show_query(step),
+    expr(dcast(DT, formula = "a ~ key", value.var = "val"))
+  )
 })
 
 test_that("implicit missings turn into explicit missings", {
@@ -55,39 +63,23 @@ test_that("column with `...j` name can be used as `names_from`", {
   expect_equal(nrow(pv), 1)
 })
 
-# test_that("data frame columns pivot correctly", {
-#   df <- tibble(
-#     i = c(1, 2, 1, 2),
-#     g = c("a", "a", "b", "b"),
-#     d = tibble(x = 1:4, y = 5:8)
-#   )
-#
-#   out <- pivot_wider(df, names_from = g, values_from = d)
-#   expect_equal(out$a$x, 1:2)
-#   expect_equal(out$b$y, 7:8)
-# })
-
-
 # column names -------------------------------------------------------------
 
-# test_that("names_glue affects output names", {
-#   df <- tibble(
-#     x = c("X", "Y"),
-#     y = 1:2,
-#     a = 1:2,
-#     b = 1:2
-#   )
-#
-#   df <- lazy_dt(df)
-#
-#   pivot_wider(df, x:y, a:b, names_glue = "{x}{y}_{.value}")
-#
-#   spec <- build_wider_spec(df, x:y, a:b, names_glue = '{x}{y}_{.value}')
-#   expect_equal(spec$.name, c("X1_a", "Y2_a", "X1_b", "Y2_b"))
-# })
+test_that("names_glue affects output names & auto-converts data.table to lazy_dt", {
+  df <- data.table(
+    x = c("X", "Y"),
+    y = 1:2,
+    a = 1:2,
+    b = 1:2
+  )
 
-# Added since above test can't be used due to ".value"
-test_that("can use names_glue", {
+  step <- pivot_wider(df, names_from = x:y, values_from = a:b, names_glue = "{x}{y}_{.value}")
+  pv <- collect(step)
+
+  expect_equal(step$vars, c("X1_a", "Y2_a", "X1_b", "Y2_b"))
+})
+
+test_that("can use names_glue without .value", {
   df <- lazy_dt(tibble(label = c("x", "y", "z"), val = 1:3))
   step <- pivot_wider(
     df, names_from = label, values_from = val, names_glue = "test_{label}"
@@ -103,7 +95,7 @@ test_that("can sort column names", {
     int = c(1, 3, 2),
     chr = c("Wed", "Tue", "Mon"),
   )
-  df <- lazy_dt(df)
+  df <- lazy_dt(df, "DT")
   step <- pivot_wider(df, names_from = chr, values_from = int, names_sort = TRUE)
 
   expect_equal(step$vars, c("Mon", "Tue", "Wed"))
@@ -118,28 +110,19 @@ test_that("can override default keys", {
     2,    "Sam", "height", 1.5,
     3,    "Bob", "age", 20,
   )
+  df <- lazy_dt(df, "DT")
+  step <- pivot_wider(df, id_cols = name, names_from = var, values_from = value)
+  pv <- collect(step)
 
-  df <- lazy_dt(df)
-
-  pv <- df %>%
-    pivot_wider(id_cols = name, names_from = var, values_from = value) %>%
-    collect()
   expect_equal(nrow(pv), 2)
+  expect_equal(
+    show_query(step),
+    expr(dcast(DT, formula = "name ~ var", value.var = "value"))
+  )
 })
 
 
 # non-unique keys ---------------------------------------------------------
-
-# test_that("duplicated keys produce list column with warning", {
-#   df <- tibble(a = c(1, 1, 2), key = c("x", "x", "x"), val = 1:3)
-#   expect_warning(
-#     pv <- pivot_wider(df, names_from = key, values_from = val),
-#     "list-col"
-#   )
-#
-#   expect_equal(pv$a, c(1, 2))
-#   expect_equal(as.list(pv$x), list(c(1L, 2L), 3L))
-# })
 
 test_that("warning suppressed by supplying values_fn", {
   df <- lazy_dt(tibble(a = c(1, 1, 2), key = c("x", "x", "x"), val = 1:3))
@@ -155,10 +138,11 @@ test_that("warning suppressed by supplying values_fn", {
 })
 
 test_that("values_fn can be a single function", {
-  df <- lazy_dt(tibble(a = c(1, 1, 2), key = c("x", "x", "x"), val = c(1, 10, 100)))
-  pv <- df %>%
-    pivot_wider(names_from = key, values_from = val, values_fn = sum) %>%
-    collect()
+  df <- lazy_dt(tibble(a = c(1, 1, 2), key = c("x", "x", "x"), val = c(1, 10, 100)), "DT")
+  step <- pivot_wider(df, names_from = key, values_from = val, values_fn = sum)
+  pv <- collect(step)
+
+  expect_equal(step$vars, c("a", "x"))
   expect_equal(pv$x, c(11, 100))
 })
 
@@ -192,9 +176,15 @@ test_that("can fill in missing cells", {
 })
 
 test_that("values_fill only affects missing cells", {
-  df <- lazy_dt(tibble(g = c(1, 2), names = c("x", "y"), value = c(1, NA)))
-  out <- collect(pivot_wider(df, names_from = names, values_from = value, values_fill = 0))
+  df <- lazy_dt(tibble(g = c(1, 2), names = c("x", "y"), value = c(1, NA)), "DT")
+  step <- pivot_wider(df, names_from = names, values_from = value, values_fill = 0)
+  out <- collect(step)
+
   expect_equal(out$y, c(0, NA))
+  expect_equal(
+    show_query(step),
+    expr(dcast(DT, formula = "g ~ names", value.var = "value", fill = 0))
+  )
 })
 
 # multiple values ----------------------------------------------------------
@@ -218,23 +208,3 @@ test_that("can pivot from multiple measure cols using all keys", {
   expect_equal(pv$a_x, 1)
   expect_equal(pv$b_y, 4)
 })
-
-# test_that("column order in output matches spec", {
-#   df <- tribble(
-#     ~hw,   ~name,  ~mark,   ~pr,
-#     "hw1", "anna",    95,  "ok",
-#     "hw2", "anna",    70, "meh",
-#   )
-#
-#   # deliberately create weird order
-#   sp <- tribble(
-#     ~hw, ~.value,  ~.name,
-#     "hw1", "mark", "hw1_mark",
-#     "hw1", "pr",   "hw1_pr",
-#     "hw2", "pr",   "hw2_pr",
-#     "hw2", "mark", "hw2_mark",
-#   )
-#
-#   pv <- pivot_wider_spec(df, sp)
-#   expect_named(pv, c("name", sp$.name))
-# })
