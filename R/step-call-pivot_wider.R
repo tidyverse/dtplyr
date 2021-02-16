@@ -117,10 +117,13 @@ pivot_wider.dtplyr_step <- function(data,
 
   out <- step_call(data, "dcast", args = args, vars = vars)
 
-  if (no_id) {
-    out <- select(out, -.)
-
+  if (no_id && names_sort) {
     new_vars <- new_vars[new_vars != "."]
+    cols_sorted <- c(id_cols, sort(new_vars))
+    out <- select(out, !!!syms(cols_sorted))
+  } else if (no_id) {
+    new_vars <- new_vars[new_vars != "."]
+    out <- select(out, -.)
   }
 
   if (!is.null(names_glue)) {
@@ -149,7 +152,7 @@ pivot_wider.dtplyr_step <- function(data,
     new_vars <- new_names
   }
 
-  if (names_sort) {
+  if (names_sort && !no_id) {
     cols_sorted <- c(id_cols, sort(new_vars))
 
     out <- step_call(

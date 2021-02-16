@@ -12,6 +12,6 @@
     Code
       show_query(step)
     Output
-      setcolorder(dcast(DT, formula = "... ~ chr", value.var = "int")[, 
-          .(Wed, Tue, Mon)], c("Mon", "Tue", "Wed"))
+      dcast(DT, formula = "... ~ chr", value.var = "int")[, .(Mon, 
+          Tue, Wed)]
 
