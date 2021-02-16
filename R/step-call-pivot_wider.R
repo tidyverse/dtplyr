@@ -89,22 +89,19 @@ pivot_wider.dtplyr_step <- function(data,
   }
 
   no_id <- length(id_cols) == 0
-
   if (no_id) {
     lhs <- "..."
     new_vars <- c(".", new_vars)
   } else {
-    lhs <- paste(id_cols, collapse = " + ")
+    lhs <- paste(syms(id_cols), collapse = " + ")
   }
 
   vars <- c(id_cols, new_vars)
 
-  rhs <- paste(names_from, collapse = " + ")
-
-  dcast_form <- paste(lhs, rhs, sep = " ~ ")
+  rhs <- paste(syms(names_from), collapse = " + ")
 
   args <- list(
-    formula = dcast_form,
+    formula = paste(lhs, rhs, sep = " ~ "),
     value.var = values_from,
     fun.aggregate = values_fn,
     sep = names_sep,
@@ -137,9 +134,7 @@ pivot_wider.dtplyr_step <- function(data,
 
     # In case of names_sort = TRUE
     new_vars <- glue_vars
-  }
-
-  if (nchar(names_prefix) > 0 && is.null(names_glue)) {
+  } else if (nchar(names_prefix) > 0) {
     new_names <- paste0(names_prefix, new_vars)
 
     out <- step_call(
