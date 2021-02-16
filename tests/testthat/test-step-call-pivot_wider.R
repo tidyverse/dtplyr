@@ -74,8 +74,8 @@ test_that("names_glue affects output names & auto-converts data.table to lazy_dt
   )
 
   step <- pivot_wider(df, names_from = x:y, values_from = a:b, names_glue = "{x}{y}_{.value}")
-  pv <- collect(step)
 
+  expect_snapshot(show_query(step))
   expect_equal(step$vars, c("X1_a", "Y2_a", "X1_b", "Y2_b"))
 })
 
@@ -98,6 +98,7 @@ test_that("can sort column names", {
   df <- lazy_dt(df, "DT")
   step <- pivot_wider(df, names_from = chr, values_from = int, names_sort = TRUE)
 
+  expect_snapshot(show_query(step))
   expect_equal(step$vars, c("Mon", "Tue", "Wed"))
 })
 
