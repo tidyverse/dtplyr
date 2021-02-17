@@ -102,6 +102,14 @@ test_that("can sort column names", {
   expect_equal(step$vars, c("Mon", "Tue", "Wed"))
 })
 
+test_that("can repair names if requested", {
+  df <- lazy_dt(tibble(x = 1, lab = "x", val = 2), "DT")
+  expect_snapshot(error = TRUE, {
+    pivot_wider(df, names_from = lab, values_from = val)
+    pivot_wider(df, names_from = lab, values_from = val, names_repair = "unique")
+  })
+})
+
 # keys ---------------------------------------------------------
 
 test_that("can override default keys", {
