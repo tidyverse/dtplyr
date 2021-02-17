@@ -60,8 +60,8 @@ test_that("translates case_when()", {
   dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
 
   expect_equal(
-    capture_dot(dt, case_when(x1 ~ y1, x2 ~ y2)),
-    quote(fcase(x1, y1, x2, y2))
+    capture_dot(dt, case_when(x1 ~ y1, x2 ~ y2, x3 ~ TRUE, TRUE ~ y4)),
+    quote(fcase(x1, y1, x2, y2, x3, TRUE, rep(TRUE, .N), y4))
   )
 
   # translates recursively

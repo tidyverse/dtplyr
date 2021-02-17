@@ -110,7 +110,12 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, "case_when")) {
     # case_when(x ~ y) -> fcase(x, y)
     args <- unlist(lapply(x[-1], function(x) {
-      list(x[[2]], x[[3]])
+      list(
+        # Get as "default" case as close as possible
+        # https://github.com/Rdatatable/data.table/issues/4258
+        if (isTRUE(x[[2]])) quote(rep(TRUE, .N)) else x[[2]],
+        x[[3]]
+      )
     }))
     args <- lapply(args, dt_squash, env = env, data = data, j = j)
     call2("fcase", !!!args)
