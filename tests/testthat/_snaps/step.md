@@ -2,7 +2,6 @@
 
     Code
       dt <- lazy_dt(mtcars, "DT")
-    Code
       dt
     Output
       Source: local data table [32 x 11]
