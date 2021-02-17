@@ -1,5 +1,8 @@
-release_date: ???
-rel_release_date: ???
-my_news_url: ???
-release_version: ???
-release_details: ???
+release_date: Feb 19
+rel_release_date: two weeks
+my_news_url: https://github.com/tidyverse/dtplyr/blob/master/NEWS.md
+release_version: 1.1.0
+release_details: >
+  This is a relatively short deadline, but it looks the problems are
+  relatively small, and I've contributed PRs where needed.
+
