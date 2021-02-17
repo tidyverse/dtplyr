@@ -36,6 +36,8 @@
   This will generally have little impact on performance but it allows you to 
   use intermediate variables to simplify complex translations.
 
+* `case_when()` is now translated to `fcase()` (#190).
+
 * `cur_data()` (`.SD`), `cur_group()` (`.BY`), `cur_group_id()` (`.GRP`), 
    and `cur_group_rows() (`.I`) are now tranlsated to their data.table 
    equivalents (#166).

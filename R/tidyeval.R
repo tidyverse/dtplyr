@@ -24,6 +24,7 @@ add_dt_wrappers <- function(env) {
   env$fsetdiff <- data.table::fsetdiff
   env$frank <- data.table::frank
   env$frankv <- data.table::frankv
+  env$fcase <- data.table::fcase
 
   invisible()
 }
@@ -114,6 +115,13 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, "coalesce")) {
     x[[1L]] <- quote(fcoalesce)
     x
+  } else if (is_call(x, "case_when")) {
+    # case_when(x ~ y) -> fcase(x, y)
+    args <- unlist(lapply(x[-1], function(x) {
+      list(x[[2]], x[[3]])
+    }))
+    args <- lapply(args, dt_squash, env = env, data = data, j = j)
+    call2("fcase", !!!args)
   } else if (is_call(x, "cur_data")) {
     quote(.SD)
   } else if (is_call(x, "cur_data_all")) {
