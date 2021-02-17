@@ -27,6 +27,9 @@
   (apart from predicate functions which can't easily work on lazily evaluated
   data tables).
 
+* We have begun the process of add translations for tidyr verbs beginning
+  with `pivot_wider()` (@markfairbanks, #189).
+
 ## Translation improvements
 
 * `compute()` now creates an intermediate assignment within the translation. 
@@ -55,6 +58,8 @@
 ## Minor improvements and bug fixes
 
 * Grouped filter, mutate, and slice no longer affect ordering of output (#178).
+
+* `as_tibble()` gains a `.name_repair` argument (@markfairbanks).
 
 * `as.data.table()` always calls `[]` so that the result will print (#146). 
 

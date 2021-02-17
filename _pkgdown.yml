@@ -37,6 +37,10 @@ reference:
   - left_join.dtplyr_step
   - intersect.dtplyr_step
 
+- title: tidyr verbs
+  contents:
+  - pivot_wider.dtplyr_step
+
 navbar:
   components:
     home: ~

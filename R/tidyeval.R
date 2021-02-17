@@ -15,7 +15,9 @@ add_dt_wrappers <- function(env) {
   # Make sure data.table functions are available so dtplyr still works
   # even when data.table isn't attached
   env$copy <- data.table::copy
+  env$dcast <- data.table::dcast
   env$setnames <- data.table::setnames
+  env$setcolorder <- data.table::setcolorder
 
   env$funion <- data.table::funion
   env$fintersect <- data.table::fintersect

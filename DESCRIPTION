@@ -26,13 +26,15 @@ Imports:
     lifecycle,
     rlang,
     tibble,
-    tidyselect
+    tidyselect,
+    vctrs
 Suggests:
     bench,
     covr,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tidyr (>= 1.1.0)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

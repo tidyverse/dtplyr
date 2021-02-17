@@ -16,7 +16,7 @@
 
 \method{as.data.frame}{dtplyr_step}(x, ...)
 
-\method{as_tibble}{dtplyr_step}(x, ...)
+\method{as_tibble}{dtplyr_step}(x, ..., .name_repair = "check_unique")
 }
 \arguments{
 \item{x}{A \link{lazy_dt}}
@@ -26,6 +26,8 @@
 \item{name}{Name of intermediate data.table.}
 
 \item{keep.rownames}{Ignored as dplyr never preserves rownames.}
+
+\item{.name_repair}{Treatment of problematic column names}
 }
 \description{
 \itemize{
