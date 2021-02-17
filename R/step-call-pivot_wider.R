@@ -90,7 +90,7 @@ pivot_wider.dtplyr_step <- function(data,
 
   no_id <- length(id_cols) == 0
   if (no_id) {
-    lhs <- "..."
+    lhs <- "..." # using symbol causes dcast() to fail
     new_vars <- c(".", new_vars)
   } else {
     lhs <- call_reduce(syms(id_cols), "+")
