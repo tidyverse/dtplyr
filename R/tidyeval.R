@@ -11,25 +11,17 @@ dt_eval <- function(x) {
   eval_tidy(quo)
 }
 
+# Make sure data.table functions are available so dtplyr still works
+# even when data.table isn't attached
+dt_funs <- c(
+  "copy", "dcast",
+  "fcase", "fintersect", "frank", "frankv", "fsetdiff", "funion",
+  "setcolorder", "setnames"
+)
 add_dt_wrappers <- function(env) {
-  # Make sure data.table functions are available so dtplyr still works
-  # even when data.table isn't attached
-  env$copy <- data.table::copy
-  env$dcast <- data.table::dcast
-  env$setnames <- data.table::setnames
-  env$setcolorder <- data.table::setcolorder
-
-  env$funion <- data.table::funion
-  env$fintersect <- data.table::fintersect
-  env$fsetdiff <- data.table::fsetdiff
-  env$frank <- data.table::frank
-  env$frankv <- data.table::frankv
-  env$fcase <- data.table::fcase
-
-  invisible()
+  env_bind(env, !!!env_get_list(ns_env("data.table"), dt_funs))
 }
-globalVariables(c("copy", "setnames", "funion", "fintersect", "fsetdiff", "frank", "frankv"))
-
+globalVariables(dt_funs)
 
 # These functions attempt to simulate tidy eval as much as possible within
 # data.table. The goal is to get the majority of real-world code to work,
