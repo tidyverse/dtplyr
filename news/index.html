@@ -176,6 +176,7 @@
 </ul>
 <p>And <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> now support dplyr 1.0.0 tidyselect syntax (apart from predicate functions which can’t easily work on lazily evaluated data tables).</p>
 </li>
+<li><p>We have begun the process of add translations for tidyr verbs beginning with <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/189'>#189</a>).</p></li>
 </ul>
 </div>
 <div id="translation-improvements" class="section level2">
@@ -201,6 +202,7 @@
 <a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
 <ul>
 <li><p>Grouped filter, mutate, and slice no longer affect ordering of output (<a href='https://github.com/tidyverse/dtplyr/issues/178'>#178</a>).</p></li>
+<li><p><code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> gains a <code>.name_repair</code> argument (<a href='https://github.com/markfairbanks'>@markfairbanks</a>).</p></li>
 <li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table()</a></code> always calls <code>[]</code> so that the result will print (<a href='https://github.com/tidyverse/dtplyr/issues/146'>#146</a>).</p></li>
 <li><p><code>print.lazy_dt()</code> shows total rows, and grouping, if present.</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_map()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/group_map.html">group_walk()</a></code> are now translated (<a href='https://github.com/tidyverse/dtplyr/issues/108'>#108</a>).</p></li>
