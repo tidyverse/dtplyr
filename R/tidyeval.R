@@ -110,14 +110,12 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, "case_when")) {
     # case_when(x ~ y) -> fcase(x, y)
     args <- unlist(lapply(x[-1], function(x) {
-      list(x[[2]], x[[3]])
+      list(
+        if (isTRUE(x[[2]])) call2("rep", TRUE, quote(.N)) else x[[2]],
+        x[[3]]
+      )
     }))
     args <- lapply(args, dt_squash, env = env, data = data, j = j)
-    odd_index <- as.logical(seq_along(args) %% 2)
-    args[odd_index] <- lapply(
-      args[odd_index],
-      function(.x) if (isTRUE(.x)) call2("rep", TRUE, quote(.N)) else .x
-    )
     call2("fcase", !!!args)
   } else if (is_call(x, "cur_data")) {
     quote(.SD)
