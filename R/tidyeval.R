@@ -106,23 +106,12 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     if (is_call(x, "[[")) {
       var <- sym(eval(var, env))
     }
-
     if (is_symbol(x[[2]], ".data")) {
       var
     } else if (is_symbol(x[[2]], ".env")) {
       sym(paste0("..", var))
     }
-  } else if (is_call(x, "n", n = 0)) {
-    quote(.N)
-  } else if (is_call(x, "row_number", n = 0)) {
-    quote(seq_len(.N))
-  } else if (is_call(x, "row_number", n = 1)) {
-    arg <- dt_squash(x[[2]], env, data, j = j)
-    expr(frank(!!arg, ties.method = "first", na.last = "keep"))
-  } else if (is_call(x, "if_else")) {
-    x[[1L]] <- quote(fifelse)
-    x
-  } else if (is_call(x, 'coalesce')) {
+  } else if (is_call(x, "coalesce")) {
     x[[1L]] <- quote(fcoalesce)
     x
   } else if (is_call(x, "cur_data")) {
@@ -135,6 +124,16 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     quote(.GRP)
   } else if (is_call(x, "cur_group_rows")) {
     quote(.I)
+  } else if (is_call(x, "if_else")) {
+    x[[1L]] <- quote(fifelse)
+    x
+  } else if (is_call(x, "n", n = 0)) {
+    quote(.N)
+  } else if (is_call(x, "row_number", n = 0)) {
+    quote(seq_len(.N))
+  } else if (is_call(x, "row_number", n = 1)) {
+    arg <- dt_squash(x[[2]], env, data, j = j)
+    expr(frank(!!arg, ties.method = "first", na.last = "keep"))
   } else if (is.function(x[[1]]) || is_call(x, "function")) {
     simplify_function_call(x, env, data, j = j)
   } else {
