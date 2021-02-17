@@ -15,6 +15,14 @@
       dcast(DT, formula = "..." ~ chr, value.var = "int")[, .(Mon, 
           Tue, Wed)]
 
+# can sort column names with id
+
+    Code
+      show_query(step)
+    Output
+      setcolorder(dcast(DT, formula = id ~ chr, value.var = "int"), 
+          c("id", "Mon", "Tue", "Wed"))
+
 # can repair names if requested
 
     Code

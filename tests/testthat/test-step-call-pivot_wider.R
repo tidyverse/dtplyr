@@ -110,6 +110,19 @@ test_that("can sort column names", {
   expect_equal(step$vars, c("Mon", "Tue", "Wed"))
 })
 
+test_that("can sort column names with id", {
+  df <- tibble(
+    id = 1:3,
+    int = c(1, 3, 2),
+    chr = c("Wed", "Tue", "Mon"),
+  )
+  df <- lazy_dt(df, "DT")
+  step <- pivot_wider(dµf, names_from = chr, values_from = int, names_sort = TRUE)
+
+  expect_snapshot(show_query(step))
+  expect_equal(step$vars, c("id", "Mon", "Tue", "Wed"))
+})
+
 test_that("can repair names if requested", {
   df <- lazy_dt(tibble(x = 1, lab = "x", val = 2), "DT")
   expect_snapshot(error = TRUE, {
