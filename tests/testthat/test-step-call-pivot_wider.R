@@ -117,7 +117,7 @@ test_that("can sort column names with id", {
     chr = c("Wed", "Tue", "Mon"),
   )
   df <- lazy_dt(df, "DT")
-  step <- pivot_wider(dµf, names_from = chr, values_from = int, names_sort = TRUE)
+  step <- pivot_wider(df, names_from = chr, values_from = int, names_sort = TRUE)
 
   expect_snapshot(show_query(step))
   expect_equal(step$vars, c("id", "Mon", "Tue", "Wed"))
