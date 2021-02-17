@@ -93,15 +93,15 @@ pivot_wider.dtplyr_step <- function(data,
     lhs <- "..."
     new_vars <- c(".", new_vars)
   } else {
-    lhs <- paste(syms(id_cols), collapse = " + ")
+    lhs <- call_reduce(syms(id_cols), "+")
   }
+
+  rhs <- call_reduce(syms(names_from), "+")
 
   vars <- c(id_cols, new_vars)
 
-  rhs <- paste(syms(names_from), collapse = " + ")
-
   args <- list(
-    formula = paste(lhs, rhs, sep = " ~ "),
+    formula = call2("~", lhs, rhs),
     value.var = values_from,
     fun.aggregate = values_fn,
     sep = names_sep,
@@ -119,7 +119,7 @@ pivot_wider.dtplyr_step <- function(data,
 
   if (no_id && names_sort) {
     new_vars <- new_vars[new_vars != "."]
-    cols_sorted <- c(id_cols, sort(new_vars))
+    cols_sorted <- sort(new_vars)
     out <- select(out, !!!syms(cols_sorted))
   } else if (no_id) {
     new_vars <- new_vars[new_vars != "."]
@@ -220,4 +220,8 @@ step_repair <- function(data, repair = "check_unique", in_place = TRUE) {
 
 shallow_dt <- function(x) {
   filter(x, TRUE)
+}
+
+call_reduce <- function(x, fun) {
+  Reduce(function(x, y) call2(fun, x, y), x)
 }

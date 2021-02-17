@@ -7,7 +7,7 @@ test_that("can pivot all cols to wide", {
   expect_equal(nrow(pv), 1)
   expect_equal(
     show_query(step),
-    expr(dcast(DT, formula = "... ~ key", value.var = "val")[, .(x, y, z)])
+    expr(dcast(DT, formula = "..." ~ key, value.var = "val")[, .(x, y, z)])
   )
 })
 
@@ -20,7 +20,7 @@ test_that("non-pivoted cols are preserved", {
   expect_equal(nrow(pv), 1)
   expect_equal(
     show_query(step),
-    expr(dcast(DT, formula = "a ~ key", value.var = "val"))
+    expr(dcast(DT, formula = a ~ key, value.var = "val"))
   )
 })
 
@@ -118,7 +118,7 @@ test_that("can override default keys", {
   expect_equal(nrow(pv), 2)
   expect_equal(
     show_query(step),
-    expr(dcast(DT, formula = "name ~ var", value.var = "value"))
+    expr(dcast(DT, formula = name ~ var, value.var = "value"))
   )
 })
 
@@ -184,7 +184,7 @@ test_that("values_fill only affects missing cells", {
   expect_equal(out$y, c(0, NA))
   expect_equal(
     show_query(step),
-    expr(dcast(DT, formula = "g ~ names", value.var = "value", fill = 0))
+    expr(dcast(DT, formula = g ~ names, value.var = "value", fill = 0))
   )
 })
 
