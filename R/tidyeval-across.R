@@ -12,12 +12,15 @@ dt_squash_across <- function(call, env, data, j = j) {
 
   funs <- across_funs(call$.fns, env, data, j = j)
 
+  dots <- call$...
+  dots <- lapply(dots, dt_squash, env = env, data = data, j = j)
+
   # Generate grid of expressions
   out <- vector("list", length(cols) * length(funs))
   k <- 1
   for (i in seq_along(cols)) {
     for (j in seq_along(funs)) {
-      out[[k]] <- exec(funs[[j]], cols[[i]], !!!call$...)
+      out[[k]] <- exec(funs[[j]], cols[[i]], !!!dots)
       k <- k + 1
     }
   }

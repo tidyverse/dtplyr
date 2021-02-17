@@ -58,6 +58,16 @@ test_that("across() translates functions", {
   )
 })
 
+test_that("dots are translated too", {
+  fun <- function() {
+    dt <- lazy_dt(data.frame(a = 1, b = 2))
+    z <- TRUE
+    capture_across(dt, across(a, mean, na.rm = z))
+  }
+
+  expect_equal(fun(), exprs(a = mean(a, na.rm = TRUE)))
+})
+
 test_that("across() translates formulas", {
   dt <- lazy_dt(data.frame(a = 1,  b = 2))
 
