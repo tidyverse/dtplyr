@@ -90,6 +90,14 @@ test_that("can use names_glue without .value", {
   expect_equal(nrow(pv), 1)
 })
 
+test_that("can add name prefix", {
+  df <- lazy_dt(tibble(label = c("x", "y", "z"), val = 1:3), "DT")
+  step <- pivot_wider(
+    df, names_from = label, values_from = val, names_prefix = "test_"
+  )
+  expect_named(collect(step), c("test_x", "test_y", "test_z"))
+})
+
 test_that("can sort column names", {
   df <- tibble(
     int = c(1, 3, 2),
