@@ -73,6 +73,12 @@ test_that("can use anonymous functions", {
   )
 })
 
+test_that("can splice a data frame", {
+  df <- data.frame(b = rep(2, 3), c = rep(3, 3))
+  dots <- capture_dots(df, !!!df)
+  expect_equal(dots, as.list(df))
+})
+
 # evaluation --------------------------------------------------------------
 
 test_that("can access functions in local env", {

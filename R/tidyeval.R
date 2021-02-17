@@ -42,6 +42,8 @@ capture_dots <- function(.data, ..., .j = TRUE) {
   is_list <- vapply(dots, is.list, logical(1))
   names(dots)[is_list] <- ""
 
+  # Auto-splice list results from dt_squash()
+  dots[!is_list] <- lapply(dots[!is_list], list)
   unlist(dots, recursive = FALSE)
 }
 
