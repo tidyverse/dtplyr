@@ -39,6 +39,7 @@ reference:
 
 - title: tidyr verbs
   contents:
+  - drop_na.dtplyr_step
   - pivot_wider.dtplyr_step
 
 navbar:
