@@ -50,7 +50,7 @@
         <a class="navbar-brand" href="../index.html">dtplyr</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
         </div>
       </div>
     </div>
@@ -380,9 +380,9 @@
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 filter     645.85µs 678.65µs     1458.        0B     17.4</span>
-<span class="co">#&gt; 2 mutate       1.03ms   1.12ms      878.        0B     19.3</span>
-<span class="co">#&gt; 3 summarise  838.38µs 910.43µs     1082.        0B     14.7</span></code></pre></div>
+<span class="co">#&gt; 1 filter      646.1µs 680.98µs     1460.        0B     17.4</span>
+<span class="co">#&gt; 2 mutate       1.08ms   1.14ms      866.        0B     17.1</span>
+<span class="co">#&gt; 3 summarise  869.32µs 913.24µs     1086.        0B     14.8</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
