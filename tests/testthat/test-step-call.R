@@ -161,3 +161,69 @@ test_that("unique is an alias for distinct", {
   dt <- lazy_dt(data.table(x = c(1, 1)))
   expect_equal(unique(dt), distinct(dt))
 })
+
+# drop_na ------------------------------------------------------------------
+
+test_that("empty call drops every row", {
+  df <- lazy_dt(tibble(x = c(1, 2, NA), y = c("a", NA, "b")), "DT")
+  exp <- tibble(x = c(1), y = c("a"))
+  step <- drop_na(df)
+  res <- as_tibble(step)
+  expect_equal(show_query(step), expr(na.omit(DT)))
+  expect_equal(res, exp)
+})
+
+test_that("converts data.table to dtplyr_step", {
+  df <- data.table(x = c(1, 2, NA), y = c("a", NA, "b"))
+  expect_equal(class(drop_na(df)), c("dtplyr_step_call", "dtplyr_step"))
+})
+
+test_that("specifying (a) variables considers only that variable(s)", {
+  df <- lazy_dt(tibble(x = c(1, 2, NA), y = c("a", NA, "b")), "DT")
+  exp <- tibble(x = c(1, 2), y = c("a", NA))
+  step <- drop_na(df, x)
+  res <- as_tibble(step)
+  expect_equal(show_query(step), expr(na.omit(DT, cols = "x")))
+  expect_equal(res, exp)
+  exp <- tibble(x = c(1), y = c("a"))
+  res <- as_tibble(drop_na(df, x:y))
+  expect_equal(res, exp)
+})
+
+test_that("groups are preserved", {
+  df <- lazy_dt(tibble(g = c("A", "A", "B"), x = c(1, 2, NA), y = c("a", NA, "b")))
+  exp <- tibble(g = c("A", "B"), x = c(1, NA), y = c("a", "b"))
+
+  gdf <- group_by(df, "g")
+  gexp <- dplyr::group_by(exp, "g")
+
+  res <- collect(drop_na(gdf, y))
+  expect_equal(res, gexp)
+  expect_equal(dplyr::group_vars(res), dplyr::group_vars(gexp))
+})
+
+test_that("empty call drops every row", {
+  df <- lazy_dt(tibble(x = c(1, 2, NA), y = c("a", NA, "b")))
+  res <- as_tibble(drop_na(df))
+  expect_identical(res, tibble(x = 1, y = "a"))
+})
+
+test_that("errors are raised", {
+  df <- lazy_dt(tibble(x = c(1, 2, NA), y = c("a", NA, "b")))
+  expect_error(collect(drop_na(df, !! list())))
+  expect_error(collect(drop_na(df, "z")))
+})
+
+test_that("single variable data.frame doesn't lose dimension", {
+  df <- lazy_dt(data.frame(x = c(1, 2, NA)))
+  res <- as.data.frame(drop_na(df, "x"))
+  exp <- data.frame(x = c(1, 2))
+  expect_equal(res, exp)
+})
+
+test_that("preserves attributes", {
+  df <- lazy_dt(tibble(x = structure(c(1, NA), attr = "!")))
+  rs <- collect(drop_na(df))
+
+  expect_equal(rs$x, structure(1, attr = "!"))
+})
