@@ -28,7 +28,11 @@
   data tables).
 
 * We have begun the process of add translations for tidyr verbs beginning
-  with `pivot_wider()` (@markfairbanks, #189).
+  with:
+  
+  * `drop_na()` (@markfairbanks, #194)
+  
+  * `pivot_wider()` (@markfairbanks, #189).
 
 ## Translation improvements
 
