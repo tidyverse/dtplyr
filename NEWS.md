@@ -1,5 +1,11 @@
 # dtplyr (development version)
 
+* More tidyr verbs are in the process of being added:
+
+  * `drop_na()` (@markfairbanks, #194)
+
+# dtplyr 1.1.0
+
 ## New features
 
 * All verbs now have (very basic) documentation pointing back to the
@@ -27,12 +33,8 @@
   (apart from predicate functions which can't easily work on lazily evaluated
   data tables).
 
-* We have begun the process of add translations for tidyr verbs beginning
-  with:
-  
-  * `drop_na()` (@markfairbanks, #194)
-  
-  * `pivot_wider()` (@markfairbanks, #189).
+* We have begun the process of adding translations for tidyr verbs beginning
+  with `pivot_wider()` (@markfairbanks, #189).
 
 ## Translation improvements
 

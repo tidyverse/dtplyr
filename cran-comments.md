@@ -1,20 +1,25 @@
-
-Compatibility with dplyr 0.8.0.
-
-## Test environments
-
-* local: darwin15.6.0-3.5.2
-* travis: 3.1, 3.2, 3.3, oldrel, release, devel
-* r-hub: windows-x86_64-devel, ubuntu-gcc-release, fedora-clang-devel
-* win-builder: windows-x86_64-devel
-
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
 
 ## revdepcheck results
 
-We checked 4 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 5 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 0 new problems
+ * We saw 3 new problems
  * We failed to check 0 packages
+
+Issues with CRAN packages are summarised below. All packages with problems recieved a PR with fix two weeks ago.
+
+### New problems
+(This reports the first line of each new failure)
+
+* grattan
+  checking tests ... ERROR
+
+* immunarch
+  checking examples ... ERROR
+
+* tidyquery
+  checking tests ... ERROR
+
