@@ -171,25 +171,26 @@ test_that("empty call drops every row", {
   expect_equal(as_tibble(step), tb[1, ])
 })
 
-test_that("converts data.table to dtplyr_step", {
-  df <- data.table(x = c(1, 2, NA), y = c("a", NA, "b"))
-  expect_equal(class(drop_na(df)), c("dtplyr_step_call", "dtplyr_step"))
-})
+test_that("uses specified variables", {
+  df <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
+  dt <- lazy_dt(df, "DT")
 
-test_that("specifying (a) variables considers only that variable(s)", {
-  df <- lazy_dt(tibble(x = c(1, 2, NA), y = c("a", NA, "b")), "DT")
-  exp <- tibble(x = c(1, 2), y = c("a", NA))
-  step <- drop_na(df, x)
-  res <- as_tibble(step)
+  step <- drop_na(dt, x)
   expect_equal(show_query(step), expr(na.omit(DT, cols = "x")))
-  expect_equal(res, exp)
-  exp <- tibble(x = c(1), y = c("a"))
-  res <- as_tibble(drop_na(df, x:y))
-  expect_equal(res, exp)
+  expect_equal(collect(step), df[1:2, ])
+
+  step <- drop_na(dt, x:y)
+  expect_equal(show_query(step), expr(na.omit(DT, cols = !!c("x", "y"))))
+  expect_equal(collect(step), df[1, ])
 })
 
 test_that("errors are raised", {
   tb <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
   dt <- lazy_dt(tb, "DT")
   expect_snapshot(collect(drop_na(dt, "z")), error = TRUE)
+})
+
+test_that("converts data.table to dtplyr_step", {
+  df <- data.table(x = c(1, 2, NA), y = c("a", NA, "b"))
+  expect_s3_class(drop_na(df), "dtplyr_step_call")
 })
