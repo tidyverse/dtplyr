@@ -191,6 +191,5 @@ test_that("specifying (a) variables considers only that variable(s)", {
 test_that("errors are raised", {
   tb <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
   dt <- lazy_dt(tb, "DT")
-  expect_snapshot(collect(drop_na(dt, !! list())), error = TRUE)
   expect_snapshot(collect(drop_na(dt, "z")), error = TRUE)
 })
