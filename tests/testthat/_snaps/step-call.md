@@ -16,3 +16,20 @@
     Output
       setnames(copy(DT), c("a", "b", "c"), toupper)
 
+# errors are raised
+
+    Code
+      collect(drop_na(dt, <list: >))
+    Error <simpleError>
+      <text>:1:21: unexpected '<'
+      1: collect(drop_na(dt, <
+                              ^
+
+---
+
+    Code
+      collect(drop_na(dt, "z"))
+    Error <vctrs_error_subscript_oob>
+      Can't subset columns that don't exist.
+      x Column `z` doesn't exist.
+
