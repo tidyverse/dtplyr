@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Subset columns using their names — select.dtplyr_step • dtplyr</title>
+<title>Drop rows containing missing values — drop_na.dtplyr_step • dtplyr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,9 +49,9 @@
 
 
 
-<meta property="og:title" content="Subset columns using their names — select.dtplyr_step" />
-<meta property="og:description" content="This is a method for the dplyr select() generic. It is translated to
-the j argument of [.data.table." />
+<meta property="og:title" content="Drop rows containing missing values — drop_na.dtplyr_step" />
+<meta property="og:description" content="This is a method for the tidyr drop_na() generic. It is translated to
+data.table::na.omit()" />
 <meta property="og:image" content="https://dtplyr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -153,64 +153,65 @@ the j argument of [.data.table." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Subset columns using their names</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-subset-select.R'><code>R/step-subset-select.R</code></a></small>
-    <div class="hidden name"><code>select.dtplyr_step.Rd</code></div>
+    <h1>Drop rows containing missing values</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-call.R'><code>R/step-call.R</code></a></small>
+    <div class="hidden name"><code>drop_na.dtplyr_step.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is a method for the dplyr <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select()</a></code> generic. It is translated to
-the <code>j</code> argument of <code>[.data.table</code>.</p>
+    <p>This is a method for the tidyr <code>drop_na()</code> generic. It is translated to
+<code><a href='https://Rdatatable.gitlab.io/data.table/reference/na.omit.data.table.html'>data.table::na.omit()</a></code></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>drop_na</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
+      <th>data</th>
       <td><p>A <code><a href='lazy_dt.html'>lazy_dt()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>&lt;<code><a href='https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html'>tidy-select</a></code>&gt; One or more unquoted
-expressions separated by commas. Variable names can be used as if they
-were positions in the data frame, so expressions like <code>x:y</code> can
-be used to select a range of variables.</p></td>
+      <td><p>&lt;<code><a href='https://tidyr.tidyverse.org/reference/tidyr_tidy_select.html'>tidy-select</a></code>&gt; Columns to inspect for
+missing values.</p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>, warn.conflicts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
 
-<span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='fl'>1</span>, x2 <span class='op'>=</span> <span class='fl'>2</span>, y1 <span class='op'>=</span> <span class='fl'>3</span>, y2 <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='cn'>NA</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='cn'>NA</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [1 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT25`[, .(x1, x2)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>na.omit(`_DT6`)
 #&gt; 
-#&gt;      x1    x2
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     1     2
+#&gt;       x y    
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1 a    
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span><span class='op'>(</span><span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span>
+#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [2 x 2]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>na.omit(`_DT6`, cols = "x")
+#&gt; 
+#&gt;       x y    
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1 a    
+#&gt; </span><span style='color: #555555;'>2</span><span>     2 </span><span style='color: #BB0000;'>NA</span><span>   
+#&gt; 
+#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+<span class='va'>vars</span> <span class='op'>&lt;-</span> <span class='st'>"y"</span>
+<span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/all_of.html'>any_of</a></span><span class='op'>(</span><span class='va'>vars</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [1 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT25`[, .(x2, y2)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>na.omit(`_DT6`, cols = c("x", "y"))
 #&gt; 
-#&gt;      x2    y2
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     2     4
-#&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>z1 <span class='op'>=</span> <span class='va'>x1</span>, z2 <span class='op'>=</span> <span class='va'>x2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [1 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT25`[, .(z1 = x1, z2 = x2)]
-#&gt; 
-#&gt;      z1    z2
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     1     2
+#&gt;       x y    
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>     1 a    
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
   </div>

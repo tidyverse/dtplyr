@@ -199,7 +199,7 @@ left-hand side; specifying both is an error.</p></td>
 
 <span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/relocate.html'>relocate</a></span><span class='op'>(</span><span class='va'>z</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [1 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT22`[, .(z, x, y)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT23`[, .(z, x, y)]
 #&gt; 
 #&gt;       z     x     y
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -207,7 +207,7 @@ left-hand side; specifying both is an error.</p></td>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/relocate.html'>relocate</a></span><span class='op'>(</span><span class='va'>y</span>, .before <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [1 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT22`[, .(y, x, z)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT23`[, .(y, x, z)]
 #&gt; 
 #&gt;       y     x     z
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -215,7 +215,7 @@ left-hand side; specifying both is an error.</p></td>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/relocate.html'>relocate</a></span><span class='op'>(</span><span class='va'>y</span>, .after <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [1 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT22`[, .(x, y, z)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT23`[, .(x, y, z)]
 #&gt; 
 #&gt;       x     y     z
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>

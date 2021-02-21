@@ -211,13 +211,13 @@ joins that use the keys.</p>
 <span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'>data.table</span><span class='fu'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, y <span class='op'>=</span> <span class='fl'>10</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'>==</span> <span class='va'>y</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [0 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT12`[x == y]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT13`[x == y]
 #&gt; 
 #&gt; </span><span style='color: #555555;'># … with 2 variables: x </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, y </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [10 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT13`)[, `:=`(z = x + y)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT14`)[, `:=`(z = x + y)]
 #&gt; 
 #&gt;       x     y     z
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
@@ -237,7 +237,7 @@ joins that use the keys.</p>
   <span class='fu'>lazy_dt</span><span class='op'>(</span>immutable <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [10 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT14`[, `:=`(z = x + y)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT15`[, `:=`(z = x + y)]
 #&gt; 
 #&gt;       x     y     z
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
@@ -255,7 +255,7 @@ joins that use the keys.</p>
 <span class='va'>mtcars2</span> <span class='op'>&lt;-</span> <span class='fu'>lazy_dt</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
 <span class='va'>mtcars2</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 11]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT15`
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT16`
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -269,7 +269,7 @@ joins that use the keys.</p>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>:</span><span class='va'>cyl</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT15`[, .(mpg, cyl)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT16`[, .(mpg, cyl)]
 #&gt; 
 #&gt;     mpg   cyl
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -283,7 +283,7 @@ joins that use the keys.</p>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>mpg</span>, y <span class='op'>=</span> <span class='va'>cyl</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT15`[, .(x = mpg, y = cyl)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT16`[, .(x = mpg, y = cyl)]
 #&gt; 
 #&gt;       x     y
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -297,7 +297,7 @@ joins that use the keys.</p>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [11 x 1]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT15`[cyl == 4, .(mpg)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT16`[cyl == 4, .(mpg)]
 #&gt; 
 #&gt;     mpg
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -311,7 +311,7 @@ joins that use the keys.</p>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>4</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [11 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT15`[, .(mpg, cyl)][cyl == 4]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT16`[, .(mpg, cyl)][cyl == 4]
 #&gt; 
 #&gt;     mpg   cyl
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -325,7 +325,7 @@ joins that use the keys.</p>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>cyl2 <span class='op'>=</span> <span class='va'>cyl</span> <span class='op'>*</span> <span class='fl'>2</span>, cyl4 <span class='op'>=</span> <span class='va'>cyl2</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 13]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT15`)[, `:=`(c("cyl2", "cyl4"), {
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT16`)[, `:=`(c("cyl2", "cyl4"), {
 #&gt;     cyl2 &lt;- cyl * 2
 #&gt;     cyl4 &lt;- cyl2 * 2
 #&gt;     .(cyl2, cyl4)
@@ -343,7 +343,7 @@ joins that use the keys.</p>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span>cyl2 <span class='op'>=</span> <span class='va'>cyl</span> <span class='op'>*</span> <span class='fl'>2</span>, vs2 <span class='op'>=</span> <span class='va'>vs</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT15`[, .(cyl2 = cyl * 2, vs2 = vs * 2)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT16`[, .(cyl2 = cyl * 2, vs2 = vs * 2)]
 #&gt; 
 #&gt;    cyl2   vs2
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -357,7 +357,7 @@ joins that use the keys.</p>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>8</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>cyl2 <span class='op'>=</span> <span class='va'>cyl</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [14 x 12]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT15`[cyl == 8][, `:=`(cyl2 = cyl * 2)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT16`[cyl == 8][, `:=`(cyl2 = cyl * 2)]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb  cyl2
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -374,7 +374,7 @@ joins that use the keys.</p>
 <span class='va'>by_cyl</span> <span class='op'>&lt;-</span> <span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span>
 <span class='va'>by_cyl</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [3 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT15`[, .(mpg = mean(mpg)), keyby = .(cyl)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT16`[, .(mpg = mean(mpg)), keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl   mpg
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -385,7 +385,7 @@ joins that use the keys.</p>
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>by_cyl</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 11]
 #&gt; </span><span style='font-weight: bold;'>Groups: </span><span>cyl
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT15`)[, `:=`(mpg = mean(mpg)), by = .(cyl)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT16`)[, `:=`(mpg = mean(mpg)), by = .(cyl)]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -401,7 +401,7 @@ joins that use the keys.</p>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>hp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>hp</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [3 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT15`[`_DT15`[, .I[mpg &lt; mean(mpg)], by = .(cyl)]$V1, .(hp = mean(hp)), 
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT16`[`_DT16`[, .I[mpg &lt; mean(mpg)], by = .(cyl)]$V1, .(hp = mean(hp)), 
 #&gt;     keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl    hp

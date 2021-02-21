@@ -124,7 +124,7 @@
 <p>This document assumes that you’re familiar with the basics of data.table; if you’re not, I recommend starting at <code>vignette("datatable-intro.html")</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidyverse/dtplyr">dtplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://Rdatatable.gitlab.io/data.table">data.table</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com">data.table</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="the-basics" class="section level2">
@@ -380,9 +380,9 @@
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 filter        658µs 715.24µs     1257.        0B     14.9</span>
-<span class="co">#&gt; 2 mutate        1.1ms   1.21ms      793.        0B     17.7</span>
-<span class="co">#&gt; 3 summarise   875.3µs 930.71µs     1043.        0B     12.5</span></code></pre></div>
+<span class="co">#&gt; 1 filter     664.75µs 693.84µs     1417.        0B     17.5</span>
+<span class="co">#&gt; 2 mutate       1.11ms   1.15ms      866.        0B     17.1</span>
+<span class="co">#&gt; 3 summarise  891.75µs  930.5µs     1049.        0B     14.8</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">

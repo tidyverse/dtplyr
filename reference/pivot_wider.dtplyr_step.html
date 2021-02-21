@@ -159,7 +159,7 @@ data.table::dcast()" />
     </div>
 
     <div class="ref-description">
-    <p>This is a method for the tidyr <code>pivot_wider()</code> generic. It is translated to
+    <p>This is a method for the tidyr <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider()</a></code> generic. It is translated to
 <code><a href='https://Rdatatable.gitlab.io/data.table/reference/dcast.data.table.html'>data.table::dcast()</a></code></p>
     </div>
 
@@ -267,7 +267,7 @@ behavior than <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class='va'>fish_encounters_dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='va'>fish_encounters</span><span class='op'>)</span>
 <span class='va'>fish_encounters_dt</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [114 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT19`
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`
 #&gt; 
 #&gt;   fish  station  seen
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
@@ -282,7 +282,7 @@ behavior than <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.h
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>fish_encounters_dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>station</span>, values_from <span class='op'>=</span> <span class='va'>seen</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [19 x 12]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT19`, formula = fish ~ station, value.var = "seen")
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT20`, formula = fish ~ station, value.var = "seen")
 #&gt; 
 #&gt;   fish  Release I80_1 Lisbon  Rstr Base_TD   BCE   BCW  BCE2  BCW2   MAE   MAW
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
@@ -298,7 +298,7 @@ behavior than <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class='va'>fish_encounters_dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>station</span>, values_from <span class='op'>=</span> <span class='va'>seen</span>, values_fill <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [19 x 12]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT19`, formula = fish ~ station, value.var = "seen", 
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT20`, formula = fish ~ station, value.var = "seen", 
 #&gt;     fill = 0)
 #&gt; 
 #&gt;   fish  Release I80_1 Lisbon  Rstr Base_TD   BCE   BCW  BCE2  BCW2   MAE   MAW
@@ -316,7 +316,7 @@ behavior than <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class='va'>us_rent_income_dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='va'>us_rent_income</span><span class='op'>)</span>
 <span class='va'>us_rent_income_dt</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [104 x 5]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT21`
 #&gt; 
 #&gt;   GEOID NAME    variable estimate   moe
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -331,7 +331,7 @@ behavior than <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.h
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>us_rent_income_dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>variable</span>, values_from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>estimate</span>, <span class='va'>moe</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [52 x 6]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT20`, formula = GEOID + NAME ~ variable, value.var = c("estimate", 
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT21`, formula = GEOID + NAME ~ variable, value.var = c("estimate", 
 #&gt; "moe"))
 #&gt; 
 #&gt;   GEOID NAME       estimate_income estimate_rent moe_income moe_rent
@@ -354,7 +354,7 @@ behavior than <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.h
     values_from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>estimate</span>, <span class='va'>moe</span><span class='op'>)</span>
   <span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [52 x 6]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT20`, formula = GEOID + NAME ~ variable, value.var = c("estimate", 
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT21`, formula = GEOID + NAME ~ variable, value.var = c("estimate", 
 #&gt; "moe"), sep = ".")
 #&gt; 
 #&gt;   GEOID NAME       estimate.income estimate.rent moe.income moe.rent
@@ -372,7 +372,7 @@ behavior than <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class='va'>warpbreaks_dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wool"</span>, <span class='st'>"tension"</span>, <span class='st'>"breaks"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>warpbreaks_dt</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [54 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT21`
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT22`
 #&gt; 
 #&gt;   wool  tension breaks
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -391,7 +391,7 @@ behavior than <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.h
     values_fn <span class='op'>=</span> <span class='va'>mean</span>
   <span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [3 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT21`, formula = tension ~ wool, value.var = "breaks", 
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT22`, formula = tension ~ wool, value.var = "breaks", 
 #&gt;     fun.aggregate = function (x, ...) 
 #&gt;     UseMethod("mean"))
 #&gt; 
