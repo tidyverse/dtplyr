@@ -267,7 +267,5 @@ drop_na.dtplyr_step <- function(data, ...) {
 # exported onLoad
 drop_na.data.table <- function(data, ...) {
   data <- lazy_dt(data)
-  drop_na(data, ...)
+  tidyr::drop_na(data, ...)
 }
-
-globalVariables("drop_na")
