@@ -161,3 +161,36 @@ test_that("unique is an alias for distinct", {
   dt <- lazy_dt(data.table(x = c(1, 1)))
   expect_equal(unique(dt), distinct(dt))
 })
+
+# drop_na ------------------------------------------------------------------
+
+test_that("empty call drops every row", {
+  tb <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
+  step <- drop_na(lazy_dt(tb, "DT"))
+  expect_equal(show_query(step), expr(na.omit(DT)))
+  expect_equal(as_tibble(step), tb[1, ])
+})
+
+test_that("uses specified variables", {
+  df <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
+  dt <- lazy_dt(df, "DT")
+
+  step <- drop_na(dt, x)
+  expect_equal(show_query(step), expr(na.omit(DT, cols = "x")))
+  expect_equal(collect(step), df[1:2, ])
+
+  step <- drop_na(dt, x:y)
+  expect_equal(show_query(step), expr(na.omit(DT, cols = !!c("x", "y"))))
+  expect_equal(collect(step), df[1, ])
+})
+
+test_that("errors are raised", {
+  tb <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
+  dt <- lazy_dt(tb, "DT")
+  expect_snapshot(collect(drop_na(dt, "z")), error = TRUE)
+})
+
+test_that("converts data.table to dtplyr_step", {
+  df <- data.table(x = c(1, 2, NA), y = c("a", NA, "b"))
+  expect_s3_class(drop_na(df), "dtplyr_step_call")
+})
