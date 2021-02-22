@@ -3,6 +3,8 @@
 * More tidyr verbs are in the process of being added:
 
   * `drop_na()` (@markfairbanks, #194)
+  
+  * `fill()` (@markfairbanks, #197)
 
 # dtplyr 1.1.0
 
