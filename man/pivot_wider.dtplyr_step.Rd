@@ -4,7 +4,7 @@
 \alias{pivot_wider.dtplyr_step}
 \title{Pivot data from long to wide}
 \usage{
-pivot_wider.dtplyr_step(
+\method{pivot_wider}{dtplyr_step}(
   data,
   id_cols = NULL,
   names_from = name,
