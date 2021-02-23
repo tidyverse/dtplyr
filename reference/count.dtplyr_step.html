@@ -207,42 +207,42 @@ it will error, and require you to specify the name.</p></td>
 #&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT4`[, .(n = .N), keyby = .(species)]
 #&gt; 
 #&gt;   species      n
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #BB0000;'>NA</span><span>           4
-#&gt; </span><span style='color: #555555;'>2</span><span> Aleena       1
-#&gt; </span><span style='color: #555555;'>3</span><span> Besalisk     1
-#&gt; </span><span style='color: #555555;'>4</span><span> Cerean       1
-#&gt; </span><span style='color: #555555;'>5</span><span> Chagrian     1
-#&gt; </span><span style='color: #555555;'>6</span><span> Clawdite     1
-#&gt; </span><span style='color: #555555;'># … with 32 more rows</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #BB0000;'>NA</span><span>           4
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Aleena       1
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Besalisk     1
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Cerean       1
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Chagrian     1
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Clawdite     1
+#&gt; </span><span style='color: #949494;'># … with 32 more rows</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='va'>species</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [38 x 2]
 #&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT4`[, .(n = .N), keyby = .(species)][order(desc(n))]
 #&gt; 
 #&gt;   species      n
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Human       35
-#&gt; </span><span style='color: #555555;'>2</span><span> Droid        6
-#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #BB0000;'>NA</span><span>           4
-#&gt; </span><span style='color: #555555;'>4</span><span> Gungan       3
-#&gt; </span><span style='color: #555555;'>5</span><span> Kaminoan     2
-#&gt; </span><span style='color: #555555;'>6</span><span> Mirialan     2
-#&gt; </span><span style='color: #555555;'># … with 32 more rows</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Human       35
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Droid        6
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> </span><span style='color: #BB0000;'>NA</span><span>           4
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Gungan       3
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Kaminoan     2
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Mirialan     2
+#&gt; </span><span style='color: #949494;'># … with 32 more rows</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='va'>species</span>, wt <span class='op'>=</span> <span class='va'>mass</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [38 x 2]
 #&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT4`[, .(n = sum(mass, na.rm = TRUE)), keyby = .(species)][order(desc(n))]
 #&gt; 
 #&gt;   species     n
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> Human   </span><span style='text-decoration: underline;'>1</span><span>821.
-#&gt; </span><span style='color: #555555;'>2</span><span> Hutt    </span><span style='text-decoration: underline;'>1</span><span>358 
-#&gt; </span><span style='color: #555555;'>3</span><span> Droid    279 
-#&gt; </span><span style='color: #555555;'>4</span><span> Wookiee  248 
-#&gt; </span><span style='color: #555555;'>5</span><span> Kaleesh  159 
-#&gt; </span><span style='color: #555555;'>6</span><span> Gungan   148 
-#&gt; </span><span style='color: #555555;'># … with 32 more rows</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Human   </span><span style='text-decoration: underline;'>1</span><span>821.
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Hutt    </span><span style='text-decoration: underline;'>1</span><span>358 
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Droid    279 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Wookiee  248 
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Kaleesh  159 
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Gungan   148 
+#&gt; </span><span style='color: #949494;'># … with 32 more rows</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
   </div>

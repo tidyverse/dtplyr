@@ -235,21 +235,21 @@ as_tibble() returns a tibble.
 #&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT2`[am == 1][, .(mpg = mean(mpg)), keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl   mpg
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     4  28.1
-#&gt; </span><span style='color: #555555;'>2</span><span>     6  20.6
-#&gt; </span><span style='color: #555555;'>3</span><span>     8  15.4
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     4  28.1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     6  20.6
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     8  15.4
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
 <span class='co'># compute and return tibble</span>
 <span class='va'>avg_mpg_tb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='va'>avg_mpg</span><span class='op'>)</span>
 <span class='va'>avg_mpg_tb</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 2</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 2</span><span>
 #&gt;     cyl   mpg
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     4  28.1
-#&gt; </span><span style='color: #555555;'>2</span><span>     6  20.6
-#&gt; </span><span style='color: #555555;'>3</span><span>     8  15.4</div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     4  28.1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     6  20.6
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     8  15.4</div><div class='input'>
 <span class='co'># compute and return data.table</span>
 <span class='va'>avg_mpg_dt</span> <span class='op'>&lt;-</span> <span class='fu'>data.table</span><span class='fu'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>as.data.table</a></span><span class='op'>(</span><span class='va'>avg_mpg</span><span class='op'>)</span>
 <span class='va'>avg_mpg_dt</span>
@@ -265,10 +265,10 @@ as_tibble() returns a tibble.
 #&gt;   `_DT3`
 #&gt; 
 #&gt;     cyl   mpg
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     4  28.1
-#&gt; </span><span style='color: #555555;'>2</span><span>     6  20.6
-#&gt; </span><span style='color: #555555;'>3</span><span>     8  15.4
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     4  28.1
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     6  20.6
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     8  15.4
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
 </div></span></pre>

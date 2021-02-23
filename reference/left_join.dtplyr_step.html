@@ -225,64 +225,64 @@ Should be a character vector of length 2.</p></td>
 
 <span class='va'>band_dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>instrument_dt</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "name"</span></div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [3 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT18`[`_DT17`, on = .(name), allow.cartesian = TRUE]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`[`_DT19`, on = .(name), allow.cartesian = TRUE]
 #&gt; 
 #&gt;   name  plays  band   
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
-#&gt; </span><span style='color: #555555;'>1</span><span> Mick  </span><span style='color: #BB0000;'>NA</span><span>     Stones 
-#&gt; </span><span style='color: #555555;'>2</span><span> John  guitar Beatles
-#&gt; </span><span style='color: #555555;'>3</span><span> Paul  bass   Beatles
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Mick  </span><span style='color: #BB0000;'>NA</span><span>     Stones 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> John  guitar Beatles
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Paul  bass   Beatles
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>band_dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>right_join</a></span><span class='op'>(</span><span class='va'>instrument_dt</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "name"</span></div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [3 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT17`[`_DT18`, on = .(name), allow.cartesian = TRUE]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT19`[`_DT20`, on = .(name), allow.cartesian = TRUE]
 #&gt; 
 #&gt;   name  band    plays 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> 
-#&gt; </span><span style='color: #555555;'>1</span><span> John  Beatles guitar
-#&gt; </span><span style='color: #555555;'>2</span><span> Paul  Beatles bass  
-#&gt; </span><span style='color: #555555;'>3</span><span> Keith </span><span style='color: #BB0000;'>NA</span><span>      guitar
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> John  Beatles guitar
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Paul  Beatles bass  
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Keith </span><span style='color: #BB0000;'>NA</span><span>      guitar
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>band_dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>instrument_dt</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "name"</span></div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [2 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>merge(`_DT17`, `_DT18`, all = FALSE, by.x = "name", by.y = "name", 
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>merge(`_DT19`, `_DT20`, all = FALSE, by.x = "name", by.y = "name", 
 #&gt;     allow.cartesian = TRUE)
 #&gt; 
 #&gt;   name  band    plays 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> 
-#&gt; </span><span style='color: #555555;'>1</span><span> John  Beatles guitar
-#&gt; </span><span style='color: #555555;'>2</span><span> Paul  Beatles bass  
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> John  Beatles guitar
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Paul  Beatles bass  
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>band_dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span><span class='op'>(</span><span class='va'>instrument_dt</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "name"</span></div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [4 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>merge(`_DT17`, `_DT18`, all = TRUE, by.x = "name", by.y = "name", 
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>merge(`_DT19`, `_DT20`, all = TRUE, by.x = "name", by.y = "name", 
 #&gt;     allow.cartesian = TRUE)
 #&gt; 
 #&gt;   name  band    plays 
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> 
-#&gt; </span><span style='color: #555555;'>1</span><span> John  Beatles guitar
-#&gt; </span><span style='color: #555555;'>2</span><span> Keith </span><span style='color: #BB0000;'>NA</span><span>      guitar
-#&gt; </span><span style='color: #555555;'>3</span><span> Mick  Stones  </span><span style='color: #BB0000;'>NA</span><span>    
-#&gt; </span><span style='color: #555555;'>4</span><span> Paul  Beatles bass  
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> John  Beatles guitar
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Keith </span><span style='color: #BB0000;'>NA</span><span>      guitar
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Mick  Stones  </span><span style='color: #BB0000;'>NA</span><span>    
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Paul  Beatles bass  
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
 <span class='va'>band_dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>semi_join</a></span><span class='op'>(</span><span class='va'>instrument_dt</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "name"</span></div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [2 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT17`[unique(`_DT17`[`_DT18`, which = TRUE, nomatch = NULL, 
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT19`[unique(`_DT19`[`_DT20`, which = TRUE, nomatch = NULL, 
 #&gt;     on = .(name)])]
 #&gt; 
 #&gt;   name  band   
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
-#&gt; </span><span style='color: #555555;'>1</span><span> John  Beatles
-#&gt; </span><span style='color: #555555;'>2</span><span> Paul  Beatles
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> John  Beatles
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Paul  Beatles
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>band_dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>anti_join</a></span><span class='op'>(</span><span class='va'>instrument_dt</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "name"</span></div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [1 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT17`[!`_DT18`, on = .(name)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT19`[!`_DT20`, on = .(name)]
 #&gt; 
 #&gt;   name  band  
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> 
-#&gt; </span><span style='color: #555555;'>1</span><span> Mick  Stones
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> 
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Mick  Stones
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
   </div>

@@ -201,42 +201,42 @@ first row of values.</p></td>
 #&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT5`[, .(x)])
 #&gt; 
 #&gt;       x
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     7
-#&gt; </span><span style='color: #555555;'>2</span><span>     5
-#&gt; </span><span style='color: #555555;'>3</span><span>     6
-#&gt; </span><span style='color: #555555;'>4</span><span>     4
-#&gt; </span><span style='color: #555555;'>5</span><span>     9
-#&gt; </span><span style='color: #555555;'>6</span><span>     8
-#&gt; </span><span style='color: #555555;'># … with 4 more rows</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     7
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     5
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     6
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span>     4
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span>     9
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span>     8
+#&gt; </span><span style='color: #949494;'># … with 4 more rows</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [59 x 2]
 #&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT5`[, .(x, y)])
 #&gt; 
 #&gt;       x     y
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     7     4
-#&gt; </span><span style='color: #555555;'>2</span><span>     5     2
-#&gt; </span><span style='color: #555555;'>3</span><span>     6     9
-#&gt; </span><span style='color: #555555;'>4</span><span>     4     2
-#&gt; </span><span style='color: #555555;'>5</span><span>     6     3
-#&gt; </span><span style='color: #555555;'>6</span><span>     9     3
-#&gt; </span><span style='color: #555555;'># … with 53 more rows</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     7     4
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     5     2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     6     9
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span>     4     2
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span>     6     3
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span>     9     3
+#&gt; </span><span style='color: #949494;'># … with 53 more rows</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/distinct.html'>distinct</a></span><span class='op'>(</span><span class='va'>x</span>, .keep_all <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [10 x 2]
 #&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT5`, by = "x")
 #&gt; 
 #&gt;       x     y
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>     7     4
-#&gt; </span><span style='color: #555555;'>2</span><span>     5     2
-#&gt; </span><span style='color: #555555;'>3</span><span>     6     9
-#&gt; </span><span style='color: #555555;'>4</span><span>     4     2
-#&gt; </span><span style='color: #555555;'>5</span><span>     9     3
-#&gt; </span><span style='color: #555555;'>6</span><span>     8     7
-#&gt; </span><span style='color: #555555;'># … with 4 more rows</span><span>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     7     4
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     5     2
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     6     9
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span>     4     2
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span>     9     3
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span>     8     7
+#&gt; </span><span style='color: #949494;'># … with 4 more rows</span><span>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
   </div>

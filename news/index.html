@@ -163,8 +163,8 @@
 <li>
 <p>More tidyr verbs are in the process of being added:</p>
 <ul>
-<li>
-<code><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/194'>#194</a>)</li>
+<li><p><code><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/194'>#194</a>)</p></li>
+<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/nafill.html">fill()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/197'>#197</a>)</p></li>
 </ul>
 </li>
 </ul>
@@ -232,7 +232,7 @@
 <li><p>Better handling for <code>.data</code> and <code>.env</code> pronouns (<a href='https://github.com/tidyverse/dtplyr/issues/138'>#138</a>).</p></li>
 <li><p>dplyr verbs now work with <code>NULL</code> inputs (<a href='https://github.com/tidyverse/dtplyr/issues/129'>#129</a>).</p></li>
 <li><p>joins do better job at determining output variables in the presence of duplicated outputs (<a href='https://github.com/tidyverse/dtplyr/issues/128'>#128</a>). When joining based on different variables in <code>x</code> and <code>y</code>, joins consistently preserve column from <code>x</code>, not <code>y</code> (<a href='https://github.com/tidyverse/dtplyr/issues/137'>#137</a>).</p></li>
-<li><p><code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> objects now have a useful <code><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse()</a></code> method (<a href='https://github.com/tidyverse/dtplyr/issues/132'>#132</a>).</p></li>
+<li><p><code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> objects now have a useful <code><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse()</a></code> method (<a href='https://github.com/tidyverse/dtplyr/issues/132'>#132</a>).</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> now has an <code>arrange</code> parameter which, if set to <code>FALSE</code>, sets the data.table translation to use <code>by</code> rather than <code>keyby</code> (<a href='https://github.com/tidyverse/dtplyr/issues/85'>#85</a>).</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> now works without <code>data.table</code> attached, as intended (<a href='https://github.com/michaelchirico'>@michaelchirico</a>, <a href='https://github.com/tidyverse/dtplyr/issues/123'>#123</a>).</p></li>
 <li><p>dtplyr has been re-licensed as MIT (<a href='https://github.com/tidyverse/dtplyr/issues/165'>#165</a>).</p></li>
