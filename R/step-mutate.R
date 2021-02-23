@@ -1,5 +1,6 @@
 step_mutate <- function(parent, new_vars = list(), nested = FALSE) {
   vars <- union(parent$vars, names(new_vars))
+  vars <- setdiff(vars, names(new_vars)[vapply(new_vars, is_null, lgl(1))])
 
   new_step(
     parent,
