@@ -79,6 +79,7 @@ test_that("can use across", {
 test_that("vars set correctly", {
   dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
   expect_equal(dt %>% mutate(z = 1) %>% .$vars, c("x", "y", "z"))
+  expect_equal(dt %>% mutate(x = NULL, z = 1) %>% .$vars, c("y", "z"))
 })
 
 test_that("emtpy mutate returns input", {
