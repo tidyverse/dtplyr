@@ -20,9 +20,10 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
     j <- call2(":=", !!!x$new_vars)
   } else {
     assign <- Map(function(x, y) call2("<-", x, y), syms(names(x$new_vars)), x$new_vars)
-    output <- call2(".", !!!syms(names(x$new_vars)))
+    new_vars <- unique(names(x$new_vars))
+    output <- call2(".", !!!syms(new_vars))
     expr <- call2("{", !!!assign, output)
-    j <- call2(":=", call2("c", !!!names(x$new_vars)), expr)
+    j <- call2(":=", call2("c", !!!new_vars), expr)
   }
 
   out <- call2("[", dt_call(x$parent, needs_copy), , j)

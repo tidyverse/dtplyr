@@ -67,6 +67,19 @@ test_that("mutate generates compound expression if needed", {
   )
 })
 
+test_that("allows multiple assignment to the same variable", {
+  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
+
+  expect_equal(
+    dt %>% mutate(x = x * 2, x = x * 2) %>% show_query(),
+    expr(copy(DT)[, c("x") := {
+      x <- x * 2
+      x <- x * 2
+      .(x)
+    }])
+  )
+})
+
 test_that("can use across", {
   dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
 
