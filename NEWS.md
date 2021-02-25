@@ -5,6 +5,8 @@
   * `drop_na()` (@markfairbanks, #194)
   
   * `fill()` (@markfairbanks, #197)
+  
+  * `replace_na()` (@markfairbanks, #202)
 
 # dtplyr 1.1.0
 

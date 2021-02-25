@@ -15,7 +15,7 @@ dt_eval <- function(x) {
 # even when data.table isn't attached
 dt_funs <- c(
   "copy", "dcast", "nafill",
-  "fcase", "fintersect", "frank", "frankv", "fsetdiff", "funion",
+  "fcase", "fcoalesce", "fintersect", "frank", "frankv", "fsetdiff", "funion",
   "setcolorder", "setnames"
 )
 add_dt_wrappers <- function(env) {
@@ -104,7 +104,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     } else if (is_symbol(x[[2]], ".env")) {
       sym(paste0("..", var))
     }
-  } else if (is_call(x, "coalesce")) {
+  } else if (is_call(x, "coalesce") || is_call(x, "replace_na")) {
     x[[1L]] <- quote(fcoalesce)
     x
   } else if (is_call(x, "case_when")) {
