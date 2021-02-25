@@ -101,6 +101,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -122,13 +128,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Release notes</li>
+    <li class="dropdown-header">Releases</li>
+    <li>
+      <a href="https://www.tidyverse.org/blog/2021/02/dplyr-backends/">Version 1.1.0</a>
+    </li>
     <li>
       <a href="https://www.tidyverse.org/blog/2019/11/dtplyr-1-0-0/">Version 1.0.0</a>
     </li>
     <li class="divider"></li>
     <li>
-      <a href="../news/index.html">Change log</a>
+      <a href="../news/index.html">Changelog</a>
     </li>
   </ul>
 </li>
@@ -232,7 +241,7 @@
 <li><p>Better handling for <code>.data</code> and <code>.env</code> pronouns (<a href='https://github.com/tidyverse/dtplyr/issues/138'>#138</a>).</p></li>
 <li><p>dplyr verbs now work with <code>NULL</code> inputs (<a href='https://github.com/tidyverse/dtplyr/issues/129'>#129</a>).</p></li>
 <li><p>joins do better job at determining output variables in the presence of duplicated outputs (<a href='https://github.com/tidyverse/dtplyr/issues/128'>#128</a>). When joining based on different variables in <code>x</code> and <code>y</code>, joins consistently preserve column from <code>x</code>, not <code>y</code> (<a href='https://github.com/tidyverse/dtplyr/issues/137'>#137</a>).</p></li>
-<li><p><code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> objects now have a useful <code><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse()</a></code> method (<a href='https://github.com/tidyverse/dtplyr/issues/132'>#132</a>).</p></li>
+<li><p><code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> objects now have a useful <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> method (<a href='https://github.com/tidyverse/dtplyr/issues/132'>#132</a>).</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> now has an <code>arrange</code> parameter which, if set to <code>FALSE</code>, sets the data.table translation to use <code>by</code> rather than <code>keyby</code> (<a href='https://github.com/tidyverse/dtplyr/issues/85'>#85</a>).</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> now works without <code>data.table</code> attached, as intended (<a href='https://github.com/michaelchirico'>@michaelchirico</a>, <a href='https://github.com/tidyverse/dtplyr/issues/123'>#123</a>).</p></li>
 <li><p>dtplyr has been re-licensed as MIT (<a href='https://github.com/tidyverse/dtplyr/issues/165'>#165</a>).</p></li>

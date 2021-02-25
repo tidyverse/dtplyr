@@ -57,6 +57,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
 <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -78,13 +84,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">Release notes</li>
+<li class="dropdown-header">Releases</li>
+    <li>
+      <a href="https://www.tidyverse.org/blog/2021/02/dplyr-backends/">Version 1.1.0</a>
+    </li>
     <li>
       <a href="https://www.tidyverse.org/blog/2019/11/dtplyr-1-0-0/">Version 1.0.0</a>
     </li>
     <li class="divider">
     <li>
-      <a href="../news/index.html">Change log</a>
+      <a href="../news/index.html">Changelog</a>
     </li>
   </ul>
 </li>
@@ -380,9 +389,9 @@
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 filter      679.9µs 706.25µs     1299.        0B     16.1</span>
-<span class="co">#&gt; 2 mutate       1.46ms   1.52ms      633.        0B     15.1</span>
-<span class="co">#&gt; 3 summarise  907.73µs 946.38µs      902.        0B     12.6</span></code></pre></div>
+<span class="co">#&gt; 1 filter     650.12µs 686.71µs     1448.        0B     17.5</span>
+<span class="co">#&gt; 2 mutate       1.38ms   1.45ms      686.        0B     17.3</span>
+<span class="co">#&gt; 3 summarise  863.23µs 910.08µs     1092.        0B     14.8</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
