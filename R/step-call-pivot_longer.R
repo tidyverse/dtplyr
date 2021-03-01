@@ -362,7 +362,7 @@ list_indices <- function(x, max = 20) {
   paste(x, collapse = ", ")
 }
 
-# str_separate()  -----------------------------------------------------------------
+# pmap()/pmap_chr()  -----------------------------------------------------------------
 
 args_recycle <- function(args) {
   lengths <- vapply(args, length, integer(1))
