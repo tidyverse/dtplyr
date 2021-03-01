@@ -6,6 +6,8 @@
   
   * `fill()` (@markfairbanks, #197)
   
+  * `pivot_longer()` (@markfairbanks, #204)
+  
   * `replace_na()` (@markfairbanks, #202)
 
 # dtplyr 1.1.0
