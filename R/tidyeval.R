@@ -14,14 +14,18 @@ dt_eval <- function(x) {
 # Make sure data.table functions are available so dtplyr still works
 # even when data.table isn't attached
 dt_funs <- c(
-  "copy", "dcast", "nafill",
+  "copy", "dcast", "melt", "nafill",
   "fcase", "fcoalesce", "fintersect", "frank", "frankv", "fsetdiff", "funion",
   "setcolorder", "setnames"
 )
 add_dt_wrappers <- function(env) {
-  env_bind(env, !!!env_get_list(ns_env("data.table"), dt_funs))
+  env_bind(
+    env,
+    !!!env_get_list(ns_env("data.table"), dt_funs),
+    vec_cast = vctrs::vec_cast
+  )
 }
-globalVariables(dt_funs)
+globalVariables(c(dt_funs, "vec_cast"))
 
 # These functions attempt to simulate tidy eval as much as possible within
 # data.table. The goal is to get the majority of real-world code to work,
