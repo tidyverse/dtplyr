@@ -119,7 +119,7 @@ pivot_longer.dtplyr_step <- function(data,
     }
   }
 
-  if (isFALSE(values_drop_na)) {
+  if (is_false(values_drop_na)) {
     args$na.rm <- NULL
   }
 
