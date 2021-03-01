@@ -3,7 +3,7 @@
     Code
       show_query(step)
     Output
-      setnames(dcast(`_DT6`, formula = "..." ~ x + y, value.var = c("a", 
+      setnames(dcast(`_DT8`, formula = "..." ~ x + y, value.var = c("a", 
       "b"))[, .(a_X_1, a_Y_2, b_X_1, b_Y_2)], old = c("a_X_1", "a_Y_2", 
       "b_X_1", "b_Y_2"), new = c("X1_a", "Y2_a", "X1_b", "Y2_b"))
 
