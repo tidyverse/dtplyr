@@ -48,3 +48,34 @@ count.data.table <- function(.data, ...) {
   .data <- lazy_dt(.data)
   count(.data, ...)
 }
+
+#' @importFrom dplyr tally
+#' @export
+tally.dtplyr_step <- function(.data, wt = NULL, sort = FALSE, name = NULL) {
+  wt <- enquo(wt)
+  if (quo_is_null(wt)) {
+    n <- expr(n())
+  } else {
+    n <- expr(sum(!!wt, na.rm = TRUE))
+  }
+
+  if (is.null(name)) {
+    name <- "n"
+  } else if (!is_string(name)) {
+    abort("`name` must be a string")
+  }
+
+  out <- summarise(.data, !!name := !!n)
+
+  if (sort) {
+    out <- arrange(out, desc(!!sym(name)))
+  }
+
+  out
+}
+
+#' @export
+tally.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  tally(.data, ...)
+}
