@@ -61,6 +61,12 @@
 #'   filter(mpg < mean(mpg)) %>%
 #'   summarise(hp = mean(hp))
 lazy_dt <- function(x, name = NULL, immutable = TRUE, key_by = NULL) {
+  if (is.data.frame(x)) {
+    groups <- group_vars(x)
+  } else {
+    groups <- character()
+  }
+
   if (!is.data.table(x)) {
     if (!immutable) {
       abort("`immutable` must be `TRUE` when `x` is not already a data table.")
@@ -80,7 +86,7 @@ lazy_dt <- function(x, name = NULL, immutable = TRUE, key_by = NULL) {
     data.table::setkeyv(x, key_vars)
   }
 
-  step_first(x, name = name, immutable = immutable, env = caller_env())
+  step_first(x, name = name, groups = groups, immutable = immutable, env = caller_env())
 }
 
 #' @export
@@ -88,7 +94,8 @@ dim.dtplyr_step_first <- function(x) {
   dim(x$parent)
 }
 
-step_first <- function(parent, name = NULL, immutable = TRUE, env = caller_env()) {
+step_first <- function(parent, name = NULL, groups = character(),
+                       immutable = TRUE, env = caller_env()) {
   stopifnot(is.data.table(parent))
 
   if (is.null(name)) {
@@ -97,7 +104,7 @@ step_first <- function(parent, name = NULL, immutable = TRUE, env = caller_env()
 
   new_step(parent,
     vars = names(parent),
-    groups = character(),
+    groups = groups,
     locals = list(),
     implicit_copy = !immutable,
     needs_copy = FALSE,

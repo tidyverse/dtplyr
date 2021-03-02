@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `lazy_dt()` now keeps groups (@mgirlich, #206).
+
 * More tidyr verbs are in the process of being added:
 
   * `drop_na()` (@markfairbanks, #194)
