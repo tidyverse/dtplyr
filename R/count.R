@@ -21,8 +21,20 @@ count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) 
     out <- .data
   }
 
-  wt <- enexpr(wt)
-  if (is.null(wt)) {
+  tally(out, wt = !!enquo(wt), sort = sort, name = name)
+}
+
+#' @export
+count.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  count(.data, ...)
+}
+
+#' @importFrom dplyr tally
+#' @export
+tally.dtplyr_step <- function(.data, wt = NULL, sort = FALSE, name = NULL) {
+  wt <- enquo(wt)
+  if (quo_is_null(wt)) {
     n <- expr(n())
   } else {
     n <- expr(sum(!!wt, na.rm = TRUE))
@@ -34,11 +46,17 @@ count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) 
     abort("`name` must be a string")
   }
 
-  out <- summarise(out, !!name := !!n)
+  out <- summarise(.data, !!name := !!n)
 
   if (sort) {
     out <- arrange(out, desc(!!sym(name)))
   }
 
   out
+}
+
+#' @export
+tally.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  tally(.data, ...)
 }
