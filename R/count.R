@@ -21,26 +21,7 @@ count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) 
     out <- .data
   }
 
-  wt <- enexpr(wt)
-  if (is.null(wt)) {
-    n <- expr(n())
-  } else {
-    n <- expr(sum(!!wt, na.rm = TRUE))
-  }
-
-  if (is.null(name)) {
-    name <- "n"
-  } else if (!is_string(name)) {
-    abort("`name` must be a string")
-  }
-
-  out <- summarise(out, !!name := !!n)
-
-  if (sort) {
-    out <- arrange(out, desc(!!sym(name)))
-  }
-
-  out
+  tally(out, wt = !!enquo(wt), sort = sort, name = name)
 }
 
 #' @export
