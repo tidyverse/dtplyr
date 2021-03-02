@@ -41,3 +41,11 @@ test_that("can sort", {
     tibble(x = c(2, 1), n = c(10, 3))
   )
 })
+
+test_that("tally works", {
+  dt <- lazy_dt(data.table(x = c(1, 1, 1, 2)), "DT")
+  expect_equal(
+    dt %>% group_by(x) %>% tally() %>% collect(),
+    tibble(x = c(1, 2), n = c(3, 1))
+  )
+})

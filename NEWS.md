@@ -2,6 +2,10 @@
 
 * `lazy_dt()` now keeps groups (@mgirlich, #206).
 
+* Loading `dtplyr` doesn't break the `count()` method on data.tables anymore (@mgirlich, #201).
+
+* `tally()` is now translated (@mgirlich, #201).
+
 * More tidyr verbs are in the process of being added:
 
   * `drop_na()` (@markfairbanks, #194)
