@@ -61,11 +61,8 @@
 #'   filter(mpg < mean(mpg)) %>%
 #'   summarise(hp = mean(hp))
 lazy_dt <- function(x, name = NULL, immutable = TRUE, key_by = NULL) {
-  if (is.data.frame(x)) {
-    groups <- group_vars(x)
-  } else {
-    groups <- character()
-  }
+  # use `tryCatch()` in case there is no matching `group_vars()` method
+  groups <- tryCatch(group_vars(x), error = function(e) character())
 
   if (!is.data.table(x)) {
     if (!immutable) {
