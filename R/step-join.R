@@ -222,10 +222,11 @@ join_vars <- function(x, y, on, suffixes) {
 
   both <- intersect(x, y)
   if (length(both) > 0) {
-    vars <- c(setdiff(vars, both), paste0(both, suffixes[[1]]), paste0(both, suffixes[[2]]))
+    x[x %in% both] <- paste0(x[x %in% both], suffixes[[1]])
+    y[y %in% both] <- paste0(y[y %in% both], suffixes[[2]])
   }
 
-  vars
+  c(x, y)
 }
 
 #' @importFrom dplyr same_src
