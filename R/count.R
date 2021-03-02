@@ -42,3 +42,9 @@ count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) 
 
   out
 }
+
+#' @export
+count.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  count(.data, ...)
+}
