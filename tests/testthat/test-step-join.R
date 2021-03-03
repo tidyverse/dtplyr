@@ -80,7 +80,7 @@ test_that("simple left joins use [", {
 
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% show_query(),
-    call2("setcolorder", expr(dt2[dt1, on = .(x), allow.cartesian = TRUE]), c("x", "a", "b"))
+    expr(setcolorder(dt2[dt1, on = .(x), allow.cartesian = TRUE], !!c("x", "a", "b")))
   )
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% pull(x),
