@@ -4,7 +4,11 @@ test_that("can pivot all cols to long", {
   step <- pivot_longer(dt, x:y)
   out <- collect(step)
 
-  expect_snapshot(show_query(step))
+  expect_equal(
+    show_query(step),
+    expr(melt(DT, measure.vars = !!c("x", "y"), variable.name = "name",
+              variable.factor = FALSE))
+  )
   expect_equal(step$vars, c("name", "value"))
   expect_equal(out$name, c("x", "x", "y", "y"))
   expect_equal(out$value, c(1, 2, 3, 4))
@@ -16,7 +20,11 @@ test_that("preserves original keys", {
   step <- pivot_longer(dt, y:z)
   out <- collect(step)
 
-  expect_snapshot(show_query(step))
+  expect_equal(
+    show_query(step),
+    expr(melt(DT, measure.vars = !!c("y", "z"), variable.name = "name",
+              variable.factor = FALSE))
+  )
   expect_equal(step$vars, c("x", "name", "value"))
   expect_equal(out$x, rep(tbl$x, 2))
 })
@@ -27,6 +35,11 @@ test_that("can drop missing values", {
   step <- pivot_longer(dt, x:y, values_drop_na = TRUE)
   out <- collect(step)
 
+  expect_equal(
+    show_query(step),
+    expr(melt(DT, measure.vars = !!c("x", "y"), variable.name = "name",
+              na.rm = TRUE, variable.factor = FALSE))
+  )
   expect_equal(out$name, c("x", "y"))
   expect_equal(out$value, c(1, 2))
 })
@@ -41,7 +54,11 @@ test_that("can handle missing combinations", {
   step <- pivot_longer(dt, -id, names_to = c(".value", "n"), names_sep = "_")
   out <- collect(step)
 
-  expect_snapshot(show_query(step))
+  expect_equal(
+    show_query(step),
+    expr(melt(DT, measure.vars = !!list(c("x_1", "x_2"), "y_2"), variable.name = "n",
+              value.name = !!c("x", "y"), variable.factor = FALSE))
+  )
   expect_equal(step$vars, c("id", "n", "x", "y"))
   expect_equal(out$x, c(1, 3, 2, 4))
   expect_equal(out$y, c("a", "b", NA, NA))
@@ -53,7 +70,11 @@ test_that("can cast values cols", {
   step <- pivot_longer(dt, x:y, values_ptypes = list(value = double()))
   out <- collect(step)
 
-  expect_snapshot(show_query(step))
+  expect_equal(
+    show_query(step),
+    expr(melt(DT, measure.vars = !!c("x", "y"), variable.name = "name",
+              variable.factor = FALSE)[, `:=`(value = vec_cast(value, !!numeric(0)))])
+  )
   expect_equal(out$value, c(1, 2))
 })
 
@@ -95,6 +116,7 @@ test_that("can pivot to multiple measure cols", {
   )
   out <- collect(step)
 
+  expect_snapshot(show_query(step))
   expect_equal(step$vars, c("set", "x", "y"))
 })
 
