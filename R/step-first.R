@@ -61,7 +61,7 @@
 #'   filter(mpg < mean(mpg)) %>%
 #'   summarise(hp = mean(hp))
 lazy_dt <- function(x, name = NULL, immutable = TRUE, key_by = NULL) {
-  # use `tryCatch()` in case there is no matching `group_vars()` method
+  # in case `x` has an `as.data.table()` method but not a `group_vars()` method 
   groups <- tryCatch(group_vars(x), error = function(e) character())
 
   if (!is.data.table(x)) {
