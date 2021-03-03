@@ -55,3 +55,10 @@ test_that("setting doesn't modify data.table", {
   expect_equal(data.table::key(dt1$parent), NULL)
   expect_equal(data.table::key(dt2$parent), "x")
 })
+
+# groups ------------------------------------------------------------------
+
+test_that("keeps groups", {
+  dt <- lazy_dt(group_by(mtcars, cyl))
+  expect_equal(group_vars(dt), "cyl")
+})
