@@ -44,10 +44,7 @@ filter_by_lgl_col <- function(dots) {
   }
 
   # catch expressions of form `!x`
-  is_call(dot) &&
-    call_name(dot) == "!" &&
-    length(dot) == 2 &&
-    is_symbol(dot[[2]])
+  is_call(dot, name = "!", n = 1) && is_symbol(dot[[2]])
 }
 
 # exported onLoad
