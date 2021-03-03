@@ -80,7 +80,7 @@ test_that("simple left joins use [", {
 
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% show_query(),
-    expr(dt2[dt1, on = .(x), allow.cartesian = TRUE])
+    call2("setcolorder", expr(dt2[dt1, on = .(x), allow.cartesian = TRUE]), c("x", "a", "b"))
   )
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% pull(x),
@@ -136,7 +136,7 @@ test_that("converts other types if requested", {
   x <- structure(10, class = "foo")
 
   expect_error(left_join(dt1, x, by = "x"), "copy")
-  expect_s3_class(left_join(dt1, x, by = "x", copy = TRUE), "dtplyr_step_subset")
+  expect_s3_class(left_join(dt1, x, by = "x", copy = TRUE), "dtplyr_step_call")
 })
 
 test_that("mutates inside joins are copied as needed", {
