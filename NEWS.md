@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `left_join()` now produces the same column order as `dplyr` (@markfairbanks, #139).
+
 * Loading `dtplyr` doesn't break the `count()` method on data.tables anymore (@mgirlich, #201).
 
 * `tally()` is now translated (@mgirlich, #201).
