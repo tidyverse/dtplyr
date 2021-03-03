@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `left_join()` now produces the same column order as `dplyr` (@markfairbanks, #139).
+
 * `lazy_dt()` now keeps groups (@mgirlich, #206).
 
 * Loading `dtplyr` doesn't break the `count()` method on data.tables anymore (@mgirlich, #201).
