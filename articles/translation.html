@@ -267,7 +267,8 @@
 <p>But <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> will use the <code>i</code> position where possible:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">dt2</span>, by <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; `_DT2`[`_DT1`, on = .(a), allow.cartesian = TRUE]</span></code></pre></div>
+<span class="co">#&gt; setcolorder(`_DT2`[`_DT1`, on = .(a), allow.cartesian = TRUE], </span>
+<span class="co">#&gt;     c("a", "b", "c", "d"))</span></code></pre></div>
 <p>Anti-joins are easy to translate because data.table has a specific form for them:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">dt2</span>, by <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span>
@@ -336,7 +337,8 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span><span class="op">:</span><span class="va">c</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Joining, by = "x"</span>
-<span class="co">#&gt; `_DT4`[`_DT3`, .(x, a, b, c), on = .(x), allow.cartesian = TRUE]</span></code></pre></div>
+<span class="co">#&gt; setcolorder(`_DT4`[`_DT3`, on = .(x), allow.cartesian = TRUE], </span>
+<span class="co">#&gt;     c("x", "y", "a", "b", "c", "d", "e"))[, .(x, a, b, c)]</span></code></pre></div>
 <p>Note, however, that <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>ing and then <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>ing must generate two separate calls to <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code>, because data.table evaluates <code>i</code> before <code>j</code>.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dt</span> <span class="op">%&gt;%</span> 
@@ -389,9 +391,9 @@
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 filter     703.13µs 739.68µs     1269.        0B     15.4</span>
-<span class="co">#&gt; 2 mutate       1.47ms   1.53ms      640.        0B     17.3</span>
-<span class="co">#&gt; 3 summarise  928.27µs 976.62µs      993.        0B     12.7</span></code></pre></div>
+<span class="co">#&gt; 1 filter     698.64µs  721.5µs     1364.        0B     17.5</span>
+<span class="co">#&gt; 2 mutate       1.48ms   1.52ms      646.        0B     17.2</span>
+<span class="co">#&gt; 3 summarise  893.89µs 948.81µs     1021.        0B     12.6</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
