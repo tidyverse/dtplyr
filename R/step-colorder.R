@@ -1,11 +1,12 @@
-step_colorder <- function(x, col_order) {
-  stopifnot(is_step(x))
+step_colorder <- function(parent, col_order) {
+  stopifnot(is_step(parent))
   stopifnot(is.character(col_order))
 
   new_step(
-    parent = x,
+    parent,
     vars = col_order,
     col_order = col_order,
+    needs_copy = !parent$implicit_copy,
     class = "dtplyr_step_colorder"
   )
 }

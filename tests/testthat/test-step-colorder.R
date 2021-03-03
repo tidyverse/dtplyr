@@ -3,7 +3,7 @@ test_that("can reorder columns", {
 
   expect_equal(
     dt %>% step_colorder(c("y", "x")) %>% show_query(),
-    expr(setcolorder(DT, !!c("y", "x")))
+    expr(setcolorder(copy(DT), !!c("y", "x")))
   )
 
   expect_named(
