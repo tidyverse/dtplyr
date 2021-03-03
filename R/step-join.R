@@ -91,13 +91,7 @@ left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
     col_order <- unique(c(x$vars, y$vars))
     out <- step_subset_on(y, x, i = y, on = by)
 
-    step_call(
-      out,
-      "setcolorder",
-      args = list(col_order),
-      vars = col_order,
-      in_place = FALSE
-    )
+    step_colorder(out, col_order)
   } else {
     step_join(x, y, on = by, style = "left", suffix = suffix)
   }
