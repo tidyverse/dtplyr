@@ -88,7 +88,16 @@ left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
   by <- dtplyr_common_by(by, x, y)
 
   if (join_is_simple(x$vars, y$vars, by)) {
-    step_subset_on(y, x, i = y, on = by)
+    col_order <- unique(c(x$vars, y$vars))
+    out <- step_subset_on(y, x, i = y, on = by)
+
+    step_call(
+      out,
+      "setcolorder",
+      args = list(col_order),
+      vars = col_order,
+      in_place = FALSE
+    )
   } else {
     step_join(x, y, on = by, style = "left", suffix = suffix)
   }
