@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `filter()` works for negated logical columns (@mgirlich, @211).
+
 * Loading `dtplyr` doesn't break the `count()` method on data.tables anymore (@mgirlich, #201).
 
 * `tally()` is now translated (@mgirlich, #201).

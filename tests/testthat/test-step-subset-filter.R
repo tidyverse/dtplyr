@@ -21,6 +21,20 @@ test_that("can filter by value", {
   )
 })
 
+test_that("can filter with logical columns", {
+  dt <- lazy_dt(data.table(x = c(TRUE, FALSE)), "DT")
+
+  expect_equal(
+    dt %>% filter(x) %>% show_query(),
+    expr(DT[(x)])
+  )
+
+  expect_equal(
+    dt %>% filter(!x) %>% show_query(),
+    expr(DT[(!x)])
+  )
+})
+
 
 test_that("inlines external variables", {
   dt <- lazy_dt(data.table(x = 1), "DT")
