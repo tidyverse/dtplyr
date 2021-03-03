@@ -155,13 +155,7 @@ pivot_wider.dtplyr_step <- function(data,
   if (names_sort && !no_id) {
     cols_sorted <- c(id_cols, sort(new_vars))
 
-    out <- step_call(
-      out,
-      "setcolorder",
-      args = list(cols_sorted),
-      vars = cols_sorted,
-      in_place = FALSE
-    )
+    out <- step_colorder(out, cols_sorted)
   }
 
   out <- step_repair(out, repair = names_repair)
