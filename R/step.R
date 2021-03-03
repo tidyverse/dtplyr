@@ -169,7 +169,6 @@ pull.dtplyr_step <- function(.data, var = -1) {
 
 #' @export
 print.dtplyr_step <- function(x, ...) {
-  x <- prepare_query(x)
   dt <- as.data.table(x)
 
   cat_line(crayon::bold("Source: "), "local data table ", dplyr::dim_desc(dt))
@@ -204,11 +203,7 @@ glimpse.dtplyr_step <- function(x, width = NULL, ...) {
 #' @importFrom dplyr show_query
 #' @export
 show_query.dtplyr_step <- function(x) {
-  dt_call(prepare_query(x))
-}
-
-prepare_query <- function(x) {
-  select(x, !!!tbl_vars(x))
+  dt_call(x)
 }
 
 is_step <- function(x) inherits(x, "dtplyr_step")

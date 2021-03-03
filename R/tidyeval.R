@@ -6,7 +6,7 @@ dt_eval <- function(x) {
     env[[var]] <- eval(x$locals[[var]], env)
   }
 
-  quo <- new_quosure(dt_call(prepare_query(x)), env)
+  quo <- new_quosure(dt_call(x), env)
 
   eval_tidy(quo)
 }
