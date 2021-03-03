@@ -122,8 +122,7 @@ right_join.data.table <- function(x, y, ...) {
 
 step_subset_on <- function(x, y, i, on) {
   step_subset(x,
-    # switch around `x` and `y` to get the same column order as in `dplyr`
-    vars = union(y$vars, x$vars),
+    vars = union(x$vars, y$vars),
     i = y,
     on = on,
     locals = utils::modifyList(x$locals, y$locals)
