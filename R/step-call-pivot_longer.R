@@ -146,10 +146,10 @@ pivot_longer.dtplyr_step <- function(data,
 
     # Need to drop variable_name and move names_to vars to correct position
     # Recreates relocate logic so only select is necessary, not relocate + select
-    sim_vars <- names(simulate_vars(out))
-    var_idx <- which(sim_vars == variable_name)
-    before_vars <- sim_vars[seq_along(sim_vars) < var_idx]
-    after_vars <- sim_vars[seq_along(sim_vars) > var_idx]
+    out_vars <- out$vars
+    var_idx <- which(out_vars == variable_name)
+    before_vars <- out_vars[seq_along(out_vars) < var_idx]
+    after_vars <- out_vars[seq_along(out_vars) > var_idx]
 
     out <- select(out, !!!syms(before_vars), !!!syms(names_to), !!!syms(after_vars))
   } else if (!multiple_names_to && uses_dot_value) {
@@ -191,7 +191,6 @@ pivot_longer.dtplyr_step <- function(data,
     out <- mutate(out, !!!cast_calls)
   }
 
-  # transform vars
   coerce_vars <- intersect(values_to, names(values_transform))
   if (length(coerce_vars) > 0) {
     coerce_calls <- vector("list", length(coerce_vars))
