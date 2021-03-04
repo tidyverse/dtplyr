@@ -131,6 +131,11 @@ test_that("can repair names if requested", {
   })
 })
 
+test_that("can handle numeric column in names_from", {
+  df <- lazy_dt(tibble(x = 1, name = 1, value = 2), "DT")
+  expect_named(pivot_wider(df, names_prefix = "nm") %>% collect(), c("x", "nm1"))
+})
+
 # keys ---------------------------------------------------------
 
 test_that("can override default keys", {
