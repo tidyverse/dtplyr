@@ -50,7 +50,6 @@ relocate.dtplyr_step <- function(.data, ..., .before = NULL, .after = NULL) {
   lhs <- setdiff(seq2(1, where - 1), to_move)
   rhs <- setdiff(seq2(where + 1, ncol(.data)), to_move)
   new_vars <- .data$vars[unique(c(lhs, to_move, rhs))]
-  j <- call2(".", !!!syms(new_vars))
-  out <- step_subset_j(.data, vars = new_vars, groups = character(), j = j)
+  out <- step_colorder(.data, new_vars)
   step_group(out, .data$groups)
 }
