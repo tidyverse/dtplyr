@@ -1,5 +1,9 @@
 # dtplyr (development version)
 
+* speed up `slice_min()` and `slice_max()` after `group_by()` (@mgirlich, #216).
+
+* `slice_max()` now works when ordering by a character column (@mgirlich, #218).
+
 * `left_join()` now produces the same column order as `dplyr` (@markfairbanks, #139).
 
 * `lazy_dt()` now keeps groups (@mgirlich, #206).
