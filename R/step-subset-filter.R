@@ -22,7 +22,7 @@
 filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
   dots <- capture_dots(.data, ..., .j = FALSE)
 
-  if (length(dots) == 1 && is_symbol(dots[[1]])) {
+  if (filter_by_lgl_col(dots)) {
     # Suppress data.table warning when filtering with a logical variable
     i <- call2("(", dots[[1]])
   } else {
@@ -30,6 +30,20 @@ filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
   }
 
   step_subset_i(.data, i)
+}
+
+filter_by_lgl_col <- function(dots) {
+  if (length(dots) > 1) {
+    return(FALSE)
+  }
+
+  dot <- dots[[1]]
+  if (is_symbol(dot)) {
+    return(TRUE)
+  }
+
+  # catch expressions of form `!x`
+  is_call(dot, name = "!", n = 1) && is_symbol(dot[[2]])
 }
 
 # exported onLoad

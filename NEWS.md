@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+
+* `filter()` works for negated logical columns (@mgirlich, @211).
+
 * speed up `slice_min()` and `slice_max()` after `group_by()` (@mgirlich, #216).
 
 * `slice_max()` now works when ordering by a character column (@mgirlich, #218).
