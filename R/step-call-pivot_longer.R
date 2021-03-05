@@ -50,17 +50,32 @@ pivot_longer.dtplyr_step <- function(data,
                                      names_prefix = NULL,
                                      names_sep = NULL,
                                      names_pattern = NULL,
-                                     names_ptypes = list(),
-                                     names_transform = list(),
+                                     names_ptypes = NULL,
+                                     names_transform = NULL,
                                      names_repair = "check_unique",
                                      values_to = "value",
                                      values_drop_na = FALSE,
-                                     values_ptypes = list(),
-                                     values_transform = list(),
+                                     values_ptypes = NULL,
+                                     values_transform = NULL,
                                      ...) {
 
+  if (!is.null(names_ptypes)) {
+    abort("`names_ptype` is not supported by dtplyr")
+  }
+
+  if (!is.null(names_transform)) {
+    abort("`names_transform` is not supported by dtplyr")
+  }
+
+  if (!is.null(values_ptypes)) {
+    abort("`values_ptypes` is not supported by dtplyr")
+  }
+
+  if (!is.null(values_transform)) {
+    abort("`values_transform` is not supported by dtplyr")
+  }
+
   sim_data <- simulate_vars(data)
-  sim_vars <- names(sim_data)
   measure_vars <- names(tidyselect::eval_select(enquo(cols), sim_data))
   if (length(measure_vars) == 0) {
     abort("`cols` must select at least one column.")
@@ -113,16 +128,15 @@ pivot_longer.dtplyr_step <- function(data,
     args$variable.name <- NULL
   }
 
-  if (length(values_to) == 1) {
-    if (values_to == "value") {
-      args$value.name <- NULL
-    }
+  if (identical(values_to, "value")) {
+    args$value.name <- NULL
   }
 
   if (is_false(values_drop_na)) {
     args$na.rm <- NULL
   }
 
+  sim_vars <- names(sim_data)
   id_vars <- sim_vars[!sim_vars %in% unlist(measure_vars)]
 
   out <- step_call(
@@ -156,53 +170,7 @@ pivot_longer.dtplyr_step <- function(data,
     out <- mutate(out, variable = NULL)
   }
 
-  out <- step_repair(out, repair = names_repair)
-
-  ## names_ptype & names_transform
-  cast_vars <- intersect(names_to, names(names_ptypes))
-  if (length(cast_vars) > 0) {
-    cast_calls <- vector("list", length(cast_vars))
-    names(cast_calls) <- cast_vars
-    for (i in seq_along(cast_calls)) {
-      cast_calls[[i]] <- call2("vec_cast", sym(cast_vars[[i]]), names_ptypes[[i]])
-    }
-    out <- mutate(out, !!!cast_calls)
-  }
-
-  coerce_vars <- intersect(names_to, names(names_transform))
-  if (length(coerce_vars) > 0) {
-    coerce_calls <- vector("list", length(coerce_vars))
-    names(coerce_calls) <- coerce_vars
-    for (i in seq_along(coerce_calls)) {
-      .fn <- as_function(names_transform[[i]])
-      coerce_calls[[i]] <- call2(.fn, sym(coerce_vars[[i]]))
-    }
-    out <- mutate(out, !!!coerce_calls)
-  }
-
-  ## values_ptype & values_transform
-  cast_vars <- intersect(values_to, names(values_ptypes))
-  if (length(cast_vars) > 0) {
-    cast_calls <- vector("list", length(cast_vars))
-    names(cast_calls) <- cast_vars
-    for (i in seq_along(cast_calls)) {
-      cast_calls[[i]] <- call2(expr(vec_cast), sym(cast_vars[[i]]), values_ptypes[[i]])
-    }
-    out <- mutate(out, !!!cast_calls)
-  }
-
-  coerce_vars <- intersect(values_to, names(values_transform))
-  if (length(coerce_vars) > 0) {
-    coerce_calls <- vector("list", length(coerce_vars))
-    names(coerce_calls) <- coerce_vars
-    for (i in seq_along(coerce_calls)) {
-      .fn <- as_function(values_transform[[i]])
-      coerce_calls[[i]] <- call2(.fn, sym(coerce_vars[[i]]))
-    }
-    out <- mutate(out, !!!coerce_calls)
-  }
-
-  out
+  step_repair(out, repair = names_repair)
 }
 
 # exported onLoad
@@ -212,13 +180,13 @@ pivot_longer.data.table <- function(data,
                                     names_prefix = NULL,
                                     names_sep = NULL,
                                     names_pattern = NULL,
-                                    names_ptypes = list(),
-                                    names_transform = list(),
+                                    names_ptypes = NULL,
+                                    names_transform = NULL,
                                     names_repair = "check_unique",
                                     values_to = "value",
                                     values_drop_na = FALSE,
-                                    values_ptypes = list(),
-                                    values_transform = list(),
+                                    values_ptypes = NULL,
+                                    values_transform = NULL,
                                     ...) {
   data <- lazy_dt(data)
   tidyr::pivot_longer(
