@@ -80,11 +80,11 @@ slice.data.table <- function(.data, ...) {
 slice_head.dtplyr_step <- function(.data, ..., n, prop) {
   ellipsis::check_dots_empty()
   size <- check_slice_size(n, prop)
-  j <- switch(size$type,
-    n = expr(head(.SD, !!size$n)),
-    prop = expr(head(.SD, !!size$prop * .N)),
+  i <- switch(size$type,
+    n = expr(seq.int(min(!!size$n, .N))),
+    prop = expr(seq.int(!!size$prop * .N)),
   )
-  step_subset_j(.data, j = j)
+  step_subset_i(.data, i = i)
 }
 
 #' @rdname slice.dtplyr_step
@@ -93,11 +93,11 @@ slice_head.dtplyr_step <- function(.data, ..., n, prop) {
 slice_tail.dtplyr_step <- function(.data, ..., n, prop) {
   ellipsis::check_dots_empty()
   size <- check_slice_size(n, prop)
-  j <- switch(size$type,
-    n = expr(tail(.SD, !!size$n)),
-    prop = expr(tail(.SD, floor(!!size$prop * .N))),
+  n_sequence <- switch(size$type,
+    n = expr(min(!!size$n, .N)),
+    prop = expr(!!size$prop * .N),
   )
-  step_subset_j(.data, j = j)
+  step_subset_i(.data, i = expr(seq.int(.N - !!n_sequence + 1, .N)))
 }
 
 #' @rdname slice.dtplyr_step
