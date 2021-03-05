@@ -113,17 +113,17 @@ slice_min.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
   ellipsis::check_dots_empty()
   size <- check_slice_size(n, prop)
   if (with_ties) {
-    i <- switch(size$type,
-      n = expr(!!smaller_ranks(!!order_by, !!size$n)),
-      prop = expr(!!smaller_ranks(!!order_by, !!size$prop * .N))
+    j <- switch(size$type,
+      n =    expr(.SD[order(!!order_by)][!!smaller_ranks(!!order_by, !!size$n)]),
+      prop = expr(.SD[order(!!order_by)][!!smaller_ranks(!!order_by, !!size$prop * .N)])
     )
   } else {
-    i <- switch(size$type,
-      n =    expr(seq(!!size$n)),
-      prop = expr(seq(!!size$prop * .N))
+    j <- switch(size$type,
+      n =    expr(head(.SD[order(!!order_by)], !!size$n)),
+      prop = expr(head(.SD[order(!!order_by)], !!size$prop * .N))
     )
   }
-  step_subset_i(arrange(.data, !!order_by), i)
+  step_subset_j(.data, j = j)
 }
 
 #' @rdname slice.dtplyr_step
@@ -149,7 +149,7 @@ slice_max.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
     )
   }
 
-  step_subset_i(arrange(.data, !!order_by, decreasing = TRUE), i)
+  step_subset_i(.data, i, i2 = expr(order(!!order_by, decreasing = TRUE)))
 }
 
 smaller_ranks <- function(x, y) {
