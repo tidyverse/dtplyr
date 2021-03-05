@@ -64,48 +64,6 @@ test_that("can handle missing combinations", {
   expect_equal(out$y, c("a", "b", NA, NA))
 })
 
-test_that("can cast values cols", {
-  tbl <- tibble(x = 1L, y = 2L)
-  dt <- lazy_dt(tbl, "DT")
-  step <- pivot_longer(dt, x:y, values_ptypes = list(value = double()))
-  out <- collect(step)
-
-  expect_equal(
-    show_query(step),
-    expr(melt(DT, measure.vars = !!c("x", "y"), variable.name = "name",
-              variable.factor = FALSE)[, `:=`(value = vec_cast(value, !!numeric(0)))])
-  )
-  expect_equal(out$value, c(1, 2))
-})
-
-test_that("can coerce values cols", {
-  tbl <- tibble(x = 1, y = 2)
-  dt <- lazy_dt(tbl, "DT")
-  step <- pivot_longer(dt, x:y, values_transform = list(value = as.character))
-  out <- collect(step)
-
-  expect_snapshot(show_query(step))
-  expect_equal(out$value, c("1", "2"))
-})
-
-test_that("can cast names cols", {
-  tbl <- tibble(x = 1L, y = 2L)
-  dt <- lazy_dt(tbl, "DT")
-  step <- pivot_longer(dt, x:y, names_ptypes = list(name = factor()))
-  out <- collect(step)
-
-  expect_equal(out$name, as.factor(c("x", "y")))
-})
-
-test_that("can coerce names cols", {
-  tbl <- tibble(x = 1, y = 2)
-  dt <- lazy_dt(tbl, "DT")
-  step <- pivot_longer(dt, x:y, names_transform = list(name = as.factor))
-  out <- collect(step)
-
-  expect_equal(out$name, as.factor(c("x", "y")))
-})
-
 test_that("can pivot to multiple measure cols", {
   dt <- lazy_dt(head(anscombe, 2), "DT")
   step <- pivot_longer(

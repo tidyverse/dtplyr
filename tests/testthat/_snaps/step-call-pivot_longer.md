@@ -1,11 +1,3 @@
-# can coerce values cols
-
-    Code
-      show_query(step)
-    Output
-      melt(DT, measure.vars = c("x", "y"), variable.name = "name", 
-          variable.factor = FALSE)[, `:=`(value = .Primitive("as.character")(value))]
-
 # can pivot to multiple measure cols
 
     Code
