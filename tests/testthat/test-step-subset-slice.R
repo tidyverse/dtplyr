@@ -68,6 +68,12 @@ test_that("min and max return ties by default", {
   expect_equal(dt %>% slice_max(x, with_ties = FALSE) %>% collect() %>% nrow(), 1)
 })
 
+test_that("min and max work with character", {
+  dt <- lazy_dt(data.table(x = c("b", "a", "d", "c")))
+  expect_equal(dt %>% slice_min(x) %>% pull(x), "a")
+  expect_equal(dt %>% slice_max(x) %>% pull(x), "d")
+})
+
 test_that("min and max reorder results", {
   dt <- lazy_dt(data.frame(id = 1:4, x = c(2, 3, 1, 2)))
 
