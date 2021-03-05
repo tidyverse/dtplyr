@@ -108,22 +108,16 @@ slice_min.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
   if (missing(order_by)) {
     abort("argument `order_by` is missing, with no default.")
   }
-  order_by <- enexpr(order_by)
 
-  ellipsis::check_dots_empty()
-  size <- check_slice_size(n, prop)
-  if (with_ties) {
-    j <- switch(size$type,
-      n =    expr(.SD[order(!!order_by)][!!smaller_ranks(!!order_by, !!size$n)]),
-      prop = expr(.SD[order(!!order_by)][!!smaller_ranks(!!order_by, !!size$prop * .N)])
-    )
-  } else {
-    j <- switch(size$type,
-      n =    expr(head(.SD[order(!!order_by)], !!size$n)),
-      prop = expr(head(.SD[order(!!order_by)], !!size$prop * .N))
-    )
-  }
-  step_subset_j(.data, j = j)
+  slice_min_max(
+    .data,
+    order_by = enexpr(order_by),
+    decreasing = FALSE,
+    ...,
+    n =  n,
+    prop = prop,
+    with_ties = with_ties
+  )
 }
 
 #' @rdname slice.dtplyr_step
@@ -133,30 +127,49 @@ slice_max.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
   if (missing(order_by)) {
     abort("argument `order_by` is missing, with no default.")
   }
-  order_by <- enexpr(order_by)
 
-  ellipsis::check_dots_empty()
-  size <- check_slice_size(n, prop)
-  if (with_ties) {
-    j <- switch(size$type,
-      n = expr(.SD[order(!!order_by, decreasing = TRUE)][!!smaller_ranks(-!!order_by, !!size$n)]),
-      prop = expr(.SD[order(!!order_by, decreasing = TRUE)][!!smaller_ranks(-!!order_by, !!size$prop * .N)])
-    )
-  } else {
-    j <- switch(size$type,
-      n =    expr(head(.SD[order(!!order_by, decreasing = TRUE)], !!size$n)),
-      prop = expr(head(.SD[order(!!order_by, decreasing = TRUE)], !!size$prop * .N))
-    )
-  }
-
-  step_subset_j(.data, j = j)
+  slice_min_max(
+    .data,
+    order_by = enexpr(order_by),
+    decreasing = TRUE,
+    ...,
+    n =  n,
+    prop = prop,
+    with_ties = with_ties
+  )
 }
 
-smaller_ranks <- function(x, y) {
+slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties = TRUE) {
+  ellipsis::check_dots_empty()
+  size <- check_slice_size(n, prop)
+
+  if (decreasing) {
+    order_by <- expr(desc(!!order_by))
+  }
+
+  if (with_ties) {
+    ties.method <- "min"
+  } else {
+    ties.method <- "first"
+  }
+
+  i <- switch(size$type,
+    n = expr(!!smaller_ranks(!!order_by, !!size$n, ties.method = ties.method)),
+    prop = expr(!!smaller_ranks(!!order_by, !!size$prop * .N, ties.method = ties.method))
+  )
+
+  step_subset_i(.data, i) %>%
+    arrange(!!order_by, .by_group = TRUE)
+}
+
+smaller_ranks <- function(x, y, ties.method = "min") {
   x <- enexpr(x)
   y <- enexpr(y)
 
-  expr(frankv(!!x, ties.method = "min", na.last = "keep") <= !!y)
+  # `frank()` by group is much slower than rank
+  # https://github.com/Rdatatable/data.table/issues/3988
+  # also https://github.com/Rdatatable/data.table/issues/4284
+  expr(rank(!!x, ties.method = !!ties.method, na.last = "keep") <= !!y)
 }
 
 #' @importFrom dplyr slice_sample

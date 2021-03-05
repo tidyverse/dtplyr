@@ -1,6 +1,14 @@
 # dtplyr (development version)
 
+
 * `filter()` works for negated logical columns (@mgirlich, @211).
+
+* speed up `slice_min()` and `slice_max()` after `group_by()` (@mgirlich, #216).
+
+* `slice_max()` now works when ordering by a character column (@mgirlich, #218).
+
+* `pivot_wider()` now names the columns correctly when `names_from` is a
+  numeric column (@mgirlich, #214).
 
 * `left_join()` now produces the same column order as `dplyr` (@markfairbanks, #139).
 
