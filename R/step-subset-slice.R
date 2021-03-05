@@ -168,6 +168,7 @@ smaller_ranks <- function(x, y, ties.method = "min") {
 
   # `frank()` by group is much slower than rank
   # https://github.com/Rdatatable/data.table/issues/3988
+  # also https://github.com/Rdatatable/data.table/issues/4284
   expr(rank(!!x, ties.method = !!ties.method, na.last = "keep") <= !!y)
 }
 
