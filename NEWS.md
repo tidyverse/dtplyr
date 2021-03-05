@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* `pivot_wider()` now names the columns correctly when `names_from` is a
+  numeric column (@mgirlich, #214).
+
 * `left_join()` now produces the same column order as `dplyr` (@markfairbanks, #139).
 
 * `lazy_dt()` now keeps groups (@mgirlich, #206).
