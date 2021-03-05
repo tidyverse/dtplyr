@@ -28,29 +28,17 @@ step_subset <- function(parent,
 }
 
 # Grouped i needs an intermediate assignment for maximum efficiency
-step_subset_i <- function(parent, i, i2 = NULL) {
+step_subset_i <- function(parent, i) {
   if (length(parent$groups) > 0) {
     parent <- compute(parent)
 
     nm <- sym(parent$name)
-    if (is_null(i2)) {
-      i <- expr((!!nm)[, .I[!!i]])              # dt[, .I[]]
-    } else {
-      i <- expr((!!nm)[!!i2, .I[!!i]])          # dt[i2, .I[]]
-    }
+    i <- expr((!!nm)[, .I[!!i]])              # dt[, .I[]]
     i <- add_grouping_param(i, parent, FALSE) # dt[, .I[], by = ()]
     i <- call("$", i, quote(V1))              # dt[, .I[], by = ()]$V1
-
-    step_subset(parent, i = i)
-  } else {
-    out <- step_subset(parent, i = i)
-
-    if (!is_null(i2)) {
-      out <- step_subset(out, i = i2)
-    }
-
-    out
   }
+
+  step_subset(parent, i = i)
 }
 
 # When adding a subset that contains only j, it may be possible to merge
