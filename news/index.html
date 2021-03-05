@@ -169,6 +169,8 @@
 <a href="#dtplyr-development-version" class="anchor"></a>dtplyr (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p>speed up <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> after <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/216'>#216</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> now works when ordering by a character column (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/218'>#218</a>).</p></li>
 <li><p><code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code> now names the columns correctly when <code>names_from</code> is a numeric column (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/214'>#214</a>).</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> now produces the same column order as <code>dplyr</code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/139'>#139</a>).</p></li>
 <li><p><code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> now keeps groups (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/206'>#206</a>).</p></li>
