@@ -156,7 +156,9 @@ smaller_ranks <- function(x, y) {
   x <- enexpr(x)
   y <- enexpr(y)
 
-  expr(frankv(!!x, ties.method = "min", na.last = "keep") <= !!y)
+  # `frank()` by group is much slower than rank
+  # https://github.com/Rdatatable/data.table/issues/3988
+  expr(rank(!!x, ties.method = "min", na.last = "keep") <= !!y)
 }
 
 #' @importFrom dplyr slice_sample
