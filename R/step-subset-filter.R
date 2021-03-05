@@ -38,7 +38,6 @@ filter_by_lgl_col <- function(dots) {
   }
 
   dot <- dots[[1]]
-
   if (is_symbol(dot)) {
     return(TRUE)
   }
