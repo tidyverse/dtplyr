@@ -74,8 +74,8 @@ pivot_wider.dtplyr_step <- function(data,
     new_vars <- unique(pull(new_vars, .names_from))
   } else {
     new_vars <- unique(pull(data, !!sym(names_from)))
+    new_vars <- as.character(new_vars)
   }
-  new_vars <- as.character(new_vars)
 
   if (!is.null(names_glue)) {
     glue_df <- as.data.table(distinct(ungroup(data), !!!syms(names_from)))
