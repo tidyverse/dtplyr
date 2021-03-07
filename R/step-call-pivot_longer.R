@@ -209,6 +209,12 @@ pivot_longer.data.table <- function(data,
   )
 }
 
+# ==============================================================================
+# inlined from tidyr
+# https://github.com/tidyverse/tidyr/issues/1103
+# ==============================================================================
+# nocov start
+
 # str_extract()  -----------------------------------------------------------------
 str_extract <- function(x, into, regex, convert = FALSE) {
   stopifnot(
@@ -356,3 +362,5 @@ pmap <- function(.l, .f, ...) {
 pmap_chr <- function(.l, .f, ...) {
   as.character(pmap(.l, .f, ...))
 }
+
+# nocov end
