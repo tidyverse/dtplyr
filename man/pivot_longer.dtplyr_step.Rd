@@ -70,22 +70,7 @@ If these arguments do not give you enough control, use
 \code{pivot_longer_spec()} to create a spec object and process manually as
 needed.}
 
-\item{names_ptypes}{A list of column name-prototype pairs.
-A prototype (or ptype for short) is a zero-length vector (like \code{integer()}
-or \code{numeric()}) that defines the type, class, and attributes of a vector.
-Use these arguments if you want to confirm that the created columns are
-the types that you expect. Note that if you want to change (instead of confirm)
-the types of specific columns, you should use \code{names_transform} or
-\code{values_transform} instead.}
-
-\item{names_transform}{A list of column name-function pairs.
-Use these arguments if you need to change the types of specific columns.
-For example, \code{names_transform = list(week = as.integer)} would convert
-a character variable called \code{week} to an integer.
-
-If not specified, the type of the columns generated from \code{names_to} will
-be character, and the type of the variables generated from \code{values_to}
-will be the common type of the input columns used to generate them.}
+\item{names_ptypes, names_transform, values_ptypes, values_transform}{Not currently supported by dtplyr.}
 
 \item{names_repair}{What happens if the output has invalid column names?
 The default, \code{"check_unique"} is to error if the columns are duplicated.
@@ -103,23 +88,6 @@ existing column names.}
 in the \code{value_to} column. This effectively converts explicit missing values
 to implicit missing values, and should generally be used only when missing
 values in \code{data} were created by its structure.}
-
-\item{values_ptypes}{A list of column name-prototype pairs.
-A prototype (or ptype for short) is a zero-length vector (like \code{integer()}
-or \code{numeric()}) that defines the type, class, and attributes of a vector.
-Use these arguments if you want to confirm that the created columns are
-the types that you expect. Note that if you want to change (instead of confirm)
-the types of specific columns, you should use \code{names_transform} or
-\code{values_transform} instead.}
-
-\item{values_transform}{A list of column name-function pairs.
-Use these arguments if you need to change the types of specific columns.
-For example, \code{names_transform = list(week = as.integer)} would convert
-a character variable called \code{week} to an integer.
-
-If not specified, the type of the columns generated from \code{names_to} will
-be character, and the type of the variables generated from \code{values_to}
-will be the common type of the input columns used to generate them.}
 
 \item{...}{Additional arguments passed on to methods.}
 }

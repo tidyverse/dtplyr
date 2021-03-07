@@ -6,6 +6,8 @@
 #'
 #' @param data A [lazy_dt()].
 #' @inheritParams tidyr::pivot_longer
+#' @param names_ptypes,names_transform,values_ptypes,values_transform
+#'   Not currently supported by dtplyr.
 #' @examples
 #' library(tidyr)
 #'
@@ -60,7 +62,7 @@ pivot_longer.dtplyr_step <- function(data,
                                      ...) {
 
   if (!is.null(names_ptypes)) {
-    abort("`names_ptype` is not supported by dtplyr")
+    abort("`names_ptypes` is not supported by dtplyr")
   }
 
   if (!is.null(names_transform)) {

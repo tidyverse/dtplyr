@@ -149,3 +149,15 @@ test_that("can use names_sep w/out .value in names_to", {
   expect_equal(out$b, c("1", "2"))
   expect_equal(out$value, c(1, 2))
 })
+
+test_that("informative errors on unsupported features", {
+  dt <- data.table(a1_1 = 1, b2_2 = 2)
+
+  expect_snapshot(error = TRUE, {
+    dt %>% pivot_longer(names_ptypes = list())
+    dt %>% pivot_longer(names_transform = list())
+    dt %>% pivot_longer(values_ptypes = list())
+    dt %>% pivot_longer(values_transform = list())
+  })
+
+})
