@@ -4,9 +4,8 @@
 #'
 #' @description
 #' These are methods for the dplyr [slice()], `slice_head()`, `slice_tail()`,
-#' `slice_min()`, `slice_max()` and `slice_sample()` generics. `slice()`
-#' and `slice_sample()` are translated to the `i` argument of `[.data.table`,
-#' all others are translated to the `j` argument.
+#' `slice_min()`, `slice_max()` and `slice_sample()` generics. They are
+#' translated to the `i` argument of `[.data.table`.
 #'
 #' Unlike dplyr, `slice()` (and `slice()` alone) returns the same number of
 #' rows per group, regardless of whether or not the indices appear in each
