@@ -51,9 +51,8 @@
 
 <meta property="og:title" content="Subset rows using their positions — slice.dtplyr_step" />
 <meta property="og:description" content="These are methods for the dplyr slice(), slice_head(), slice_tail(),
-slice_min(), slice_max() and slice_sample() generics. slice()
-and slice_sample() are translated to the i argument of [.data.table,
-all others are translated to the j argument.
+slice_min(), slice_max() and slice_sample() generics. They are
+translated to the i argument of [.data.table.
 Unlike dplyr, slice() (and slice() alone) returns the same number of
 rows per group, regardless of whether or not the indices appear in each
 group." />
@@ -174,9 +173,8 @@ group." />
 
     <div class="ref-description">
     <p>These are methods for the dplyr <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_head()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_tail()</a></code>,
-<code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_min()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_max()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_sample()</a></code> generics. <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice()</a></code>
-and <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_sample()</a></code> are translated to the <code>i</code> argument of <code>[.data.table</code>,
-all others are translated to the <code>j</code> argument.</p>
+<code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_min()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_max()</a></code> and <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_sample()</a></code> generics. They are
+translated to the <code>i</code> argument of <code>[.data.table</code>.</p>
 <p>Unlike dplyr, <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice()</a></code> (and <code><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice()</a></code> alone) returns the same number of
 rows per group, regardless of whether or not the indices appear in each
 group.</p>
@@ -263,7 +261,7 @@ and return the first <code>n</code> rows.</p></td>
 <span class='co'># First and last rows based on existing order</span>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_head</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [5 x 11]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT29`[, head(.SD, 5L)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT29`[seq.int(min(5L, .N))]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -275,7 +273,7 @@ and return the first <code>n</code> rows.</p></td>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_tail</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [5 x 11]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT29`[, tail(.SD, 5L)]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT29`[seq.int(.N - min(5L, .N) + 1, .N)]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
