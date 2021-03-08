@@ -14,7 +14,7 @@ dt_eval <- function(x) {
 # Make sure data.table functions are available so dtplyr still works
 # even when data.table isn't attached
 dt_funs <- c(
-  "copy", "dcast", "nafill",
+  "copy", "dcast", "melt", "nafill",
   "fcase", "fcoalesce", "fintersect", "frank", "frankv", "fsetdiff", "funion",
   "setcolorder", "setnames"
 )
