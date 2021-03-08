@@ -183,15 +183,29 @@ test_that("scoped verbs produce nice output", {
     dt %>% summarise_all(~ n()) %>% show_query(),
     expr(DT[, .(x = .N)])
   )
+})
 
-  # mask if_else & coalesce with data.table versions, #112
+test_that("mask if_else/ifelse & coalesce with data.table versions", {
+  dt <- lazy_dt(data.table(x = 1:5), "DT")
+
+  # if_else/ifelse & coalesce to fifelse & fcoalesce, #112
   expect_equal(
-    dt %>% summarise_all(~if_else(. > 0, -1, 1)) %>% show_query(),
-    expr(DT[ , .(x = fifelse(x > 0, -1, 1))])
+    dt %>% mutate(y = if_else(x < 3, 1, 2)) %>% show_query(),
+    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
   )
   expect_equal(
-    dt %>% summarise_all(~coalesce(., 1)) %>% show_query(),
-    expr(DT[ , .(x = fcoalesce(x, 1))])
+    dt %>% mutate(y = ifelse(x < 3, 1, 2)) %>% show_query(),
+    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
+  )
+  expect_equal(
+    dt %>% mutate(y = coalesce(x, 1)) %>% show_query(),
+    expr(copy(DT)[, `:=`(y = fcoalesce(x, 1))])
+  )
+
+  # tidyeval works inside if_else, #220
+  expect_equal(
+    dt %>% mutate(y = if_else(.data$x < 3, 1, 2)) %>% show_query(),
+    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
   )
 })
 
