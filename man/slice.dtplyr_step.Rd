@@ -40,9 +40,8 @@ and return the first \code{n} rows.}
 }
 \description{
 These are methods for the dplyr \code{\link[=slice]{slice()}}, \code{slice_head()}, \code{slice_tail()},
-\code{slice_min()}, \code{slice_max()} and \code{slice_sample()} generics. \code{slice()}
-and \code{slice_sample()} are translated to the \code{i} argument of \verb{[.data.table},
-all others are translated to the \code{j} argument.
+\code{slice_min()}, \code{slice_max()} and \code{slice_sample()} generics. They are
+translated to the \code{i} argument of \verb{[.data.table}.
 
 Unlike dplyr, \code{slice()} (and \code{slice()} alone) returns the same number of
 rows per group, regardless of whether or not the indices appear in each
