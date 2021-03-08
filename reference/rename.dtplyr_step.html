@@ -209,7 +209,7 @@ defaults to all columns.</p></td>
 <span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span>, y <span class='op'>=</span> <span class='fl'>2</span>, z <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>new_x <span class='op'>=</span> <span class='va'>x</span>, new_y <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [1 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>setnames(copy(`_DT26`), c("x", "y"), c("new_x", "new_y"))
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>setnames(copy(`_DT30`), c("x", "y"), c("new_x", "new_y"))
 #&gt; 
 #&gt;   new_x new_y     z
 #&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -217,7 +217,7 @@ defaults to all columns.</p></td>
 #&gt; 
 #&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename_with</a></span><span class='op'>(</span><span class='va'>toupper</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [1 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>setnames(copy(`_DT26`), toupper)
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>setnames(copy(`_DT30`), toupper)
 #&gt; 
 #&gt;       X     Y     Z
 #&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
