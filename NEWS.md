@@ -18,6 +18,10 @@
 
 * `tally()` is now translated (@mgirlich, #201).
 
+* `ifelse()` is now mapped to `fifelse()` (@markfairbanks, #220).
+
+* `.data` and `.env` pronouns now work inside of `if_else()` (@markfairbanks, #220).
+
 * More tidyr verbs are in the process of being added:
 
   * `drop_na()` (@markfairbanks, #194)
