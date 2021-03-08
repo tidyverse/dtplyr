@@ -15,7 +15,7 @@ dt_eval <- function(x) {
 # even when data.table isn't attached
 dt_funs <- c(
   "copy", "dcast", "melt", "nafill",
-  "fcase", "fcoalesce", "fintersect", "frank", "frankv", "fsetdiff", "funion",
+  "fcase", "fcoalesce", "fifelse", "fintersect", "frank", "frankv", "fsetdiff", "funion",
   "setcolorder", "setnames"
 )
 add_dt_wrappers <- function(env) {
@@ -129,8 +129,9 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     quote(.GRP)
   } else if (is_call(x, "cur_group_rows")) {
     quote(.I)
-  } else if (is_call(x, "if_else")) {
+  } else if (is_call(x, "if_else") || is_call(x, "ifelse")) {
     x[[1L]] <- quote(fifelse)
+    x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
     x
   } else if (is_call(x, "n", n = 0)) {
     quote(.N)
