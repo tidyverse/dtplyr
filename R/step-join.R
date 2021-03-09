@@ -219,7 +219,10 @@ join_is_simple <- function(x, y, by) {
 }
 
 join_vars <- function(x, y, on, suffixes) {
-  y <- setdiff(y, if (is_named(on)) names(on) else on)
+  on_y <- names2(on)
+  on_y[on_y == ""] <- on[on_y == ""]
+
+  y <- setdiff(y, on_y)
   vars <- union(x, y)
 
   both <- intersect(x, y)
