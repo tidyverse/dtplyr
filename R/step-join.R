@@ -34,6 +34,7 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
   lhs <- dt_call(x$parent, needs_copy)
   rhs <- dt_call(x$parent2)
   on <- call2(".", !!!syms(x$on))
+  on <- create_on_call(x$on)
 
   by.x <- as.character(x$on)
   by.y <- ifelse(names(x$on) == "", by.x, names(x$on))
@@ -53,6 +54,15 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
   }
 
   call
+}
+
+create_on_call <- function(on) {
+  # names and values have to be swapped in the on call
+  on_swapped <- set_names(names2(on), on)
+  on_swapped[on_swapped == ""] <- on[on_swapped == ""]
+  on_swapped <- simplify_names(on_swapped)
+
+  call2(".", !!!syms(on_swapped))
 }
 
 # dplyr verbs -------------------------------------------------------------
