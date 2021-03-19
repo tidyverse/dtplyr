@@ -158,7 +158,6 @@ slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties =
   )
 
   out <- step_subset_i(.data, i)
-
   arrange(out, !!order_by, .by_group = TRUE)
 }
 
