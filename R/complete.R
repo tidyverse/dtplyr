@@ -1,4 +1,4 @@
-#' Expand data frame to include all possible combinations of values.
+#' Complete a data frame with missing combinations of data
 #'
 #' @description
 #' This is a method for the tidyr `complete()` generic. This is a wrapper

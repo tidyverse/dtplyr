@@ -2,7 +2,7 @@
 % Please edit documentation in R/complete.R
 \name{complete.dtplyr_step}
 \alias{complete.dtplyr_step}
-\title{Expand data frame to include all possible combinations of values.}
+\title{Complete a data frame with missing combinations of data}
 \usage{
 \method{complete}{dtplyr_step}(data, ..., fill = list())
 }
