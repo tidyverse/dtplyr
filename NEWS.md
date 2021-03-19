@@ -22,6 +22,9 @@
 
 * `.data` and `.env` pronouns now work inside of `if_else()` (@markfairbanks, #220).
 
+* `arrange(dt, desc(col))` is now translated to `dt[order(-col)]` in order to utilize
+`data.table`'s fast order.
+
 * More translations for tidyr verbs have been added:
   
   * `drop_na()` (@markfairbanks, #194)
