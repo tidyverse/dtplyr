@@ -128,7 +128,8 @@ step_subset_on <- function(x, y, i, on) {
     vars = union(x$vars, y$vars),
     i = y,
     on = on,
-    locals = utils::modifyList(x$locals, y$locals)
+    locals = utils::modifyList(x$locals, y$locals),
+    allow_cartesian = TRUE
   )
 }
 

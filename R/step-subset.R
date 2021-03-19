@@ -119,11 +119,7 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 
   if (length(x$on) > 0) {
     out$on <- call2(".", !!!syms(x$on))
-    if (is.null(x$allow_cartesian)) {
-      out$allow.cartesian <- TRUE
-    } else {
-      out$allow.cartesian <- parent$allow_cartesian
-    }
+    out$allow.cartesian <- x$allow_cartesian
   }
   out
 }
