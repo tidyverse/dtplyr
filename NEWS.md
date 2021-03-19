@@ -26,6 +26,8 @@
   
   * `drop_na()` (@markfairbanks, #194)
   
+  * `complete()` (@markfairbanks, #225)
+  
   * `expand()` (@markfairbanks, #225)
   
   * `fill()` (@markfairbanks, #197)
