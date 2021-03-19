@@ -129,6 +129,9 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     quote(.GRP)
   } else if (is_call(x, "cur_group_rows")) {
     quote(.I)
+  } else if (is_call(x, "desc")) {
+    x[[1]] <- sym("-")
+    x
   } else if (is_call(x, "if_else") || is_call(x, "ifelse")) {
     x[[1L]] <- quote(fifelse)
     x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)

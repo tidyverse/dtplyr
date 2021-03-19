@@ -217,6 +217,15 @@ test_that("non-Gforce verbs work", {
   expect_equal(dt %>% mutate_at(vars(x), add) %>% pull(), c(3, 3))
 })
 
+test_that("`desc(col)` is translated to `-col` inside arrange", {
+  dt <- lazy_dt(data.table(x = c("a", "b")), "DT")
+  step <- arrange(dt, desc(x))
+  out <- collect(step)
+
+  expect_equal(show_query(step), expr(DT[order(-x)]))
+  expect_equal(out$x, c("b", "a"))
+})
+
 # fun_name ----------------------------------------------------------------
 
 test_that("finds name of functions with GForce implementations", {
