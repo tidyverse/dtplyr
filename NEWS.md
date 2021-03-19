@@ -22,9 +22,13 @@
 
 * `.data` and `.env` pronouns now work inside of `if_else()` (@markfairbanks, #220).
 
-* More tidyr verbs are in the process of being added:
-
+* More translations for tidyr verbs have been added:
+  
   * `drop_na()` (@markfairbanks, #194)
+  
+  * `complete()` (@markfairbanks, #225)
+  
+  * `expand()` (@markfairbanks, #225)
   
   * `fill()` (@markfairbanks, #197)
   

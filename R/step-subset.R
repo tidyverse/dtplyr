@@ -5,8 +5,9 @@ step_subset <- function(parent,
                         arrange = parent$arrange,
                         i = NULL,
                         j = NULL,
-                        on = character()
-                        ) {
+                        on = character(),
+                        allow_cartesian = NULL
+) {
 
   stopifnot(is_step(parent))
   stopifnot(is.null(i) || is_expression(i) || is_step(i))
@@ -22,6 +23,7 @@ step_subset <- function(parent,
     i = i,
     j = j,
     on = on,
+    allow_cartesian = allow_cartesian,
     implicit_copy = !is.null(i) || !is.null(j),
     class = "dtplyr_step_subset"
   )
@@ -117,7 +119,7 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
 
   if (length(x$on) > 0) {
     out$on <- call2(".", !!!syms(x$on))
-    out$allow.cartesian <- TRUE
+    out$allow.cartesian <- x$allow_cartesian
   }
   out
 }

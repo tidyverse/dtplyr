@@ -19,7 +19,7 @@ Depends:
     R (>= 3.3)
 Imports:
     crayon,
-    data.table (>= 1.12.4),
+    data.table (>= 1.13.0),
     dplyr (>= 1.0.3),
     ellipsis,
     glue,

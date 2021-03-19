@@ -157,8 +157,8 @@ slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties =
     prop = expr(!!smaller_ranks(!!order_by, !!size$prop * .N, ties.method = ties.method))
   )
 
-  step_subset_i(.data, i) %>%
-    arrange(!!order_by, .by_group = TRUE)
+  out <- step_subset_i(.data, i)
+  arrange(out, !!order_by, .by_group = TRUE)
 }
 
 smaller_ranks <- function(x, y, ties.method = "min") {
