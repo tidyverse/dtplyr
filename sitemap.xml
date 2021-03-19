@@ -10,6 +10,9 @@
     <loc>https://dtplyr.tidyverse.org/reference/collect.dtplyr_step.html</loc>
   </url>
   <url>
+    <loc>https://dtplyr.tidyverse.org/reference/complete.dtplyr_step.html</loc>
+  </url>
+  <url>
     <loc>https://dtplyr.tidyverse.org/reference/count.dtplyr_step.html</loc>
   </url>
   <url>
@@ -20,6 +23,9 @@
   </url>
   <url>
     <loc>https://dtplyr.tidyverse.org/reference/dtplyr-package.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/reference/expand.dtplyr_step.html</loc>
   </url>
   <url>
     <loc>https://dtplyr.tidyverse.org/reference/fill.dtplyr_step.html</loc>

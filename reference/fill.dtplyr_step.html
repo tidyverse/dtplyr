@@ -224,7 +224,7 @@ or "updown" (first up and then down).</p></td>
 <span class='co'># `fill()` defaults to replacing missing data from top to bottom</span>
 <span class='va'>sales</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/fill.html'>fill</a></span><span class='op'>(</span><span class='va'>year</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [16 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT7`)[, `:=`(year = nafill(year, "locf"))]
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT9`)[, `:=`(year = nafill(year, "locf"))]
 #&gt; 
 #&gt;   quarter  year sales
 #&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -261,7 +261,7 @@ or "updown" (first up and then down).</p></td>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/fill.html'>fill</a></span><span class='op'>(</span><span class='va'>n_squirrels</span>, .direction <span class='op'>=</span> <span class='st'>"downup"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [12 x 4]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT8`)[, `:=`(n_squirrels = nafill(nafill(n_squirrels, 
+#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT10`)[, `:=`(n_squirrels = nafill(nafill(n_squirrels, 
 #&gt;     "locf"), "nocb")), by = .(group)]
 #&gt; 
 #&gt;   group name    role        n_squirrels
