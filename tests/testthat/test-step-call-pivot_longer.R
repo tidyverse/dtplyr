@@ -44,26 +44,6 @@ test_that("can drop missing values", {
   expect_equal(out$value, c(1, 2))
 })
 
-test_that("can handle missing combinations", {
-  tbl <- tribble(
-    ~id, ~x_1, ~x_2, ~y_2,
-    "A",    1,    2,  "a",
-    "B",    3,    4,  "b",
-  )
-  dt <- lazy_dt(tbl, "DT")
-  step <- pivot_longer(dt, -id, names_to = c(".value", "n"), names_sep = "_")
-  out <- collect(step)
-
-  expect_equal(
-    show_query(step),
-    expr(melt(DT, measure.vars = !!list(c("x_1", "x_2"), "y_2"), variable.name = "n",
-              value.name = !!c("x", "y"), variable.factor = FALSE))
-  )
-  expect_equal(step$vars, c("id", "n", "x", "y"))
-  expect_equal(out$x, c(1, 3, 2, 4))
-  expect_equal(out$y, c("a", "b", NA, NA))
-})
-
 test_that("can pivot to multiple measure cols", {
   dt <- lazy_dt(head(anscombe, 2), "DT")
   step <- pivot_longer(
@@ -103,6 +83,15 @@ test_that(".value can be at any position in `names_to`", {
     collect()
 
   expect_identical(value_first, value_second)
+})
+
+test_that("errors on unbalanced datasets", {
+  tbl <- tibble(x_1 = 1, x_2 = 1, y_3 = 1, y_4 = 1)
+  dt <- lazy_dt(tbl, "DT")
+
+  expect_snapshot(error = TRUE,
+                  pivot_longer(dt, everything(), names_to = c(".value", "id"), names_sep = "_")
+  )
 })
 
 test_that("can use names_prefix", {
@@ -161,3 +150,4 @@ test_that("informative errors on unsupported features", {
   })
 
 })
+
