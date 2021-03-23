@@ -87,6 +87,11 @@ test_that("can use across", {
     dt %>% mutate(across(everything(), ~ . + 1)) %>% show_query(),
     expr(copy(DT)[, `:=`(x = x + 1, y = y + 1)])
   )
+
+  expect_equal(
+    dt %>% mutate(across(.fns = ~ . + 1)) %>% show_query(),
+    expr(copy(DT)[, `:=`(x = x + 1, y = y + 1)])
+  )
 })
 
 test_that("vars set correctly", {

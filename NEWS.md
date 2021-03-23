@@ -23,7 +23,9 @@
 * `.data` and `.env` pronouns now work inside of `if_else()` (@markfairbanks, #220).
 
 * `arrange(dt, desc(col))` is now translated to `dt[order(-col)]` in order to utilize
-`data.table`'s fast order.
+`data.table`'s fast order (@markfairbanks, #227).
+
+* `across()` now defaults to `.cols = everything()` when `.cols` isn't provided (@markfairbanks, #231).
 
 * More translations for tidyr verbs have been added:
   
