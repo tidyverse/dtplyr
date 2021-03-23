@@ -90,13 +90,15 @@ pivot_longer.dtplyr_step <- function(data,
 
   if (uses_dot_value) {
     if (!is.null(names_sep)) {
-      .value <- str_separate(measure_vars, into = names_to, sep = names_sep)$.value
+      names_to_setup <- str_separate(measure_vars, into = names_to, sep = names_sep)
     } else if (!is.null(names_pattern)) {
-      .value <- str_extract(measure_vars, into = names_to, names_pattern)$.value
+      names_to_setup <- str_extract(measure_vars, into = names_to, names_pattern)
     } else {
       abort("If you use '.value' in `names_to` you must also supply
             `names_sep' or `names_pattern")
     }
+
+    .value <- names_to_setup$.value
 
     v_fct <- factor(.value, levels = unique(.value))
     measure_vars <- split(measure_vars, v_fct)
@@ -105,6 +107,23 @@ pivot_longer.dtplyr_step <- function(data,
 
     if (multiple_names_to) {
       variable_name <- names_to[!names_to == ".value"]
+
+      .value_ids <- split(names_to_setup[[variable_name]], v_fct)
+      .value_id <- .value_ids[[1]]
+
+      # Make sure data is "balanced"
+      # https://github.com/Rdatatable/data.table/issues/2575
+      # The list passed to measure.vars also needs the same number of column names per element
+      equal_ids <- vapply(
+        .value_ids[-1],
+        function(.x) isTRUE(all.equal(.value_id, .x)),
+        logical(1)
+      )
+      if (all(equal_ids)) {
+        .value_id <- vctrs::vec_rep_each(.value_id, length(pull(data)))
+      } else {
+        abort("`data.table::melt()` doesn't currently support melting of unbalanced datasets.")
+      }
     }
   } else if (multiple_names_to) {
     if (is.null(names_sep) && is.null(names_pattern)) {
@@ -152,7 +171,9 @@ pivot_longer.dtplyr_step <- function(data,
     out <- mutate(out, !!variable_name := gsub(paste0("^", names_prefix), "", !!sym(variable_name)))
   }
 
-  if (multiple_names_to && !uses_dot_value) {
+  if (multiple_names_to && uses_dot_value) {
+    out <- mutate(out, !!variable_name := !!.value_id)
+  } else if (multiple_names_to && !uses_dot_value) {
     if (!is.null(names_sep)) {
       into_cols <- str_separate(pull(out, !!sym(variable_name)), names_to, sep = names_sep)
     } else {
