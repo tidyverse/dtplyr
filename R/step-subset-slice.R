@@ -86,6 +86,12 @@ slice_head.dtplyr_step <- function(.data, ..., n, prop) {
   step_subset_i(.data, i = i)
 }
 
+#' @export
+slice_head.data.table <- function(.data, ..., n, prop) {
+  .data <- lazy_dt(.data)
+  slice_head(.data, ..., n = n, prop = prop)
+}
+
 #' @rdname slice.dtplyr_step
 #' @importFrom dplyr slice_tail
 #' @export
@@ -97,6 +103,12 @@ slice_tail.dtplyr_step <- function(.data, ..., n, prop) {
     prop = expr(!!size$prop * .N),
   )
   step_subset_i(.data, i = expr(seq.int(.N - !!n_sequence + 1, .N)))
+}
+
+#' @export
+slice_tail.data.table <- function(.data, ..., n, prop) {
+  .data <- lazy_dt(.data)
+  slice_tail(.data, ..., n = n, prop = prop)
 }
 
 #' @rdname slice.dtplyr_step
@@ -119,6 +131,12 @@ slice_min.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
   )
 }
 
+#' @export
+slice_min.data.table <- function(.data, order_by, ..., n, prop, with_ties = TRUE) {
+  .data <- lazy_dt(.data)
+  slice_min(.data, !!enexpr(order_by), ..., n = n, prop = prop, with_ties = with_ties)
+}
+
 #' @rdname slice.dtplyr_step
 #' @importFrom dplyr slice_max
 #' @export
@@ -136,6 +154,12 @@ slice_max.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
     prop = prop,
     with_ties = with_ties
   )
+}
+
+#' @export
+slice_max.data.table <- function(.data, order_by, ..., n, prop, with_ties = TRUE) {
+  .data <- lazy_dt(.data)
+  slice_max(.data, !!enexpr(order_by), ..., n = n, prop = prop, with_ties = with_ties)
 }
 
 slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties = TRUE) {
@@ -186,6 +210,12 @@ slice_sample.dtplyr_step <- function(.data, ..., n, prop, weight_by = NULL, repl
   )
 
   step_subset_i(.data, i)
+}
+
+#' @export
+slice_sample.data.table <- function(.data, ..., n, prop, weight_by = NULL, replace = FALSE) {
+  .data <- lazy_dt(.data)
+  slice_sample(.data, ..., n = n, prop = prop, weight_by = !!enexpr(weight_by), replace = replace)
 }
 
 sample_int <- function(n, size, replace = FALSE, wt = NULL) {
