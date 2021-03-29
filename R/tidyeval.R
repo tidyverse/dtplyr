@@ -131,6 +131,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     quote(.I)
   } else if (is_call(x, "desc")) {
     x[[1]] <- sym("-")
+    x[[2]] <- get_expr(x[[2]])
     x
   } else if (is_call(x, "if_else") || is_call(x, "ifelse")) {
     x[[1L]] <- quote(fifelse)
