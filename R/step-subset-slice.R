@@ -122,7 +122,7 @@ slice_min.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
 
   slice_min_max(
     .data,
-    order_by = enexpr(order_by),
+    order_by = {{ order_by }},
     decreasing = FALSE,
     ...,
     n =  n,
@@ -134,7 +134,7 @@ slice_min.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
 #' @export
 slice_min.data.table <- function(.data, order_by, ..., n, prop, with_ties = TRUE) {
   .data <- lazy_dt(.data)
-  slice_min(.data, !!enexpr(order_by), ..., n = n, prop = prop, with_ties = with_ties)
+  slice_min(.data, {{ order_by }}, ..., n = n, prop = prop, with_ties = with_ties)
 }
 
 #' @rdname slice.dtplyr_step
@@ -147,7 +147,7 @@ slice_max.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
 
   slice_min_max(
     .data,
-    order_by = enexpr(order_by),
+    order_by = {{ order_by }},
     decreasing = TRUE,
     ...,
     n =  n,
@@ -159,12 +159,14 @@ slice_max.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
 #' @export
 slice_max.data.table <- function(.data, order_by, ..., n, prop, with_ties = TRUE) {
   .data <- lazy_dt(.data)
-  slice_max(.data, !!enexpr(order_by), ..., n = n, prop = prop, with_ties = with_ties)
+  slice_max(.data, {{ order_by }}, ..., n = n, prop = prop, with_ties = with_ties)
 }
 
 slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties = TRUE) {
   ellipsis::check_dots_empty()
   size <- check_slice_size(n, prop)
+
+  order_by <- capture_dot(.data, {{ order_by }}, j = FALSE)
 
   if (decreasing) {
     order_by <- expr(desc(!!order_by))
