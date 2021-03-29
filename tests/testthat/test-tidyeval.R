@@ -194,6 +194,10 @@ test_that("mask if_else/ifelse & coalesce with data.table versions", {
     expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
   )
   expect_equal(
+    dt %>% mutate(y = if_else(condition = x < 3, true = 1, false = 2, missing = NA)) %>% show_query(),
+    expr(copy(DT)[, `:=`(y = fifelse(test = x < 3, yes = 1, no = 2, na = NA))])
+  )
+  expect_equal(
     dt %>% mutate(y = ifelse(x < 3, 1, 2)) %>% show_query(),
     expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
   )
