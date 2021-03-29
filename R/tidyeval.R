@@ -155,7 +155,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
 
 if_else_args <- c(
   "condition" = "test", "true" = "yes", "false" = "no", "missing" = "na",
-  "yes" = "yes", "no" = "no"
+  "test" = "test", "yes" = "yes", "no" = "no"
 )
 
 is_mask_pronoun <- function(x) {
