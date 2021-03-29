@@ -18,6 +18,9 @@
 
 * `tally()` is now translated (@mgirlich, #201).
 
+* Named arguments in `if_else()` are translated to the correct arguments in `data.table::fifelse()` 
+(@markfairbanks, #234)
+
 * `ifelse()` is now mapped to `fifelse()` (@markfairbanks, #220).
 
 * `.data` and `.env` pronouns now work inside of `if_else()` (@markfairbanks, #220).
