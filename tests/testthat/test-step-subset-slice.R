@@ -74,13 +74,18 @@ test_that("min and max work with character", {
   expect_equal(dt %>% slice_max(x) %>% pull(x), "d")
 })
 
-test_that("min and max reorder results", {
+test_that("min and max reorder results and auto-convert data.tables", {
   dt <- lazy_dt(data.frame(id = 1:4, x = c(2, 3, 1, 2)))
 
   expect_equal(dt %>% slice_min(x, n = 2) %>% pull(id), c(3, 1, 4))
   expect_equal(dt %>% slice_min(x, n = 2, with_ties = FALSE) %>% pull(id), c(3, 1))
   expect_equal(dt %>% slice_max(x, n = 2) %>% pull(id), c(2, 1, 4))
   expect_equal(dt %>% slice_max(x, n = 2, with_ties = FALSE) %>% pull(id), c(2, 1))
+
+  dt <- data.table(id = 1:4, x = c(2, 3, 1, 2))
+
+  expect_equal(dt %>% slice_min(x, n = 2) %>% pull(id), c(3, 1, 4))
+  expect_equal(dt %>% slice_max(x, n = 2) %>% pull(id), c(2, 1, 4))
 })
 
 test_that("min and max ignore NA's (#4826)", {
