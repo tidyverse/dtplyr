@@ -135,6 +135,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     x
   } else if (is_call(x, "if_else") || is_call(x, "ifelse")) {
     x[[1L]] <- quote(fifelse)
+    names(x) <- if_else_args[names(x)]
     x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
     x
   } else if (is_call(x, "n", n = 0)) {
@@ -151,6 +152,8 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     x
   }
 }
+
+if_else_args <- c("condition" = "test", "true" = "yes", "false" = "no", "missing" = "na")
 
 is_mask_pronoun <- function(x) {
   is_call(x, c("$", "[["), n = 2) && is_symbol(x[[2]], c(".data", ".env"))
