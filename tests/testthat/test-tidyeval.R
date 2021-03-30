@@ -193,9 +193,10 @@ test_that("mask if_else/ifelse & coalesce with data.table versions", {
     dt %>% mutate(y = if_else(x < 3, 1, 2)) %>% show_query(),
     expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
   )
+  # if_else works with named args, partial named args, and odd argument order
   expect_equal(
-    dt %>% mutate(y = if_else(condition = x < 3, true = 1, false = 2, missing = NA)) %>% show_query(),
-    expr(copy(DT)[, `:=`(y = fifelse(test = x < 3, yes = 1, no = 2, na = NA))])
+    dt %>% mutate(y = if_else(x < 3, false = 2, tr = 1, missing = NA)) %>% show_query(),
+    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2, NA))])
   )
   expect_equal(
     dt %>% mutate(y = ifelse(x < 3, 1, 2)) %>% show_query(),
