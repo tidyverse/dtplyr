@@ -56,6 +56,44 @@ test_that("translate context functions", {
   expect_equal(capture_dot(dt, cur_group_rows()), quote(.I))
 })
 
+
+test_that("translates if_else()/ifelse()", {
+  df <- data.frame(x = 1:5)
+
+  expect_equal(
+    capture_dot(df, ifelse(x < 0, 1, 2)),
+    expr(fifelse(x < 0, 1, 2))
+  )
+  expect_equal(
+    capture_dot(df, if_else(x < 0, 1, 2)),
+    expr(fifelse(x < 0, 1, 2))
+  )
+
+  # Handles unusual argument names/order
+  expect_equal(
+    capture_dot(df, ifelse(x < 0, n = 2, yes = 1)),
+    expr(fifelse(x < 0, 1, 2))
+  )
+  expect_equal(
+    capture_dot(df, if_else(x < 0, f = 2, true = 1)),
+    expr(fifelse(x < 0, 1, 2))
+  )
+
+  # tidyeval works inside if_else, #220
+  expect_equal(
+    capture_dot(df,  if_else(.data$x < 3, 1, 2)),
+    expr(fifelse(x < 3, 1, 2))
+  )
+})
+
+test_that("translates coalesce()", {
+  df <- data.frame(x = 1:5)
+  expect_equal(
+    capture_dot(df, coalesce(x, 1)),
+    expr(fcoalesce(x, 1))
+  )
+})
+
 test_that("translates case_when()", {
   dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
 
@@ -182,30 +220,6 @@ test_that("scoped verbs produce nice output", {
   expect_equal(
     dt %>% summarise_all(~ n()) %>% show_query(),
     expr(DT[, .(x = .N)])
-  )
-})
-
-test_that("mask if_else/ifelse & coalesce with data.table versions", {
-  dt <- lazy_dt(data.table(x = 1:5), "DT")
-
-  # if_else/ifelse & coalesce to fifelse & fcoalesce, #112
-  expect_equal(
-    dt %>% mutate(y = if_else(x < 3, 1, 2)) %>% show_query(),
-    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
-  )
-  expect_equal(
-    dt %>% mutate(y = ifelse(x < 3, 1, 2)) %>% show_query(),
-    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
-  )
-  expect_equal(
-    dt %>% mutate(y = coalesce(x, 1)) %>% show_query(),
-    expr(copy(DT)[, `:=`(y = fcoalesce(x, 1))])
-  )
-
-  # tidyeval works inside if_else, #220
-  expect_equal(
-    dt %>% mutate(y = if_else(.data$x < 3, 1, 2)) %>% show_query(),
-    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
   )
 })
 
