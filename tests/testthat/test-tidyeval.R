@@ -58,8 +58,6 @@ test_that("translate context functions", {
 
 
 test_that("translates if_else()/ifelse()", {
-  withr::local_options(warnPartialMatchArgs = FALSE)
-
   df <- data.frame(x = 1:5)
 
   expect_equal(

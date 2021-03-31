@@ -34,8 +34,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    tidyr (>= 1.1.0),
-    withr
+    tidyr (>= 1.1.0)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
