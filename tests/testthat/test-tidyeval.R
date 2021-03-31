@@ -185,32 +185,42 @@ test_that("scoped verbs produce nice output", {
   )
 })
 
-test_that("mask if_else/ifelse & coalesce with data.table versions", {
-  dt <- lazy_dt(data.table(x = 1:5), "DT")
+test_that("translate if_else/ifelse to fifelse", {
+  withr::local_options(warnPartialMatchArgs = FALSE)
 
-  # if_else/ifelse & coalesce to fifelse & fcoalesce, #112
+  df <- data.frame(x = 1:5)
+
   expect_equal(
-    dt %>% mutate(y = if_else(x < 3, 1, 2)) %>% show_query(),
-    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
-  )
-  # if_else works with named args, partial named args, and odd argument order
-  expect_equal(
-    dt %>% mutate(y = if_else(x < 3, false = 2, tr = 1, missing = NA)) %>% show_query(),
-    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2, NA))])
+    capture_dot(df, ifelse(x < 0, 1, 2)),
+    expr(fifelse(x < 0, 1, 2))
   )
   expect_equal(
-    dt %>% mutate(y = ifelse(x < 3, 1, 2)) %>% show_query(),
-    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
+    capture_dot(df, if_else(x < 0, 1, 2)),
+    expr(fifelse(x < 0, 1, 2))
+  )
+
+  # Handles unusual argument names/order
+  expect_equal(
+    capture_dot(df, ifelse(x < 0, n = 2, yes = 1)),
+    expr(fifelse(x < 0, 1, 2))
   )
   expect_equal(
-    dt %>% mutate(y = coalesce(x, 1)) %>% show_query(),
-    expr(copy(DT)[, `:=`(y = fcoalesce(x, 1))])
+    capture_dot(df, if_else(x < 0, f = 2, true = 1)),
+    expr(fifelse(x < 0, 1, 2))
   )
 
   # tidyeval works inside if_else, #220
   expect_equal(
-    dt %>% mutate(y = if_else(.data$x < 3, 1, 2)) %>% show_query(),
-    expr(copy(DT)[, `:=`(y = fifelse(x < 3, 1, 2))])
+    capture_dot(df,  if_else(.data$x < 3, 1, 2)),
+    expr(fifelse(x < 3, 1, 2))
+  )
+})
+
+test_that("coalesce translated to fcoalesce", {
+  df <- data.frame(x = 1:5)
+  expect_equal(
+    capture_dot(df, coalesce(x, 1)),
+    expr(fcoalesce(x, 1))
   )
 })
 

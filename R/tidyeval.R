@@ -136,6 +136,8 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, c("if_else", "ifelse"))) {
     if (is_call(x, "if_else")) {
       x <- unname(match.call(dplyr::if_else, x))
+    } else {
+      x <- unname(match.call(ifelse, x))
     }
 
     x[[1]] <- quote(fifelse)
