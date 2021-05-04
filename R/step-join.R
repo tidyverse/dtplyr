@@ -224,15 +224,6 @@ dtplyr_auto_copy <- function(x, y, copy = copy) {
   }
 }
 
-join_is_simple <- function(x, y, by) {
-  if (is_named(by)) {
-    return(FALSE)
-  }
-
-  common_vars <- setdiff(intersect(x, y), by)
-  length(common_vars) == 0
-}
-
 join_vars <- function(x, y, on, suffixes) {
   on_y <- names2(on)
   on_y[on_y == ""] <- on[on_y == ""]
@@ -272,26 +263,16 @@ join_vars_dt_dplyr_left <- function(x, y, by, suffix = c(".x", ".y")) {
   y_out[by] <- nms[idx]
 
   x_out <- setdiff(x, nms)
+  xy_out <- add_suffix(x_out, y_out, suffix)
 
-  both <- intersect(y_out, x_out)
-  if (length(both) > 0) {
-    x_out[x_out %in% both] <- paste0(x_out[x_out %in% both], suffix[1])
-    y_out[y_out %in% both] <- paste0(y_out[y_out %in% both], suffix[2])
-  }
-
-  c(unname(y_out), x_out)
+  c(unname(xy_out$y), xy_out$x)
 }
 
 join_vars_dt_dplyr_right <- function(x, y, by, suffix = c(".x", ".y")) {
   y_out <- setdiff(y, by)
+  xy_out <- add_suffix(x, y_out, suffix)
 
-  both <- intersect(y_out, x)
-  if (length(both) > 0) {
-    x[x %in% both] <- paste0(x[x %in% both], suffix[1])
-    y_out[y_out %in% both] <- paste0(y_out[y_out %in% both], suffix[2])
-  }
-
-  c(x, unname(y_out))
+  c(xy_out$x, unname(xy_out$y))
 }
 
 merge_vars <- function(x, y, by, suffix = c(".x", ".y")) {
@@ -301,13 +282,19 @@ merge_vars <- function(x, y, by, suffix = c(".x", ".y")) {
   x_out <- setdiff(x, nms)
   y_out <- setdiff(y, by)
 
-  both <- intersect(y_out, x_out)
+  xy_out <- add_suffix(x_out, y_out, suffix)
+
+  c(nms, xy_out$x, xy_out$y)
+}
+
+add_suffix <- function(x, y, suffix) {
+  both <- intersect(x, y)
   if (length(both) > 0) {
-    x_out[x_out %in% both] <- paste0(x_out[x_out %in% both], suffix[1])
-    y_out[y_out %in% both] <- paste0(y_out[y_out %in% both], suffix[2])
+    x[x %in% both] <- paste0(x[x %in% both], suffix[[1]])
+    y[y %in% both] <- paste0(y[y %in% both], suffix[[2]])
   }
 
-  c(nms, x_out, y_out)
+  list(x = x, y = y)
 }
 
 #' @importFrom dplyr same_src
