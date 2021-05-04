@@ -4,22 +4,22 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   stopifnot(is.character(on))
   style <- match.arg(style, c("inner", "full", "right", "left", "semi", "anti"))
 
+  on <- dtplyr_common_by(on, x, y)
+
   if (style %in% c("semi", "anti")) {
     vars <- x$vars
   } else {
     vars <- join_vars(x$vars, y$vars, on, suffix)
   }
 
-  on_org <- set_names(names2(on), on)
-  on_org[on_org == ""] <- on[on_org == ""]
-  on_org <- simplify_names(on_org)
+  on_yx <- list(x = on$y, y = on$x)
 
   out <- new_step(
     parent = x,
     implicit_copy = TRUE,
     parent2 = y,
     vars = vars,
-    on = if (style %in% c("left")) on else on_org,
+    on = if (style %in% c("left", "full")) on else on_yx,
     style = style,
     locals = utils::modifyList(x$locals, y$locals),
     class = "dtplyr_step_join"
@@ -30,14 +30,16 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   }
 
   if (style == "left") {
-    vars_out_dt <- join_vars_dt(y$vars, x$vars, on)
-    vars_out_dt2 <- join_vars_dt_dplyr_left(x$vars, y$vars, on_org, suffix)
+    vars_out_dt <- join_vars_dt(y$vars, x$vars, on$x)
+    vars_out_dt2 <- join_vars_dt_dplyr_left(x$vars, y$vars, on$x, on$y, suffix)
   } else if (style %in% c("right", "inner")) {
-    vars_out_dt <- join_vars_dt(x$vars, y$vars, on_org)
-    vars_out_dt2 <- join_vars_dt_dplyr_right(x$vars, y$vars, on_org, suffix)
-  } else {
-    vars_out_dt <- merge_vars(x$vars, y$vars, on_org, suffix)
+    vars_out_dt <- join_vars_dt(x$vars, y$vars, on$y)
+    vars_out_dt2 <- join_vars_dt_dplyr_right(x$vars, y$vars, on$y, suffix)
+  } else if (style == "full") {
+    vars_out_dt <- merge_vars(x$vars, y$vars, on$x, on$y, suffix)
     vars_out_dt2 <- vars_out_dt
+  } else {
+    abort("unexpected join style")
   }
 
   same <- vars_out_dt == vars_out_dt2
@@ -53,7 +55,7 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   }
 
   # TODO do not use unexported dplyr function
-  vars <- dplyr:::join_cols(x$vars, y$vars, by = on_org, suffix = suffix)
+  vars <- dplyr:::join_cols(x$vars, y$vars, by = purrr::set_names(on$y, on$x), suffix = suffix)
   colorder <- c(names(vars$x$out), names(vars$y$out))
 
   if (any(colorder != vars_out_dt2)) {
@@ -74,15 +76,13 @@ dt_sources.dtplyr_step_join <- function(x) {
 dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
   lhs <- dt_call(x$parent, needs_copy)
   rhs <- dt_call(x$parent2)
-  on <- call2(".", !!!syms(x$on))
+  on2 <- simplify_names(stats::setNames(x$on$x, x$on$y))
 
-  by.x <- names2(x$on)
-  by.x[by.x == ""] <- x$on[by.x == ""]
-  by.y <- unname(x$on)
+  on <- call2(".", !!!syms(on2))
 
   switch(x$style,
     left = call2("[", rhs, lhs, on = on, allow.cartesian = TRUE),
-    full = call2("merge", lhs, rhs, all = TRUE, by.x = by.x, by.y = by.y, allow.cartesian = TRUE),
+    full = call2("merge", lhs, rhs, all = TRUE, by.x = x$on$x, by.y = x$on$y, allow.cartesian = TRUE),
     right = call2("[", lhs, rhs, on = on, allow.cartesian = TRUE),
     anti = call2("[", lhs, call2("!", rhs), on = on),
     semi = call2("[", lhs, call2("unique", call2("[", lhs, rhs, which = TRUE, nomatch = NULL, on = on))),
@@ -120,7 +120,6 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
 #' band_dt %>% anti_join(instrument_dt)
 left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
   y <- dtplyr_auto_copy(x, y, copy = copy)
-  by <- dtplyr_common_by(by, x, y)
 
   step_join(x, y, by, style = "left", suffix = suffix)
 }
@@ -135,7 +134,6 @@ left_join.data.table <- function(x, y, ...) {
 #' @export
 right_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
   y <- dtplyr_auto_copy(x, y, copy = copy)
-  by <- dtplyr_common_by(by, x, y)
 
   step_join(x, y, by, style = "right", suffix = suffix)
 }
@@ -151,7 +149,6 @@ right_join.data.table <- function(x, y, ...) {
 #' @export
 inner_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
   y <- dtplyr_auto_copy(x, y, copy = copy)
-  by <- dtplyr_common_by(by, x, y)
 
   step_join(x, y, on = by, style = "inner", suffix = suffix)
 }
@@ -166,7 +163,6 @@ inner_join.data.table <- function(x, y, ...) {
 #' @export
 full_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
   y <- dtplyr_auto_copy(x, y, copy = copy)
-  by <- dtplyr_common_by(by, x, y)
 
   step_join(x, y, on = by, style = "full", suffix = suffix)
 }
@@ -181,7 +177,6 @@ full_join.data.table <- function(x, y, ...) {
 #' @export
 anti_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE) {
   y <- dtplyr_auto_copy(x, y, copy = copy)
-  by <- dtplyr_common_by(by, x, y)
 
   step_join(x, y, on = by, style = "anti")
 }
@@ -195,9 +190,6 @@ anti_join.data.table <- function(x, y, ...) {
 #' @importFrom dplyr semi_join
 #' @export
 semi_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE) {
-  y <- dtplyr_auto_copy(x, y, copy = copy)
-  by <- dtplyr_common_by(by, x, y)
-
   step_join(x, y, on = by, style = "semi")
 }
 
@@ -210,8 +202,7 @@ semi_join.data.table <- function(x, y, ...) {
 # helpers -----------------------------------------------------------------
 
 dtplyr_common_by <- function(by, x, y) {
-  by <- dplyr::common_by(by, x, y)
-  simplify_names(stats::setNames(by$x, by$y))
+  dplyr::common_by(by, x, y)
 }
 
 dtplyr_auto_copy <- function(x, y, copy = copy) {
@@ -243,9 +234,9 @@ join_vars <- function(x, y, on, suffixes) {
 #' column names as generated in `x[y, on = by]`
 #' variables produced by a datatable join:
 #' `x[y, on = on]`
-join_vars_dt <- function(x, y, on) {
+join_vars_dt <- function(x, y, on_y) {
   # join variables are already included in `x`
-  y_out <- setdiff(y, on)
+  y_out <- setdiff(y, on_y)
   # variables that are in `x` and `y` and not joined by get prefixed by "i."
   y_out[y_out %in% x] <- paste0("i.", y_out[y_out %in% x])
   c(x, y_out)
@@ -253,38 +244,32 @@ join_vars_dt <- function(x, y, on) {
 
 #' @noRd
 #' variables as they should be named according to dplyr
-join_vars_dt_dplyr_left <- function(x, y, by, suffix = c(".x", ".y")) {
-  nms <- names2(by)
-  nms[nms == ""] <- by[nms == ""]
-
+join_vars_dt_dplyr_left <- function(x, y, on_x, on_y, suffix = c(".x", ".y")) {
   # rename y
   y_out <- purrr::set_names(y)
-  idx <- vctrs::vec_match(by, y_out)
-  y_out[by] <- nms[idx]
+  idx <- vctrs::vec_match(on_y, y_out)
+  y_out[on_y] <- on_x[idx]
 
-  x_out <- setdiff(x, nms)
+  x_out <- setdiff(x, on_x)
   xy_out <- add_suffix(x_out, y_out, suffix)
 
   c(unname(xy_out$y), xy_out$x)
 }
 
-join_vars_dt_dplyr_right <- function(x, y, by, suffix = c(".x", ".y")) {
-  y_out <- setdiff(y, by)
+join_vars_dt_dplyr_right <- function(x, y, on_y, suffix = c(".x", ".y")) {
+  y_out <- setdiff(y, on_y)
   xy_out <- add_suffix(x, y_out, suffix)
 
-  c(xy_out$x, unname(xy_out$y))
+  c(xy_out$x, xy_out$y)
 }
 
-merge_vars <- function(x, y, by, suffix = c(".x", ".y")) {
-  nms <- names2(by)
-  nms[nms == ""] <- by[nms == ""]
-
-  x_out <- setdiff(x, nms)
-  y_out <- setdiff(y, by)
+merge_vars <- function(x, y, on_x, on_y, suffix = c(".x", ".y")) {
+  x_out <- setdiff(x, on_x)
+  y_out <- setdiff(y, on_y)
 
   xy_out <- add_suffix(x_out, y_out, suffix)
 
-  c(nms, xy_out$x, xy_out$y)
+  c(on_x, xy_out$x, xy_out$y)
 }
 
 add_suffix <- function(x, y, suffix) {
