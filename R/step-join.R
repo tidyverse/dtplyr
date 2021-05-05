@@ -16,6 +16,8 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
 
   on_yx <- list(x = on$y, y = on$x)
 
+  # TODO suppress warning in merge
+  # "column names ... are duplicated in the result
   out <- new_step(
     parent = x,
     implicit_copy = TRUE,
@@ -51,10 +53,16 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
 
   same <- vars_out_dt == vars
   if (!all(same)) {
+    if (any(duplicated(vars_out_dt))) {
+      old <- seq_along(vars_out_dt)[!same]
+    } else {
+      old <- vars_out_dt[!same]
+    }
+
     out <- step_call(
       out,
       "setnames",
-      args = list(vars_out_dt[!same], vars[!same]),
+      args = list(old, vars[!same]),
       vars = vars,
       in_place = TRUE
     )
@@ -210,18 +218,8 @@ dtplyr_auto_copy <- function(x, y, copy = copy) {
 }
 
 add_suffixes <- function (x, y, suffix) {
-  if (identical(suffix, "")) {
-    return(x)
-  }
-  out <- rep_along(x, na_chr)
-  for (i in seq_along(x)) {
-    nm <- x[[i]]
-    while (nm %in% y || nm %in% out[seq_len(i - 1)]) {
-      nm <- paste0(nm, suffix)
-    }
-    out[[i]] <- nm
-  }
-  out
+  x[x %in% y] <- paste0(x[x %in% y], suffix)
+  x
 }
 
 #' @noRd
@@ -231,7 +229,25 @@ join_vars_dt <- function(x, y, on_y) {
   y_out <- setdiff(y, on_y)
   # remaining `y` columns that are also in `x` get _prefixed_ by "i."
   y_out[y_out %in% x] <- paste0("i.", y_out[y_out %in% x])
-  c(x, y_out)
+  out_names <- c(x, y_out)
+
+  add_dt_suffix(out_names)
+}
+
+add_dt_suffix <- function(x) {
+  for (i in seq_along(x)) {
+    j <- 1
+    nm <- x[[i]]
+    first_occurrence <- !nm %in% x[seq(0, i - 1)]
+    if (!first_occurrence) {
+      while (nm %in% x[-i]) {
+        nm <- paste0(x[[i]], ".", j)
+        j <- j + 1
+      }
+    }
+    x[[i]] <- nm
+  }
+  x
 }
 
 join_colorder_dt_left <- function(x, y, on_x, on_y) {
