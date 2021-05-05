@@ -30,13 +30,13 @@ test_that("simple usage generates expected translation", {
   expect_equal(
     ldt1 %>% left_join(ldt2, by = "x") %>% show_query(),
     expr(
-      setcolorder(
-        setnames(
+      setnames(
+        setcolorder(
           dt2[copy(dt1), on = .(x), allow.cartesian = TRUE],
-          !!c("y", "i.y"),
-          !!c("y.y", "y.x")
+          !!c("x", "i.y", "a", "y", "b")
         ),
-        !!c("x", "y.x", "a", "y.y", "b")
+        !!c("i.y", "y"),
+        !!c("y.x", "y.y")
       )
     )
   )
@@ -110,12 +110,12 @@ test_that("named by converted to by.x and by.y", {
   expect_equal(
     out_left %>% show_query(),
     expr(
-      setcolorder(
-        setnames(
+      setnames(
+        setcolorder(
           dt2[copy(dt1), on = .(a2 = a1), allow.cartesian = TRUE],
-          !!c("a2", "z", "i.z"),
-          !!c("a1", "z.y", "z.x")
+          !!c("a2", "i.z", "z")
         ),
+        !!c("a2", "i.z", "z"),
         !!c("a1", "z.x", "z.y")
       )
     )
@@ -163,13 +163,13 @@ test_that("can override suffixes", {
   expect_equal(
     dt1 %>% left_join(dt2, by = "x", suffix = c("X", "Y")) %>% show_query(),
     expr(
-      setcolorder(
-        setnames(
+      setnames(
+        setcolorder(
           dt2[copy(dt1), on = .(x), allow.cartesian = TRUE],
-          !!c("y", "i.y"),
-          !!c("yY", "yX")
+          !!c("x", "i.y", "a", "y", "b")
         ),
-        !!c("x", "yX", "a", "yY", "b")
+        !!c("i.y", "y"),
+        !!c("y.x", "y.y")
       )
     )
   )
