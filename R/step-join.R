@@ -19,9 +19,9 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   # TODO suppress warning in merge
   # "column names ... are duplicated in the result
   out <- new_step(
-    parent = x,
+    parent = if (style == "left") y else x,
     implicit_copy = TRUE,
-    parent2 = y,
+    parent2 = if (style == "left") x else y,
     vars = vars,
     on = if (style %in% c("left", "full")) on else on_yx,
     style = style,
@@ -87,7 +87,7 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
   on <- call2(".", !!!syms(on2))
 
   switch(x$style,
-    left = call2("[", rhs, lhs, on = on, allow.cartesian = TRUE),
+    left = call2("[", lhs, rhs, on = on, allow.cartesian = TRUE),
     full = call2("merge", lhs, rhs, all = TRUE, by.x = x$on$x, by.y = x$on$y, allow.cartesian = TRUE),
     right = call2("[", lhs, rhs, on = on, allow.cartesian = TRUE),
     anti = call2("[", lhs, call2("!", rhs), on = on),

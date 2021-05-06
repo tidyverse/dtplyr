@@ -21,28 +21,21 @@ test_that("joins captures locals from both parents", {
 # dplyr verbs -------------------------------------------------------------
 
 test_that("simple usage generates expected translation", {
-  df1 <- tibble(x = 1, y = 2, a = 3)
-  df2 <- tibble(x = 1, y = 22, b = 24)
-
-  ldt1 <- lazy_dt(df1, "dt1")
-  ldt2 <- lazy_dt(df2, "dt2")
+  ldt1 <- lazy_dt(tibble(x = 1, y = 2, a = 3), "dt1")
+  ldt2 <- lazy_dt(tibble(x = 1, y = 22, b = 24), "dt2")
 
   expect_equal(
     ldt1 %>% left_join(ldt2, by = "x") %>% show_query(),
     expr(
       setnames(
         setcolorder(
-          dt2[copy(dt1), on = .(x), allow.cartesian = TRUE],
+          copy(dt2)[dt1, on = .(x), allow.cartesian = TRUE],
           !!c("x", "i.y", "a", "y", "b")
         ),
         !!c("i.y", "y"),
         !!c("y.x", "y.y")
       )
     )
-  )
-  expect_equal(
-    ldt1 %>% left_join(ldt2, by = "x") %>% collect(),
-    df1 %>% left_join(df2, by = "x")
   )
 
   expect_equal(
@@ -55,10 +48,6 @@ test_that("simple usage generates expected translation", {
       )
     )
   )
-  expect_equal(
-    ldt1 %>% right_join(ldt2, by = "x") %>% collect(),
-    df1 %>% right_join(df2, by = "x")
-  )
 
   expect_equal(
     ldt1 %>% inner_join(ldt2, by = "x") %>% show_query(),
@@ -70,18 +59,10 @@ test_that("simple usage generates expected translation", {
       )
     )
   )
-  expect_equal(
-    ldt1 %>% inner_join(ldt2, by = "x") %>% collect(),
-    df1 %>% inner_join(df2, by = "x")
-  )
 
   expect_equal(
     ldt1 %>% full_join(ldt2, by = "x") %>% show_query(),
     expr(merge(dt1, dt2, all = TRUE, by.x = "x", by.y = "x", allow.cartesian = TRUE))
-  )
-  expect_equal(
-    ldt1 %>% full_join(ldt2, by = "x") %>% collect(),
-    df1 %>% full_join(df2, by = "x")
   )
 
   expect_equal(
@@ -112,7 +93,7 @@ test_that("named by converted to by.x and by.y", {
     expr(
       setnames(
         setcolorder(
-          dt2[copy(dt1), on = .(a2 = a1), allow.cartesian = TRUE],
+          copy(dt2)[dt1, on = .(a2 = a1), allow.cartesian = TRUE],
           !!c("a2", "i.z", "z")
         ),
         !!c("a2", "i.z", "z"),
@@ -123,7 +104,7 @@ test_that("named by converted to by.x and by.y", {
   expect_setequal(tbl_vars(out_left), c("a1", "z.x", "z.y"))
 })
 
-test_that("simple left joins use [", {
+test_that("setnames only used when necessary", {
   dt1 <- lazy_dt(data.frame(x = 1:2, a = 3), "dt1")
   dt2 <- lazy_dt(data.frame(x = 2:3, b = 4), "dt2")
 
@@ -165,7 +146,7 @@ test_that("can override suffixes", {
     expr(
       setnames(
         setcolorder(
-          dt2[copy(dt1), on = .(x), allow.cartesian = TRUE],
+          copy(dt2)[dt1, on = .(x), allow.cartesian = TRUE],
           !!c("x", "i.y", "a", "y", "b")
         ),
         !!c("i.y", "y"),
