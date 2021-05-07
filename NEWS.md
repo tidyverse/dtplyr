@@ -1,5 +1,10 @@
 # dtplyr (development version)
 
+* `left_join()`, `right_join()`, and `inner_join()` are now always translated to
+  the `[.data.table` equivalent (@mgirlich).
+
+* joins handle names in `by` better and handle duplicated variables names 
+  produced in the data.table join better (@mgirlich, #222).
 
 * `filter()` works for negated logical columns (@mgirlich, @211).
 
