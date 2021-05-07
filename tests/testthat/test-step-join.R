@@ -136,7 +136,7 @@ test_that("converts other types if requested", {
   x <- structure(10, class = "foo")
 
   expect_error(left_join(dt1, x, by = "x"), "copy")
-  expect_s3_class(left_join(dt1, x, by = "x", copy = TRUE), "dtplyr_step_colorder")
+  expect_s3_class(left_join(dt1, x, by = "x", copy = TRUE), "dtplyr_step_call")
 })
 
 test_that("mutates inside joins are copied as needed", {
