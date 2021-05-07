@@ -34,21 +34,23 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   }
 
   if (style == "left") {
-    colorder <- join_colorder_dt_left(x$vars, y$vars, on$x, on$y)
-
     # need to swap `x` and `y` as the data.table left join is `y[x, on]`
     vars_out_dt <- join_vars_dt(y$vars, x$vars, on_y = on$x)
-    vars_out_dt <- vars_out_dt[colorder]
-
-    if (any(colorder != seq_along(colorder))) {
-      out <- step_colorder(out, vars_out_dt)
-    }
+    colorder <- join_colorder_dt_left(x$vars, y$vars, on$x, on$y)
   } else if (style %in% c("right", "inner")) {
     vars_out_dt <- join_vars_dt(x$vars, y$vars, on$y)
+    colorder <- seq_along(vars_out_dt)
   } else if (style == "full") {
     vars_out_dt <- merge_vars(x$vars, y$vars, on$x, on$y, suffix)
+    colorder <- join_colorder_dt_full(x$vars, y$vars, on$x, on$y)
   } else {
     abort("unexpected join style")
+  }
+
+  vars_out_dt <- vars_out_dt[colorder]
+
+  if (any(colorder != seq_along(colorder))) {
+    out <- step_colorder(out, colorder, vars_out_dt)
   }
 
   same <- vars_out_dt == vars
@@ -277,6 +279,21 @@ merge_vars <- function(x, y, on_x, on_y, suffix = c(".x", ".y")) {
   y_out <- add_suffixes(y, x, suffix[[2]])
 
   c(on_x, x_out, y_out)
+}
+
+join_colorder_dt_full <- function(x, y, on_x, on_y) {
+  # variable order
+  # merge(x, y, on_x, on_y): on_x, x-vars - on_x, y-vars - on_y
+  # full_join(x, y, on): x-vars, y-vars - on_y
+
+  x_out_dt <- setdiff(x, on_x)
+  x_loc <- vctrs::vec_match(x, x_out_dt) + length(on_x)
+  x_loc[is.na(x_loc)] <- vctrs::vec_match(x[is.na(x_loc)], on_x)
+
+  n_x <- length(x)
+  n_y_out <- length(y) - length(on_x)
+
+  c(x_loc, n_x + seq2(1, n_y_out))
 }
 
 #' @importFrom dplyr same_src

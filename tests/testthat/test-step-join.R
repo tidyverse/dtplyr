@@ -21,16 +21,16 @@ test_that("joins captures locals from both parents", {
 # dplyr verbs -------------------------------------------------------------
 
 test_that("simple usage generates expected translation", {
-  ldt1 <- lazy_dt(tibble(x = 1, y = 2, a = 3), "dt1")
-  ldt2 <- lazy_dt(tibble(x = 1, y = 22, b = 24), "dt2")
+  dt1 <- lazy_dt(tibble(x = 1, y = 2, a = 3), "dt1")
+  dt2 <- lazy_dt(tibble(x = 1, y = 2, b = 24), "dt2")
 
   expect_equal(
-    ldt1 %>% left_join(ldt2, by = "x") %>% show_query(),
+    dt1 %>% left_join(dt2, by = "x") %>% show_query(),
     expr(
       setnames(
         setcolorder(
           copy(dt2)[dt1, on = .(x), allow.cartesian = TRUE],
-          !!c("x", "i.y", "a", "y", "b")
+          !!c(1L, 4L, 5L, 2L, 3L)
         ),
         !!c("i.y", "y"),
         !!c("y.x", "y.y")
@@ -39,7 +39,7 @@ test_that("simple usage generates expected translation", {
   )
 
   expect_equal(
-    ldt1 %>% right_join(ldt2, by = "x") %>% show_query(),
+    dt1 %>% right_join(dt2, by = "x") %>% show_query(),
     expr(
       setnames(
         copy(dt1)[dt2, on = .(x), allow.cartesian = TRUE],
@@ -50,7 +50,7 @@ test_that("simple usage generates expected translation", {
   )
 
   expect_equal(
-    ldt1 %>% inner_join(ldt2, by = "x") %>% show_query(),
+    dt1 %>% inner_join(dt2, by = "x") %>% show_query(),
     expr(
       setnames(
         copy(dt1)[dt2, on = .(x), nomatch = NULL],
@@ -61,18 +61,66 @@ test_that("simple usage generates expected translation", {
   )
 
   expect_equal(
-    ldt1 %>% full_join(ldt2, by = "x") %>% show_query(),
+    dt1 %>% full_join(dt2, by = "x") %>% show_query(),
     expr(merge(dt1, dt2, all = TRUE, by.x = "x", by.y = "x", allow.cartesian = TRUE))
   )
 
   expect_equal(
-    ldt1 %>% anti_join(ldt2, by = "x") %>% show_query(),
+    dt1 %>% anti_join(dt2, by = "x") %>% show_query(),
     expr(dt1[!dt2, on = .(x)])
   )
 
   expect_equal(
-    ldt1 %>% semi_join(ldt2, by = "x") %>% show_query(),
+    dt1 %>% semi_join(dt2, by = "x") %>% show_query(),
     expr(dt1[unique(dt1[dt2, which = TRUE, nomatch = NULL, on = .(x)])])
+  )
+})
+
+test_that("full_join produces correct names", {
+  # data.table: use merge which simply appends the corresponding suffix
+  #   producing duplicates
+  # dplyr: appends suffix until name is unique
+  df1 <- tibble(a = "a", b = "b.x", b.x = "b.x.x.x")
+  df2 <- tibble(a = "a", b = "b.y", b.x.x = "b.x.x")
+
+  dt1 <- lazy_dt(df1, "dt1")
+  dt2 <- lazy_dt(df2, "dt2")
+
+  joined_dt <- full_join(dt1, dt2, by = "a")
+  expected <- full_join(df1, df2, by = "a") %>% colnames()
+
+  expect_equal(
+    joined_dt %>% .$vars,
+    expected
+  )
+
+  expect_equal(
+    joined_dt %>% collect() %>% colnames(),
+    expected
+  )
+})
+
+test_that("left_join produces correct names", {
+  # data.table: uses y[x] which prefixes `x` vars with "i." and if name is not
+  #   unique it appends ".<number>" with the smallest number without a collision
+  # dplyr: appends suffix until name is unique
+  df1 <- tibble(a = "a", b = "b.x", i.b = "i.b")
+  df2 <- tibble(a = "a", b = "b.y")
+
+  dt1 <- lazy_dt(df1, "dt1")
+  dt2 <- lazy_dt(df2, "dt2")
+
+  joined_dt <- left_join(dt1, dt2, by = "a")
+  expected <- left_join(df1, df2, by = "a") %>% colnames()
+
+  expect_equal(
+    joined_dt %>% .$vars,
+    expected
+  )
+
+  expect_equal(
+    joined_dt %>% collect() %>% colnames(),
+    expected
   )
 })
 
@@ -94,7 +142,7 @@ test_that("named by converted to by.x and by.y", {
       setnames(
         setcolorder(
           copy(dt2)[dt1, on = .(a2 = a1), allow.cartesian = TRUE],
-          !!c("a2", "i.z", "z")
+          !!c(1L, 3L, 2L)
         ),
         !!c("a2", "i.z", "z"),
         !!c("a1", "z.x", "z.y")
@@ -104,13 +152,43 @@ test_that("named by converted to by.x and by.y", {
   expect_setequal(tbl_vars(out_left), c("a1", "z.x", "z.y"))
 })
 
+test_that("named by can handle edge cases", {
+  test_equal <- function(f_join) {
+    joined_dt <- f_join(dt1, dt2, by = c("x", z = "y"))
+    expected <- f_join(df1, df2, by = c("x", z = "y"))
+
+    expect_equal(
+      joined_dt %>% collect(),
+      expected
+    )
+
+    expect_equal(
+      joined_dt$vars,
+      colnames(expected)
+    )
+  }
+
+  df1 <- tibble(x = 1, y = 1, z = 2)
+  df2 <- tibble(x = 1, y = 2)
+
+  dt1 <- lazy_dt(df1, "dt1")
+  dt2 <- lazy_dt(df2, "dt2")
+
+  test_equal(left_join)
+  test_equal(right_join)
+  test_equal(full_join)
+
+  test_equal(semi_join)
+  test_equal(anti_join)
+})
+
 test_that("setnames only used when necessary", {
   dt1 <- lazy_dt(data.frame(x = 1:2, a = 3), "dt1")
   dt2 <- lazy_dt(data.frame(x = 2:3, b = 4), "dt2")
 
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% show_query(),
-    expr(setcolorder(dt2[dt1, on = .(x), allow.cartesian = TRUE], !!c("x", "a", "b")))
+    expr(setcolorder(dt2[dt1, on = .(x), allow.cartesian = TRUE], !!c(1L, 3L, 2L)))
   )
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% pull(x),
@@ -147,7 +225,7 @@ test_that("can override suffixes", {
       setnames(
         setcolorder(
           copy(dt2)[dt1, on = .(x), allow.cartesian = TRUE],
-          !!c("x", "i.y", "a", "y", "b")
+          !!c(1L, 4L, 5L, 2L, 3L)
         ),
         !!c("i.y", "y"),
         !!c("y.x", "y.y")
