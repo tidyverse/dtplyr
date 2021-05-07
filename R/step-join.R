@@ -103,11 +103,13 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
 #' Join data tables
 #'
 #' These are methods for the dplyr generics [left_join()], [right_join()],
-#' [inner_join()], [full_join()], [anti_join()], and [semi_join()]. The
-#' mutating joins (left, right, inner, and full) are translated to
-#' [data.table::merge.data.table()], except for the special cases where it's
-#' possible to translate to `[.data.table`. Semi- and anti-joins have no
-#' direct data.table equivalent.
+#' [inner_join()], [full_join()], [anti_join()], and [semi_join()]. Left, right,
+#' inner, and anti join are translated to the `[.data.table` equivalent,
+#' full joins to [data.table::merge.data.table()].
+#' Left, right, and full joins are in some cases followed by calls to
+#' [data.table::setcolorder()] and [data.table::setnames()] to ensure correct
+#' column order and names.
+#' Semi-joins don't have a direct data.table equivalent.
 #'
 #' @param x,y A pair of [lazy_dt()]s.
 #' @inheritParams dplyr::left_join

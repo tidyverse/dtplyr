@@ -40,11 +40,13 @@ Should be a character vector of length 2.}
 }
 \description{
 These are methods for the dplyr generics \code{\link[=left_join]{left_join()}}, \code{\link[=right_join]{right_join()}},
-\code{\link[=inner_join]{inner_join()}}, \code{\link[=full_join]{full_join()}}, \code{\link[=anti_join]{anti_join()}}, and \code{\link[=semi_join]{semi_join()}}. The
-mutating joins (left, right, inner, and full) are translated to
-\code{\link[data.table:merge]{data.table::merge.data.table()}}, except for the special cases where it's
-possible to translate to \verb{[.data.table}. Semi- and anti-joins have no
-direct data.table equivalent.
+\code{\link[=inner_join]{inner_join()}}, \code{\link[=full_join]{full_join()}}, \code{\link[=anti_join]{anti_join()}}, and \code{\link[=semi_join]{semi_join()}}. Left, right,
+inner, and anti join are translated to the \verb{[.data.table} equivalent,
+full joins to \code{\link[data.table:merge]{data.table::merge.data.table()}}.
+Left, right, and full joins are in some cases followed by calls to
+\code{\link[data.table:setcolorder]{data.table::setcolorder()}} and \code{\link[data.table:setattr]{data.table::setnames()}} to ensure correct
+column order and names.
+Semi-joins don't have a direct data.table equivalent.
 }
 \examples{
 library(dplyr, warn.conflicts = FALSE)
