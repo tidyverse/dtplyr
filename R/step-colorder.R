@@ -1,18 +1,23 @@
-step_colorder <- function(parent, col_order, vars = col_order) {
-  stopifnot(is_step(parent))
+step_colorder <- function(x, col_order) {
+  stopifnot(is_step(x))
   stopifnot(is.character(col_order) || is.integer(col_order))
-  stopifnot(is.character(vars))
 
-  new_step(
-    parent,
+  if (is.integer(col_order)) {
+    if (all(col_order == seq_along(col_order))) {
+      return(x)
+    }
+    vars <- x$vars[col_order]
+  } else {
+    if (all(col_order == x$vars)) {
+      return(x)
+    }
+    vars <- col_order
+  }
+
+  step_call(x,
+    "setcolorder",
+    args = list(col_order),
     vars = vars,
-    col_order = col_order,
-    needs_copy = !parent$implicit_copy,
-    class = "dtplyr_step_colorder"
+    in_place = !x$implicit_copy
   )
-}
-
-#' @export
-dt_call.dtplyr_step_colorder <- function(x, needs_copy = x$needs_copy) {
-  call2("setcolorder", dt_call(x$parent, needs_copy), x$col_order)
 }
