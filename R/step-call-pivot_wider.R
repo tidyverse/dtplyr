@@ -128,13 +128,13 @@ pivot_wider.dtplyr_step <- function(data,
   }
 
   if (!is.null(names_glue)) {
-    out <- step_setnames(out, !!!stats::setNames(new_vars, glue_vars), in_place = FALSE)
+    out <- step_setnames(out, new_vars, glue_vars, in_place = FALSE)
 
     # In case of names_sort = TRUE
     new_vars <- glue_vars
   } else if (nchar(names_prefix) > 0) {
     new_names <- paste0(names_prefix, new_vars)
-    out <- step_setnames(out, !!!stats::setNames(new_vars, new_names), in_place = FALSE)
+    out <- step_setnames(out, new_vars, new_names, in_place = FALSE)
 
     # In case of names_sort = TRUE
     new_vars <- new_names
@@ -188,7 +188,7 @@ step_repair <- function(data, repair = "check_unique", in_place = TRUE) {
   repaired_names <- vctrs::vec_as_names(data_names, repair = repair)
 
   if (any(data_names != repaired_names)) {
-    data <- step_setnames(data, !!!stats::setNames(seq_along(data_names), repaired_names), in_place = in_place)
+    data <- step_setnames(data, seq_along(data_names), repaired_names, in_place = in_place)
   }
 
   data

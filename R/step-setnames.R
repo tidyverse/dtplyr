@@ -1,35 +1,36 @@
-step_setnames <- function(x, ..., in_place, rename_groups = FALSE) {
+step_setnames <- function(x, old, new, in_place, rename_groups = FALSE) {
   stopifnot(is_step(x))
+  stopifnot(is.character(old) || is.integer(old))
+  stopifnot(is.character(new))
+  stopifnot(length(old) == length(new))
   stopifnot(is_bool(in_place))
   stopifnot(is_bool(rename_groups))
 
-  sim_data <- simulate_vars(x)
-  locs <- tidyselect::eval_rename(expr(c(...)), sim_data)
-
-  new_vars <- x$vars
-  new_vars[locs] <- names(locs)
-
-  x_to_rename <- x$vars[locs]
-  if (any(duplicated(x_to_rename))) {
-    vars <- set_names(locs, names(locs))
+  if (is.integer(old)) {
+    locs <- old
   } else {
-    vars <- set_names(x_to_rename, names(locs))
-    vars <- vars[vars != names(vars)]
+    locs <- vctrs::vec_match(old, x$vars)
   }
 
-  if (length(vars) == 0) {
+  name_changed <- x$vars[locs] != new
+  old <- old[name_changed]
+  new <- new[name_changed]
+
+  if (length(old) == 0) {
     return(x)
   }
 
+  new_vars <- x$vars
+  new_vars[locs] <- new
   out <- step_call(x,
     "setnames",
-    args = list(unname(vars), names(vars)),
+    args = list(old, new),
     vars = new_vars,
     in_place = in_place
   )
 
   if (rename_groups) {
-    groups <- rename_groups(x$groups, vars)
+    groups <- rename_groups(x$groups, set_names(old, new))
     out <- step_group(out, groups)
   }
 
