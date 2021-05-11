@@ -72,8 +72,8 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
 #' inner, and anti join are translated to the `[.data.table` equivalent,
 #' full joins to [data.table::merge.data.table()].
 #' Left, right, and full joins are in some cases followed by calls to
-#' [data.table::setcolorder()] and [data.table::setnames()] to ensure correct
-#' column order and names.
+#' [data.table::setcolorder()] and [data.table::setnames()] to ensure that column
+#' order and names match dplyr conventions.
 #' Semi-joins don't have a direct data.table equivalent.
 #'
 #' @param x,y A pair of [lazy_dt()]s.
