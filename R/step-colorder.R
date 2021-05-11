@@ -2,13 +2,17 @@ step_colorder <- function(x, col_order) {
   stopifnot(is_step(x))
   stopifnot(is.character(col_order) || is.integer(col_order))
 
+  if (any(duplicated(col_order))) {
+    abort("every element of `col_order` must be unique.")
+  }
+
   if (is.integer(col_order)) {
-    if (all(col_order == seq_along(col_order))) {
+    if (identical(col_order, seq_along(col_order))) {
       return(x)
     }
     vars <- x$vars[col_order]
   } else {
-    if (all(col_order == x$vars)) {
+    if (identical(col_order, x$vars)) {
       return(x)
     }
     vars <- col_order
