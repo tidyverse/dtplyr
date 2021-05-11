@@ -22,14 +22,14 @@ test_that("joins captures locals from both parents", {
 
 test_that("simple usage generates expected translation", {
   dt1 <- lazy_dt(tibble(x = 1, y = 2, a = 3), "dt1")
-  dt2 <- lazy_dt(tibble(x = 1, y = 2, b = 24), "dt2")
+  dt2 <- lazy_dt(tibble(x = 1, y = 2, b = 4), "dt2")
 
   expect_equal(
     dt1 %>% left_join(dt2, by = "x") %>% show_query(),
     expr(
       setnames(
         setcolorder(
-          copy(dt2)[dt1, on = .(x), allow.cartesian = TRUE],
+          dt2[dt1, on = .(x), allow.cartesian = TRUE],
           !!c(1L, 4L, 5L, 2L, 3L)
         ),
         !!c("i.y", "y"),
@@ -42,7 +42,7 @@ test_that("simple usage generates expected translation", {
     dt1 %>% right_join(dt2, by = "x") %>% show_query(),
     expr(
       setnames(
-        copy(dt1)[dt2, on = .(x), allow.cartesian = TRUE],
+        dt1[dt2, on = .(x), allow.cartesian = TRUE],
         !!c("y", "i.y"),
         !!c("y.x", "y.y")
       )
@@ -53,7 +53,7 @@ test_that("simple usage generates expected translation", {
     dt1 %>% inner_join(dt2, by = "x") %>% show_query(),
     expr(
       setnames(
-        copy(dt1)[dt2, on = .(x), nomatch = NULL],
+        dt1[dt2, on = .(x), nomatch = NULL],
         !!c("y", "i.y"),
         !!c("y.x", "y.y")
       )
@@ -131,7 +131,7 @@ test_that("named by converted to by.x and by.y", {
   out_inner <- inner_join(dt1, dt2, by = c('a1' = 'a2'))
   expect_equal(
     out_inner %>% show_query(),
-    expr(setnames(copy(dt1)[dt2, on = .(a1 = a2), nomatch = NULL], !!c("z", "i.z"), !!c("z.x", "z.y")))
+    expr(setnames(dt1[dt2, on = .(a1 = a2), nomatch = NULL], !!c("z", "i.z"), !!c("z.x", "z.y")))
   )
   expect_setequal(tbl_vars(out_inner), c("a1", "z.x", "z.y"))
 
@@ -141,7 +141,7 @@ test_that("named by converted to by.x and by.y", {
     expr(
       setnames(
         setcolorder(
-          copy(dt2)[dt1, on = .(a2 = a1), allow.cartesian = TRUE],
+          dt2[dt1, on = .(a2 = a1), allow.cartesian = TRUE],
           !!c(1L, 3L, 2L)
         ),
         !!c("a2", "i.z", "z"),
@@ -224,7 +224,7 @@ test_that("can override suffixes", {
     expr(
       setnames(
         setcolorder(
-          copy(dt2)[dt1, on = .(x), allow.cartesian = TRUE],
+          dt2[dt1, on = .(x), allow.cartesian = TRUE],
           !!c(1L, 4L, 5L, 2L, 3L)
         ),
         !!c("i.y", "y"),

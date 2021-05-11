@@ -32,28 +32,11 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   y_sim <- simulate_vars(y)
   vars <- colnames(left_join(x_sim, y_sim, by = stats::setNames(on$y, on$x)))
 
-  # TODO simplify when PR 241 is merged
-  # step_setnames(out, !!!stats::setNames(vars_out_dt, vars), in_place = FALSE)
-  vars_out_dt <- vars_out_dt[colorder]
-  same <- vars_out_dt == vars
-  if (!all(same)) {
-    if (any(duplicated(vars_out_dt))) {
-      old <- seq_along(vars_out_dt)[!same]
-    } else {
-      old <- vars_out_dt[!same]
-    }
-
-    out <- step_call(
-      out,
-      "setnames",
-      args = list(old, vars[!same]),
-      vars = vars,
-      in_place = TRUE
-    )
+  if (any(duplicated(vars_out_dt))) {
+    step_setnames(out, colorder, vars, in_place = FALSE)
+  } else {
+    step_setnames(out, vars_out_dt[colorder], vars, in_place = FALSE)
   }
-
-  out
-
 }
 
 #' @export
