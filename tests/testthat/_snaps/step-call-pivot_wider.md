@@ -4,8 +4,8 @@
       show_query(step)
     Output
       setnames(dcast(`_DT12`, formula = "..." ~ x + y, value.var = c("a", 
-      "b"))[, .(a_X_1, a_Y_2, b_X_1, b_Y_2)], old = c("a_X_1", "a_Y_2", 
-      "b_X_1", "b_Y_2"), new = c("X1_a", "Y2_a", "X1_b", "Y2_b"))
+      "b"))[, .(a_X_1, a_Y_2, b_X_1, b_Y_2)], c("a_X_1", "a_Y_2", "b_X_1", 
+      "b_Y_2"), c("X1_a", "Y2_a", "X1_b", "Y2_b"))
 
 # can sort column names
 
@@ -40,7 +40,7 @@
     Output
       Source: local data table [1 x 2]
       Call:   setnames(dcast(copy(DT), formula = x ~ lab, value.var = "val"), 
-          new = c("x...1", "x...2"))
+          1:2, c("x...1", "x...2"))
       
         x...1 x...2
         <dbl> <dbl>
