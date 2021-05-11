@@ -15,6 +15,7 @@ step_setnames <- function(x, old, new, in_place, rename_groups = FALSE) {
   name_changed <- x$vars[locs] != new
   old <- old[name_changed]
   new <- new[name_changed]
+  locs <- locs[name_changed]
 
   if (length(old) == 0) {
     return(x)
