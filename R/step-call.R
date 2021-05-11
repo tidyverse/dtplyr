@@ -74,25 +74,7 @@ rename.dtplyr_step <- function(.data, ...) {
   sim_data <- simulate_vars(.data)
   locs <- tidyselect::eval_rename(expr(c(...)), sim_data)
 
-  new_vars <- .data$vars
-  new_vars[locs] <- names(locs)
-
-  vars <- set_names(.data$vars[locs], names(locs))
-  vars <- vars[vars != names(vars)]
-
-  if (length(vars) == 0) {
-    return(.data)
-  }
-
-  out <- step_call(.data,
-    "setnames",
-    args = list(unname(vars), names(vars)),
-    vars = new_vars,
-    in_place = TRUE
-  )
-
-  groups <- rename_groups(.data$groups, vars)
-  step_group(out, groups)
+  step_setnames(.data, .data$vars[locs], names(locs), in_place = TRUE, rename_groups = TRUE)
 }
 
 
