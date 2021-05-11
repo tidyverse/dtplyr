@@ -206,8 +206,7 @@ dt_join_vars <- function(x, y, on_x, on_y, suffix, style) {
   }
 }
 
-#' column names as generated in `x[y, on = on]`
-#' @noRd
+# column names as generated in `x[y, on = on]`
 subset_join_vars <- function(x, y, on_y) {
   # `y` variables used for joining are not included again
   y_out <- setdiff(y, on_y)
