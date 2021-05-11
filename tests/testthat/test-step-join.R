@@ -228,7 +228,7 @@ test_that("can override suffixes", {
           !!c(1L, 4L, 5L, 2L, 3L)
         ),
         !!c("i.y", "y"),
-        !!c("y.x", "y.y")
+        !!c("yX", "yY")
       )
     )
   )
