@@ -1,8 +1,12 @@
+# can handle duplicate column names
+
+    The column(s) x do not uniquely match a column in `x`.
+
 # checks col_order
 
-    every element of `col_order` must be unique.
+    Every element of `col_order` must be unique.
 
 ---
 
-    every element of `col_order` must be unique.
+    Every element of `col_order` must be unique.
 
