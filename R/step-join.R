@@ -23,6 +23,24 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   )
 }
 
+cross_join <- function(x, y) {
+  # TODO use `right_join()` as it produces a shorter query
+  # needs issue 243 to be fixed
+  # https://github.com/tidyverse/dtplyr/issues/243
+  xy <- left_join(
+    mutate(x, .cross_join_col = 1),
+    mutate(y, .cross_join_col = 1),
+    by = ".cross_join_col"
+  )
+
+  # use custom select to produce way shorter query
+  step_subset_j(
+    xy,
+    vars = setdiff(xy$vars, ".cross_join_col"),
+    j = expr(!".cross_join_col")
+  )
+}
+
 #' @export
 dt_sources.dtplyr_step_join <- function(x) {
   # TODO: need to throw error if same name refers to different tables.
@@ -86,6 +104,10 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
 left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
   y <- dtplyr_auto_copy(x, y, copy = copy)
   by <- dtplyr_common_by(by, x, y)
+
+  if (is_empty(by)) {
+    return(cross_join(x, y))
+  }
 
   if (join_is_simple(x$vars, y$vars, by)) {
     col_order <- unique(c(x$vars, y$vars))
