@@ -156,7 +156,7 @@ test_that("performs cartesian joins as needed", {
 })
 
 test_that("performs cross join", {
-  df1 <- data.frame(x = 1:2, y = "a")
+  df1 <- data.frame(x = 1:2, y = "a", stringsAsFactors = FALSE)
   df2 <- data.frame(x = 3:4)
 
   dt1 <- lazy_dt(df1, "dt1")
