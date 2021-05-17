@@ -154,3 +154,24 @@ test_that("performs cartesian joins as needed", {
   out <- collect(left_join(x, y, by = "x"))
   expect_equal(nrow(out), 9)
 })
+
+test_that("performs cross join", {
+  df1 <- data.frame(x = 1:2, y = "a")
+  df2 <- data.frame(x = 3:4)
+
+  dt1 <- lazy_dt(df1, "dt1")
+  dt2 <- lazy_dt(df2, "dt2")
+  expected <- left_join(df1, df2, by = character()) %>% as_tibble()
+
+  expect_snapshot(left_join(dt1, dt2, by = character()))
+  expect_equal(left_join(dt1, dt2, by = character()) %>% collect(), expected)
+
+  expect_snapshot(right_join(dt1, dt2, by = character()))
+  expect_equal(right_join(dt1, dt2, by = character()) %>% collect(), expected)
+
+  expect_snapshot(full_join(dt1, dt2, by = character()))
+  expect_equal(full_join(dt1, dt2, by = character()) %>% collect(), expected)
+
+  expect_snapshot(inner_join(dt1, dt2, by = character()))
+  expect_equal(inner_join(dt1, dt2, by = character()) %>% collect(), expected)
+})

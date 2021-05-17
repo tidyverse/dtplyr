@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `left_join()`, `right_join()`, `full_join()`, and `inner_join()` perform a
+  cross join for `by = character()` (@mgirlich, #242).
 
 * `filter()` works for negated logical columns (@mgirlich, @211).
 
