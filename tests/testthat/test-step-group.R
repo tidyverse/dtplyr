@@ -33,6 +33,12 @@ test_that("grouping can compute new variables if needed", {
     expr(copy(DT)[, `:=`(xy = x + y)])
   )
 
+  # also works when RHS is only a symbol
+  expect_equal(
+    dt %>% group_by(z = x) %>% show_query(),
+    expr(copy(DT)[, `:=`(z = x)])
+  )
+
   expect_equal(
     dt %>% group_by(xy = x + y) %>% summarise(x = mean(x)) %>% show_query(),
     expr(copy(DT)[, `:=`(xy = x + y)][, .(x = mean(x)), keyby = .(xy)])
