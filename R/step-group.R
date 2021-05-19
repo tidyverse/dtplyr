@@ -78,12 +78,16 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
     .add <- add
   }
 
-  existing <- purrr::imap_lgl(
-    dots,
-    function(x, name) {
+  existing <- vapply(
+    seq_along(dots),
+    function(i) {
+      x <- dots[[i]]
+      name <- names(dots)[[i]]
       is_symbol(x) && (as_name(x) == name)
-    }
+    },
+    logical(1)
   )
+
   if (!all(existing)) {
     .data <- mutate(.data, !!!dots[!existing])
     dots[!existing] <- syms(names(dots[!existing]))
