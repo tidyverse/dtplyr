@@ -19,3 +19,13 @@ test_that("transmute generates compound expression if needed", {
     }])
   )
 })
+
+test_that("groups are respected", {
+  dt <- lazy_dt(data.table(x = 1), "DT") %>% group_by(x) %>% transmute(y = 2)
+
+  expect_equal(dt$vars, c("x", "y"))
+  expect_equal(
+    dt %>% show_query(),
+    expr(DT[, .(y = 2), keyby = .(x)])
+  )
+})
