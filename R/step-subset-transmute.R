@@ -36,9 +36,7 @@ transmute.dtplyr_step <- function(.data, ...) {
   if (!nested) {
     j <- call2(".", !!!dots)
   } else {
-    assign <- Map(function(x, y) call2("<-", x, y), syms(names(dots)), dots)
-    output <- call2(".", !!!syms(set_names(names(dots))))
-    j <- call2("{", !!!assign, output)
+    j <- mutate_nested_vars(dots)$expr
   }
   vars <- union(group_vars(.data), names(dots))
   step_subset_j(.data, vars = vars, j = j)

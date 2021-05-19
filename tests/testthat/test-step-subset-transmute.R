@@ -15,10 +15,24 @@ test_that("transmute generates compound expression if needed", {
     expr(DT[, {
       x2 <- x * 2
       x4 <- x2 * 2
-      .(x2 = x2, x4 = x4)
+      .(x2, x4)
     }])
   )
 })
+
+test_that("allows multiple assignment to the same variable", {
+  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
+
+  expect_equal(
+    dt %>% transmute(x = x * 2, x = x * 2) %>% show_query(),
+    expr(DT[, {
+      x <- x * 2
+      x <- x * 2
+      .(x)
+    }])
+  )
+})
+
 
 test_that("groups are respected", {
   dt <- lazy_dt(data.table(x = 1), "DT") %>% group_by(x) %>% transmute(y = 2)
