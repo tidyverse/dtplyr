@@ -17,6 +17,14 @@ transmute.dtplyr_step <- function(.data, ...) {
   nested <- nested_vars(.data, dots, .data$vars)
 
   if (!nested) {
+    groups <- group_vars(.data)
+    is_group_var <- names(dots) %in% groups
+    group_dots <- dots[is_group_var]
+
+    .data <- mutate(ungroup(.data), !!!group_dots)
+    .data <- group_by(.data, !!!syms(groups))
+
+    dots <- dots[!is_group_var]
     j <- call2(".", !!!dots)
   } else {
     assign <- Map(function(x, y) call2("<-", x, y), syms(names(dots)), dots)
