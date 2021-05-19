@@ -51,3 +51,14 @@ test_that("grouping vars can be transmuted", {
     tibble(x = 4, y = 3) %>% group_by(x)
   )
 })
+
+test_that("empty transmute returns input", {
+  dt <- lazy_dt(data.frame(x = 1))
+  expect_equal(transmute(dt), dt)
+  expect_equal(transmute(dt, !!!list()), dt)
+})
+
+test_that("only transmuting groups works", {
+  dt <- lazy_dt(data.frame(x = 1)) %>% group_by(x)
+  expect_equal(transmute(dt, x) %>% collect(), dt %>% collect())
+})

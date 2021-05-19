@@ -18,6 +18,8 @@ transmute.dtplyr_step <- function(.data, ...) {
 
   groups <- group_vars(.data)
   if (!is_empty(groups)) {
+    # TODO could check if there is actually anything mutated, e.g. to avoid
+    # DT[, .(x = x)]
     is_group_var <- names(dots) %in% groups
     group_dots <- dots[is_group_var]
 
@@ -25,6 +27,10 @@ transmute.dtplyr_step <- function(.data, ...) {
     .data <- group_by(.data, !!!syms(groups))
 
     dots <- dots[!is_group_var]
+  }
+
+  if (is_empty(dots)) {
+    return(.data)
   }
 
   if (!nested) {
