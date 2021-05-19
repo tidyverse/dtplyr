@@ -45,16 +45,12 @@ expand.dtplyr_step <- function(data, ..., .name_repair = "check_unique") {
     return(data)
   }
 
-  expanded_simple <- expand_no_nesting(data, dots$simple)
-  expanded_nesting <- expand_nesting(data, dots$nesting, .name_repair = .name_repair)
+  tbl_list <- c(
+    list(expand_no_nesting(data, dots$simple)),
+    expand_nesting(data, dots$nesting)
+  )
 
-  if (is_empty(expanded_simple)) {
-    out <- expanded_nesting
-  } else if (is_empty(expanded_nesting)) {
-    out <- expanded_simple
-  } else {
-    out <- left_join(expanded_nesting, expanded_simple, by = character())
-  }
+  out <- purrr::reduce(tbl_list, left_join, by = group_vars(data))
 
   renamed <- names(dots$select) != unname(dots$select)
   relocated <- unname(dots$select) != out$vars
@@ -75,20 +71,15 @@ prepare_expand_dots <- function(data, ..., .name_repair) {
   dot_names_tidyr <- names(exprs(..., .named = TRUE))
   dots <- capture_dots(data, ..., .j = FALSE)
 
-  dot_is_null <- vapply(dots, is_null, logical(1))
-  dots <- dots[!dot_is_null]
-  dot_names_tidyr <- dot_names_tidyr[!dot_is_null]
-
+  dots <- dots[!vapply(dots, is_null, logical(1))]
   if (is_null(dots)) {
     return(NULL)
   }
 
   is_nesting <- purrr::map_lgl(dots, ~ is_call(.x, "nesting"))
-
   dots_df <- tibble(
     expr = dots,
-    name_tidyr = ifelse(is_nesting, NA_character_, dot_names_tidyr),
-    position = seq_along(expr)
+    position = seq_along(dots)
   )
 
   dots_df_nesting <- dots_df[is_nesting, ]
@@ -100,22 +91,19 @@ prepare_expand_dots <- function(data, ..., .name_repair) {
   simple_vars <- dt_dot_names(dots_df_simple$expr)
   dots_df_simple$name_dt <- names(simple_vars)
   dots_df_simple$var <- simple_vars
+  dots_df_simple$name_tidyr <- dot_names_tidyr[!is_nesting]
 
   meta_df <- bind_rows(
     dots_df_simple,
     tidyr::unnest(dots_df_nesting, name_tidyr)
   )
-
-  meta_df <- arrange(meta_df, position)
-  meta_df$name_dt <- coalesce(meta_df$name_dt, meta_df$name_tidyr)
-
-  meta_df$name_tidyr <- vctrs::vec_as_names(meta_df$name_tidyr, repair = .name_repair)
-
+  names_dt <- coalesce(meta_df$name_dt, meta_df$name_tidyr)
+  names_tidyr <- vctrs::vec_as_names(meta_df$name_tidyr, repair = .name_repair)
 
   list(
     simple = dots_df_simple$var,
     nesting = dots_df_nesting$var,
-    select = purrr::set_names(meta_df$name_dt, meta_df$name_tidyr)
+    select = purrr::set_names(names_dt, names_tidyr)[order(meta_df$position)]
   )
 }
 
@@ -130,30 +118,12 @@ get_nesting_vars <- function(expr) {
   purrr::set_names(vars, nms)
 }
 
-expand_nesting <- function(data, vars, .name_repair) {
+expand_nesting <- function(data, vars) {
   if (is_empty(vars)) {
     return(NULL)
   }
 
-  # now that `nesting()` has been unpacked resolve name conflicts
-  out_names <- names(exprs_auto_name(purrr::flatten(vars)))
-  out_names_repaired <- vctrs::vec_as_names(out_names, repair = .name_repair)
-
-  ns <- lengths(vars)
-  indices <- vctrs::vec_rep_each(seq_along(vars), ns)
-  out_names_list <- vctrs::vec_split(out_names_repaired, indices)$val
-
-  distinct_tables <- purrr::map2(
-    vars, out_names_list,
-    ~ {
-      args <- set_names(.x, .y)
-      data_distinct <- distinct(data, !!!args)
-      # ensure same ordering as for data frame
-      arrange(data_distinct, across(), .by_group = TRUE)
-    }
-  )
-
-  purrr::reduce(distinct_tables, left_join, by = group_vars(data))
+  purrr::map(vars, ~ distinct(data, !!!.x))
 }
 
 dt_dot_names <- function(dots, .name_repair) {
