@@ -68,10 +68,11 @@ expand.data.table <- function(data, ..., .name_repair = "check_unique") {
 }
 
 prepare_expand_dots <- function(data, ..., .name_repair) {
-  dot_names_tidyr <- names(exprs(..., .named = TRUE))
   dots <- capture_dots(data, ..., .j = FALSE)
 
-  dots <- dots[!vapply(dots, is_null, logical(1))]
+  dot_is_null <- vapply(dots, is_null, logical(1))
+  dots <- dots[!dot_is_null]
+  dot_names_tidyr <- names(exprs(..., .named = TRUE))[!dot_is_null]
   if (is_null(dots)) {
     return(NULL)
   }
@@ -97,13 +98,18 @@ prepare_expand_dots <- function(data, ..., .name_repair) {
     dots_df_simple,
     tidyr::unnest(dots_df_nesting, name_tidyr)
   )
-  names_dt <- coalesce(meta_df$name_dt, meta_df$name_tidyr)
-  names_tidyr <- vctrs::vec_as_names(meta_df$name_tidyr, repair = .name_repair)
+  groups <- group_vars(data)
+  names_dt <- c(groups, coalesce(meta_df$name_dt, meta_df$name_tidyr))
+  names_tidyr <- vctrs::vec_as_names(
+    c(groups, meta_df$name_tidyr),
+    repair = .name_repair
+  )
+  order <- c(seq_along(groups), length(groups) + order(meta_df$position))
 
   list(
     simple = dots_df_simple$var,
     nesting = dots_df_nesting$var,
-    select = purrr::set_names(names_dt, names_tidyr)[order(meta_df$position)]
+    select = purrr::set_names(names_dt, names_tidyr)[order]
   )
 }
 
