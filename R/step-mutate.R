@@ -56,11 +56,10 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 #' dt %>%
 #'   mutate(x1 = x + 1, x2 = x1 + 1)
 mutate.dtplyr_step <- function(.data, ...) {
-  if (missing(...)) {
+  dots <- capture_dots(.data, ...)
+  if (is_null(dots)) {
     return(.data)
   }
-
-  dots <- capture_dots(.data, ...)
 
   nested <- nested_vars(.data, dots, .data$vars)
   step_mutate(.data, dots, nested)
