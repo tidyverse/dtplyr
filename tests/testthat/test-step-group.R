@@ -69,3 +69,9 @@ test_that("`key` switches between keyby= and by=", {
     expr(DT1[, .(mean_mpg = mean(mpg)), keyby = .(cyl)])
   )
 })
+
+test_that("emtpy group_by ungroups", {
+  dt <- lazy_dt(data.frame(x = 1)) %>% group_by(x)
+  expect_equal(group_by(dt) %>% group_vars(), character())
+  expect_equal(group_by(dt, !!!list()) %>% group_vars(), character())
+})
