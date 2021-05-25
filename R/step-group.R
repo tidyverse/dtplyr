@@ -1,4 +1,8 @@
 step_group <- function(parent, groups = parent$groups, arrange = parent$arrange) {
+  if (can_step_group_return_early(parent, groups, arrange)) {
+    return(parent)
+  }
+
   new_step(
     parent,
     vars = parent$vars,
@@ -84,10 +88,23 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
     dots[!existing] <- syms(names(dots[!existing]))
   }
 
-  groups <- c(if (.add) .data$groups, names(dots))
+  groups <- c(if (.add) .data$groups, names(dots)) %||% character()
   arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
 
   step_group(.data, groups, arranged)
+}
+
+can_step_group_return_early <- function(parent, groups, arrange) {
+  groups_old <- parent$groups
+  arrange_old <- parent$arrange
+
+  if (is_empty(groups)) {
+    return(is_empty(groups_old))
+  }
+
+  same_arrange <- (is_false(arrange) || identical(arrange, parent$arrange))
+  same_groups <- identical(groups, parent$groups)
+  same_arrange && same_groups
 }
 
 #' @export
