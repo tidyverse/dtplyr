@@ -21,7 +21,7 @@ step_colorder <- function(x, col_order) {
       abort(msg)
     }
 
-    if (identical(col_order, x$vars)) {
+    if (identical(col_order, x$vars[seq_along(col_order)])) {
       return(x)
     }
     vars <- col_order

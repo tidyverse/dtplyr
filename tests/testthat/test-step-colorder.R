@@ -44,3 +44,20 @@ test_that("checks col_order", {
   expect_snapshot_error(dt %>% step_colorder(c("y", "y")))
   expect_snapshot_error(dt %>% step_colorder(c(1L, 1L)))
 })
+
+test_that("works for empty input", {
+  dt <- lazy_dt(data.frame(x = 1), "DT")
+
+  expect_equal(dt %>% step_colorder(character()), dt)
+  expect_equal(dt %>% step_colorder(integer()), dt)
+})
+
+test_that("doesn't add step if not necessary", {
+  dt <- lazy_dt(data.frame(x = 1, y = 2), "DT")
+
+  expect_equal(dt %>% step_colorder(c("x", "y")), dt)
+  expect_equal(dt %>% step_colorder("x"), dt)
+
+  expect_equal(dt %>% step_colorder(1:2), dt)
+  expect_equal(dt %>% step_colorder(1L), dt)
+})
