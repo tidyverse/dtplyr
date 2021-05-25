@@ -13,7 +13,15 @@
 #'   dt %>% dplyr::group_by(x) %>% nest()
 #' }
 # exported onLoad
-nest.dtplyr_step <- function(.data, ..., .names_sep = NULL) {
+nest.dtplyr_step <- function(.data, ..., .names_sep = NULL, .key = deprecated()) {
+  if (lifecycle::is_present(.key)) {
+    abort(c(
+      "`nest()` for lazy data.tables doesn't support the `.key` argument.",
+      i = "Use a name in the `...` argument instead."
+    ))
+    lifecycle::deprecate_stop("1.1.0", "nest(.key = )", "foobar_adder(bar = )")
+  }
+
   cols <- eval_nest_dots(.data, ...)
 
   cols <- lapply(cols, set_names)
@@ -49,9 +57,9 @@ nest.dtplyr_step <- function(.data, ..., .names_sep = NULL) {
 }
 
 # exported onLoad
-nest.data.table <- function(.data, ..., .names_sep = NULL) {
+nest.data.table <- function(.data, ..., .names_sep = NULL, .key = deprecated()) {
   .data <- lazy_dt(.data)
-  tidyr::nest(.data, ...)
+  tidyr::nest(.data, ..., .names_sep = .names_sep, .key = .key)
 }
 
 eval_nest_dots <- function(.data, ...) {
