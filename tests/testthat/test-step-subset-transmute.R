@@ -66,13 +66,18 @@ test_that("grouping vars can be transmuted", {
   )
 })
 
-test_that("empty transmute returns input", {
-  dt <- lazy_dt(data.frame(x = 1))
-  expect_equal(transmute(dt), dt)
-  expect_equal(transmute(dt, !!!list()), dt)
+test_that("empty transmute works", {
+  dt <- lazy_dt(data.frame(x = 1), "DT")
+  expect_equal(transmute(dt) %>% show_query(), expr(DT[, 0L]))
+  expect_equal(transmute(dt)$vars, character())
+  expect_equal(transmute(dt, !!!list()) %>% show_query(), expr(DT[, 0L]))
+
+  dt_grouped <- lazy_dt(data.frame(x = 1), "DT") %>% group_by(x)
+  expect_equal(transmute(dt_grouped)$vars, "x")
 })
 
 test_that("only transmuting groups works", {
   dt <- lazy_dt(data.frame(x = 1)) %>% group_by(x)
   expect_equal(transmute(dt, x) %>% collect(), dt %>% collect())
+  expect_equal(transmute(dt, x)$vars, "x")
 })

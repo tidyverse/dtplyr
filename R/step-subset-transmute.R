@@ -30,7 +30,8 @@ transmute.dtplyr_step <- function(.data, ...) {
   }
 
   if (is_empty(dots)) {
-    return(.data)
+    # TODO suppress message: "Adding missing grouping variables"
+    return(select(.data))
   }
 
   if (!nested) {
