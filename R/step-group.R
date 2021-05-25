@@ -84,7 +84,7 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
     dots[!existing] <- syms(names(dots[!existing]))
   }
 
-  groups <- c(if (.add) .data$groups, names(dots))
+  groups <- c(if (.add) .data$groups, names(dots)) %||% character()
   arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
 
   step_group(.data, groups, arranged)
