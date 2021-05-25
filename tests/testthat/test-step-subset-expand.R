@@ -6,7 +6,7 @@ test_that("expand completes all values", {
 
   expect_equal(
     show_query(step),
-    expr(unique(DT[, .(x, y)])[CJ(x, y, unique = TRUE), on = .(x, y)])
+    expr(unique(DT)[CJ(x, y, unique = TRUE), on = .(x, y)])
   )
   expect_equal(step$vars, c("x", "y"))
   expect_equal(nrow(out), 4)
