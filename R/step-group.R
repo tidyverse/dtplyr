@@ -117,7 +117,14 @@ group_by.data.table <- function(.data, ...) {
 #' @export
 #' @rdname group_by.dtplyr_step
 ungroup.dtplyr_step <- function(.data, ...) {
-  step_group(.data, groups = character())
+  if (missing(...)) {
+    step_group(.data, groups = character())
+  } else {
+    old_groups <- group_vars(.data)
+    to_remove <- tidyselect::vars_select(.data$vars, ...)
+    new_groups <- setdiff(old_groups, to_remove)
+    step_group(.data, groups = new_groups)
+  }
 }
 
 #' @export
