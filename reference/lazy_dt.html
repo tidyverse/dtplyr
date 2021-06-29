@@ -219,207 +219,207 @@ joins that use the keys.</p>
 <span class='co'># automatically convert it to a lazy_dt object</span>
 <span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'>data.table</span><span class='fu'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, y <span class='op'>=</span> <span class='fl'>10</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>x</span> <span class='op'>==</span> <span class='va'>y</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [0 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT17`[x == y]
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [0 x 2]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT17`[x == y]
 #&gt; 
-#&gt; </span><span style='color: #949494;'># … with 2 variables: x &lt;int&gt;, y &lt;int&gt;</span><span>
+#&gt; <span style='color: #949494;'># … with 2 variables: x &lt;int&gt;, y &lt;int&gt;</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [10 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT18`)[, `:=`(z = x + y)]
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [10 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>copy(`_DT18`)[, `:=`(z = x + y)]
 #&gt; 
 #&gt;       x     y     z
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     1    10    11
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     2     9    11
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     3     8    11
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>     4     7    11
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>     5     6    11
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>     6     5    11
-#&gt; </span><span style='color: #949494;'># … with 4 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>     1    10    11
+#&gt; <span style='color: #BCBCBC;'>2</span>     2     9    11
+#&gt; <span style='color: #BCBCBC;'>3</span>     3     8    11
+#&gt; <span style='color: #BCBCBC;'>4</span>     4     7    11
+#&gt; <span style='color: #BCBCBC;'>5</span>     5     6    11
+#&gt; <span style='color: #BCBCBC;'>6</span>     6     5    11
+#&gt; <span style='color: #949494;'># … with 4 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># Note that dtplyr will avoid mutating the input data.table, so the</span>
 <span class='co'># previous translation includes an automatic copy(). You can avoid this</span>
 <span class='co'># with a manual call to lazy_dt()</span>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'>lazy_dt</span><span class='op'>(</span>immutable <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>x</span> <span class='op'>+</span> <span class='va'>y</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [10 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT19`[, `:=`(z = x + y)]
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [10 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT19`[, `:=`(z = x + y)]
 #&gt; 
 #&gt;       x     y     z
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     1    10    11
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     2     9    11
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     3     8    11
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>     4     7    11
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>     5     6    11
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>     6     5    11
-#&gt; </span><span style='color: #949494;'># … with 4 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>     1    10    11
+#&gt; <span style='color: #BCBCBC;'>2</span>     2     9    11
+#&gt; <span style='color: #BCBCBC;'>3</span>     3     8    11
+#&gt; <span style='color: #BCBCBC;'>4</span>     4     7    11
+#&gt; <span style='color: #BCBCBC;'>5</span>     5     6    11
+#&gt; <span style='color: #BCBCBC;'>6</span>     6     5    11
+#&gt; <span style='color: #949494;'># … with 4 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># If you have a data frame, you can use lazy_dt() to convert it to</span>
 <span class='co'># a data.table:</span>
 <span class='va'>mtcars2</span> <span class='op'>&lt;-</span> <span class='fu'>lazy_dt</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
 <span class='va'>mtcars2</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 11]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [32 x 11]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT20`
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>  21       6   160   110  3.9   2.62  16.5     0     1     4     4
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>  21       6   160   110  3.9   2.88  17.0     0     1     4     4
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1
-#&gt; </span><span style='color: #949494;'># … with 26 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  21       6   160   110  3.9   2.62  16.5     0     1     4     4
+#&gt; <span style='color: #BCBCBC;'>2</span>  21       6   160   110  3.9   2.88  17.0     0     1     4     4
+#&gt; <span style='color: #BCBCBC;'>3</span>  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1
+#&gt; <span style='color: #BCBCBC;'>4</span>  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1
+#&gt; <span style='color: #BCBCBC;'>5</span>  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2
+#&gt; <span style='color: #BCBCBC;'>6</span>  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1
+#&gt; <span style='color: #949494;'># … with 26 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>:</span><span class='va'>cyl</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`[, .(mpg, cyl)]
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>:</span><span class='va'>cyl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [32 x 2]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT20`[, .(mpg, cyl)]
 #&gt; 
 #&gt;     mpg   cyl
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>  21       6
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>  21       6
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>  22.8     4
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>  21.4     6
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>  18.7     8
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>  18.1     6
-#&gt; </span><span style='color: #949494;'># … with 26 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  21       6
+#&gt; <span style='color: #BCBCBC;'>2</span>  21       6
+#&gt; <span style='color: #BCBCBC;'>3</span>  22.8     4
+#&gt; <span style='color: #BCBCBC;'>4</span>  21.4     6
+#&gt; <span style='color: #BCBCBC;'>5</span>  18.7     8
+#&gt; <span style='color: #BCBCBC;'>6</span>  18.1     6
+#&gt; <span style='color: #949494;'># … with 26 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>mpg</span>, y <span class='op'>=</span> <span class='va'>cyl</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`[, .(x = mpg, y = cyl)]
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>mpg</span>, y <span class='op'>=</span> <span class='va'>cyl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [32 x 2]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT20`[, .(x = mpg, y = cyl)]
 #&gt; 
 #&gt;       x     y
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>  21       6
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>  21       6
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>  22.8     4
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>  21.4     6
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>  18.7     8
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>  18.1     6
-#&gt; </span><span style='color: #949494;'># … with 26 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  21       6
+#&gt; <span style='color: #BCBCBC;'>2</span>  21       6
+#&gt; <span style='color: #BCBCBC;'>3</span>  22.8     4
+#&gt; <span style='color: #BCBCBC;'>4</span>  21.4     6
+#&gt; <span style='color: #BCBCBC;'>5</span>  18.7     8
+#&gt; <span style='color: #BCBCBC;'>6</span>  18.1     6
+#&gt; <span style='color: #949494;'># … with 26 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [11 x 1]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`[cyl == 4, .(mpg)]
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [11 x 1]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT20`[cyl == 4, .(mpg)]
 #&gt; 
 #&gt;     mpg
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>  22.8
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>  24.4
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>  22.8
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>  32.4
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>  30.4
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>  33.9
-#&gt; </span><span style='color: #949494;'># … with 5 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  22.8
+#&gt; <span style='color: #BCBCBC;'>2</span>  24.4
+#&gt; <span style='color: #BCBCBC;'>3</span>  22.8
+#&gt; <span style='color: #BCBCBC;'>4</span>  32.4
+#&gt; <span style='color: #BCBCBC;'>5</span>  30.4
+#&gt; <span style='color: #BCBCBC;'>6</span>  33.9
+#&gt; <span style='color: #949494;'># … with 5 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [11 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`[, .(mpg, cyl)][cyl == 4]
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [11 x 2]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT20`[, .(mpg, cyl)][cyl == 4]
 #&gt; 
 #&gt;     mpg   cyl
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>  22.8     4
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>  24.4     4
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>  22.8     4
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>  32.4     4
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>  30.4     4
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>  33.9     4
-#&gt; </span><span style='color: #949494;'># … with 5 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  22.8     4
+#&gt; <span style='color: #BCBCBC;'>2</span>  24.4     4
+#&gt; <span style='color: #BCBCBC;'>3</span>  22.8     4
+#&gt; <span style='color: #BCBCBC;'>4</span>  32.4     4
+#&gt; <span style='color: #BCBCBC;'>5</span>  30.4     4
+#&gt; <span style='color: #BCBCBC;'>6</span>  33.9     4
+#&gt; <span style='color: #949494;'># … with 5 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>cyl2 <span class='op'>=</span> <span class='va'>cyl</span> <span class='op'>*</span> <span class='fl'>2</span>, cyl4 <span class='op'>=</span> <span class='va'>cyl2</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 13]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT20`)[, `:=`(c("cyl2", "cyl4"), {
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>cyl2 <span class='op'>=</span> <span class='va'>cyl</span> <span class='op'>*</span> <span class='fl'>2</span>, cyl4 <span class='op'>=</span> <span class='va'>cyl2</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [32 x 13]
+#&gt; <span style='font-weight: bold;'>Call:   </span>copy(`_DT20`)[, `:=`(c("cyl2", "cyl4"), {
 #&gt;     cyl2 &lt;- cyl * 2
 #&gt;     cyl4 &lt;- cyl2 * 2
 #&gt;     .(cyl2, cyl4)
 #&gt; })]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb  cyl2  cyl4
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>  21       6   160   110  3.9   2.62  16.5     0     1     4     4    12    24
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>  21       6   160   110  3.9   2.88  17.0     0     1     4     4    12    24
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1     8    16
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1    12    24
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2    16    32
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1    12    24
-#&gt; </span><span style='color: #949494;'># … with 26 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  21       6   160   110  3.9   2.62  16.5     0     1     4     4    12    24
+#&gt; <span style='color: #BCBCBC;'>2</span>  21       6   160   110  3.9   2.88  17.0     0     1     4     4    12    24
+#&gt; <span style='color: #BCBCBC;'>3</span>  22.8     4   108    93  3.85  2.32  18.6     1     1     4     1     8    16
+#&gt; <span style='color: #BCBCBC;'>4</span>  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1    12    24
+#&gt; <span style='color: #BCBCBC;'>5</span>  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2    16    32
+#&gt; <span style='color: #BCBCBC;'>6</span>  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1    12    24
+#&gt; <span style='color: #949494;'># … with 26 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span>cyl2 <span class='op'>=</span> <span class='va'>cyl</span> <span class='op'>*</span> <span class='fl'>2</span>, vs2 <span class='op'>=</span> <span class='va'>vs</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`[, .(cyl2 = cyl * 2, vs2 = vs * 2)]
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>transmute</a></span><span class='op'>(</span>cyl2 <span class='op'>=</span> <span class='va'>cyl</span> <span class='op'>*</span> <span class='fl'>2</span>, vs2 <span class='op'>=</span> <span class='va'>vs</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [32 x 2]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT20`[, .(cyl2 = cyl * 2, vs2 = vs * 2)]
 #&gt; 
 #&gt;    cyl2   vs2
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>    12     0
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>    12     0
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     8     2
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>    12     2
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>    16     0
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>    12     2
-#&gt; </span><span style='color: #949494;'># … with 26 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>    12     0
+#&gt; <span style='color: #BCBCBC;'>2</span>    12     0
+#&gt; <span style='color: #BCBCBC;'>3</span>     8     2
+#&gt; <span style='color: #BCBCBC;'>4</span>    12     2
+#&gt; <span style='color: #BCBCBC;'>5</span>    16     0
+#&gt; <span style='color: #BCBCBC;'>6</span>    12     2
+#&gt; <span style='color: #949494;'># … with 26 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>8</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>cyl2 <span class='op'>=</span> <span class='va'>cyl</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [14 x 12]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`[cyl == 8][, `:=`(cyl2 = cyl * 2)]
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cyl</span> <span class='op'>==</span> <span class='fl'>8</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>cyl2 <span class='op'>=</span> <span class='va'>cyl</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [14 x 12]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT20`[cyl == 8][, `:=`(cyl2 = cyl * 2)]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb  cyl2
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2    16
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4    16
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>  16.4     8  276.   180  3.07  4.07  17.4     0     0     3     3    16
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>  17.3     8  276.   180  3.07  3.73  17.6     0     0     3     3    16
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>  15.2     8  276.   180  3.07  3.78  18       0     0     3     3    16
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>  10.4     8  472    205  2.93  5.25  18.0     0     0     3     4    16
-#&gt; </span><span style='color: #949494;'># … with 8 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2    16
+#&gt; <span style='color: #BCBCBC;'>2</span>  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4    16
+#&gt; <span style='color: #BCBCBC;'>3</span>  16.4     8  276.   180  3.07  4.07  17.4     0     0     3     3    16
+#&gt; <span style='color: #BCBCBC;'>4</span>  17.3     8  276.   180  3.07  3.73  17.6     0     0     3     3    16
+#&gt; <span style='color: #BCBCBC;'>5</span>  15.2     8  276.   180  3.07  3.78  18       0     0     3     3    16
+#&gt; <span style='color: #BCBCBC;'>6</span>  10.4     8  472    205  2.93  5.25  18.0     0     0     3     4    16
+#&gt; <span style='color: #949494;'># … with 8 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># Learn more about translation in vignette("translation")</span>
 <span class='va'>by_cyl</span> <span class='op'>&lt;-</span> <span class='va'>mtcars2</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span>
 <span class='va'>by_cyl</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [3 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`[, .(mpg = mean(mpg)), keyby = .(cyl)]
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [3 x 2]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT20`[, .(mpg = mean(mpg)), keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl   mpg
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     4  26.7
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     6  19.7
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     8  15.1
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>     4  26.7
+#&gt; <span style='color: #BCBCBC;'>2</span>     6  19.7
+#&gt; <span style='color: #BCBCBC;'>3</span>     8  15.1
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>by_cyl</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [32 x 11]
-#&gt; </span><span style='font-weight: bold;'>Groups: </span><span>cyl
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT20`)[, `:=`(mpg = mean(mpg)), by = .(cyl)]
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>by_cyl</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>mpg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [32 x 11]
+#&gt; <span style='font-weight: bold;'>Groups: </span>cyl
+#&gt; <span style='font-weight: bold;'>Call:   </span>copy(`_DT20`)[, `:=`(mpg = mean(mpg)), by = .(cyl)]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>  19.7     6   160   110  3.9   2.62  16.5     0     1     4     4
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>  19.7     6   160   110  3.9   2.88  17.0     0     1     4     4
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>  26.7     4   108    93  3.85  2.32  18.6     1     1     4     1
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>  19.7     6   258   110  3.08  3.22  19.4     1     0     3     1
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>  15.1     8   360   175  3.15  3.44  17.0     0     0     3     2
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>  19.7     6   225   105  2.76  3.46  20.2     1     0     3     1
-#&gt; </span><span style='color: #949494;'># … with 26 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  19.7     6   160   110  3.9   2.62  16.5     0     1     4     4
+#&gt; <span style='color: #BCBCBC;'>2</span>  19.7     6   160   110  3.9   2.88  17.0     0     1     4     4
+#&gt; <span style='color: #BCBCBC;'>3</span>  26.7     4   108    93  3.85  2.32  18.6     1     1     4     1
+#&gt; <span style='color: #BCBCBC;'>4</span>  19.7     6   258   110  3.08  3.22  19.4     1     0     3     1
+#&gt; <span style='color: #BCBCBC;'>5</span>  15.1     8   360   175  3.15  3.44  17.0     0     0     3     2
+#&gt; <span style='color: #BCBCBC;'>6</span>  19.7     6   225   105  2.76  3.46  20.2     1     0     3     1
+#&gt; <span style='color: #949494;'># … with 26 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>by_cyl</span> <span class='op'>%&gt;%</span>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>by_cyl</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>hp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>hp</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [3 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT20`[`_DT20`[, .I[mpg &lt; mean(mpg)], by = .(cyl)]$V1, .(hp = mean(hp)), 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [3 x 2]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT20`[`_DT20`[, .I[mpg &lt; mean(mpg)], by = .(cyl)]$V1, .(hp = mean(hp)), 
 #&gt;     keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl    hp
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     4  91.2
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     6 132. 
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     8 246. 
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>     4  91.2
+#&gt; <span style='color: #BCBCBC;'>2</span>     6 132. 
+#&gt; <span style='color: #BCBCBC;'>3</span>     8 246. 
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

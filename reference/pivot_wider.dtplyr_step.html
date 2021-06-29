@@ -276,85 +276,85 @@ behavior than <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.h
 
 <span class='va'>fish_encounters_dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='va'>fish_encounters</span><span class='op'>)</span>
 <span class='va'>fish_encounters_dt</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [114 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT28`
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [114 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT28`
 #&gt; 
 #&gt;   fish  station  seen
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 4842  Release     1
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 4842  I80_1       1
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 4842  Lisbon      1
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 4842  Rstr        1
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 4842  Base_TD     1
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 4842  BCE         1
-#&gt; </span><span style='color: #949494;'># … with 108 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 4842  Release     1
+#&gt; <span style='color: #BCBCBC;'>2</span> 4842  I80_1       1
+#&gt; <span style='color: #BCBCBC;'>3</span> 4842  Lisbon      1
+#&gt; <span style='color: #BCBCBC;'>4</span> 4842  Rstr        1
+#&gt; <span style='color: #BCBCBC;'>5</span> 4842  Base_TD     1
+#&gt; <span style='color: #BCBCBC;'>6</span> 4842  BCE         1
+#&gt; <span style='color: #949494;'># … with 108 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>fish_encounters_dt</span> <span class='op'>%&gt;%</span>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>fish_encounters_dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>station</span>, values_from <span class='op'>=</span> <span class='va'>seen</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [19 x 12]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT28`, formula = fish ~ station, value.var = "seen")
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [19 x 12]
+#&gt; <span style='font-weight: bold;'>Call:   </span>dcast(`_DT28`, formula = fish ~ station, value.var = "seen")
 #&gt; 
 #&gt;   fish  Release I80_1 Lisbon  Rstr Base_TD   BCE   BCW  BCE2  BCW2   MAE   MAW
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 4842        1     1      1     1       1     1     1     1     1     1     1
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 4843        1     1      1     1       1     1     1     1     1     1     1
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 4844        1     1      1     1       1     1     1     1     1     1     1
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 4845        1     1      1     1       1    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 4847        1     1      1    </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 4848        1     1      1     1      </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #949494;'># … with 13 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 4842        1     1      1     1       1     1     1     1     1     1     1
+#&gt; <span style='color: #BCBCBC;'>2</span> 4843        1     1      1     1       1     1     1     1     1     1     1
+#&gt; <span style='color: #BCBCBC;'>3</span> 4844        1     1      1     1       1     1     1     1     1     1     1
+#&gt; <span style='color: #BCBCBC;'>4</span> 4845        1     1      1     1       1    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'>5</span> 4847        1     1      1    <span style='color: #BB0000;'>NA</span>      <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'>6</span> 4848        1     1      1     1      <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #949494;'># … with 13 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='co'># Fill in missing values</span>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='co'># Fill in missing values</span>
 <span class='va'>fish_encounters_dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>station</span>, values_from <span class='op'>=</span> <span class='va'>seen</span>, values_fill <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [19 x 12]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT28`, formula = fish ~ station, value.var = "seen", 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [19 x 12]
+#&gt; <span style='font-weight: bold;'>Call:   </span>dcast(`_DT28`, formula = fish ~ station, value.var = "seen", 
 #&gt;     fill = 0)
 #&gt; 
 #&gt;   fish  Release I80_1 Lisbon  Rstr Base_TD   BCE   BCW  BCE2  BCW2   MAE   MAW
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 4842        1     1      1     1       1     1     1     1     1     1     1
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 4843        1     1      1     1       1     1     1     1     1     1     1
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 4844        1     1      1     1       1     1     1     1     1     1     1
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 4845        1     1      1     1       1     0     0     0     0     0     0
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 4847        1     1      1     0       0     0     0     0     0     0     0
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 4848        1     1      1     1       0     0     0     0     0     0     0
-#&gt; </span><span style='color: #949494;'># … with 13 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 4842        1     1      1     1       1     1     1     1     1     1     1
+#&gt; <span style='color: #BCBCBC;'>2</span> 4843        1     1      1     1       1     1     1     1     1     1     1
+#&gt; <span style='color: #BCBCBC;'>3</span> 4844        1     1      1     1       1     1     1     1     1     1     1
+#&gt; <span style='color: #BCBCBC;'>4</span> 4845        1     1      1     1       1     0     0     0     0     0     0
+#&gt; <span style='color: #BCBCBC;'>5</span> 4847        1     1      1     0       0     0     0     0     0     0     0
+#&gt; <span style='color: #BCBCBC;'>6</span> 4848        1     1      1     1       0     0     0     0     0     0     0
+#&gt; <span style='color: #949494;'># … with 13 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># Generate column names from multiple variables</span>
 <span class='va'>us_rent_income_dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='va'>us_rent_income</span><span class='op'>)</span>
 <span class='va'>us_rent_income_dt</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [104 x 5]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT29`
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [104 x 5]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT29`
 #&gt; 
 #&gt;   GEOID NAME    variable estimate   moe
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 01    Alabama income      </span><span style='text-decoration: underline;'>24</span><span>476   136
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 01    Alabama rent          747     3
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 02    Alaska  income      </span><span style='text-decoration: underline;'>32</span><span>940   508
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 02    Alaska  rent         </span><span style='text-decoration: underline;'>1</span><span>200    13
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 04    Arizona income      </span><span style='text-decoration: underline;'>27</span><span>517   148
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 04    Arizona rent          972     4
-#&gt; </span><span style='color: #949494;'># … with 98 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 01    Alabama income      <span style='text-decoration: underline;'>24</span>476   136
+#&gt; <span style='color: #BCBCBC;'>2</span> 01    Alabama rent          747     3
+#&gt; <span style='color: #BCBCBC;'>3</span> 02    Alaska  income      <span style='text-decoration: underline;'>32</span>940   508
+#&gt; <span style='color: #BCBCBC;'>4</span> 02    Alaska  rent         <span style='text-decoration: underline;'>1</span>200    13
+#&gt; <span style='color: #BCBCBC;'>5</span> 04    Arizona income      <span style='text-decoration: underline;'>27</span>517   148
+#&gt; <span style='color: #BCBCBC;'>6</span> 04    Arizona rent          972     4
+#&gt; <span style='color: #949494;'># … with 98 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>us_rent_income_dt</span> <span class='op'>%&gt;%</span>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>us_rent_income_dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>variable</span>, values_from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>estimate</span>, <span class='va'>moe</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [52 x 6]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT29`, formula = GEOID + NAME ~ variable, value.var = c("estimate", 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [52 x 6]
+#&gt; <span style='font-weight: bold;'>Call:   </span>dcast(`_DT29`, formula = GEOID + NAME ~ variable, value.var = c("estimate", 
 #&gt; "moe"))
 #&gt; 
 #&gt;   GEOID NAME       estimate_income estimate_rent moe_income moe_rent
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 01    Alabama              </span><span style='text-decoration: underline;'>24</span><span>476           747        136        3
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 02    Alaska               </span><span style='text-decoration: underline;'>32</span><span>940          </span><span style='text-decoration: underline;'>1</span><span>200        508       13
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 04    Arizona              </span><span style='text-decoration: underline;'>27</span><span>517           972        148        4
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 05    Arkansas             </span><span style='text-decoration: underline;'>23</span><span>789           709        165        5
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 06    California           </span><span style='text-decoration: underline;'>29</span><span>454          </span><span style='text-decoration: underline;'>1</span><span>358        109        3
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 08    Colorado             </span><span style='text-decoration: underline;'>32</span><span>401          </span><span style='text-decoration: underline;'>1</span><span>125        109        5
-#&gt; </span><span style='color: #949494;'># … with 46 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 01    Alabama              <span style='text-decoration: underline;'>24</span>476           747        136        3
+#&gt; <span style='color: #BCBCBC;'>2</span> 02    Alaska               <span style='text-decoration: underline;'>32</span>940          <span style='text-decoration: underline;'>1</span>200        508       13
+#&gt; <span style='color: #BCBCBC;'>3</span> 04    Arizona              <span style='text-decoration: underline;'>27</span>517           972        148        4
+#&gt; <span style='color: #BCBCBC;'>4</span> 05    Arkansas             <span style='text-decoration: underline;'>23</span>789           709        165        5
+#&gt; <span style='color: #BCBCBC;'>5</span> 06    California           <span style='text-decoration: underline;'>29</span>454          <span style='text-decoration: underline;'>1</span>358        109        3
+#&gt; <span style='color: #BCBCBC;'>6</span> 08    Colorado             <span style='text-decoration: underline;'>32</span>401          <span style='text-decoration: underline;'>1</span>125        109        5
+#&gt; <span style='color: #949494;'># … with 46 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># When there are multiple `names_from` or `values_from`, you can use</span>
 <span class='co'># use `names_sep` or `names_glue` to control the output variable names</span>
 <span class='va'>us_rent_income_dt</span> <span class='op'>%&gt;%</span>
@@ -363,55 +363,55 @@ behavior than <code><a href='https://tidyr.tidyverse.org/reference/pivot_wider.h
     names_sep <span class='op'>=</span> <span class='st'>"."</span>,
     values_from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>estimate</span>, <span class='va'>moe</span><span class='op'>)</span>
   <span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [52 x 6]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT29`, formula = GEOID + NAME ~ variable, value.var = c("estimate", 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [52 x 6]
+#&gt; <span style='font-weight: bold;'>Call:   </span>dcast(`_DT29`, formula = GEOID + NAME ~ variable, value.var = c("estimate", 
 #&gt; "moe"), sep = ".")
 #&gt; 
 #&gt;   GEOID NAME       estimate.income estimate.rent moe.income moe.rent
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 01    Alabama              </span><span style='text-decoration: underline;'>24</span><span>476           747        136        3
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 02    Alaska               </span><span style='text-decoration: underline;'>32</span><span>940          </span><span style='text-decoration: underline;'>1</span><span>200        508       13
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 04    Arizona              </span><span style='text-decoration: underline;'>27</span><span>517           972        148        4
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 05    Arkansas             </span><span style='text-decoration: underline;'>23</span><span>789           709        165        5
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 06    California           </span><span style='text-decoration: underline;'>29</span><span>454          </span><span style='text-decoration: underline;'>1</span><span>358        109        3
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 08    Colorado             </span><span style='text-decoration: underline;'>32</span><span>401          </span><span style='text-decoration: underline;'>1</span><span>125        109        5
-#&gt; </span><span style='color: #949494;'># … with 46 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 01    Alabama              <span style='text-decoration: underline;'>24</span>476           747        136        3
+#&gt; <span style='color: #BCBCBC;'>2</span> 02    Alaska               <span style='text-decoration: underline;'>32</span>940          <span style='text-decoration: underline;'>1</span>200        508       13
+#&gt; <span style='color: #BCBCBC;'>3</span> 04    Arizona              <span style='text-decoration: underline;'>27</span>517           972        148        4
+#&gt; <span style='color: #BCBCBC;'>4</span> 05    Arkansas             <span style='text-decoration: underline;'>23</span>789           709        165        5
+#&gt; <span style='color: #BCBCBC;'>5</span> 06    California           <span style='text-decoration: underline;'>29</span>454          <span style='text-decoration: underline;'>1</span>358        109        3
+#&gt; <span style='color: #BCBCBC;'>6</span> 08    Colorado             <span style='text-decoration: underline;'>32</span>401          <span style='text-decoration: underline;'>1</span>125        109        5
+#&gt; <span style='color: #949494;'># … with 46 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># Can perform aggregation with values_fn</span>
 <span class='va'>warpbreaks_dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>as_tibble</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wool"</span>, <span class='st'>"tension"</span>, <span class='st'>"breaks"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>warpbreaks_dt</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [54 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT30`
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [54 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT30`
 #&gt; 
 #&gt;   wool  tension breaks
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> A     L           26
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> A     L           30
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> A     L           54
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> A     L           25
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> A     L           70
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> A     L           52
-#&gt; </span><span style='color: #949494;'># … with 48 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> A     L           26
+#&gt; <span style='color: #BCBCBC;'>2</span> A     L           30
+#&gt; <span style='color: #BCBCBC;'>3</span> A     L           54
+#&gt; <span style='color: #BCBCBC;'>4</span> A     L           25
+#&gt; <span style='color: #BCBCBC;'>5</span> A     L           70
+#&gt; <span style='color: #BCBCBC;'>6</span> A     L           52
+#&gt; <span style='color: #949494;'># … with 48 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>warpbreaks_dt</span> <span class='op'>%&gt;%</span>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>warpbreaks_dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>
     names_from <span class='op'>=</span> <span class='va'>wool</span>,
     values_from <span class='op'>=</span> <span class='va'>breaks</span>,
     values_fn <span class='op'>=</span> <span class='va'>mean</span>
   <span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [3 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>dcast(`_DT30`, formula = tension ~ wool, value.var = "breaks", 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [3 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>dcast(`_DT30`, formula = tension ~ wool, value.var = "breaks", 
 #&gt;     fun.aggregate = function (x, ...) 
 #&gt;     UseMethod("mean"))
 #&gt; 
 #&gt;   tension     A     B
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> L        44.6  28.2
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> M        24    28.8
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> H        24.6  18.8
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> L        44.6  28.2
+#&gt; <span style='color: #BCBCBC;'>2</span> M        24    28.8
+#&gt; <span style='color: #BCBCBC;'>3</span> H        24.6  18.8
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

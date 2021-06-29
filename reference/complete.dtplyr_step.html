@@ -221,34 +221,34 @@ use instead of <code>NA</code> for missing combinations.</p></td>
 
 <span class='va'>dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/complete.html'>complete</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [4 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>merge(unique(`_DT4`[, .(x, y)])[CJ(x, y, unique = TRUE), on = .(x, 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [4 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>merge(unique(`_DT4`[, .(x, y)])[CJ(x, y, unique = TRUE), on = .(x, 
 #&gt;     y)], `_DT4`, all = TRUE, by.x = c("x", "y"), by.y = c("x", 
 #&gt; "y"), allow.cartesian = TRUE)
 #&gt; 
 #&gt;       x     y     z
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     1     1     3
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     1     2    </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     2     1    </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>     2     2     4
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>     1     1     3
+#&gt; <span style='color: #BCBCBC;'>2</span>     1     2    <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'>3</span>     2     1    <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'>4</span>     2     2     4
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/complete.html'>complete</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='fl'>10L</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [4 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>merge(unique(`_DT4`[, .(x, y)])[CJ(x, y, unique = TRUE), on = .(x, 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [4 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>merge(unique(`_DT4`[, .(x, y)])[CJ(x, y, unique = TRUE), on = .(x, 
 #&gt;     y)], `_DT4`, all = TRUE, by.x = c("x", "y"), by.y = c("x", 
 #&gt; "y"), allow.cartesian = TRUE)[, `:=`(z = fcoalesce(z, 10L))]
 #&gt; 
 #&gt;       x     y     z
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     1     1     3
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     1     2    10
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     2     1    10
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>     2     2     4
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>     1     1     3
+#&gt; <span style='color: #BCBCBC;'>2</span>     1     2    10
+#&gt; <span style='color: #BCBCBC;'>3</span>     2     1    10
+#&gt; <span style='color: #BCBCBC;'>4</span>     2     2     4
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

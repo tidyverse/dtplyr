@@ -203,30 +203,30 @@ functions. The name will be the name of the variable in the result.</p>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>vs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>vs</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [3 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT36`[, .(vs = mean(vs)), keyby = .(cyl)]
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [3 x 2]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT36`[, .(vs = mean(vs)), keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl    vs
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     4 0.909
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     6 0.571
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     8 0    
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>     4 0.909
+#&gt; <span style='color: #BCBCBC;'>2</span>     6 0.571
+#&gt; <span style='color: #BCBCBC;'>3</span>     8 0    
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/across.html'>across</a></span><span class='op'>(</span><span class='va'>disp</span><span class='op'>:</span><span class='va'>wt</span>, <span class='va'>mean</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [3 x 5]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT36`[, .(disp = mean(disp), hp = mean(hp), drat = mean(drat), 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [3 x 5]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT36`[, .(disp = mean(disp), hp = mean(hp), drat = mean(drat), 
 #&gt;     wt = mean(wt)), keyby = .(cyl)]
 #&gt; 
 #&gt;     cyl  disp    hp  drat    wt
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     4  105.  82.6  4.07  2.29
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     6  183. 122.   3.59  3.12
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     8  353. 209.   3.23  4.00
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>     4  105.  82.6  4.07  2.29
+#&gt; <span style='color: #BCBCBC;'>2</span>     6  183. 122.   3.59  3.12
+#&gt; <span style='color: #BCBCBC;'>3</span>     8  353. 209.   3.23  4.00
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

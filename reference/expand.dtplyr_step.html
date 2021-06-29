@@ -241,112 +241,112 @@ to enforce them.</p></td>
 <span class='co'># Note that all defined, but not necessarily present, levels of the</span>
 <span class='co'># factor variable `size` are retained.</span>
 <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [2 x 1]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT8`[, .(type)])[CJ(type, unique = TRUE), on = .(type)]
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [2 x 1]
+#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type)])[CJ(type, unique = TRUE), on = .(type)]
 #&gt; 
 #&gt;   type  
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> 
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> apple 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> orange
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> 
+#&gt; <span style='color: #BCBCBC;'>1</span> apple 
+#&gt; <span style='color: #BCBCBC;'>2</span> orange
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [6 x 2]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT8`[, .(type, size)])[CJ(type, size, unique = TRUE), 
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [6 x 2]
+#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type, size)])[CJ(type, size, unique = TRUE), 
 #&gt;     on = .(type, size)]
 #&gt; 
 #&gt;   type   size 
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> apple  XS   
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> apple  S    
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> apple  M    
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> orange XS   
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> orange S    
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> orange M    
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> apple  XS   
+#&gt; <span style='color: #BCBCBC;'>2</span> apple  S    
+#&gt; <span style='color: #BCBCBC;'>3</span> apple  M    
+#&gt; <span style='color: #BCBCBC;'>4</span> orange XS   
+#&gt; <span style='color: #BCBCBC;'>5</span> orange S    
+#&gt; <span style='color: #BCBCBC;'>6</span> orange M    
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span>, <span class='va'>year</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [12 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, unique = TRUE), 
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span>, <span class='va'>year</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [12 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, unique = TRUE), 
 #&gt;     on = .(type, size, year)]
 #&gt; 
 #&gt;   type  size   year
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> apple XS     </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> apple XS     </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> apple S      </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> apple S      </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> apple M      </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> apple M      </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #949494;'># … with 6 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> apple XS     <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>2</span> apple XS     <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #BCBCBC;'>3</span> apple S      <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>4</span> apple S      <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #BCBCBC;'>5</span> apple M      <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>6</span> apple M      <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #949494;'># … with 6 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># Other uses -------------------------------------------------------</span>
 <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span>, <span class='fl'>2010</span><span class='op'>:</span><span class='fl'>2012</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [18 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT8`[, .(type = type, size = size, V3 = 2010:2012)])[CJ(type, 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [18 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type = type, size = size, V3 = 2010:2012)])[CJ(type, 
 #&gt;     size, V3, unique = TRUE), on = .(type, size, V3)]
 #&gt; 
 #&gt;   type  size     V3
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> apple XS     </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> apple XS     </span><span style='text-decoration: underline;'>2</span><span>011
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> apple XS     </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> apple S      </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> apple S      </span><span style='text-decoration: underline;'>2</span><span>011
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> apple S      </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #949494;'># … with 12 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> apple XS     <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>2</span> apple XS     <span style='text-decoration: underline;'>2</span>011
+#&gt; <span style='color: #BCBCBC;'>3</span> apple XS     <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #BCBCBC;'>4</span> apple S      <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>5</span> apple S      <span style='text-decoration: underline;'>2</span>011
+#&gt; <span style='color: #BCBCBC;'>6</span> apple S      <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #949494;'># … with 12 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># Use `anti_join()` to determine which observations are missing</span>
 <span class='va'>all</span> <span class='op'>&lt;-</span> <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span>, <span class='va'>year</span><span class='op'>)</span>
 <span class='va'>all</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [12 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, unique = TRUE), 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [12 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, unique = TRUE), 
 #&gt;     on = .(type, size, year)]
 #&gt; 
 #&gt;   type  size   year
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> apple XS     </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> apple XS     </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> apple S      </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> apple S      </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> apple M      </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> apple M      </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #949494;'># … with 6 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> apple XS     <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>2</span> apple XS     <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #BCBCBC;'>3</span> apple S      <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>4</span> apple S      <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #BCBCBC;'>5</span> apple M      <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>6</span> apple M      <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #949494;'># … with 6 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'><span class='va'>all</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>anti_join</a></span><span class='op'>(</span><span class='va'>fruits</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("type", "size", "year")</span></div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [8 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, unique = TRUE), 
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>all</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>anti_join</a></span><span class='op'>(</span><span class='va'>fruits</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("type", "size", "year")</span></div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [8 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, unique = TRUE), 
 #&gt;     on = .(type, size, year)][!`_DT8`, on = .(type, size, year)]
 #&gt; 
 #&gt;   type   size   year
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> apple  XS     </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> apple  S      </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> apple  S      </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> apple  M      </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> orange XS     </span><span style='text-decoration: underline;'>2</span><span>010
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> orange XS     </span><span style='text-decoration: underline;'>2</span><span>012
-#&gt; </span><span style='color: #949494;'># … with 2 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> apple  XS     <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #BCBCBC;'>2</span> apple  S      <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>3</span> apple  S      <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #BCBCBC;'>4</span> apple  M      <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>5</span> orange XS     <span style='text-decoration: underline;'>2</span>010
+#&gt; <span style='color: #BCBCBC;'>6</span> orange XS     <span style='text-decoration: underline;'>2</span>012
+#&gt; <span style='color: #949494;'># … with 2 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># Use with `right_join()` to fill in missing rows</span>
 <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>right_join</a></span><span class='op'>(</span><span class='va'>all</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("type", "size", "year")</span></div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [14 x 4]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>`_DT8`[unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, 
+</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("type", "size", "year")</span></div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [14 x 4]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, 
 #&gt;     unique = TRUE), on = .(type, size, year)], on = .(type, size, 
 #&gt;     year), allow.cartesian = TRUE]
 #&gt; 
 #&gt;   type   year size  weights
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> apple  </span><span style='text-decoration: underline;'>2</span><span>010 XS       3.43
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> apple  </span><span style='text-decoration: underline;'>2</span><span>012 XS      </span><span style='color: #BB0000;'>NA</span><span>   
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> apple  </span><span style='text-decoration: underline;'>2</span><span>010 S       </span><span style='color: #BB0000;'>NA</span><span>   
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> apple  </span><span style='text-decoration: underline;'>2</span><span>012 S       </span><span style='color: #BB0000;'>NA</span><span>   
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> apple  </span><span style='text-decoration: underline;'>2</span><span>010 M       </span><span style='color: #BB0000;'>NA</span><span>   
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> apple  </span><span style='text-decoration: underline;'>2</span><span>012 M        3.86
-#&gt; </span><span style='color: #949494;'># … with 8 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> apple  <span style='text-decoration: underline;'>2</span>010 XS       3.43
+#&gt; <span style='color: #BCBCBC;'>2</span> apple  <span style='text-decoration: underline;'>2</span>012 XS      <span style='color: #BB0000;'>NA</span>   
+#&gt; <span style='color: #BCBCBC;'>3</span> apple  <span style='text-decoration: underline;'>2</span>010 S       <span style='color: #BB0000;'>NA</span>   
+#&gt; <span style='color: #BCBCBC;'>4</span> apple  <span style='text-decoration: underline;'>2</span>012 S       <span style='color: #BB0000;'>NA</span>   
+#&gt; <span style='color: #BCBCBC;'>5</span> apple  <span style='text-decoration: underline;'>2</span>010 M       <span style='color: #BB0000;'>NA</span>   
+#&gt; <span style='color: #BCBCBC;'>6</span> apple  <span style='text-decoration: underline;'>2</span>012 M        3.86
+#&gt; <span style='color: #949494;'># … with 8 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div></span></pre>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

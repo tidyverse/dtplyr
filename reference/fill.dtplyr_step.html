@@ -223,20 +223,20 @@ or "updown" (first up and then down).</p></td>
 
 <span class='co'># `fill()` defaults to replacing missing data from top to bottom</span>
 <span class='va'>sales</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/fill.html'>fill</a></span><span class='op'>(</span><span class='va'>year</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span><span>local data table [16 x 3]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT9`)[, `:=`(year = nafill(year, "locf"))]
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [16 x 3]
+#&gt; <span style='font-weight: bold;'>Call:   </span>copy(`_DT9`)[, `:=`(year = nafill(year, "locf"))]
 #&gt; 
 #&gt;   quarter  year sales
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> Q1       </span><span style='text-decoration: underline;'>2</span><span>000 </span><span style='text-decoration: underline;'>66</span><span>013
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> Q2       </span><span style='text-decoration: underline;'>2</span><span>000 </span><span style='text-decoration: underline;'>69</span><span>182
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> Q3       </span><span style='text-decoration: underline;'>2</span><span>000 </span><span style='text-decoration: underline;'>53</span><span>175
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Q4       </span><span style='text-decoration: underline;'>2</span><span>000 </span><span style='text-decoration: underline;'>21</span><span>001
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Q1       </span><span style='text-decoration: underline;'>2</span><span>001 </span><span style='text-decoration: underline;'>46</span><span>036
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> Q2       </span><span style='text-decoration: underline;'>2</span><span>001 </span><span style='text-decoration: underline;'>58</span><span>842
-#&gt; </span><span style='color: #949494;'># … with 10 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> Q1       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>66</span>013
+#&gt; <span style='color: #BCBCBC;'>2</span> Q2       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>69</span>182
+#&gt; <span style='color: #BCBCBC;'>3</span> Q3       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>53</span>175
+#&gt; <span style='color: #BCBCBC;'>4</span> Q4       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>21</span>001
+#&gt; <span style='color: #BCBCBC;'>5</span> Q1       <span style='text-decoration: underline;'>2</span>001 <span style='text-decoration: underline;'>46</span>036
+#&gt; <span style='color: #BCBCBC;'>6</span> Q2       <span style='text-decoration: underline;'>2</span>001 <span style='text-decoration: underline;'>58</span>842
+#&gt; <span style='color: #949494;'># … with 10 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># Value (n_squirrels) is missing above and below within a group</span>
 <span class='va'>squirrels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span>
   <span class='op'>~</span><span class='va'>group</span>,    <span class='op'>~</span><span class='va'>name</span>,     <span class='op'>~</span><span class='va'>role</span>,     <span class='op'>~</span><span class='va'>n_squirrels</span>,
@@ -260,23 +260,23 @@ or "updown" (first up and then down).</p></td>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/fill.html'>fill</a></span><span class='op'>(</span><span class='va'>n_squirrels</span>, .direction <span class='op'>=</span> <span class='st'>"downup"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='font-weight: bold;'>Source: </span><span>local data table [12 x 4]
-#&gt; </span><span style='font-weight: bold;'>Call:   </span><span>copy(`_DT10`)[, `:=`(n_squirrels = nafill(nafill(n_squirrels, 
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [12 x 4]
+#&gt; <span style='font-weight: bold;'>Call:   </span>copy(`_DT10`)[, `:=`(n_squirrels = nafill(nafill(n_squirrels, 
 #&gt;     "locf"), "nocb")), by = .(group)]
 #&gt; 
 #&gt;   group name    role        n_squirrels
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>     1 Sam     Observer              8
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span>     1 Mara    Scorekeeper           8
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span>     1 Jesse   Observer              8
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span>     1 Tom     Observer              8
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span>     2 Mike    Observer             14
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span>     2 Rachael Observer             14
-#&gt; </span><span style='color: #949494;'># … with 6 more rows</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>     1 Sam     Observer              8
+#&gt; <span style='color: #BCBCBC;'>2</span>     1 Mara    Scorekeeper           8
+#&gt; <span style='color: #BCBCBC;'>3</span>     1 Jesse   Observer              8
+#&gt; <span style='color: #BCBCBC;'>4</span>     1 Tom     Observer              8
+#&gt; <span style='color: #BCBCBC;'>5</span>     2 Mike    Observer             14
+#&gt; <span style='color: #BCBCBC;'>6</span>     2 Rachael Observer             14
+#&gt; <span style='color: #949494;'># … with 6 more rows</span>
 #&gt; 
-#&gt; </span><span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span><span></div><div class='input'>
+#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># Using `.direction = "updown"` accomplishes the same goal in this example</span>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
