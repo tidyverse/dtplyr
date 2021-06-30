@@ -19,7 +19,6 @@ nest.dtplyr_step <- function(.data, ..., .names_sep = NULL, .key = deprecated())
       "`nest()` for lazy data.tables doesn't support the `.key` argument.",
       i = "Use a name in the `...` argument instead."
     ))
-    lifecycle::deprecate_stop("1.1.0", "nest(.key = )", "foobar_adder(bar = )")
   }
 
   cols <- eval_nest_dots(.data, ...)
