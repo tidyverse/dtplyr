@@ -1,7 +1,9 @@
 #' Nest
 #'
 #' @description
-#' This is a method for the tidyr `nest()` generic.
+#' This is a method for the tidyr [tidyr::nest()] generic. It is translated
+#' using the non-nested variables in the `by` argument and `.SD` in the `j`
+#' argument.
 #'
 #' @inheritParams tidyr::nest
 #' @param data A [lazy_dt()].
@@ -19,7 +21,6 @@ nest.dtplyr_step <- function(.data, ..., .names_sep = NULL, .key = deprecated())
       "`nest()` for lazy data.tables doesn't support the `.key` argument.",
       i = "Use a name in the `...` argument instead."
     ))
-    lifecycle::deprecate_stop("1.1.0", "nest(.key = )", "foobar_adder(bar = )")
   }
 
   cols <- eval_nest_dots(.data, ...)
