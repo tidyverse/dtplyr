@@ -95,11 +95,8 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
 }
 
 can_step_group_return_early <- function(parent, groups, arrange) {
-  groups_old <- parent$groups
-  arrange_old <- parent$arrange
-
   if (is_empty(groups)) {
-    return(is_empty(groups_old))
+    return(is_empty(parent$groups))
   }
 
   same_arrange <- (is_false(arrange) || identical(arrange, parent$arrange))
