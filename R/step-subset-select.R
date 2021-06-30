@@ -29,6 +29,11 @@ select.dtplyr_step <- function(.data, ...) {
   } else {
     groups <- rename_groups(.data$groups, vars)
     vars <- simplify_names(vars)
+
+    is_unnamed <- all(!have_name(vars))
+    if (is_unnamed && identical(unname(vars), .data$vars)) {
+      return(.data)
+    }
     j <- call2(".", !!!syms(vars))
   }
 

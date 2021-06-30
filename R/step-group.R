@@ -1,4 +1,8 @@
 step_group <- function(parent, groups = parent$groups, arrange = parent$arrange) {
+  if (can_step_group_return_early(parent, groups, arrange)) {
+    return(parent)
+  }
+
   new_step(
     parent,
     vars = parent$vars,
@@ -99,6 +103,16 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
   step_group(.data, groups, arranged)
 }
 
+can_step_group_return_early <- function(parent, groups, arrange) {
+  if (is_empty(groups)) {
+    return(is_empty(parent$groups))
+  }
+
+  same_arrange <- (is_false(arrange) || identical(arrange, parent$arrange))
+  same_groups <- identical(groups, parent$groups)
+  same_arrange && same_groups
+}
+
 #' @export
 group_by.data.table <- function(.data, ...) {
   .data <- lazy_dt(.data)
@@ -109,7 +123,14 @@ group_by.data.table <- function(.data, ...) {
 #' @export
 #' @rdname group_by.dtplyr_step
 ungroup.dtplyr_step <- function(.data, ...) {
-  step_group(.data, groups = character())
+  if (missing(...)) {
+    step_group(.data, groups = character())
+  } else {
+    old_groups <- group_vars(.data)
+    to_remove <- tidyselect::vars_select(.data$vars, ...)
+    new_groups <- setdiff(old_groups, to_remove)
+    step_group(.data, groups = new_groups)
+  }
 }
 
 #' @export

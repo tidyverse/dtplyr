@@ -53,4 +53,8 @@ test_that("vars set correctly", {
   expect_equal(dt %>% select(a = x, y) %>% .$vars, c("a", "y"))
 })
 
-
+test_that("only add step if necessary", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3), "DT")
+  expect_equal(dt %>% select(everything()), dt)
+  expect_equal(dt %>% select(x, y), dt)
+})
