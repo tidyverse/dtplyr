@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* @mgirlich is now a dtplyr author in recognition of his significant and
+  sustained contributions.
+
 * `ungroup()` removes variables in `...` from grouping (@mgirlich, #253).
 
 * `filter()` works for negated logical columns (@mgirlich, @211).

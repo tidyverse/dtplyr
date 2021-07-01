@@ -16,6 +16,7 @@ Provides a data.table backend for 'dplyr'. The goal
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://dtplyr.tidyverse.org}
   \item \url{https://github.com/tidyverse/dtplyr}
   \item Report bugs at \url{https://github.com/tidyverse/dtplyr/issues}
 }
@@ -23,6 +24,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Hadley Wickham \email{hadley@rstudio.com}
+
+Authors:
+\itemize{
+  \item Maximilian Girlich
+}
 
 Other contributors:
 \itemize{
