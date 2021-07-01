@@ -1,5 +1,19 @@
 # dtplyr (development version)
 
+* `transmute()` doesn't produce duplicate columns when assigning to the same
+  variable (@mgirlich, #249).
+
+* `group_by(dt, y = x)` now works (@mgirlich, #246).
+
+* Group columns can now be mutated instead of creating another column with the
+  same name (@mgirlich, #246).
+  
+* Grouping variables can now be selected after a `transmute()` (@mgirlich, #246).
+
+* `group_by()` now ungroups when no grouping variables are specified (@mgirlich, #248).
+  
+* `transmute()` and `mutate()` without any variables now work (@mgirlich, #248).
+
 * `ungroup()` removes variables in `...` from grouping (@mgirlich, #253).
 
 * `filter()` works for negated logical columns (@mgirlich, @211).
