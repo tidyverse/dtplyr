@@ -8,6 +8,12 @@ test_that("grouping and ungrouping adjust groups field", {
   expect_equal(dt %>% group_by(x) %>% ungroup() %>% .$groups, character())
 })
 
+test_that("ungroup can remove variables from grouping", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3)) %>% group_by(x, y)
+
+  expect_equal(dt %>% ungroup(y) %>% group_vars(), "x")
+})
+
 test_that("can use across", {
   dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
   expect_equal(dt %>% group_by(across(everything())) %>% .$groups, c("x", "y"))
@@ -62,4 +68,21 @@ test_that("`key` switches between keyby= and by=", {
     dt1 %>% group_by(cyl) %>% summarize(mean_mpg = mean(mpg)) %>% show_query(),
     expr(DT1[, .(mean_mpg = mean(mpg)), keyby = .(cyl)])
   )
+})
+
+test_that("only adds step if necessary", {
+  dt <- lazy_dt(data.table(x = 1, y = 1), "DT")
+  expect_equal(dt %>% group_by(), dt)
+
+  expect_equal(dt %>% ungroup(), dt)
+  expect_equal(dt %>% ungroup(x), dt)
+
+  dt_grouped <- dt %>% group_by(x)
+  dt_grouped2 <- dt_grouped %>% group_by(x)
+  expect_equal(dt_grouped, dt_grouped2)
+  expect_equal(dt_grouped %>% ungroup(y), dt_grouped)
+
+  out <- dt_grouped %>% mutate(y = y - mean(y)) %>% group_by()
+  expect_s3_class(out, "dtplyr_step_group")
+  expect_equal(group_vars(out), character())
 })
