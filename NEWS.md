@@ -2,9 +2,9 @@
 
 * `left_join()`, `right_join()`, and `inner_join()` are now always translated to
   the `[.data.table` equivalent. For simple merges the translation gets a bit
-  longer but the advantages are a simpler code base. This helps to handle names
-  in `by` and duplicated variables names produced in the data.table join
-  better (@mgirlich, #222).
+  longer but thanks to the simpler code base it helps to better handle
+  names in `by` and duplicated variables names produced in the data.table join
+  (@mgirlich, #222).
 
 * `filter()` works for negated logical columns (@mgirlich, @211).
 
