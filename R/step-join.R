@@ -4,6 +4,10 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   stopifnot(is.null(on) || is.character(on))
   style <- match.arg(style, c("inner", "full", "right", "left", "semi", "anti"))
 
+  if (is_character(on, 0)) {
+    return(cross_join(x, y))
+  }
+
   on <- dplyr::common_by(on, x, y)
 
   vars_out_dt <- dt_join_vars(x$vars, y$vars, on$x, on$y, suffix = suffix, style = style)
@@ -37,6 +41,21 @@ step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
   } else {
     step_setnames(out, vars_out_dt[colorder], vars, in_place = FALSE)
   }
+}
+
+cross_join <- function(x, y) {
+  xy <- left_join(
+    mutate(x, .cross_join_col = 1),
+    mutate(y, .cross_join_col = 1),
+    by = ".cross_join_col"
+  )
+
+  # use custom select to produce way shorter query
+  step_subset_j(
+    xy,
+    vars = setdiff(xy$vars, ".cross_join_col"),
+    j = expr(!".cross_join_col")
+  )
 }
 
 #' @export
