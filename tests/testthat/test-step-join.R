@@ -94,8 +94,9 @@ test_that("full_join produces correct names", {
     expected
   )
 
+  # suppress warning created by `data.table::merge()`
   expect_equal(
-    joined_dt %>% collect() %>% colnames(),
+    suppressWarnings(joined_dt %>% collect() %>% colnames()),
     expected
   )
 })
