@@ -18,7 +18,7 @@ strip_names <- function(df, base, names_sep) {
   base <- paste0(base, names_sep)
   names <- names(df)
 
-  has_prefix <- substr(names, 1, nchar(base)) == base
+  has_prefix <- startsWith(names, base)
   names[has_prefix] <- substr(names[has_prefix], nchar(base) + 1, nchar(names[has_prefix]))
 
   set_names(df, names)
