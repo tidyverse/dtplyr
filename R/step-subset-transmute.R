@@ -30,8 +30,11 @@ transmute.dtplyr_step <- function(.data, ...) {
   }
 
   if (is_empty(dots)) {
-    # TODO suppress message: "Adding missing grouping variables"
-    return(select(.data))
+    # grouping variables have been removed from `dots` so `select()` would
+    # produce a message "Adding grouping vars".
+    # As `dplyr::transmute()` doesn't generate a message when adding group vars
+    # we can also leave it away here
+    return(select(.data, !!!group_vars(.data)))
   }
 
   if (!nested) {
