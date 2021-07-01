@@ -13,6 +13,7 @@
 * `group_by()` now ungroups when no grouping variables are specified (@mgirlich, #248).
   
 * `transmute()` and `mutate()` without any variables now work (@mgirlich, #248).
+
 * `ungroup()` removes variables in `...` from grouping (@mgirlich, #253).
 
 * `filter()` works for negated logical columns (@mgirlich, @211).
