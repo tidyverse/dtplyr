@@ -19,16 +19,24 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
   if (!x$nested) {
     j <- call2(":=", !!!x$new_vars)
   } else {
-    assign <- Map(function(x, y) call2("<-", x, y), syms(names(x$new_vars)), x$new_vars)
-    new_vars <- unique(names(x$new_vars))
-    output <- call2(".", !!!syms(new_vars))
-    expr <- call2("{", !!!assign, output)
-    j <- call2(":=", call2("c", !!!new_vars), expr)
+    mutate_list <- mutate_nested_vars(x$new_vars)
+    j <- call2(":=", call2("c", !!!mutate_list$new_vars), mutate_list$expr)
   }
 
   out <- call2("[", dt_call(x$parent, needs_copy), , j)
 
   add_grouping_param(out, x, arrange = FALSE)
+}
+
+mutate_nested_vars <- function(mutate_vars) {
+  assign <- map2(syms(names(mutate_vars)), mutate_vars, function(x, y) call2("<-", x, y))
+  new_vars <- unique(names(mutate_vars))
+  output <- call2(".", !!!syms(new_vars))
+
+  list(
+    expr = call2("{", !!!assign, output),
+    new_vars = new_vars
+  )
 }
 
 # dplyr methods -----------------------------------------------------------
@@ -56,11 +64,10 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 #' dt %>%
 #'   mutate(x1 = x + 1, x2 = x1 + 1)
 mutate.dtplyr_step <- function(.data, ...) {
-  if (missing(...)) {
+  dots <- capture_dots(.data, ...)
+  if (is_null(dots)) {
     return(.data)
   }
-
-  dots <- capture_dots(.data, ...)
 
   nested <- nested_vars(.data, dots, .data$vars)
   step_mutate(.data, dots, nested)

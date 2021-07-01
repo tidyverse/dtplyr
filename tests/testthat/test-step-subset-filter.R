@@ -91,3 +91,10 @@ test_that("grouped filter doesn't reorder", {
   )
   expect_equal(dt2 %>% as_tibble(), as_tibble(dt1))
 })
+
+test_that("only adds step if dots are not empty", {
+  dt <- lazy_dt(data.table(x = 1), "DT")
+
+  expect_equal(dt %>% filter(), dt)
+  expect_equal(dt %>% filter(!!!list()), dt)
+})
