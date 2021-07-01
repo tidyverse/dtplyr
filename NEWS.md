@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `pull()` now supports the `name` argument (@mgirlich, #263).
+
 * `left_join()`, `right_join()`, `full_join()`, and `inner_join()` perform a
   cross join for `by = character()` (@mgirlich, #242).
   
