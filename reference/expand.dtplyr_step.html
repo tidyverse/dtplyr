@@ -331,10 +331,10 @@ to enforce them.</p></td>
 #&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
 <span class='co'># Use with `right_join()` to fill in missing rows</span>
 <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>right_join</a></span><span class='op'>(</span><span class='va'>all</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("type", "size", "year")</span></div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [14 x 4]
+</div><div class='output co'>#&gt; <span class='message'>Joining, by = c("type", "year", "size")</span></div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [14 x 4]
 #&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, 
-#&gt;     unique = TRUE), on = .(type, size, year)], on = .(type, size, 
-#&gt;     year), allow.cartesian = TRUE]
+#&gt;     unique = TRUE), on = .(type, size, year)], on = .(type, year, 
+#&gt;     size), allow.cartesian = TRUE]
 #&gt; 
 #&gt;   type   year size  weights
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>

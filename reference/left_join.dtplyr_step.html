@@ -51,11 +51,13 @@
 
 <meta property="og:title" content="Join data tables — left_join.dtplyr_step" />
 <meta property="og:description" content="These are methods for the dplyr generics left_join(), right_join(),
-inner_join(), full_join(), anti_join(), and semi_join(). The
-mutating joins (left, right, inner, and full) are translated to
-data.table::merge.data.table(), except for the special cases where it's
-possible to translate to [.data.table. Semi- and anti-joins have no
-direct data.table equivalent." />
+inner_join(), full_join(), anti_join(), and semi_join(). Left, right,
+inner, and anti join are translated to the [.data.table equivalent,
+full joins to data.table::merge.data.table().
+Left, right, and full joins are in some cases followed by calls to
+data.table::setcolorder() and data.table::setnames() to ensure correct
+column order and names.
+Semi-joins don't have a direct data.table equivalent." />
 <meta property="og:image" content="https://dtplyr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -173,11 +175,13 @@ direct data.table equivalent." />
 
     <div class="ref-description">
     <p>These are methods for the dplyr generics <code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>right_join()</a></code>,
-<code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>anti_join()</a></code>, and <code><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>semi_join()</a></code>. The
-mutating joins (left, right, inner, and full) are translated to
-<code><a href='https://Rdatatable.gitlab.io/data.table/reference/merge.html'>data.table::merge.data.table()</a></code>, except for the special cases where it's
-possible to translate to <code>[.data.table</code>. Semi- and anti-joins have no
-direct data.table equivalent.</p>
+<code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>anti_join()</a></code>, and <code><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>semi_join()</a></code>. Left, right,
+inner, and anti join are translated to the <code>[.data.table</code> equivalent,
+full joins to <code><a href='https://Rdatatable.gitlab.io/data.table/reference/merge.html'>data.table::merge.data.table()</a></code>.
+Left, right, and full joins are in some cases followed by calls to
+<code><a href='https://Rdatatable.gitlab.io/data.table/reference/setcolorder.html'>data.table::setcolorder()</a></code> and <code><a href='https://Rdatatable.gitlab.io/data.table/reference/setattr.html'>data.table::setnames()</a></code> to ensure correct
+column order and names.
+Semi-joins don't have a direct data.table equivalent.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
@@ -235,7 +239,7 @@ Should be a character vector of length 2.</p></td>
 <span class='va'>band_dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>instrument_dt</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "name"</span></div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [3 x 3]
 #&gt; <span style='font-weight: bold;'>Call:   </span>setcolorder(`_DT22`[`_DT21`, on = .(name), allow.cartesian = TRUE], 
-#&gt;     c("name", "band", "plays"))
+#&gt;     c(1L, 3L, 2L))
 #&gt; 
 #&gt;   name  band    plays 
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> 
@@ -255,8 +259,7 @@ Should be a character vector of length 2.</p></td>
 #&gt; 
 #&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>band_dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>instrument_dt</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "name"</span></div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [2 x 3]
-#&gt; <span style='font-weight: bold;'>Call:   </span>merge(`_DT21`, `_DT22`, all = FALSE, by.x = "name", by.y = "name", 
-#&gt;     allow.cartesian = TRUE)
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT21`[`_DT22`, on = .(name), nomatch = NULL]
 #&gt; 
 #&gt;   name  band    plays 
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> 
