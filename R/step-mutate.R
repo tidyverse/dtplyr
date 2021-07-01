@@ -29,7 +29,7 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 }
 
 mutate_nested_vars <- function(mutate_vars) {
-  assign <- Map(function(x, y) call2("<-", x, y), syms(names(mutate_vars)), mutate_vars)
+  assign <- map2(syms(names(mutate_vars)), mutate_vars, function(x, y) call2("<-", x, y))
   new_vars <- unique(names(mutate_vars))
   output <- call2(".", !!!syms(new_vars))
 
