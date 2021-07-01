@@ -31,6 +31,10 @@ step_subset <- function(parent,
 
 # Grouped i needs an intermediate assignment for maximum efficiency
 step_subset_i <- function(parent, i) {
+  if (is_empty(i)) {
+    return(parent)
+  }
+
   if (length(parent$groups) > 0) {
     parent <- compute(parent)
 

@@ -1,4 +1,8 @@
 step_group <- function(parent, groups = parent$groups, arrange = parent$arrange) {
+  if (can_step_group_return_early(parent, groups, arrange)) {
+    return(parent)
+  }
+
   new_step(
     parent,
     vars = parent$vars,
@@ -78,7 +82,16 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
     .add <- add
   }
 
-  existing <- vapply(dots, is_symbol, logical(1))
+  existing <- vapply(
+    seq_along(dots),
+    function(i) {
+      x <- dots[[i]]
+      name <- names(dots)[[i]]
+      is_symbol(x) && (as_name(x) == name)
+    },
+    logical(1)
+  )
+
   if (!all(existing)) {
     .data <- mutate(.data, !!!dots[!existing])
     dots[!existing] <- syms(names(dots[!existing]))
@@ -88,6 +101,16 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
   arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
 
   step_group(.data, groups, arranged)
+}
+
+can_step_group_return_early <- function(parent, groups, arrange) {
+  if (is_empty(groups)) {
+    return(is_empty(parent$groups))
+  }
+
+  same_arrange <- (is_false(arrange) || identical(arrange, parent$arrange))
+  same_groups <- identical(groups, parent$groups)
+  same_arrange && same_groups
 }
 
 #' @export
@@ -100,7 +123,14 @@ group_by.data.table <- function(.data, ...) {
 #' @export
 #' @rdname group_by.dtplyr_step
 ungroup.dtplyr_step <- function(.data, ...) {
-  step_group(.data, groups = character())
+  if (missing(...)) {
+    step_group(.data, groups = character())
+  } else {
+    old_groups <- group_vars(.data)
+    to_remove <- tidyselect::vars_select(.data$vars, ...)
+    new_groups <- setdiff(old_groups, to_remove)
+    step_group(.data, groups = new_groups)
+  }
 }
 
 #' @export

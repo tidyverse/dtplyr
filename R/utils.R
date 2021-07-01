@@ -1,5 +1,7 @@
 cat_line <- function(...) cat(paste(..., "\n", collapse = "", sep = ""))
 
+# nocov start - compat-purrr.R
+
 imap <- function(.x, .f, ...) {
   map2(.x, names(.x) %||% seq_along(.x), .f, ...)
 }
@@ -14,6 +16,10 @@ map2 <- function(.x, .y, .f, ...) {
   }
 }
 
+# nocov end
+
+# nocov start - compat-tidyr.R
+
 strip_names <- function(df, base, names_sep) {
   base <- paste0(base, names_sep)
   names <- names(df)
@@ -23,3 +29,5 @@ strip_names <- function(df, base, names_sep) {
 
   set_names(df, names)
 }
+
+# nocov end

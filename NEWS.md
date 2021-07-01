@@ -1,5 +1,26 @@
 # dtplyr (development version)
 
+* `left_join()`, `right_join()`, and `inner_join()` are now always translated to
+  the `[.data.table` equivalent. For simple merges the translation gets a bit
+  longer but thanks to the simpler code base it helps to better handle
+  names in `by` and duplicated variables names produced in the data.table join
+  (@mgirlich, #222).
+  
+* `transmute()` doesn't produce duplicate columns when assigning to the same
+  variable (@mgirlich, #249).
+
+* `group_by(dt, y = x)` now works (@mgirlich, #246).
+
+* Group columns can now be mutated instead of creating another column with the
+  same name (@mgirlich, #246).
+  
+* Grouping variables can now be selected after a `transmute()` (@mgirlich, #246).
+
+* `group_by()` now ungroups when no grouping variables are specified (@mgirlich, #248).
+  
+* `transmute()` and `mutate()` without any variables now work (@mgirlich, #248).
+
+* `ungroup()` removes variables in `...` from grouping (@mgirlich, #253).
 
 * `filter()` works for negated logical columns (@mgirlich, @211).
 

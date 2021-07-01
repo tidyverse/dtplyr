@@ -125,26 +125,31 @@ dt %>% distinct(c = a + b, .keep_all = TRUE) %>% show_query()
 
 ### Joins
 
-Most joins use `merge()`:
+Most joins use the `[.data.table` equivalent:
 
 ```{r}
 dt2 <- lazy_dt(data.frame(a = 1))
 
-dt %>% right_join(dt2, by = "a") %>% show_query()
 dt %>% inner_join(dt2, by = "a") %>% show_query()
+dt %>% right_join(dt2, by = "a") %>% show_query()
+dt %>% left_join(dt2, by = "a") %>% show_query()
+dt %>% anti_join(dt2, by = "a") %>% show_query()
+```
+
+But `full_join()` uses `merge()`
+
+```{r}
 dt %>% full_join(dt2, by = "a") %>% show_query()
 ```
 
-But `left_join()` will use the `i` position where possible:
+In some case extra calls to `data.table::setcolorder()` and `data.table::setnames()`
+are required to ensure correct column order and names in:
 
 ```{r}
-dt %>% left_join(dt2, by = "a") %>% show_query()
-```
+dt3 <- lazy_dt(data.frame(b = 1, a = 1))
 
-Anti-joins are easy to translate because data.table has a specific form for them:
-
-```{r}
-dt %>% anti_join(dt2, by = "a") %>% show_query()
+dt %>% left_join(dt3, by = "a") %>% show_query()
+dt %>% full_join(dt3, by = "b") %>% show_query()
 ```
 
 Semi-joins are little more complex:
