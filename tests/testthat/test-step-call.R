@@ -106,7 +106,7 @@ test_that("uses supplied variables", {
 
   expect_equal(
     dt %>% group_by(x) %>% distinct(x, y) %>% show_query(),
-    expr(unique(dt[, .(x, y)]))
+    expr(unique(dt))
   )
 })
 

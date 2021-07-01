@@ -103,4 +103,5 @@ test_that("vars set correctly", {
 test_that("emtpy mutate returns input", {
   dt <- lazy_dt(data.frame(x = 1))
   expect_equal(mutate(dt), dt)
+  expect_equal(mutate(dt, !!!list()), dt)
 })

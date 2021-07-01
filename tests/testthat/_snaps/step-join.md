@@ -4,9 +4,9 @@
       left_join(dt1, dt2, by = character())
     Output
       Source: local data table [4 x 3]
-      Call:   merge(copy(dt1)[, `:=`(.cross_join_col = 1)], copy(dt2)[, `:=`(.cross_join_col = 1)], 
-          all.x = TRUE, all.y = FALSE, by.x = ".cross_join_col", by.y = ".cross_join_col", 
-          allow.cartesian = TRUE)[, !".cross_join_col"]
+      Call:   setnames(setcolorder(copy(dt2)[, `:=`(.cross_join_col = 1)][copy(dt1)[, 
+          `:=`(.cross_join_col = 1)], on = .(.cross_join_col), allow.cartesian = TRUE], 
+          c(3L, 4L, 2L, 1L)), c("i.x", "x"), c("x.x", "x.y"))[, !".cross_join_col"]
       
           x.x y       x.y
         <int> <chr> <int>
@@ -23,9 +23,9 @@
       right_join(dt1, dt2, by = character())
     Output
       Source: local data table [4 x 3]
-      Call:   merge(copy(dt1)[, `:=`(.cross_join_col = 1)], copy(dt2)[, `:=`(.cross_join_col = 1)], 
-          all.x = TRUE, all.y = FALSE, by.x = ".cross_join_col", by.y = ".cross_join_col", 
-          allow.cartesian = TRUE)[, !".cross_join_col"]
+      Call:   setnames(setcolorder(copy(dt2)[, `:=`(.cross_join_col = 1)][copy(dt1)[, 
+          `:=`(.cross_join_col = 1)], on = .(.cross_join_col), allow.cartesian = TRUE], 
+          c(3L, 4L, 2L, 1L)), c("i.x", "x"), c("x.x", "x.y"))[, !".cross_join_col"]
       
           x.x y       x.y
         <int> <chr> <int>
@@ -42,9 +42,9 @@
       full_join(dt1, dt2, by = character())
     Output
       Source: local data table [4 x 3]
-      Call:   merge(copy(dt1)[, `:=`(.cross_join_col = 1)], copy(dt2)[, `:=`(.cross_join_col = 1)], 
-          all.x = TRUE, all.y = FALSE, by.x = ".cross_join_col", by.y = ".cross_join_col", 
-          allow.cartesian = TRUE)[, !".cross_join_col"]
+      Call:   setnames(setcolorder(copy(dt2)[, `:=`(.cross_join_col = 1)][copy(dt1)[, 
+          `:=`(.cross_join_col = 1)], on = .(.cross_join_col), allow.cartesian = TRUE], 
+          c(3L, 4L, 2L, 1L)), c("i.x", "x"), c("x.x", "x.y"))[, !".cross_join_col"]
       
           x.x y       x.y
         <int> <chr> <int>
@@ -61,9 +61,9 @@
       inner_join(dt1, dt2, by = character())
     Output
       Source: local data table [4 x 3]
-      Call:   merge(copy(dt1)[, `:=`(.cross_join_col = 1)], copy(dt2)[, `:=`(.cross_join_col = 1)], 
-          all.x = TRUE, all.y = FALSE, by.x = ".cross_join_col", by.y = ".cross_join_col", 
-          allow.cartesian = TRUE)[, !".cross_join_col"]
+      Call:   setnames(setcolorder(copy(dt2)[, `:=`(.cross_join_col = 1)][copy(dt1)[, 
+          `:=`(.cross_join_col = 1)], on = .(.cross_join_col), allow.cartesian = TRUE], 
+          c(3L, 4L, 2L, 1L)), c("i.x", "x"), c("x.x", "x.y"))[, !".cross_join_col"]
       
           x.x y       x.y
         <int> <chr> <int>
