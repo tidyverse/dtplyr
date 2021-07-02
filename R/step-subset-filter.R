@@ -20,6 +20,7 @@
 #' @importFrom dplyr filter
 # exported onLoad
 filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
+  check_filter(...)
   dots <- capture_dots(.data, ..., .j = FALSE)
 
   if (filter_by_lgl_col(dots)) {
@@ -50,4 +51,26 @@ filter_by_lgl_col <- function(dots) {
 filter.data.table <- function(.data, ...) {
   .data <- lazy_dt(.data)
   filter(.data, ...)
+}
+
+check_filter <- function(...) {
+  dots <- enquos(...)
+  named <- have_name(dots)
+
+  for (i in which(named)) {
+    quo <- dots[[i]]
+
+    # only allow named logical vectors, anything else
+    # is suspicious
+    expr <- quo_get_expr(quo)
+    if (!is.logical(expr)) {
+      abort(c(
+        glue::glue("Problem with `filter()` input `..{i}`."),
+        x = glue::glue("Input `..{i}` is named."),
+        i = glue::glue("This usually means that you've used `=` instead of `==`."),
+        i = glue::glue("Did you mean `{name} == {as_label(expr)}`?", name = names(dots)[i])
+      ))
+    }
+
+  }
 }
