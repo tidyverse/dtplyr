@@ -72,6 +72,8 @@
   * `pivot_longer()` (@markfairbanks, #204)
   
   * `replace_na()` (@markfairbanks, #202)
+  
+  * `nest()` (@mgirlich, #251)
 
 # dtplyr 1.1.0
 
