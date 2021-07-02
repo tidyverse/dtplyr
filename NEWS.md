@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `pull()` now supports the `name` argument (@mgirlich, #263).
+
 * @mgirlich is now a dtplyr author in recognition of his significant and
   sustained contributions.
 

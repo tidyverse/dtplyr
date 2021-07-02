@@ -157,14 +157,22 @@ as_tibble.dtplyr_step <- function(x, ..., .name_repair = "check_unique") {
 
 #' @export
 #' @importFrom dplyr pull
-pull.dtplyr_step <- function(.data, var = -1) {
-  expr <- enquo(var)
-  var <- dplyr:::find_var(expr, .data$vars)
+pull.dtplyr_step <- function(.data, var = -1, name = NULL) {
+  var <- sym(tidyselect::vars_pull(.data$vars, !!enquo(var)))
 
   .data <- ungroup(.data)
-  .data <- select(.data, !! sym(var))
-  .data <- collect(.data)
-  .data[[1]]
+
+  name <- enquo(name)
+  if (quo_is_null(name)) {
+    .data <- select(.data, !! var)
+    .data <- collect(.data)
+    .data[[1]]
+  } else {
+    name <- sym(tidyselect::vars_pull(.data$vars, !!name))
+    .data <- select(.data, !! var, !! name)
+    .data <- collect(.data)
+    set_names(.data[[1]], .data[[2]])
+  }
 }
 
 #' @export
