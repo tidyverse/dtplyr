@@ -54,3 +54,30 @@ test_that("collect and compute return grouped data", {
   expect_equal(dt %>% compute() %>% group_vars(), "x")
   expect_equal(dt %>% collect() %>% group_vars(), "x")
 })
+
+
+# pull() ------------------------------------------------------------------
+
+test_that("pull default extracts last var from data frame", {
+  df <- lazy_dt(tibble(x = 1:10, y = 1:10), "DT")
+  expect_equal(pull(df), 1:10)
+})
+
+test_that("can extract by name, or positive/negative position", {
+  x <- 1:10
+  df <- lazy_dt(tibble(x = x, y = runif(10)), "DT")
+
+  expect_equal(pull(df, x), x)
+  expect_equal(pull(df, 1), x)
+  expect_equal(pull(df, -2L), x)
+})
+
+test_that("can extract named vectors", {
+  x <- 1:10
+  y <- letters[x]
+  df <- lazy_dt(tibble(x = x, y = y), "DT")
+  xn <- set_names(x, y)
+
+  expect_equal(pull(df, x, y), xn)
+  expect_equal(pull(df, 1, 2), xn)
+})
