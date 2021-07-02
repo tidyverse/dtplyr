@@ -83,7 +83,6 @@ eval_nest_dots <- function(.data, ...) {
 }
 
 simplify_names2 <- function(x) {
-  # TODO this could be used in more places
   auto_names <- rlang::exprs_auto_name(x)
   name_unnecessary <- names2(x) == auto_names
   names(x)[name_unnecessary] <- ""
