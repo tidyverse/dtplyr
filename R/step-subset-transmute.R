@@ -16,14 +16,34 @@ transmute.dtplyr_step <- function(.data, ...) {
   dots <- capture_dots(.data, ...)
   nested <- nested_vars(.data, dots, .data$vars)
 
+  groups <- group_vars(.data)
+  if (!is_empty(groups)) {
+    # TODO could check if there is actually anything mutated, e.g. to avoid
+    # DT[, .(x = x)]
+    is_group_var <- names(dots) %in% groups
+    group_dots <- dots[is_group_var]
+
+    .data <- mutate(ungroup(.data), !!!group_dots)
+    .data <- group_by(.data, !!!syms(groups))
+
+    dots <- dots[!is_group_var]
+  }
+
+  if (is_empty(dots)) {
+    # grouping variables have been removed from `dots` so `select()` would
+    # produce a message "Adding grouping vars".
+    # As `dplyr::transmute()` doesn't generate a message when adding group vars
+    # we can also leave it away here
+    return(select(.data, !!!group_vars(.data)))
+  }
+
   if (!nested) {
     j <- call2(".", !!!dots)
   } else {
-    assign <- Map(function(x, y) call2("<-", x, y), syms(names(dots)), dots)
-    output <- call2(".", !!!syms(set_names(names(dots))))
-    j <- call2("{", !!!assign, output)
+    j <- mutate_nested_vars(dots)$expr
   }
-  step_subset_j(.data, vars = names(dots), j = j)
+  vars <- union(group_vars(.data), names(dots))
+  step_subset_j(.data, vars = vars, j = j)
 }
 
 #' @export
