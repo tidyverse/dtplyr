@@ -1,5 +1,13 @@
 # dtplyr (development version)
 
+* `pull()` now supports the `name` argument (@mgirlich, #263).
+
+* @mgirlich is now a dtplyr author in recognition of his significant and
+  sustained contributions.
+
+* `left_join()`, `right_join()`, `full_join()`, and `inner_join()` perform a
+  cross join for `by = character()` (@mgirlich, #242).
+  
 * `left_join()`, `right_join()`, and `inner_join()` are now always translated to
   the `[.data.table` equivalent. For simple merges the translation gets a bit
   longer but thanks to the simpler code base it helps to better handle
