@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `filter()` now errors for named input like dplyr (@mgirlich, #267).
+
 * `pull()` now supports the `name` argument (@mgirlich, #263).
 
 * @mgirlich is now a dtplyr author in recognition of his significant and
