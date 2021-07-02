@@ -38,7 +38,7 @@ nest.dtplyr_step <- function(.data, ..., .names_sep = NULL, .key = deprecated())
     j_exprs <- imap(
       cols,
       function(x, name) {
-        x <- simplify_names2(x)
+        x <- simplify_names(x)
         expr(.(data.table(!!!syms(x))))
       }
     )
@@ -80,11 +80,4 @@ eval_nest_dots <- function(.data, ...) {
     sim_data <- simulate_vars(.data)
     lapply(cols, function(.x) names(tidyselect::eval_select(.x, sim_data)))
   }
-}
-
-simplify_names2 <- function(x) {
-  auto_names <- rlang::exprs_auto_name(x)
-  name_unnecessary <- names2(x) == auto_names
-  names(x)[name_unnecessary] <- ""
-  x
 }
