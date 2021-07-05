@@ -24,7 +24,7 @@ This argument is passed by expression and supports quasiquotation
 (you can unquote column names or column positions).}
 
 \item{into}{Names of new variables to create as character vector.
-Use NA to omit the variable in the output.}
+Use \code{NA} to omit the variable in the output.}
 
 \item{sep}{Separator between columns.
 The default value is a regular expression that matches any sequence of non-alphanumeric values.}
@@ -39,8 +39,8 @@ NB: this will cause string "NA"s to be converted to NAs.}
 \item{...}{Arguments passed on to methods}
 }
 \description{
-This is a method for the tidyr \code{\link[tidyr:separate]{tidyr::separate()}} generic. It is translated to
-\code{tstrsplit()} in the \code{j} argument of \verb{[.data.table}.
+This is a method for the \code{\link[tidyr:separate]{tidyr::separate()}} generic. It is translated to
+\code{\link[data.table:tstrsplit]{data.table::tstrsplit()}} in the \code{j} argument of \verb{[.data.table}.
 }
 \examples{
 library(tidyr)

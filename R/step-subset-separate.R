@@ -2,23 +2,23 @@
 #' expression or numeric locations
 #'
 #' @description
-#' This is a method for the tidyr [tidyr::separate()] generic. It is translated to
-#' `tstrsplit()` in the `j` argument of `[.data.table`.
+#' This is a method for the [tidyr::separate()] generic. It is translated to
+#'   [data.table::tstrsplit()] in the `j` argument of `[.data.table`.
 #'
 #' @param data A [lazy_dt()].
 #' @param col Column name or position.
 #'
-#' This argument is passed by expression and supports quasiquotation
-#' (you can unquote column names or column positions).
+#'   This argument is passed by expression and supports quasiquotation
+#'   (you can unquote column names or column positions).
 #' @param into Names of new variables to create as character vector.
-#' Use NA to omit the variable in the output.
+#'   Use `NA` to omit the variable in the output.
 #' @param sep Separator between columns.
-#' The default value is a regular expression that matches any sequence of non-alphanumeric values.
+#'   The default value is a regular expression that matches any sequence of non-alphanumeric values.
 #' @param remove If TRUE, remove the input column from the output data frame.
 #' @param convert If TRUE, will run type.convert() with as.is = TRUE on new columns.
-#' This is useful if the component columns are integer, numeric or logical.
+#'   This is useful if the component columns are integer, numeric or logical.
 #'
-#' NB: this will cause string "NA"s to be converted to NAs.
+#'   NB: this will cause string "NA"s to be converted to NAs.
 #' @param ... Arguments passed on to methods
 #' @examples
 #' library(tidyr)
@@ -43,8 +43,8 @@ separate.dtplyr_step <- function(data, col, into,
                                  remove = TRUE,
                                  convert = FALSE,
                                  ...) {
-  vctrs::vec_assert(into, character())
-  vctrs::vec_assert(sep, character())
+  stopifnot(is.character(into))
+  stopifnot(is.character(sep))
 
   col <- enexpr(col)
 
@@ -55,11 +55,9 @@ separate.dtplyr_step <- function(data, col, into,
   into <- into[not_na_into]
 
   t_str_split <- call2("tstrsplit", col, split = sep)
-
   if (length(keep) < into_length) {
     t_str_split$keep <- keep
   }
-
   if (identical(convert, TRUE)) {
     t_str_split$type.convert <- TRUE
   }
