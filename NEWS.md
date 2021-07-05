@@ -2,6 +2,8 @@
 
 * `summarise()` now supports the `.groups` argument (@mgirlich, #245).
 
+* `filter()` now errors for named input, e.g. `filter(dt, x = 1)` (@mgirlich, #267).
+
 * `pull()` now supports the `name` argument (@mgirlich, #263).
 
 * @mgirlich is now a dtplyr author in recognition of his significant and
@@ -74,6 +76,8 @@
   * `pivot_longer()` (@markfairbanks, #204)
   
   * `replace_na()` (@markfairbanks, #202)
+  
+  * `nest()` (@mgirlich, #251)
 
 # dtplyr 1.1.0
 

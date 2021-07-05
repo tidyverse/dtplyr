@@ -98,3 +98,24 @@ test_that("only adds step if dots are not empty", {
   expect_equal(dt %>% filter(), dt)
   expect_equal(dt %>% filter(!!!list()), dt)
 })
+
+test_that("errors for named input", {
+  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
+
+  expect_snapshot(error = TRUE, filter(dt, x = 1))
+  expect_snapshot(error = TRUE, filter(dt, y > 1, x = 1))
+})
+
+test_that("allows named constants that resolve to logical vectors", {
+  dt <- lazy_dt(mtcars, "DT")
+  filters <- mtcars %>%
+    transmute(
+      cyl %in% 6:8,
+      hp / drat > 50
+    )
+
+  expect_equal(
+    filter(dt, !!!filters),
+    filter(dt, !!!unname(filters))
+  )
+})
