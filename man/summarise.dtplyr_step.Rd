@@ -4,7 +4,7 @@
 \alias{summarise.dtplyr_step}
 \title{Summarise each group to one row}
 \usage{
-\method{summarise}{dtplyr_step}(.data, ...)
+\method{summarise}{dtplyr_step}(.data, ..., .groups = NULL)
 }
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
@@ -18,6 +18,20 @@ The value can be:
 \item A vector of length \code{n}, e.g. \code{quantile()}.
 \item A data frame, to add multiple columns from a single expression.
 }}
+
+\item{.groups}{\Sexpr[results=rd]{lifecycle::badge("experimental")} Grouping structure of the result.
+\itemize{
+\item "drop_last": dropping the last level of grouping. This was the
+only supported option before version 1.0.0.
+\item "drop": All levels of grouping are dropped.
+\item "keep": Same grouping structure as \code{.data}.
+}
+
+When \code{.groups} is not specified, it defaults to "drop_last".
+
+In addition, a message informs you of that choice, unless the result is ungrouped,
+the option "dplyr.summarise.inform" is set to \code{FALSE},
+or when \code{summarise()} is called from a function in a package.}
 }
 \description{
 This is a method for the dplyr \code{\link[=summarise]{summarise()}} generic. It is translated to

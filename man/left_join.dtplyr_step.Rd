@@ -44,8 +44,8 @@ These are methods for the dplyr generics \code{\link[=left_join]{left_join()}}, 
 inner, and anti join are translated to the \verb{[.data.table} equivalent,
 full joins to \code{\link[data.table:merge]{data.table::merge.data.table()}}.
 Left, right, and full joins are in some cases followed by calls to
-\code{\link[data.table:setcolorder]{data.table::setcolorder()}} and \code{\link[data.table:setattr]{data.table::setnames()}} to ensure correct
-column order and names.
+\code{\link[data.table:setcolorder]{data.table::setcolorder()}} and \code{\link[data.table:setattr]{data.table::setnames()}} to ensure that column
+order and names match dplyr conventions.
 Semi-joins don't have a direct data.table equivalent.
 }
 \examples{
