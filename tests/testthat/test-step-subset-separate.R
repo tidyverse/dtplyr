@@ -46,10 +46,24 @@ test_that("drops NA columns", {
 
 test_that("checks type of `into` and `sep`", {
   dt <- lazy_dt(tibble(x = "a:b"), "DT")
-  expect_error(
-    separate(dt, x, "x", FALSE)
+  expect_snapshot(
+    separate(dt, x, "x", FALSE),
+    error = TRUE
   )
-  expect_error(
-    separate(dt, x, FALSE)
+  expect_snapshot(
+    separate(dt, x, FALSE),
+    error = TRUE
+  )
+})
+
+test_that("only copies when necessary", {
+  dt <- tibble(x = paste(letters[1:3], letters[1:3], sep = "-"), y = 1:3) %>%
+    lazy_dt("DT")
+  step <- dt %>%
+    filter(y < 4) %>%
+    separate(x, into = c("left", "right"), sep = "-")
+  expect_equal(
+    show_query(step),
+    expr(DT[y < 4][, `:=`(!!c("left", "right"), tstrsplit(x, split = "-"))][, .(y, left, right)])
   )
 })
