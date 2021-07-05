@@ -169,6 +169,8 @@
 <a href="#dtplyr-development-version" class="anchor"></a>dtplyr (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> now supports the <code>.groups</code> argument (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/245'>#245</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> now errors for named input, e.g. <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter(dt, x = 1)</a></code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/267'>#267</a>).</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code> now supports the <code>name</code> argument (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/263'>#263</a>).</p></li>
 <li><p>@mgirlich is now a dtplyr author in recognition of his significant and sustained contributions.</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> perform a cross join for <code>by = character()</code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/242'>#242</a>).</p></li>

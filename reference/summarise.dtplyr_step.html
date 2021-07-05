@@ -173,7 +173,7 @@ the <code>j</code> argument of <code>[.data.table</code>.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, .groups <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,6 +191,21 @@ functions. The name will be the name of the variable in the result.</p>
 <li><p>A vector of length <code>n</code>, e.g. <code><a href='https://rdrr.io/r/stats/quantile.html'>quantile()</a></code>.</p></li>
 <li><p>A data frame, to add multiple columns from a single expression.</p></li>
 </ul></td>
+    </tr>
+    <tr>
+      <th>.groups</th>
+      <td><p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a>
+ Grouping structure of the result.</p><ul>
+<li><p>"drop_last": dropping the last level of grouping. This was the
+only supported option before version 1.0.0.</p></li>
+<li><p>"drop": All levels of grouping are dropped.</p></li>
+<li><p>"keep": Same grouping structure as <code>.data</code>.</p></li>
+</ul>
+
+<p>When <code>.groups</code> is not specified, it defaults to "drop_last".</p>
+<p>In addition, a message informs you of that choice, unless the result is ungrouped,
+the option "dplyr.summarise.inform" is set to <code>FALSE</code>,
+or when <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code> is called from a function in a package.</p></td>
     </tr>
     </table>
 

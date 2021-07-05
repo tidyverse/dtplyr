@@ -55,8 +55,8 @@ inner_join(), full_join(), anti_join(), and semi_join(). Left, right,
 inner, and anti join are translated to the [.data.table equivalent,
 full joins to data.table::merge.data.table().
 Left, right, and full joins are in some cases followed by calls to
-data.table::setcolorder() and data.table::setnames() to ensure correct
-column order and names.
+data.table::setcolorder() and data.table::setnames() to ensure that column
+order and names match dplyr conventions.
 Semi-joins don't have a direct data.table equivalent." />
 <meta property="og:image" content="https://dtplyr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -179,8 +179,8 @@ Semi-joins don't have a direct data.table equivalent." />
 inner, and anti join are translated to the <code>[.data.table</code> equivalent,
 full joins to <code><a href='https://Rdatatable.gitlab.io/data.table/reference/merge.html'>data.table::merge.data.table()</a></code>.
 Left, right, and full joins are in some cases followed by calls to
-<code><a href='https://Rdatatable.gitlab.io/data.table/reference/setcolorder.html'>data.table::setcolorder()</a></code> and <code><a href='https://Rdatatable.gitlab.io/data.table/reference/setattr.html'>data.table::setnames()</a></code> to ensure correct
-column order and names.
+<code><a href='https://Rdatatable.gitlab.io/data.table/reference/setcolorder.html'>data.table::setcolorder()</a></code> and <code><a href='https://Rdatatable.gitlab.io/data.table/reference/setattr.html'>data.table::setnames()</a></code> to ensure that column
+order and names match dplyr conventions.
 Semi-joins don't have a direct data.table equivalent.</p>
     </div>
 
