@@ -398,9 +398,9 @@
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 filter      746.1µs 808.16µs     1224.        0B     12.6</span>
-<span class="co">#&gt; 2 mutate       1.32ms   1.43ms      690.        0B     10.8</span>
-<span class="co">#&gt; 3 summarise  889.15µs 962.69µs     1034.        0B     10.4</span></code></pre></div>
+<span class="co">#&gt; 1 filter     754.03µs 792.76µs     1242.        0B     12.6</span>
+<span class="co">#&gt; 2 mutate       1.31ms   1.41ms      692.        0B     10.8</span>
+<span class="co">#&gt; 3 summarise  883.87µs 942.35µs     1039.        0B     10.4</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
@@ -427,7 +427,7 @@
 
 <div class="author">
   <p>
-    Developed by <a href="http://hadley.nz">Hadley Wickham</a>, Maximilian Girlich.
+    Developed by <a href="http://hadley.nz">Hadley Wickham</a>, Maximilian Girlich, Mark Fairbanks.
     Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
   </p>
 </div>
