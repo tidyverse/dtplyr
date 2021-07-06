@@ -8,6 +8,9 @@
 
 * @mgirlich is now a dtplyr author in recognition of his significant and
   sustained contributions.
+  
+* @markfairbanks is now a dtplyr author in recognition of his significant and
+  sustained contributions.
 
 * `left_join()`, `right_join()`, `full_join()`, and `inner_join()` perform a
   cross join for `by = character()` (@mgirlich, #242).

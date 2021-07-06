@@ -28,6 +28,7 @@ Useful links:
 Authors:
 \itemize{
   \item Maximilian Girlich
+  \item Mark Fairbanks
 }
 
 Other contributors:

@@ -9,6 +9,9 @@ Authors@R:
       person(given = "Maximilian",
              family = "Girlich",
              role = "aut"),
+      person(given = "Mark",
+             family = "Fairbanks",
+             role = "aut"),
       person(given = "RStudio",
              role = "cph"))
 Description: Provides a data.table backend for 'dplyr'. The goal
