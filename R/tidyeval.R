@@ -113,7 +113,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
       list(
         # Get as "default" case as close as possible
         # https://github.com/Rdatatable/data.table/issues/4258
-        if (isTRUE(x[[2]]) || is_symbol(x[[2]], "T")) quote(rep(TRUE, .N)) else x[[2]],
+        if (isTRUE(x[[2]])) quote(rep(TRUE, .N)) else x[[2]],
         x[[3]]
       )
     }))
