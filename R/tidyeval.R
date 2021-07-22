@@ -16,7 +16,7 @@ dt_eval <- function(x) {
 dt_funs <- c(
   "CJ", "copy", "dcast", "melt", "nafill",
   "fcase", "fcoalesce", "fifelse", "fintersect", "frank", "frankv", "fsetdiff", "funion",
-  "setcolorder", "setnames"
+  "setcolorder", "setnames", "tstrsplit"
 )
 add_dt_wrappers <- function(env) {
   env_bind(env, !!!env_get_list(ns_env("data.table"), dt_funs))
@@ -113,7 +113,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
       list(
         # Get as "default" case as close as possible
         # https://github.com/Rdatatable/data.table/issues/4258
-        if (isTRUE(x[[2]])) quote(rep(TRUE, .N)) else x[[2]],
+        if (isTRUE(x[[2]]) || is_symbol(x[[2]], "T")) quote(rep(TRUE, .N)) else x[[2]],
         x[[3]]
       )
     }))
