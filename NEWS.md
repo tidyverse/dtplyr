@@ -66,6 +66,8 @@
 
 * `across()` now defaults to `.cols = everything()` when `.cols` isn't provided (@markfairbanks, #231).
 
+* Can use `T` to specify the default in `case_when()`, (#272).
+
 * More translations for tidyr verbs have been added:
   
   * `drop_na()` (@markfairbanks, #194)
