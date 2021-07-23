@@ -58,7 +58,7 @@ separate.dtplyr_step <- function(data, col, into,
   if (length(keep) < into_length) {
     t_str_split$keep <- keep
   }
-  if (identical(convert, TRUE)) {
+  if (isTRUE(convert)) {
     t_str_split$type.convert <- TRUE
   }
 
