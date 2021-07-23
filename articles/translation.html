@@ -395,12 +395,12 @@
   summarise <span class="op">=</span> <span class="va">dt</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span>,
   check <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>
-<span class="co">#&gt; # A tibble: 3 x 6</span>
+<span class="co">#&gt; # A tibble: 3 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 filter     754.03µs 792.76µs     1242.        0B     12.6</span>
-<span class="co">#&gt; 2 mutate       1.31ms   1.41ms      692.        0B     10.8</span>
-<span class="co">#&gt; 3 summarise  883.87µs 942.35µs     1039.        0B     10.4</span></code></pre></div>
+<span class="co">#&gt; 1 filter     786.47µs 827.41µs     1171.        0B    12.7 </span>
+<span class="co">#&gt; 2 mutate       1.42ms   1.56ms      611.        0B     8.61</span>
+<span class="co">#&gt; 3 summarise  932.61µs   1.01ms      950.        0B     8.32</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
