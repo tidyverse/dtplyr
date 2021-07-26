@@ -7,12 +7,12 @@ test_that("can slice", {
     expr(DT)
   )
   expect_equal(
-    dt %>% slice(1:4) %>% show_query(),
-    expr(DT[1:4])
+    dt %>% slice(c(1, 2)) %>% show_query(),
+    expr(DT[c(1, 2)[between(c(1, 2), -.N, .N)]])
   )
   expect_equal(
     dt %>% slice(1, 2, 3) %>% show_query(),
-    expr(DT[c(1, 2, 3)])
+    expr(DT[c(1, 2, 3)[between(c(1, 2, 3), -.N, .N)]])
   )
 })
 
@@ -22,7 +22,7 @@ test_that("can slice when grouped", {
 
   expect_equal(
     dt2 %>% show_query(),
-    expr(DT[DT[, .I[1], by = .(x)]$V1])
+    expr(DT[DT[, .I[1[between(1, -.N, .N)]], by = .(x)]$V1])
   )
   expect_equal(as_tibble(dt2), tibble(x = c(1, 2), y = c(1, 3)))
 })
@@ -32,6 +32,14 @@ test_that("slicing doesn't sorts groups", {
   expect_equal(
     dt %>% group_by(x) %>% slice(1) %>% pull(x),
     2:1
+  )
+})
+
+test_that("doesn't return excess rows, #10", {
+  dt <- lazy_dt(data.table(x = 1:2))
+  expect_equal(
+    dt %>% slice(1:3) %>% pull(x),
+    1:2
   )
 })
 

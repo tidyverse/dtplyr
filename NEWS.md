@@ -68,6 +68,8 @@
 
 * Can use `T` to specify the default in `case_when()`, (#272).
 
+* `slice()` no longer returns excess rows (#10).
+
 * More translations for tidyr verbs have been added:
   
   * `drop_na()` (@markfairbanks, #194)

@@ -56,12 +56,17 @@ slice.dtplyr_step <- function(.data, ...) {
 
   if (length(dots) == 0) {
     i <- NULL
-  } else if (length(dots) == 1) {
-    i <- dots[[1]]
   } else {
-    i <- call2("c", !!!dots)
+    if (length(dots) == 1) {
+      .rows <- dots[[1]]
+    } else {
+      .rows <- call2("c", !!!dots)
+    }
+    # Update logic once data.table #4353 is merged
+    # https://github.com/Rdatatable/data.table/pull/4353
+    between <- call2("between", .rows, quote(-.N), quote(.N))
+    i <- call2("[", .rows, between)
   }
-  i <- expr(!!i)
 
   step_subset_i(.data, i)
 }
