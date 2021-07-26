@@ -197,6 +197,7 @@
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange(dt, desc(col))</a></code> is now translated to <code>dt[order(-col)]</code> in order to utilize <code>data.table</code>’s fast order (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/227'>#227</a>).</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> now defaults to <code>.cols = everything()</code> when <code>.cols</code> isn’t provided (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/231'>#231</a>).</p></li>
 <li><p>Can use <code>T</code> to specify the default in <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>, (<a href='https://github.com/tidyverse/dtplyr/issues/272'>#272</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code> no longer returns excess rows (<a href='https://github.com/tidyverse/dtplyr/issues/10'>#10</a>).</p></li>
 <li>
 <p>More translations for tidyr verbs have been added:</p>
 <ul>

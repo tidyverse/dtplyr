@@ -235,7 +235,7 @@ and return the first <code>n</code> rows.</p></td>
 <span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [3 x 11]
-#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT35`[c(1, 5, 10)]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT35`[c(1, 5, 10)[between(c(1, 5, 10), -.N, .N)]]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -245,7 +245,7 @@ and return the first <code>n</code> rows.</p></td>
 #&gt; 
 #&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='op'>-</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [28 x 11]
-#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT35`[-(1:4)]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT35`[(-(1:4))[between(-(1:4), -.N, .N)]]
 #&gt; 
 #&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
