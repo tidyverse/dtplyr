@@ -62,6 +62,8 @@ slice.dtplyr_step <- function(.data, ...) {
     } else {
       .rows <- call2("c", !!!dots)
     }
+    # Update logic once data.table #4353 is merged
+    # https://github.com/Rdatatable/data.table/pull/4353
     between <- call2("between", .rows, quote(-.N), quote(.N))
     i <- call2("[", .rows, between)
   }
