@@ -16,7 +16,7 @@ dt_eval <- function(x) {
 dt_funs <- c(
   "between", "CJ", "copy", "dcast", "melt", "nafill",
   "fcase", "fcoalesce", "fifelse", "fintersect", "frank", "frankv", "fsetdiff", "funion",
-  "setcolorder", "setnames", "tstrsplit"
+  "setcolorder", "setnames", "tstrsplit", "uniqueN"
 )
 add_dt_wrappers <- function(env) {
   env_bind(env, !!!env_get_list(ns_env("data.table"), dt_funs))
@@ -145,6 +145,19 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     x
   } else if (is_call(x, "n", n = 0)) {
     quote(.N)
+  } else if (is_call(x, "n_distinct")) {
+    x <- match.call(dplyr::n_distinct, x, expand.dots = FALSE)
+    dots <- x$...
+    if (length(dots) == 1) {
+      vec <- dots[[1]]
+    } else {
+      vec <- call2("c", !!!dots)
+    }
+    call <- call2("uniqueN", vec)
+    if (!is_null(x$na.rm)) {
+      call$na.rm <- x$na.rm
+    }
+    call
   } else if (is_call(x, "row_number", n = 0)) {
     quote(seq_len(.N))
   } else if (is_call(x, "row_number", n = 1)) {
