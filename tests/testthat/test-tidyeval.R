@@ -247,10 +247,10 @@ test_that("`desc(col)` is translated to `-col` inside arrange", {
 })
 
 test_that("n_distinct() is translated to uniqueN()", {
-  # Works with input vec
+  # Works with multiple inputs
   expect_equal(
-    dt_squash(expr(n_distinct(1, 2, 3))),
-    expr(uniqueN(c(1, 2, 3)))
+    dt_squash(expr(n_distinct(c(1, 1, 2), c(1, 2, 1)))),
+    expr(uniqueN(data.table(c(1, 1, 2), c(1, 2, 1))))
   )
   # Works with single column selection (in summarise())
   expect_equal(
