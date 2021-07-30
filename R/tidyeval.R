@@ -14,7 +14,7 @@ dt_eval <- function(x) {
 # Make sure data.table functions are available so dtplyr still works
 # even when data.table isn't attached
 dt_funs <- c(
-  "between", "CJ", "copy", "dcast", "melt", "nafill",
+  "between", "CJ", "copy", "data.table", "dcast", "melt", "nafill",
   "fcase", "fcoalesce", "fifelse", "fintersect", "frank", "frankv", "fsetdiff", "funion",
   "setcolorder", "setnames", "tstrsplit", "uniqueN"
 )
@@ -151,7 +151,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     if (length(dots) == 1) {
       vec <- dots[[1]]
     } else {
-      vec <- call2("c", !!!dots)
+      vec <- call2("data.table", !!!dots)
     }
     call <- call2("uniqueN", vec)
     if (!is_null(x$na.rm)) {
