@@ -70,6 +70,8 @@
 
 * `slice()` no longer returns excess rows (#10).
 
+* `n_distinct()` is now mapped to `uniqueN()`
+
 * More translations for tidyr verbs have been added:
   
   * `drop_na()` (@markfairbanks, #194)

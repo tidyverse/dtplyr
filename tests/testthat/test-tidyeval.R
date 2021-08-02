@@ -246,6 +246,27 @@ test_that("`desc(col)` is translated to `-col` inside arrange", {
   expect_equal(out$x, c("b", "a"))
 })
 
+test_that("n_distinct() is translated to uniqueN()", {
+  # Works with multiple inputs
+  expect_equal(
+    dt_squash(expr(n_distinct(c(1, 1, 2), c(1, 2, 1)))),
+    expr(uniqueN(data.table(c(1, 1, 2), c(1, 2, 1))))
+  )
+  # Works with single column selection (in summarise())
+  expect_equal(
+    dt_squash(expr(n_distinct(x))),
+    expr(uniqueN(x))
+  )
+  dt <- lazy_dt(data.table(x = c("a", "a", "b", NA)), "DT")
+  step <- summarise(dt, num = n_distinct(x, na.rm = TRUE))
+  out <- collect(step)
+  expect_equal(
+    show_query(step),
+    expr(DT[, .(num = uniqueN(x, na.rm = TRUE))])
+  )
+  expect_equal(out$num, 2)
+})
+
 # fun_name ----------------------------------------------------------------
 
 test_that("finds name of functions with GForce implementations", {
