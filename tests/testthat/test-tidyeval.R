@@ -115,6 +115,22 @@ test_that("translates case_when()", {
   )
 })
 
+test_that("translates lag()/lead()", {
+  df <- data.frame(x = 1:5, y = 1:5)
+  expect_equal(
+    capture_dot(df, lag(x)),
+    expr(shift(x, type = "lag"))
+  )
+  expect_equal(
+    capture_dot(df, lead(x, 2, default = 3)),
+    expr(shift(x, n = 2, fill = 3, type = "lead"))
+  )
+  # Errors with order_by
+  expect_snapshot_error(
+    capture_dot(df, lag(x, order_by = y)),
+  )
+})
+
 test_that("can process many expressions in one go", {
   dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
   n <- 10

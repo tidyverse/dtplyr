@@ -70,7 +70,9 @@
 
 * `slice()` no longer returns excess rows (#10).
 
-* `n_distinct()` is now mapped to `uniqueN()`
+* `n_distinct()` is now mapped to `uniqueN()`.
+
+* `lag()`/`lead()` are now translated to `shift()`.
 
 * More translations for tidyr verbs have been added:
   
