@@ -74,6 +74,8 @@
 
 * `lag()`/`lead()` are now translated to `shift()`.
 
+* `intersect()`/`union()`/`union_all()`/`setdiff()` convert all data.table inputs to a `lazy_dt()` (#278).
+
 * More translations for tidyr verbs have been added:
   
   * `drop_na()` (@markfairbanks, #194)
