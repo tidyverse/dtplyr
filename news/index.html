@@ -200,6 +200,7 @@
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code> no longer returns excess rows (<a href='https://github.com/tidyverse/dtplyr/issues/10'>#10</a>).</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct()</a></code> is now mapped to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/duplicated.html">uniqueN()</a></code>.</p></li>
 <li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lag()</a></code>/<code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lead()</a></code> are now translated to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">shift()</a></code>.</p></li>
+<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">intersect()</a></code>/<code><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">union()</a></code>/<code><a href="https://dplyr.tidyverse.org/reference/setops.html">union_all()</a></code>/<code><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">setdiff()</a></code> convert all data.table inputs to a <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/278'>#278</a>).</p></li>
 <li>
 <p>More translations for tidyr verbs have been added:</p>
 <ul>
