@@ -23,10 +23,10 @@ dt_call.dtplyr_step_set <- function(x, needs_copy = x$needs_copy) {
   rhs <- dt_call(x$parent2)
 
   call <- switch(x$style,
-                 intersect = call2("fintersect", lhs, rhs),
-                 union = call2("funion", lhs, rhs),
-                 union_all = call2("funion", lhs, rhs, all = TRUE),
-                 setdiff = call2("fsetdiff", lhs, rhs),
+    intersect = call2("fintersect", lhs, rhs),
+    union = call2("funion", lhs, rhs),
+    union_all = call2("funion", lhs, rhs, all = TRUE),
+    setdiff = call2("fsetdiff", lhs, rhs),
   )
 
   call
