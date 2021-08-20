@@ -130,17 +130,17 @@ test_that("slice_*() checks for empty ...", {
 })
 
 test_that("slice_*() checks for constant n= and prop=", {
-  df <- data.frame(x = 1:10)
-  expect_error(slice_head(df, n = n()), "constant")
-  expect_error(slice_head(df, prop = n()), "constant")
-  expect_error(slice_tail(df, n = n()), "constant")
-  expect_error(slice_tail(df, prop = n()), "constant")
-  expect_error(slice_min(df, x, n = n()), "constant")
-  expect_error(slice_min(df, x, prop = n()), "constant")
-  expect_error(slice_max(df, x, n = n()), "constant")
-  expect_error(slice_max(df, x, prop = n()), "constant")
-  expect_error(slice_sample(df, n = n()), "constant")
-  expect_error(slice_sample(df, prop = n()), "constant")
+  dt <- lazy_dt(data.frame(x = 1:10))
+  expect_error(slice_head(dt, n = n()), "constant")
+  expect_error(slice_head(dt, prop = n()), "constant")
+  expect_error(slice_tail(dt, n = n()), "constant")
+  expect_error(slice_tail(dt, prop = n()), "constant")
+  expect_error(slice_min(dt, x, n = n()), "constant")
+  expect_error(slice_min(dt, x, prop = n()), "constant")
+  expect_error(slice_max(dt, x, n = n()), "constant")
+  expect_error(slice_max(dt, x, prop = n()), "constant")
+  expect_error(slice_sample(dt, n = n()), "constant")
+  expect_error(slice_sample(dt, prop = n()), "constant")
 })
 
 test_that("check_slice_catches common errors", {
@@ -153,36 +153,39 @@ test_that("check_slice_catches common errors", {
   })
 })
 
-test_that("slice_head/slice_tail correctly slice ungrouped df when n < 0", {
-  df <- data.frame(x = 1:10)
+test_that("slice_head/slice_tail correctly slice ungrouped dt when n < 0", {
+  dt <- lazy_dt(data.frame(x = 1:10))
 
   expect_equal(
-    slice_head(df, n = -2),
-    slice_head(df, n = nrow(df) - 2)
+    slice_head(dt, n = -2),
+    slice_head(dt, n = nrow(dt) - 2)
   )
   expect_equal(
-    slice_tail(df, n = -2),
-    slice_tail(df, n = nrow(df) - 2)
+    slice_tail(dt, n = -2),
+    slice_tail(dt, n = nrow(dt) - 2)
   )
 })
 
-test_that("slice_head/slice_tail correctly slice grouped df when n < 0", {
-  df <- data.frame(x = 1:10, g = c(rep(1, 8), rep(2, 2))) %>% group_by(g)
+test_that("slice_head/slice_tail correctly slice grouped dt when n < 0", {
+  dt <-
+    data.frame(x = 1:10, g = c(rep(1, 8), rep(2, 2))) %>%
+    lazy_dt() %>%
+    group_by(g)
 
   expect_equal(
-    slice_head(df, n = -3),
-    slice(df, rlang::seq2(1L, n() - 3))
+    slice_head(dt, n = -3),
+    slice(dt, rlang::seq2(1L, n() - 3))
   )
   expect_equal(
-    n_groups(slice_head(df, n = -3)),
+    n_groups(slice_head(dt, n = -3)),
     1L
   )
   expect_equal(
-    slice_tail(df, n = -3),
-    slice(df, rlang::seq2(3 + 1, n()))
+    slice_tail(dt, n = -3),
+    slice(dt, rlang::seq2(3 + 1, n()))
   )
   expect_equal(
-    n_groups(slice_tail(df, n = -3)),
+    n_groups(slice_tail(dt, n = -3)),
     1L
   )
 
