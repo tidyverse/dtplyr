@@ -88,7 +88,7 @@ slice.data.table <- function(.data, ...) {
 slice_head.dtplyr_step <- function(.data, ..., n, prop) {
   ellipsis::check_dots_empty()
   size <- get_slice_size(n, prop, "slice_head")
-  i <- expr(seq2(1L, !!size))
+  i <- expr(rlang::seq2(1L, !!size))
   step_subset_i(.data, i = i)
 }
 
@@ -104,7 +104,7 @@ slice_head.data.table <- function(.data, ..., n, prop) {
 slice_tail.dtplyr_step <- function(.data, ..., n, prop) {
   ellipsis::check_dots_empty()
   size <- get_slice_size(n, prop, "slice_tail")
-  i <- expr(seq2(.N - !!size + 1L, .N))
+  i <- expr(rlang::seq2(.N - !!size + 1L, .N))
   step_subset_i(.data, i = i)
 }
 
