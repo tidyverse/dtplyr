@@ -87,7 +87,7 @@ slice.data.table <- function(.data, ...) {
 #' @export
 slice_head.dtplyr_step <- function(.data, ..., n, prop) {
   ellipsis::check_dots_empty()
-  size <- get_slice_size(n, prop)
+  size <- get_slice_size(n, prop, "slice_head")
   i <- expr(seq2(1L, !!size))
   step_subset_i(.data, i = i)
 }
@@ -103,7 +103,7 @@ slice_head.data.table <- function(.data, ..., n, prop) {
 #' @export
 slice_tail.dtplyr_step <- function(.data, ..., n, prop) {
   ellipsis::check_dots_empty()
-  size <- get_slice_size(n, prop)
+  size <- get_slice_size(n, prop, "slice_tail")
   i <- expr(seq2(.N - !!size + 1L, .N))
   step_subset_i(.data, i = i)
 }
@@ -130,7 +130,8 @@ slice_min.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
     ...,
     n =  n,
     prop = prop,
-    with_ties = with_ties
+    with_ties = with_ties,
+    .slice_fn = "slice_min"
   )
 }
 
@@ -155,7 +156,8 @@ slice_max.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
     ...,
     n =  n,
     prop = prop,
-    with_ties = with_ties
+    with_ties = with_ties,
+    .slice_fn = "slice_max"
   )
 }
 
@@ -165,9 +167,10 @@ slice_max.data.table <- function(.data, order_by, ..., n, prop, with_ties = TRUE
   slice_max(.data, {{ order_by }}, ..., n = n, prop = prop, with_ties = with_ties)
 }
 
-slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties = TRUE) {
+slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties = TRUE,
+                          .slice_fn = "slice_min_max") {
   ellipsis::check_dots_empty()
-  size <- get_slice_size(n, prop)
+  size <- get_slice_size(n, prop, .slice_fn)
 
   order_by <- capture_dot(.data, {{ order_by }}, j = FALSE)
 
@@ -201,7 +204,7 @@ smaller_ranks <- function(x, y, ties.method = "min") {
 #' @inheritParams dplyr::slice
 #' @export
 slice_sample.dtplyr_step <- function(.data, ..., n, prop, weight_by = NULL, replace = FALSE) {
-  size <- get_slice_size(n, prop)
+  size <- get_slice_size(n, prop, "slice_sample")
   ellipsis::check_dots_empty()
 
   wt <- enexpr(weight_by)
