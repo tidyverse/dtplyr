@@ -157,12 +157,12 @@ test_that("slice_head/slice_tail correctly slice ungrouped dt when n < 0", {
   dt <- lazy_dt(data.frame(x = 1:10))
 
   expect_equal(
-    slice_head(dt, n = -2),
-    slice_head(dt, n = nrow(dt) - 2)
+    slice_head(dt, n = -2) %>% as_tibble(),
+    slice_head(dt, n = nrow(dt) - 2) %>% as_tibble()
   )
   expect_equal(
-    slice_tail(dt, n = -2),
-    slice_tail(dt, n = nrow(dt) - 2)
+    slice_tail(dt, n = -2) %>% as_tibble(),
+    slice_tail(dt, n = nrow(dt) - 2) %>% as_tibble()
   )
 })
 
@@ -173,16 +173,16 @@ test_that("slice_head/slice_tail correctly slice grouped dt when n < 0", {
     group_by(g)
 
   expect_equal(
-    slice_head(dt, n = -3),
-    slice(dt, rlang::seq2(1L, n() - 3))
+    slice_head(dt, n = -3) %>% as_tibble(),
+    slice(dt, rlang::seq2(1L, n() - 3)) %>% as_tibble()
   )
   expect_equal(
     n_groups(slice_head(dt, n = -3)),
     1L
   )
   expect_equal(
-    slice_tail(dt, n = -3),
-    slice(dt, rlang::seq2(3 + 1, n()))
+    slice_tail(dt, n = -3) %>% as_tibble(),
+    slice(dt, rlang::seq2(3 + 1, n())) %>% as_tibble()
   )
   expect_equal(
     n_groups(slice_tail(dt, n = -3)),
