@@ -53,6 +53,11 @@ test_that("functions silently truncate results", {
   expect_equal(dt %>% slice_sample(n = 6) %>% as_tibble() %>% nrow(), 5)
   expect_equal(dt %>% slice_min(x, n = 6) %>% as_tibble() %>% nrow(), 5)
   expect_equal(dt %>% slice_max(x, n = 6) %>% as_tibble() %>% nrow(), 5)
+  expect_equal(dt %>% slice_head(n = -6) %>% as_tibble() %>% nrow(), 0)
+  expect_equal(dt %>% slice_tail(n = -6) %>% as_tibble() %>% nrow(), 0)
+  expect_equal(dt %>% slice_sample(n = -6) %>% as_tibble() %>% nrow(), 0)
+  expect_equal(dt %>% slice_min(x, n = -6) %>% as_tibble() %>% nrow(), 0)
+  expect_equal(dt %>% slice_max(x, n = -6) %>% as_tibble() %>% nrow(), 0)
 })
 
 test_that("proportion rounds down", {
@@ -124,14 +129,70 @@ test_that("slice_*() checks for empty ...", {
   expect_error(slice_max(dt), "missing")
 })
 
+test_that("slice_*() checks for constant n= and prop=", {
+  df <- data.frame(x = 1:10)
+  expect_error(slice_head(df, n = n()), "constant")
+  expect_error(slice_head(df, prop = n()), "constant")
+  expect_error(slice_tail(df, n = n()), "constant")
+  expect_error(slice_tail(df, prop = n()), "constant")
+  expect_error(slice_min(df, x, n = n()), "constant")
+  expect_error(slice_min(df, x, prop = n()), "constant")
+  expect_error(slice_max(df, x, n = n()), "constant")
+  expect_error(slice_max(df, x, prop = n()), "constant")
+  expect_error(slice_sample(df, n = n()), "constant")
+  expect_error(slice_sample(df, prop = n()), "constant")
+})
+
 test_that("check_slice_catches common errors", {
   expect_snapshot(error = TRUE, {
     check_slice_size(n = 1, prop = 1)
     check_slice_size(n = "a")
     check_slice_size(prop = "a")
-    check_slice_size(n = -1)
-    check_slice_size(prop = -1)
+    check_slice_size(n = NA)
+    check_slice_size(prop = NA)
   })
+})
+
+test_that("slice_head/slice_tail correctly slice ungrouped df when n < 0", {
+  df <- data.frame(x = 1:10)
+
+  expect_equal(
+    slice_head(df, n = -2),
+    slice_head(df, n = nrow(df) - 2)
+  )
+  expect_equal(
+    slice_tail(df, n = -2),
+    slice_tail(df, n = nrow(df) - 2)
+  )
+})
+
+test_that("slice_head/slice_tail correctly slice grouped df when n < 0", {
+  df <- data.frame(x = 1:10, g = c(rep(1, 8), rep(2, 2))) %>% group_by(g)
+
+  expect_equal(
+    slice_head(df, n = -3),
+    slice(df, rlang::seq2(1L, n() - 3))
+  )
+  expect_equal(
+    n_groups(slice_head(df, n = -3)),
+    1L
+  )
+  expect_equal(
+    slice_tail(df, n = -3),
+    slice(df, rlang::seq2(3 + 1, n()))
+  )
+  expect_equal(
+    n_groups(slice_tail(df, n = -3)),
+    1L
+  )
+
+})
+
+test_that("Non-integer number of rows computed correctly", {
+  expect_equal(eval_tidy(get_slice_size(n = 1.6), list(.N = 10)), 1)
+  expect_equal(eval_tidy(get_slice_size(prop = 0.16), list(.N = 10)), 1)
+  expect_equal(eval_tidy(get_slice_size(n = -1.6), list(.N = 10)), 9)
+  expect_equal(eval_tidy(get_slice_size(prop = -0.16), list(.N = 10)), 9)
 })
 
 

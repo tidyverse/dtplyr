@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+*  `slice()` helpers (`slice_head()`, `slice_tail()`, `slice_min()`, `slice_max()` 
+   and `slice_sample()`) now accept negative values for `n` and `prop`.
+
 * `summarise()` now supports the `.groups` argument (@mgirlich, #245).
 
 * `filter()` now errors for named input, e.g. `filter(dt, x = 1)` (@mgirlich, #267).
