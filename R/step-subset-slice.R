@@ -311,15 +311,15 @@ get_slice_size <- function(n, prop, .slice_fn = "get_slice_size") {
 
   if (slice_input$type == "n") {
     if (slice_input$n < 0) {
-      out <- expr(max(.N + !!slice_input$n, 0L))
+      expr(max(.N + !!slice_input$n, 0L))
     } else {
-      out <- expr(min(!!slice_input$n, .N))
+      expr(min(!!slice_input$n, .N))
     }
   } else if (slice_input$type == "prop") {
     if (slice_input$prop < 0) {
-      out <- expr(max(.N + as.integer(!!slice_input$prop * .N), 0L))
+      expr(max(.N + as.integer(!!slice_input$prop * .N), 0L))
     } else {
-      out <- expr(min(as.integer(!!slice_input$prop * .N), .N))
+      expr(min(as.integer(!!slice_input$prop * .N), .N))
     }
   }
 }
