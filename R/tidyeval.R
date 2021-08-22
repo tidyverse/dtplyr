@@ -130,6 +130,9 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, "cur_group_rows")) {
     quote(.I)
   } else if (is_call(x, "desc")) {
+      if (!has_length(x, 2L)) {
+        abort("`desc()` expects exactly one argument.")
+      }
     x[[1]] <- sym("-")
     x[[2]] <- get_expr(x[[2]])
     x

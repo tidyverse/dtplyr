@@ -262,6 +262,10 @@ test_that("`desc(col)` is translated to `-col` inside arrange", {
   expect_equal(out$x, c("b", "a"))
 })
 
+test_that("desc() checks the number of arguments", {
+  expect_snapshot(error = TRUE, capture_dots(df, desc(a, b)))
+})
+
 test_that("n_distinct() is translated to uniqueN()", {
   # Works with multiple inputs
   expect_equal(
