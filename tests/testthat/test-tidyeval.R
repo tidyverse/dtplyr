@@ -263,7 +263,7 @@ test_that("`desc(col)` is translated to `-col` inside arrange", {
 })
 
 test_that("desc() checks the number of arguments", {
-  expect_snapshot(error = TRUE, capture_dots(df, desc(a, b)))
+  expect_snapshot(error = TRUE, capture_dot(df, desc(a, b)))
 })
 
 test_that("n_distinct() is translated to uniqueN()", {
