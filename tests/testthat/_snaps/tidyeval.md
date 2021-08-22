@@ -5,7 +5,7 @@
 # desc() checks the number of arguments
 
     Code
-      capture_dots(df, desc(a, b))
+      capture_dot(df, desc(a, b))
     Error <rlang_error>
       `desc()` expects exactly one argument.
 
