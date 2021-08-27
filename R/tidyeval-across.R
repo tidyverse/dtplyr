@@ -96,7 +96,9 @@ across_fun <- function(fun, env, data, j = TRUE) {
 dt_squash_formula <- function(x, env, data, j = TRUE, replace = quote(!!.x)) {
   call <- f_rhs(x)
   call <- replace_dot(call, replace)
-  call <- dt_squash_call(call, env, data, j = j)
+  if (is_call(call)) {
+    call <- dt_squash_call(call, env, data, j = j)
+  }
   call
 }
 
