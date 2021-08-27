@@ -63,9 +63,7 @@ test_that("across() captures anonymous functions", {
 
   expect_equal(
    capture_across(dt, across(a, function(x) log(x))),
-   quo_squash(list(
-     a = call2(function(x) log(x), quote(a))
-   ))
+   quo_squash(list(a = call2(function(x) log(x), quote(a))))
   )
 })
 
