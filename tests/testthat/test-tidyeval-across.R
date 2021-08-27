@@ -83,6 +83,11 @@ test_that("across() translates formulas", {
   )
 
   expect_equal(
+    capture_across(dt, across(a:b, ~2)),
+    exprs(a = 2, b = 2)
+  )
+
+  expect_equal(
     capture_across(dt, across(a:b, list(~log(.x)))),
     exprs(a = log(a), b = log(b))
   )
