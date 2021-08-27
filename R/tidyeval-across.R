@@ -60,10 +60,8 @@ dt_squash_if <- function(call, env, data, j = j, reduce = "&") {
 across_funs <- function(funs, env, data, j = TRUE) {
   if (is.null(funs)) {
     list(function(x, ...) x)
-  } else if (is_function(funs)) {
-    set_names(list(across_fun(funs, env, data, j = j)), 'anonymous_function')
-  } else if (is_symbol(funs)) {
-    set_names(list(across_fun(funs, env, data, j = j)), as.character(funs))
+  } else if (is_symbol(funs) || is_function(funs)) {
+    set_names(list(across_fun(funs, env, data, j = j)), as_label(funs))
   } else if (is.character(funs)) {
     names(funs)[names2(funs) == ""] <- funs
     lapply(funs, across_fun, env, data, j = j)
