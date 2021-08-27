@@ -60,6 +60,8 @@ dt_squash_if <- function(call, env, data, j = j, reduce = "&") {
 across_funs <- function(funs, env, data, j = TRUE) {
   if (is.null(funs)) {
     list(function(x, ...) x)
+  } else if (is_function(funs)) {
+    set_names(list(function(x, ...) call2(funs, x, ...)), 'anon')
   } else if (is_symbol(funs)) {
     set_names(list(across_fun(funs, env, data, j = j)), as.character(funs))
   } else if (is.character(funs)) {
@@ -75,7 +77,7 @@ across_funs <- function(funs, env, data, j = TRUE) {
     funs <- eval(funs, env)
     across_funs(funs, NULL)
   } else {
-    abort("`.fns` argument to dtplyr::across() must be a NULL, a function name, formula, or list")
+    abort("`.fns` argument to dtplyr::across() must be a NULL, a function, formula, or list")
   }
 }
 
