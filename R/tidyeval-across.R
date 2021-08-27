@@ -61,7 +61,7 @@ across_funs <- function(funs, env, data, j = TRUE) {
   if (is.null(funs)) {
     list(function(x, ...) x)
   } else if (is_function(funs)) {
-    set_names(list(function(x, ...) call2(funs, x, ...)), 'anon')
+    set_names(list(across_fun(funs, env, data, j = j)), 'anonymous_function')
   } else if (is_symbol(funs)) {
     set_names(list(across_fun(funs, env, data, j = j)), as.character(funs))
   } else if (is.character(funs)) {
@@ -82,14 +82,15 @@ across_funs <- function(funs, env, data, j = TRUE) {
 }
 
 across_fun <- function(fun, env, data, j = TRUE) {
-  if (is_symbol(fun) || is_string(fun)) {
+  if (is_symbol(fun) || is_string(fun) ||
+    is_call(fun, "function") || is_function(fun)) {
     function(x, ...) call2(fun, x, ...)
   } else if (is_call(fun, "~")) {
     call <- dt_squash_formula(fun, env, data, j = j, replace = quote(!!.x))
     function(x, ...) expr_interp(call, child_env(emptyenv(), .x = x))
   } else {
     abort(c(
-      ".fns argument to dtplyr::across() must contain a function name or a formula",
+      ".fns argument to dtplyr::across() must contain a function or a formula",
       x = paste0("Problem with ", expr_deparse(fun))
     ))
   }
