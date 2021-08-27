@@ -8,7 +8,15 @@ dt_squash_across <- function(call, env, data, j = j) {
 
   tbl <- simulate_vars(data, drop_groups = TRUE)
   .cols <- call$.cols %||% expr(everything())
-  locs <- tidyselect::eval_select(.cols, tbl, allow_rename = FALSE)
+
+  if (is_empty(tidyselect::eval_select(.cols, tbl, allow_rename = TRUE))) {
+    # Empty selection with allow_rename = FALSE causes an error.
+    # Remove this when https://github.com/r-lib/tidyselect/issues/221 is closed
+    locs <- integer(0)
+  } else {
+    locs <- tidyselect::eval_select(.cols, tbl, allow_rename = FALSE)
+  }
+
   cols <- syms(names(tbl))[locs]
 
   funs <- across_funs(call$.fns, env, data, j = j)
