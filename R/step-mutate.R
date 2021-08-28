@@ -16,7 +16,9 @@ step_mutate <- function(parent, new_vars = list(), nested = FALSE) {
 
 dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
   # i is always empty because we never mutate a subset
-  if (!x$nested) {
+  if (is_empty(x$new_vars)) {
+    j <- quote(.SD)
+  } else if (!x$nested) {
     j <- call2(":=", !!!x$new_vars)
   } else {
     mutate_list <- mutate_nested_vars(x$new_vars)
