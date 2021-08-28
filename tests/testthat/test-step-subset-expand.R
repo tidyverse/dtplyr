@@ -6,7 +6,7 @@ test_that("expand completes all values", {
 
   expect_equal(
     show_query(step),
-    expr(unique(DT)[CJ(x, y, unique = TRUE), on = .(x, y)])
+    expr(DT[, CJ(x = x, y = y, unique = TRUE)])
   )
   expect_equal(step$vars, c("x", "y"))
   expect_equal(nrow(out), 4)
@@ -29,7 +29,7 @@ test_that("works with unnamed vectors", {
 
   expect_equal(
     show_query(step),
-    expr(unique(DT[, .(x = x, V2 = 1:2)])[CJ(x, V2, unique = TRUE), on = .(x, V2)])
+    expr(DT[, CJ(x = x, V2 = 1:2, unique = TRUE)])
   )
   expect_equal(step$vars, c("x", "V2"))
   expect_equal(nrow(out), 4)
@@ -43,7 +43,7 @@ test_that("works with named vectors", {
 
   expect_equal(
     show_query(step),
-    expr(unique(DT[, .(x = x, val = 1:2)])[CJ(x, val, unique = TRUE), on = .(x, val)])
+    expr(DT[, CJ(x = x, val = 1:2, unique = TRUE)])
   )
   expect_equal(step$vars, c("x", "val"))
   expect_equal(nrow(out), 4)
@@ -61,7 +61,7 @@ test_that("expand respects groups", {
 
   expect_equal(
     show_query(step),
-    expr(unique(DT[, .(c, a, b)])[, .SD[CJ(a, b, unique = TRUE), on = .(a, b)], keyby = .(c)])
+    expr(DT[, CJ(a = a, b = b, unique = TRUE), keyby = .(c)])
   )
   expect_equal(step$vars, c("c", "a", "b"))
   expect_equal(out$a, c(1, 1, 2, 2, 1))
