@@ -105,3 +105,27 @@ test_that("emtpy mutate returns input", {
   expect_equal(mutate(dt), dt)
   expect_equal(mutate(dt, !!!list()), dt)
 })
+
+# .before and .after -----------------------------------------------------------
+
+test_that("can use .before and .after to control column position", {
+  dt <- lazy_dt(data.frame(x = 1, y = 2))
+  expect_named(
+    mutate(dt, z = 1) %>% as_tibble(),
+    c("x", "y", "z")
+  )
+  expect_named(
+    mutate(dt, z = 1, .before = x) %>% as_tibble(),
+    c("z", "x", "y")
+    )
+  expect_named(
+    mutate(dt, z = 1, .after = x) %>% as_tibble(),
+    c("x", "z", "y")
+    )
+
+  # but doesn't affect order of existing columns
+  expect_named(
+    mutate(dt, x = 1, .after = y) %>% as_tibble(),
+    c("x", "y")
+    )
+})
