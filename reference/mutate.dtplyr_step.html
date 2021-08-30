@@ -51,7 +51,9 @@
 
 <meta property="og:title" content="Create and modify columns — mutate.dtplyr_step" />
 <meta property="og:description" content="This is a method for the dplyr mutate() generic. It is translated to
-the j argument of [.data.table, using := to modify &quot;in place&quot;." />
+the j argument of [.data.table, using := to modify &quot;in place&quot;. If
+.before or .after is provided, the new columns are relocated with a call
+to data.table::setcolorder()." />
 <meta property="og:image" content="https://dtplyr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -169,11 +171,13 @@ the j argument of [.data.table, using := to modify &quot;in place&quot;." />
 
     <div class="ref-description">
     <p>This is a method for the dplyr <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> generic. It is translated to
-the <code>j</code> argument of <code>[.data.table</code>, using <code>:=</code> to modify "in place".</p>
+the <code>j</code> argument of <code>[.data.table</code>, using <code>:=</code> to modify "in place". If
+<code>.before</code> or <code>.after</code> is provided, the new columns are relocated with a call
+to <code><a href='https://Rdatatable.gitlab.io/data.table/reference/setcolorder.html'>data.table::setcolorder()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, .before <span class='op'>=</span> <span class='cn'>NULL</span>, .after <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,6 +191,14 @@ the <code>j</code> argument of <code>[.data.table</code>, using <code>:=</code> 
       <td><p>&lt;<a href='https://dplyr.tidyverse.org/reference/dplyr_data_masking.html'>data-masking</a>&gt; Name-value pairs.
 The name gives the name of the column in the output, and the value should
 evaluate to a vector.</p></td>
+    </tr>
+    <tr>
+      <th>.before, .after</th>
+      <td><p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a>
+
+&lt;<code><a href='https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html'>tidy-select</a></code>&gt; Optionally, control where new columns
+should appear (the default is to add to the right hand side). See
+<code><a href='https://dplyr.tidyverse.org/reference/relocate.html'>relocate()</a></code> for more details.</p></td>
     </tr>
     </table>
 
