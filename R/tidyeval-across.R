@@ -60,8 +60,8 @@ dt_squash_if <- function(call, env, data, j = j, reduce = "&") {
 across_funs <- function(funs, env, data, j = TRUE) {
   if (is.null(funs)) {
     list(function(x, ...) x)
-  } else if (is_symbol(funs)) {
-    set_names(list(across_fun(funs, env, data, j = j)), as.character(funs))
+  } else if (is_symbol(funs) || is_function(funs)) {
+    set_names(list(across_fun(funs, env, data, j = j)), as_label(funs))
   } else if (is.character(funs)) {
     names(funs)[names2(funs) == ""] <- funs
     lapply(funs, across_fun, env, data, j = j)
@@ -75,19 +75,20 @@ across_funs <- function(funs, env, data, j = TRUE) {
     funs <- eval(funs, env)
     across_funs(funs, NULL)
   } else {
-    abort("`.fns` argument to dtplyr::across() must be a NULL, a function name, formula, or list")
+    abort("`.fns` argument to dtplyr::across() must be a NULL, a function, formula, or list")
   }
 }
 
 across_fun <- function(fun, env, data, j = TRUE) {
-  if (is_symbol(fun) || is_string(fun)) {
+  if (is_symbol(fun) || is_string(fun) ||
+    is_call(fun, "function") || is_function(fun)) {
     function(x, ...) call2(fun, x, ...)
   } else if (is_call(fun, "~")) {
     call <- dt_squash_formula(fun, env, data, j = j, replace = quote(!!.x))
     function(x, ...) expr_interp(call, child_env(emptyenv(), .x = x))
   } else {
     abort(c(
-      ".fns argument to dtplyr::across() must contain a function name or a formula",
+      ".fns argument to dtplyr::across() must contain a function or a formula",
       x = paste0("Problem with ", expr_deparse(fun))
     ))
   }
@@ -96,7 +97,9 @@ across_fun <- function(fun, env, data, j = TRUE) {
 dt_squash_formula <- function(x, env, data, j = TRUE, replace = quote(!!.x)) {
   call <- f_rhs(x)
   call <- replace_dot(call, replace)
-  call <- dt_squash_call(call, env, data, j = j)
+  if (is_call(call)) {
+    call <- dt_squash_call(call, env, data, j = j)
+  }
   call
 }
 
