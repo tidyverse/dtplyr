@@ -49,7 +49,8 @@ to enforce them.}
 }
 \description{
 This is a method for the tidyr \code{expand()} generic. It is translated to
-\code{\link[data.table:J]{data.table::CJ()}}.
+\code{\link[data.table:J]{data.table::CJ()}}. Unlike the data.frame method, this method only retains
+factor levels present in the data.
 }
 \examples{
 library(tidyr)
@@ -64,12 +65,26 @@ fruits <- lazy_dt(tibble(
   weights = rnorm(6, as.numeric(size) + 2)
 ))
 
-# All possible combinations ---------------------------------------
-# Note that all defined, but not necessarily present, levels of the
-# factor variable `size` are retained.
-fruits \%>\% expand(type)
-fruits \%>\% expand(type, size)
-fruits \%>\% expand(type, size, year)
+# Factors ----------------------------------------------------------
+# When called on `fruits` defined above, the level "L" is not present in
+# the output of `expand(fruits, size)`, unlike the output of `expand()` when
+# `fruits` is a data.frame.
+
+fruits \%>\% expand(size) \%>\% as_tibble()
+#> # A tibble: 3 × 1
+#>   size
+#>   <fct>
+#> 1 XS
+#> 2 S
+#> 3 M
+fruits \%>\% as_tibble() \%>\% expand(size)
+#> # A tibble: 4 × 1
+#>   size
+#>   <fct>
+#> 1 XS
+#> 2 S
+#> 3 M
+#> 4 L
 
 # Other uses -------------------------------------------------------
 fruits \%>\% expand(type, size, 2010:2012)

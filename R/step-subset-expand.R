@@ -2,7 +2,8 @@
 #'
 #' @description
 #' This is a method for the tidyr `expand()` generic. It is translated to
-#' [data.table::CJ()].
+#' [data.table::CJ()]. Unlike the data.frame method, this method only retains
+#' factor levels present in the data.
 #'
 #' @param data A [lazy_dt()].
 #' @inheritParams tidyr::expand
@@ -20,13 +21,10 @@
 #' ))
 #'
 #' # Factors ----------------------------------------------------------
-#' # The output of `expand(<dtplyr_step>)` only contains levels of factor 
-#' # variables present in the data. This is in contrast to the output of 
-#' # `expand()` when the input is a data.frame, which retains all factor levels.
-#' # Using the `fruits` data, the level "L" is not be present in `expand()` 
-#' # output, unlike the output of `expand()` after converting `fruits()` to a
-#' # tibble.
-#' 
+#' # When called on `fruits` defined above, the level "L" is not present in
+#' # the output of `expand(fruits, size)`, unlike the output of `expand()` when
+#' # `fruits` is a data.frame.
+#'
 #' fruits %>% expand(size) %>% as_tibble()
 #' #> # A tibble: 3 × 1
 #' #>   size
@@ -54,6 +52,7 @@
 #' # Use with `right_join()` to fill in missing rows
 #' fruits %>% dplyr::right_join(all)
 # exported onLoad
+
 expand.dtplyr_step <- function(data, ..., .name_repair = "check_unique") {
   dots <- capture_dots(data, ..., .j = FALSE)
   dots <- dots[!vapply(dots, is_null, logical(1))]
