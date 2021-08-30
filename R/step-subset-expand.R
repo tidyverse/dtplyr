@@ -19,12 +19,29 @@
 #'   weights = rnorm(6, as.numeric(size) + 2)
 #' ))
 #'
-#' # All possible combinations ---------------------------------------
-#' # Note that all defined, but not necessarily present, levels of the
-#' # factor variable `size` are retained.
-#' fruits %>% expand(type)
-#' fruits %>% expand(type, size)
-#' fruits %>% expand(type, size, year)
+#' # Factors ----------------------------------------------------------
+#' # The output of `expand(<dtplyr_step>)` only contains levels of factor 
+#' # variables present in the data. This is in contrast to the output of 
+#' # `expand()` when the input is a data.frame, which retains all factor levels.
+#' # Using the `fruits` data, the level "L" is not be present in `expand()` 
+#' # output, unlike the output of `expand()` after converting `fruits()` to a
+#' # tibble.
+#' 
+#' fruits %>% expand(size) %>% as_tibble()
+#' #> # A tibble: 3 × 1
+#' #>   size
+#' #>   <fct>
+#' #> 1 XS
+#' #> 2 S
+#' #> 3 M
+#' fruits %>% as_tibble() %>% expand(size)
+#' #> # A tibble: 4 × 1
+#' #>   size
+#' #>   <fct>
+#' #> 1 XS
+#' #> 2 S
+#' #> 3 M
+#' #> 4 L
 #'
 #' # Other uses -------------------------------------------------------
 #' fruits %>% expand(type, size, 2010:2012)
