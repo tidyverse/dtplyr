@@ -52,7 +52,6 @@
 #' # Use with `right_join()` to fill in missing rows
 #' fruits %>% dplyr::right_join(all)
 # exported onLoad
-
 expand.dtplyr_step <- function(data, ..., .name_repair = "check_unique") {
   dots <- capture_dots(data, ..., .j = FALSE)
   dots <- dots[!vapply(dots, is_null, logical(1))]
