@@ -214,6 +214,13 @@
 <li><p><code><a href="https://tidyr.tidyverse.org/reference/separate.html">separate()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/269'>#269</a>)</p></li>
 </ul>
 </li>
+<li>
+<p><code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> now handles <code>.fns</code> arguments provided in the forms listed below. (<a href='https://github.com/eutwt'>@eutwt</a> <a href='https://github.com/tidyverse/dtplyr/issues/288'>#288</a>)</p>
+<ul>
+<li><p>Anonymous functions, such as <code>function(x) x + 1</code></p></li>
+<li><p>Formulas which don’t require a function call, such as <code>~ 1</code></p></li>
+</ul>
+</li>
 </ul>
 </div>
     <div id="dtplyr-110" class="section level1">
