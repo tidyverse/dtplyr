@@ -94,6 +94,10 @@
   
   * `separate()` (@markfairbanks, #269)
 
+* `mutate()` gains experimental new arguments `.before` and `.after` that allow 
+   you to control where the new columns are placed (as added in dplyr 1.0.0) 
+   (@eutwt #291).
+
 * `across()` now handles `.fns` arguments provided in the forms listed below. (@eutwt #288)
 
   * Anonymous functions, such as `function(x) x + 1`
