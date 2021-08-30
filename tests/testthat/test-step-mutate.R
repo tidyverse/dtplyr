@@ -117,15 +117,15 @@ test_that("can use .before and .after to control column position", {
   expect_named(
     mutate(dt, z = 1, .before = x) %>% as_tibble(),
     c("z", "x", "y")
-    )
+  )
   expect_named(
     mutate(dt, z = 1, .after = x) %>% as_tibble(),
     c("x", "z", "y")
-    )
+  )
 
   # but doesn't affect order of existing columns
   expect_named(
     mutate(dt, x = 1, .after = y) %>% as_tibble(),
     c("x", "y")
-    )
+  )
 })
