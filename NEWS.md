@@ -98,6 +98,12 @@
    you to control where the new columns are placed (as added in dplyr 1.0.0) 
    (@eutwt #291).
 
+* `across()` now handles `.fns` arguments provided in the forms listed below. (@eutwt #288)
+
+  * Anonymous functions, such as `function(x) x + 1`
+
+  * Formulas which don't require a function call, such as `~ 1`
+
 # dtplyr 1.1.0
 
 ## New features

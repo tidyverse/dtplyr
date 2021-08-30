@@ -58,6 +58,15 @@ test_that("across() translates functions", {
   )
 })
 
+test_that("across() captures anonymous functions", {
+  dt <- lazy_dt(data.frame(a = 1))
+
+  expect_equal(
+   capture_across(dt, across(a, function(x) log(x))),
+   list(a = call2(function(x) log(x), quote(a)))
+  )
+})
+
 test_that("dots are translated too", {
   fun <- function() {
     dt <- lazy_dt(data.frame(a = 1, b = 2))
@@ -80,6 +89,11 @@ test_that("across() translates formulas", {
   expect_equal(
     capture_across(dt, across(a, ~ .x / n())),
     exprs(a = a / .N)
+  )
+
+  expect_equal(
+    capture_across(dt, across(a:b, ~2)),
+    exprs(a = 2, b = 2)
   )
 
   expect_equal(
