@@ -94,6 +94,10 @@
   
   * `separate()` (@markfairbanks, #269)
 
+* `mutate()` gains experimental new arguments `.before` and `.after` that allow 
+   you to control where the new columns are placed (as added in dplyr 1.0.0) 
+   (@eutwt #291).
+
 # dtplyr 1.1.0
 
 ## New features
