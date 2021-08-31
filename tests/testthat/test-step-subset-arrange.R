@@ -28,7 +28,7 @@ test_that("can use with across", {
 
   expect_equal(
     dt %>% arrange(across(x:y)) %>% show_query(),
-    expr(DT[order(x, y)])
+    expr(DT[order(x = x, y = y)])
   )
 })
 
