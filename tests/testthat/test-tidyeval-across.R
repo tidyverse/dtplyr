@@ -97,36 +97,42 @@ test_that("across() gives informative errors", {
 })
 
 test_that("across() can use named selections", {
-  df <- lazy_dt(data.frame(x = 1, y = 2))
+  dt <- lazy_dt(data.frame(x = 1, y = 2))
 
   # no fns
   expect_equal(
-    df %>% summarise(across(c(a = x, b = y))) %>% as.data.frame(),
-    data.frame(a = 1, b = 2)
+    capture_across(dt, across(c(a = x, b = y))),
+    list(a = quote(x), b = quote(y))
   )
   expect_equal(
-    df %>% summarise(across(all_of(c(a = "x", b = "y")))) %>% as.data.frame(),
-    data.frame(a = 1, b = 2)
+    capture_across(dt, across(all_of(c(a = "x", b = "y")))),
+    list(a = quote(x), b = quote(y))
   )
 
   # one fn
   expect_equal(
-    df %>% summarise(across(c(a = x, b = y), mean)) %>% as.data.frame(),
-    data.frame(a = 1, b = 2)
+    capture_across(dt, across(c(a = x, b = y), mean)),
+    list(a = quote(mean(x)), b = quote(mean(y)))
   )
   expect_equal(
-    df %>% summarise(across(all_of(c(a = "x", b = "y")), mean)) %>% as.data.frame(),
-    data.frame(a = 1, b = 2)
+    capture_across(dt, across(all_of(c(a = "x", b = "y")), mean)),
+    list(a = quote(mean(x)), b = quote(mean(y)))
   )
 
   # multiple fns
   expect_equal(
-    df %>% summarise(across(c(a = x, b = y), list(mean = mean, sum = sum))) %>% as.data.frame(),
-    data.frame(a_mean = 1, a_sum = 1, b_mean = 2, b_sum = 2)
+    capture_across(dt, across(c(a = x, b = y), list(mean, nm = sum))),
+    list(
+      a_mean = quote(mean(x)), a_nm = quote(sum(x)),
+      b_mean = quote(mean(y)), b_nm = quote(sum(y))
+    )
   )
   expect_equal(
-    df %>% summarise(across(all_of(c(a = "x", b = "y")), list(mean = mean, sum = sum))) %>% as.data.frame(),
-    data.frame(a_mean = 1, a_sum = 1, b_mean = 2, b_sum = 2)
+    capture_across(dt, across(all_of(c(a = "x", b = "y")), list(mean, nm = sum))),
+    list(
+      a_mean = quote(mean(x)), a_nm = quote(sum(x)),
+      b_mean = quote(mean(y)), b_nm = quote(sum(y))
+    )
   )
 
 })
