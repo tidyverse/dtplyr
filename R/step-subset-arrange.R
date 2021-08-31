@@ -19,7 +19,6 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   if (!is_empty(dots)) {
     dots <- set_names(dots, NULL)
   }
-
   if (.by_group) {
     dots <- c(syms(.data$groups), dots)
   }
