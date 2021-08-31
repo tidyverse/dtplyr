@@ -16,9 +16,6 @@
 #' dt %>% arrange(across(mpg:disp))
 arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   dots <- capture_dots(.data, ..., .j = FALSE)
-  if (!is_empty(dots)) {
-    dots <- set_names(dots, NULL)
-  }
   if (.by_group) {
     dots <- c(syms(.data$groups), dots)
   }
@@ -28,6 +25,7 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   }
 
   # Order without grouping then restore
+  dots <- set_names(dots, NULL)
   step <- step_subset(.data, i = call2("order", !!!dots), groups = character())
   step_group(step, groups = .data$groups)
 }
