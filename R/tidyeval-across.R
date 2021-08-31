@@ -99,16 +99,16 @@ dt_squash_formula <- function(x, env, data, j = TRUE, replace = quote(!!.x)) {
 }
 
 across_names <- function(cols, funs, names = NULL, env = parent.frame()) {
-  n_times <- if (is_empty(funs)) 1 else length(funs)
-  if (n_times == 1) {
+  n_reps <- if (is_empty(funs)) 1 else length(funs)
+  if (n_reps == 1) {
     names <- names %||% "{.col}"
   } else {
     names <- names %||% "{.col}_{.fn}"
   }
 
   glue_env <- child_env(env,
-    .col = rep(cols, each = n_times),
-    .fn = rep(funs %||% seq_len(n_times), length(cols))
+    .col = rep(cols, each = n_reps),
+    .fn = rep(funs %||% seq_len(n_reps), length(cols))
   )
   glue::glue(names, .envir = glue_env)
 }
