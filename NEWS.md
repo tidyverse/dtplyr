@@ -1,7 +1,7 @@
 # dtplyr (development version)
 
 * `if_any()` and `if_all()` now default to `.cols = everything()` when `.cols` 
-  isn't provided (@markfairbanks, #231).
+  isn't provided (@eutwt, #231).
 
 * `summarise()` now supports the `.groups` argument (@mgirlich, #245).
 
