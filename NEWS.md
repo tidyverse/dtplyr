@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `across()` handles named selections (@eutwt #293)
+
 * `summarise()` now supports the `.groups` argument (@mgirlich, #245).
 
 * `filter()` now errors for named input, e.g. `filter(dt, x = 1)` (@mgirlich, #267).
