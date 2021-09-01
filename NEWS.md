@@ -1,6 +1,6 @@
 # dtplyr (development version)
 
-* `across()` handles named selections (@eutwt #293)
+* `across()` handles named selections (@eutwt #293).
 
 * `summarise()` now supports the `.groups` argument (@mgirlich, #245).
 
