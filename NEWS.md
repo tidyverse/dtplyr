@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* `if_any()` and `if_all()` now default to `.cols = everything()` when `.cols` 
+  isn't provided (@eutwt, #294).
+
 * `summarise()` now supports the `.groups` argument (@mgirlich, #245).
 
 * `filter()` now errors for named input, e.g. `filter(dt, x = 1)` (@mgirlich, #267).
