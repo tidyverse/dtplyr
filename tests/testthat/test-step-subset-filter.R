@@ -67,6 +67,16 @@ test_that("can use with across", {
     expr(DT[x > 0 | y > 0])
   )
 
+  expect_equal(
+    dt %>% filter(if_all(.fns = ~ . > 0)) %>% show_query(),
+    expr(DT[x > 0 & y > 0 & z > 0])
+  )
+  expect_equal(
+    dt %>% filter(if_any(.fns = ~ . > 0)) %>% show_query(),
+    expr(DT[x > 0 | y > 0 | z > 0])
+  )
+
+
 })
 
 test_that("can filter when grouped", {

@@ -43,7 +43,8 @@ dt_squash_if <- function(call, env, data, j = j, reduce = "&") {
   call <- match.call(dplyr::if_any, call, expand.dots = FALSE, envir = env)
 
   tbl <- simulate_vars(data, drop_groups = TRUE)
-  locs <- tidyselect::eval_select(call$.cols, tbl, allow_rename = FALSE)
+  .cols <- call$.cols %||% expr(everything())
+  locs <- tidyselect::eval_select(.cols, tbl, allow_rename = FALSE)
   cols <- syms(names(tbl))[locs]
 
   fun <- across_fun(call$.fns, env, data, j = j)
