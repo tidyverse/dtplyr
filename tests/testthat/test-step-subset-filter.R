@@ -67,6 +67,7 @@ test_that("can use with across", {
     expr(DT[x > 0 | y > 0])
   )
 
+  # .cols defaults to everything()
   expect_equal(
     dt %>% filter(if_all(.fns = ~ . > 0)) %>% show_query(),
     expr(DT[x > 0 & y > 0 & z > 0])
