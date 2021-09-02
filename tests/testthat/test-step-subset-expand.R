@@ -68,6 +68,48 @@ test_that("expand respects groups", {
   expect_equal(out$b, c(1, 2, 1, 2, 1))
 })
 
+test_that("expand handles group variables as arguments", {
+  dt <- lazy_dt(data.frame(x = 1, y = 2, z = 3), "DT")
+
+  # single group var, not redefined
+  res <- dt %>% group_by(x) %>% expand(x, y)
+  expect_equal(
+    show_query(res),
+    expr(DT[, CJ(x = x, y = y, unique = TRUE), keyby = .(x)][, `:=`("x", NULL)])
+  )
+  expect_equal(
+    res$groups,
+    "x"
+  )
+
+  # multiple group vars, not redefined
+  res <- dt %>% group_by(x, y) %>% expand(x, y, z)
+  expect_equal(
+    show_query(res),
+    expr(DT[, CJ(x = x, y = y, z = z, unique = TRUE), keyby = .(x, y)
+            ][, !!expr(!!c("x", "y") := NULL)])
+  )
+  expect_equal(
+    res$groups,
+    c("x", "y")
+  )
+
+  # redefined group var
+  res <- dt %>% group_by(x) %>% expand(x = 5, y)
+  expect_equal(
+    show_query(res),
+    expr(DT[, CJ(x = 5, y = y, unique = TRUE), keyby = .(x)][, `:=`("x", NULL)])
+  )
+  expect_equal(
+    res$groups,
+    c("x")
+  )
+  expect_equal(
+    as_tibble(res),
+    tibble(x = 5, y = 2)
+  )
+})
+
 test_that("NULL inputs", {
   tbl <- tibble(x = 1:5)
   dt <- lazy_dt(tbl, "DT")
