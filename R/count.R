@@ -68,7 +68,7 @@ check_name <- function(name, vars) {
         i = "Use `name = \"new_name\"` to pick a new name."
       ))
     }
-  } else if (!is.character(name) || length(name) != 1) {
+  } else if (!is_string(name)) {
     abort("`name` must be a single string.")
   }
 
