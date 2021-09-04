@@ -72,7 +72,7 @@ test_that("simple usage generates expected translation", {
 
   expect_equal(
     dt1 %>% semi_join(dt2, by = "x") %>% show_query(),
-    expr(dt1[dt2, on = .(x), nomatch = NULL, mult = "first"])
+    expr(dt1[dt2, j = !!c("x", "y", "a"), on = .(x), nomatch = NULL, mult = "first"])
   )
 })
 

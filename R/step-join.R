@@ -78,7 +78,7 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
     inner = call2("[", lhs, rhs, on = on, nomatch = NULL),
     right = call2("[", lhs, rhs, on = on, allow.cartesian = TRUE),
     anti = call2("[", lhs, call2("!", rhs), on = on),
-    semi = call2("[", lhs, rhs, on = on, nomatch = NULL, mult = 'first')
+    semi = call2("[", lhs, rhs, j = x$vars, on = on, nomatch = NULL, mult = 'first')
   )
 }
 
@@ -189,6 +189,7 @@ semi_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE) {
 #' @export
 semi_join.data.table <- function(x, y, ...) {
   x <- lazy_dt(x)
+  y <- lazy_dt(y)
   semi_join(x, y, ...)
 }
 
