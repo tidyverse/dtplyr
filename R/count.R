@@ -69,7 +69,7 @@ check_name <- function(name, vars) {
       ))
     }
   } else if (!is_string(name)) {
-    abort("`name` must be a single string.")
+    abort("`name` must be a string")
   }
 
   name
