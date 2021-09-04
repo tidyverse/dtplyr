@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* `semi_join()` is now translated as a single `[.data.table` call with `nomatch = NULL`
+  and `mult = 'first'` (@eutwt #296)
+
 * `if_any()` and `if_all()` now default to `.cols = everything()` when `.cols` 
   isn't provided (@eutwt, #294).
 
