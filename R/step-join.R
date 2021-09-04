@@ -78,7 +78,7 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
     inner = call2("[", lhs, rhs, on = on, nomatch = NULL),
     right = call2("[", lhs, rhs, on = on, allow.cartesian = TRUE),
     anti = call2("[", lhs, call2("!", rhs), on = on),
-    semi = call2("[", lhs, call2("unique", call2("[", lhs, rhs, which = TRUE, nomatch = NULL, on = on)))
+    semi = call2("[", lhs, rhs, on = on, nomatch = NULL, mult = 'first')
   )
 }
 
