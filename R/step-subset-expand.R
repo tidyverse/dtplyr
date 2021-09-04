@@ -59,7 +59,9 @@ expand.dtplyr_step <- function(data, ..., .name_repair = "check_unique") {
   dots_names <- names(dots)
 
   out <- step_subset_j(
-    data, j = expr(CJ(!!!dots, unique = TRUE)), vars = c(data$groups, dots_names)
+    data, 
+    vars = union(data$groups, dots_names),
+    j = expr(CJ(!!!dots, unique = TRUE))
   )
 
   # Delete duplicate columns if group vars are expanded
@@ -68,7 +70,7 @@ expand.dtplyr_step <- function(data, ..., .name_repair = "check_unique") {
     expanded_group_vars <- dots_names[dots_names %in% group_vars]
 
     out <- step_subset(
-      out, j = expr(!!expanded_group_vars := NULL), groups = character()
+      out, groups = character(), j = expr(!!expanded_group_vars := NULL)
     )
     out <- group_by(out, !!!syms(group_vars))
   }
