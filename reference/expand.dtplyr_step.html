@@ -242,7 +242,7 @@ to enforce them.</p></td>
 <span class='co'># factor variable `size` are retained.</span>
 <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [2 x 1]
-#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type)])[CJ(type, unique = TRUE), on = .(type)]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[, CJ(type = type, unique = TRUE)]
 #&gt; 
 #&gt;   type  
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> 
@@ -251,8 +251,7 @@ to enforce them.</p></td>
 #&gt; 
 #&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [6 x 2]
-#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type, size)])[CJ(type, size, unique = TRUE), 
-#&gt;     on = .(type, size)]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[, CJ(type = type, size = size, unique = TRUE)]
 #&gt; 
 #&gt;   type   size 
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>
@@ -265,8 +264,7 @@ to enforce them.</p></td>
 #&gt; 
 #&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span>, <span class='va'>year</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [12 x 3]
-#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, unique = TRUE), 
-#&gt;     on = .(type, size, year)]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[, CJ(type = type, size = size, year = year, unique = TRUE)]
 #&gt; 
 #&gt;   type  size   year
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -282,8 +280,7 @@ to enforce them.</p></td>
 <span class='co'># Other uses -------------------------------------------------------</span>
 <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span>, <span class='fl'>2010</span><span class='op'>:</span><span class='fl'>2012</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [18 x 3]
-#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type = type, size = size, V3 = 2010:2012)])[CJ(type, 
-#&gt;     size, V3, unique = TRUE), on = .(type, size, V3)]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[, CJ(type = type, size = size, V3 = 2010:2012, unique = TRUE)]
 #&gt; 
 #&gt;   type  size     V3
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
@@ -300,8 +297,7 @@ to enforce them.</p></td>
 <span class='va'>all</span> <span class='op'>&lt;-</span> <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span>, <span class='va'>year</span><span class='op'>)</span>
 <span class='va'>all</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [12 x 3]
-#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, unique = TRUE), 
-#&gt;     on = .(type, size, year)]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[, CJ(type = type, size = size, year = year, unique = TRUE)]
 #&gt; 
 #&gt;   type  size   year
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -315,8 +311,8 @@ to enforce them.</p></td>
 #&gt; 
 #&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>all</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter-joins.html'>anti_join</a></span><span class='op'>(</span><span class='va'>fruits</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = c("type", "size", "year")</span></div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [8 x 3]
-#&gt; <span style='font-weight: bold;'>Call:   </span>unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, unique = TRUE), 
-#&gt;     on = .(type, size, year)][!`_DT8`, on = .(type, size, year)]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[, CJ(type = type, size = size, year = year, unique = TRUE)][!`_DT8`, 
+#&gt;     on = .(type, size, year)]
 #&gt; 
 #&gt;   type   size   year
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
@@ -332,9 +328,8 @@ to enforce them.</p></td>
 <span class='co'># Use with `right_join()` to fill in missing rows</span>
 <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>right_join</a></span><span class='op'>(</span><span class='va'>all</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = c("type", "year", "size")</span></div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [14 x 4]
-#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[unique(`_DT8`[, .(type, size, year)])[CJ(type, size, year, 
-#&gt;     unique = TRUE), on = .(type, size, year)], on = .(type, year, 
-#&gt;     size), allow.cartesian = TRUE]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[`_DT8`[, CJ(type = type, size = size, year = year, unique = TRUE)], 
+#&gt;     on = .(type, year, size), allow.cartesian = TRUE]
 #&gt; 
 #&gt;   type   year size  weights
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>

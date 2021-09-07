@@ -222,9 +222,8 @@ use instead of <code>NA</code> for missing combinations.</p></td>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/complete.html'>complete</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [4 x 3]
-#&gt; <span style='font-weight: bold;'>Call:   </span>merge(unique(`_DT4`[, .(x, y)])[CJ(x, y, unique = TRUE), on = .(x, 
-#&gt;     y)], `_DT4`, all = TRUE, by.x = c("x", "y"), by.y = c("x", 
-#&gt; "y"), allow.cartesian = TRUE)
+#&gt; <span style='font-weight: bold;'>Call:   </span>merge(`_DT4`[, CJ(x = x, y = y, unique = TRUE)], `_DT4`, all = TRUE, 
+#&gt;     by.x = c("x", "y"), by.y = c("x", "y"), allow.cartesian = TRUE)
 #&gt; 
 #&gt;       x     y     z
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
@@ -237,9 +236,9 @@ use instead of <code>NA</code> for missing combinations.</p></td>
 <span class='va'>dt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/complete.html'>complete</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='fl'>10L</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [4 x 3]
-#&gt; <span style='font-weight: bold;'>Call:   </span>merge(unique(`_DT4`[, .(x, y)])[CJ(x, y, unique = TRUE), on = .(x, 
-#&gt;     y)], `_DT4`, all = TRUE, by.x = c("x", "y"), by.y = c("x", 
-#&gt; "y"), allow.cartesian = TRUE)[, `:=`(z = fcoalesce(z, 10L))]
+#&gt; <span style='font-weight: bold;'>Call:   </span>merge(`_DT4`[, CJ(x = x, y = y, unique = TRUE)], `_DT4`, all = TRUE, 
+#&gt;     by.x = c("x", "y"), by.y = c("x", "y"), allow.cartesian = TRUE)[, 
+#&gt;     `:=`(z = fcoalesce(z, 10L))]
 #&gt; 
 #&gt;       x     y     z
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
