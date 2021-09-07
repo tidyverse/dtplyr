@@ -39,12 +39,7 @@ tally.dtplyr_step <- function(.data, wt = NULL, sort = FALSE, name = NULL) {
   } else {
     n <- expr(sum(!!wt, na.rm = TRUE))
   }
-
-  if (is.null(name)) {
-    name <- "n"
-  } else if (!is_string(name)) {
-    abort("`name` must be a string")
-  }
+  name <- check_name(name, .data$groups)
 
   out <- summarise(.data, !!name := !!n)
 
@@ -60,3 +55,32 @@ tally.data.table <- function(.data, ...) {
   .data <- lazy_dt(.data)
   tally(.data, ...)
 }
+
+# Helpers -----------------------------------------------------------------
+
+check_name <- function(name, vars) {
+  if (is.null(name)) {
+    name <- n_name(vars)
+
+    if (name != "n") {
+      inform(c(
+        glue::glue("Storing counts in `{name}`, as `n` already present in input"),
+        i = "Use `name = \"new_name\"` to pick a new name."
+      ))
+    }
+  } else if (!is_string(name)) {
+    abort("`name` must be a string")
+  }
+
+  name
+}
+
+n_name <- function(x) {
+  name <- "n"
+  while (name %in% x) {
+    name <- paste0("n", name)
+  }
+
+  name
+}
+
