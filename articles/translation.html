@@ -398,9 +398,9 @@
 <span class="co">#&gt; # A tibble: 3 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 filter     826.59µs 870.43µs     1129.        0B    12.6 </span>
-<span class="co">#&gt; 2 mutate       1.46ms   1.55ms      589.        0B     8.59</span>
-<span class="co">#&gt; 3 summarise  905.95µs 997.31µs      972.        0B    10.4</span></code></pre></div>
+<span class="co">#&gt; 1 filter     832.56µs 939.42µs     1009.        0B    10.5 </span>
+<span class="co">#&gt; 2 mutate       1.47ms   1.67ms      575.        0B    11.1 </span>
+<span class="co">#&gt; 3 summarise   990.9µs   1.28ms      751.        0B     6.22</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
