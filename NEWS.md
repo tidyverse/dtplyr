@@ -1,10 +1,6 @@
 # dtplyr (development version)
 
-* `tally()` and `count()` now follow the dplyr convention of creating a unique 
-  name if the default output `name` (n) already exists (@eutwt, #295).
-
-* Fixed a bug which prevented changing the value of a group variable with
-  `summarise()`, `tally()`, or `count()` (@eutwt, #295).
+* `desc()` now gives an error if more than one argument is provided (@eutwt #285).
 
 * `if_any()` and `if_all()` now default to `.cols = everything()` when `.cols` 
   isn't provided (@eutwt, #294).
