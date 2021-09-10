@@ -45,6 +45,10 @@ test_that("can weight", {
     dt %>% count(x, wt = y) %>% collect(),
     tibble(x = c(1, 2), n = c(3, 10))
   )
+  expect_equal(
+    dt %>% add_count(x, wt = y) %>% collect(),
+    dt %>% mutate(n = c(3, 3, 10)) %>% collect()
+  )
 })
 
 test_that("can sort", {
@@ -52,6 +56,10 @@ test_that("can sort", {
   expect_equal(
     dt %>% count(x, wt = y, sort = TRUE) %>% collect(),
     tibble(x = c(2, 1), n = c(10, 3))
+  )
+  expect_equal(
+    dt %>% add_count(x, wt = y, sort = TRUE) %>% collect(),
+    tibble(x = c(2, 1, 1), y = c(10, 1, 2), n = c(10, 3, 3))
   )
 })
 
@@ -87,4 +95,18 @@ test_that("name must be string", {
   dt <- lazy_dt(data.frame(x = c(1, 2)))
   expect_error(count(dt, x, name = 1), "string")
   expect_error(count(dt, x, name = letters), "string")
+})
+
+# add_count ---------------------------------------------------------------
+
+test_that("add_count() gives expected calls and groups", {
+  dt <- lazy_dt(data.frame(g = c(1, 2, 2, 2)), "DT")
+
+  res <- dt %>% add_count(g)
+  expect_equal(show_query(res), expr(copy(DT)[, `:=`(n = .N), by = .(g)]))
+  expect_equal(res$groups, character())
+
+  res <- dt %>% group_by(g) %>% add_count()
+  expect_equal(show_query(res), expr(copy(DT)[, `:=`(n = .N), by = .(g)]))
+  expect_equal(res$groups, "g")
 })

@@ -30,6 +30,25 @@ count.data.table <- function(.data, ...) {
   count(.data, ...)
 }
 
+#' @importFrom dplyr add_count
+#' @export
+add_count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) {
+  if (!missing(...)) {
+    out <- group_by(.data, ..., .add = TRUE)
+  } else {
+    out <- .data 
+  }
+  out <- add_tally(out, wt = !!enquo(wt), sort = sort, name = name)
+  out <- group_by(out, !!!syms(group_vars(.data)))
+  out
+}
+
+#' @export
+add_count.data.table <- function(.data, ...) {
+  .data <- lazy_dt(.data)
+  add_count(.data, ...)
+}
+
 #' @importFrom dplyr tally
 #' @export
 tally.dtplyr_step <- function(.data, wt = NULL, sort = FALSE, name = NULL) {
