@@ -6,7 +6,7 @@ test_that("expand completes all values", {
 
   expect_equal(
     show_query(step),
-    expr(unique(DT)[CJ(x, y, unique = TRUE), on = .(x, y)])
+    expr(DT[, CJ(x = x, y = y, unique = TRUE)])
   )
   expect_equal(step$vars, c("x", "y"))
   expect_equal(nrow(out), 4)
@@ -29,7 +29,7 @@ test_that("works with unnamed vectors", {
 
   expect_equal(
     show_query(step),
-    expr(unique(DT[, .(x = x, V2 = 1:2)])[CJ(x, V2, unique = TRUE), on = .(x, V2)])
+    expr(DT[, CJ(x = x, V2 = 1:2, unique = TRUE)])
   )
   expect_equal(step$vars, c("x", "V2"))
   expect_equal(nrow(out), 4)
@@ -43,7 +43,7 @@ test_that("works with named vectors", {
 
   expect_equal(
     show_query(step),
-    expr(unique(DT[, .(x = x, val = 1:2)])[CJ(x, val, unique = TRUE), on = .(x, val)])
+    expr(DT[, CJ(x = x, val = 1:2, unique = TRUE)])
   )
   expect_equal(step$vars, c("x", "val"))
   expect_equal(nrow(out), 4)
@@ -61,11 +61,53 @@ test_that("expand respects groups", {
 
   expect_equal(
     show_query(step),
-    expr(unique(DT[, .(c, a, b)])[, .SD[CJ(a, b, unique = TRUE), on = .(a, b)], keyby = .(c)])
+    expr(DT[, CJ(a = a, b = b, unique = TRUE), keyby = .(c)])
   )
   expect_equal(step$vars, c("c", "a", "b"))
   expect_equal(out$a, c(1, 1, 2, 2, 1))
   expect_equal(out$b, c(1, 2, 1, 2, 1))
+})
+
+test_that("expand handles group variables as arguments", {
+  dt <- lazy_dt(data.frame(x = 1, y = 2, z = 3), "DT")
+
+  # single group var, not redefined
+  res <- dt %>% group_by(x) %>% expand(x, y)
+  expect_equal(
+    show_query(res),
+    expr(DT[, CJ(x = x, y = y, unique = TRUE), keyby = .(x)][, `:=`("x", NULL)])
+  )
+  expect_equal(
+    res$groups,
+    "x"
+  )
+
+  # multiple group vars, not redefined
+  res <- dt %>% group_by(x, y) %>% expand(x, y, z)
+  expect_equal(
+    show_query(res),
+    expr(DT[, CJ(x = x, y = y, z = z, unique = TRUE), keyby = .(x, y)
+            ][, !!expr(!!c("x", "y") := NULL)])
+  )
+  expect_equal(
+    res$groups,
+    c("x", "y")
+  )
+
+  # redefined group var
+  res <- dt %>% group_by(x) %>% expand(x = 5, y)
+  expect_equal(
+    show_query(res),
+    expr(DT[, CJ(x = 5, y = y, unique = TRUE), keyby = .(x)][, `:=`("x", NULL)])
+  )
+  expect_equal(
+    res$groups,
+    c("x")
+  )
+  expect_equal(
+    as_tibble(res),
+    tibble(x = 5, y = 2)
+  )
 })
 
 test_that("NULL inputs", {

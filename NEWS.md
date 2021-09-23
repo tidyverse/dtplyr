@@ -1,6 +1,16 @@
 # dtplyr (development version)
 
+
 * `across()` handles named selections (@eutwt #293).
+
+* `tally()` and `count()` now follow the dplyr convention of creating a unique 
+  name if the default output `name` (n) already exists (@eutwt, #295).
+
+* Fixed a bug which prevented changing the value of a group variable with
+  `summarise()`, `tally()`, or `count()` (@eutwt, #295).
+
+* `if_any()` and `if_all()` now default to `.cols = everything()` when `.cols` 
+  isn't provided (@eutwt, #294).
 
 * `summarise()` now supports the `.groups` argument (@mgirlich, #245).
 
@@ -95,6 +105,16 @@
   * `nest()` (@mgirlich, #251)
   
   * `separate()` (@markfairbanks, #269)
+
+* `mutate()` gains experimental new arguments `.before` and `.after` that allow 
+   you to control where the new columns are placed (as added in dplyr 1.0.0) 
+   (@eutwt #291).
+
+* `across()` now handles `.fns` arguments provided in the forms listed below. (@eutwt #288)
+
+  * Anonymous functions, such as `function(x) x + 1`
+
+  * Formulas which don't require a function call, such as `~ 1`
 
 # dtplyr 1.1.0
 

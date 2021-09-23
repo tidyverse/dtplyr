@@ -66,11 +66,14 @@ test_that("column with `...j` name can be used as `names_from`", {
 # column names -------------------------------------------------------------
 
 test_that("names_glue affects output names & auto-converts data.table to lazy_dt", {
-  df <- data.table(
-    x = c("X", "Y"),
-    y = 1:2,
-    a = 1:2,
-    b = 1:2
+  df <- lazy_dt(
+    data.frame(
+      x = c("X", "Y"),
+      y = 1:2,
+      a = 1:2,
+      b = 1:2
+    ),
+    "DT"
   )
 
   step <- pivot_wider(df, names_from = x:y, values_from = a:b, names_glue = "{x}{y}_{.value}")
