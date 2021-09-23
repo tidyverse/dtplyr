@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+
+* `across()` handles named selections (@eutwt #293).
+
 * `tally()` and `count()` now follow the dplyr convention of creating a unique 
   name if the default output `name` (n) already exists (@eutwt, #295).
 
