@@ -11,8 +11,8 @@ step_subset <- function(parent,
 ) {
 
   stopifnot(is_step(parent))
-  stopifnot(is.null(i) || is_expression(i) || is_step(i))
-  stopifnot(is.null(j) || is_expression(j))
+  stopifnot(is_expression(i) || is_call(i) || is_step(i))
+  stopifnot(is_expression(j) || is_call(j))
   stopifnot(is.character(on))
 
   new_step(
