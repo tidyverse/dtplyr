@@ -168,73 +168,90 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#dtplyr-development-version" class="anchor"></a>dtplyr (development version)<small> Unreleased </small>
 </h1>
+<div id="new-authors" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-authors" class="anchor"></a>New authors</h2>
+<p>@markfairbanks and <a href='https://github.com/mgirlich'>@mgirlich</a> are now dtplyr authors in recognition of their significant and sustained contributions. Along with <a href='https://github.com/eutwt'>@eutwt</a>, they supplied the bulk of the improvements in this release!</p>
+</div>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> handles named selections (<a href='https://github.com/eutwt'>@eutwt</a> <a href='https://github.com/tidyverse/dtplyr/issues/293'>#293</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> now follow the dplyr convention of creating a unique name if the default output <code>name</code> (n) already exists (<a href='https://github.com/eutwt'>@eutwt</a>, <a href='https://github.com/tidyverse/dtplyr/issues/295'>#295</a>).</p></li>
-<li><p>Fixed a bug which prevented changing the value of a group variable with <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code>, or <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> (<a href='https://github.com/eutwt'>@eutwt</a>, <a href='https://github.com/tidyverse/dtplyr/issues/295'>#295</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/across.html">if_any()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/across.html">if_all()</a></code> now default to <code>.cols = everything()</code> when <code>.cols</code> isn’t provided (<a href='https://github.com/eutwt'>@eutwt</a>, <a href='https://github.com/tidyverse/dtplyr/issues/294'>#294</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> now supports the <code>.groups</code> argument (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/245'>#245</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> now errors for named input, e.g. <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter(dt, x = 1)</a></code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/267'>#267</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code> now supports the <code>name</code> argument (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/263'>#263</a>).</p></li>
-<li><p>@mgirlich is now a dtplyr author in recognition of his significant and sustained contributions.</p></li>
-<li><p>@markfairbanks is now a dtplyr author in recognition of his significant and sustained contributions.</p></li>
+<li>
+<p>dtplyr gains translations for many more tidyr verbs:</p>
+<ul>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/194'>#194</a>)</li>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/complete.html">complete()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/225'>#225</a>)</li>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/expand.html">expand()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/225'>#225</a>)</li>
+<li>
+<code><a href="https://Rdatatable.gitlab.io/data.table/reference/nafill.html">fill()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/197'>#197</a>)</li>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/204'>#204</a>)</li>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/replace_na.html">replace_na()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/202'>#202</a>)</li>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/nest.html">nest()</a></code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/251'>#251</a>)</li>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/separate.html">separate()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/269'>#269</a>)</li>
+</ul>
+</li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code> gains a translation (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/201'>#201</a>).</p></li>
+<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse()</a></code> is mapped to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">fifelse()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/220'>#220</a>).</p></li>
+</ul>
+</div>
+<div id="minor-improvements-and-bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
+<ul>
+<li>
+<p><code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> defaults to <code><a href="https://tidyselect.r-lib.org/reference/everything.html">everything()</a></code> when <code>.cols</code> isn’t provided (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/231'>#231</a>), and handles named selections (<a href='https://github.com/eutwt'>@eutwt</a> <a href='https://github.com/tidyverse/dtplyr/issues/293'>#293</a>). It ˜ow handles <code>.fns</code> arguments in more forms (<a href='https://github.com/eutwt'>@eutwt</a> <a href='https://github.com/tidyverse/dtplyr/issues/288'>#288</a>):</p>
+<ul>
+<li>Anonymous functions, such as <code>function(x) x + 1</code>
+</li>
+<li>Formulas which don’t require a function call, such as <code>~ 1</code>
+</li>
+</ul>
+</li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange(dt, desc(col))</a></code> is translated to <code>dt[order(-col)]</code> in order to take advantage of data.table’s fast order (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/227'>#227</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> applied to data.tables no longer breaks when dtplyr is loaded (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/201'>#201</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> supports use of <code>T</code> to specify the default (<a href='https://github.com/tidyverse/dtplyr/issues/272'>#272</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> errors for named input, e.g. <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter(dt, x = 1)</a></code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/267'>#267</a>) and works for negated logical columns (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/211'>@211</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> ungroups when no grouping variables are specified (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/248'>#248</a>), and supports inline mutation like <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by(dt, y = x)</a></code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/246'>#246</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code> named arguments are translated to the correct arguments in <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">data.table::fifelse()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/234'>#234</a>). <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code> supports <code>.data</code> and <code>.env</code> pronouns (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/220'>#220</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/across.html">if_any()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/across.html">if_all()</a></code> default to <code><a href="https://tidyselect.r-lib.org/reference/everything.html">everything()</a></code> when <code>.cols</code> isn’t provided (<a href='https://github.com/eutwt'>@eutwt</a>, <a href='https://github.com/tidyverse/dtplyr/issues/294'>#294</a>).</p></li>
+<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">intersect()</a></code>/<code><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">union()</a></code>/<code><a href="https://dplyr.tidyverse.org/reference/setops.html">union_all()</a></code>/<code><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">setdiff()</a></code> convert data.table inputs to <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/278'>#278</a>).</p></li>
+<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lag()</a></code>/<code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lead()</a></code> are translated to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">shift()</a></code>.</p></li>
+<li><p><code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> keeps groups (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/206'>#206</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> produces the same column order as dplyr (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/139'>#139</a>).</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> perform a cross join for <code>by = character()</code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/242'>#242</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> are now always translated to the <code>[.data.table</code> equivalent. For simple merges the translation gets a bit longer but thanks to the simpler code base it helps to better handle names in <code>by</code> and duplicated variables names produced in the data.table join (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/222'>#222</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute()</a></code> doesn’t produce duplicate columns when assigning to the same variable (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/249'>#249</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by(dt, y = x)</a></code> now works (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/246'>#246</a>).</p></li>
-<li><p>Group columns can now be mutated instead of creating another column with the same name (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/246'>#246</a>).</p></li>
-<li><p>Grouping variables can now be selected after a <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute()</a></code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/246'>#246</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> now ungroups when no grouping variables are specified (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/248'>#248</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> without any variables now work (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/248'>#248</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> removes variables in <code>...</code> from grouping (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/253'>#253</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> works for negated logical columns (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/211'>@211</a>).</p></li>
-<li><p>speed up <code>slice_*()</code> functions after <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/216'>#216</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> now works when ordering by a character column (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/218'>#218</a>).</p></li>
-<li><p><code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code> now names the columns correctly when <code>names_from</code> is a numeric column (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/214'>#214</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> now produces the same column order as <code>dplyr</code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/139'>#139</a>).</p></li>
-<li><p><code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> now keeps groups (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/206'>#206</a>).</p></li>
-<li><p>Loading <code>dtplyr</code> doesn’t break the <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> method on data.tables anymore (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/201'>#201</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code> is now translated (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/201'>#201</a>).</p></li>
-<li><p>Named arguments in <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code> are translated to the correct arguments in <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">data.table::fifelse()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/234'>#234</a>)</p></li>
-<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">ifelse()</a></code> is now mapped to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html">fifelse()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/220'>#220</a>).</p></li>
-<li><p><code>.data</code> and <code>.env</code> pronouns now work inside of <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/220'>#220</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange(dt, desc(col))</a></code> is now translated to <code>dt[order(-col)]</code> in order to utilize <code>data.table</code>’s fast order (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/227'>#227</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> now defaults to <code>.cols = everything()</code> when <code>.cols</code> isn’t provided (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/231'>#231</a>).</p></li>
-<li><p>Can use <code>T</code> to specify the default in <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>, (<a href='https://github.com/tidyverse/dtplyr/issues/272'>#272</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> are always translated to the <code>[.data.table</code> equivalent. For simple merges the translation gets a bit longer but thanks to the simpler code base it helps to better handle names in <code>by</code> and duplicated variables names produced in the data.table join (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/222'>#222</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute()</a></code> work when called without variables (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/248'>#248</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> gains new experimental arguments <code>.before</code> and <code>.after</code> that allow you to control where the new columns are placed (to match dplyr 1.0.0) (<a href='https://github.com/eutwt'>@eutwt</a> <a href='https://github.com/tidyverse/dtplyr/issues/291'>#291</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> can modify grouping columns (instead of creating another column with the same name) (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/246'>#246</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct()</a></code> is translated to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/duplicated.html">uniqueN()</a></code>.</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> follow the dplyr convention of creating a unique name if the default output <code>name</code> (n) already exists (<a href='https://github.com/eutwt'>@eutwt</a>, <a href='https://github.com/tidyverse/dtplyr/issues/295'>#295</a>).</p></li>
+<li><p><code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code> names the columns correctly when <code>names_from</code> is a numeric column (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/214'>#214</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code> supports the <code>name</code> argument (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/263'>#263</a>).</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code> no longer returns excess rows (<a href='https://github.com/tidyverse/dtplyr/issues/10'>#10</a>).</p></li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct()</a></code> is now mapped to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/duplicated.html">uniqueN()</a></code>.</p></li>
-<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lag()</a></code>/<code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">lead()</a></code> are now translated to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/shift.html">shift()</a></code>.</p></li>
-<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">intersect()</a></code>/<code><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">union()</a></code>/<code><a href="https://dplyr.tidyverse.org/reference/setops.html">union_all()</a></code>/<code><a href="https://Rdatatable.gitlab.io/data.table/reference/setops.html">setdiff()</a></code> convert all data.table inputs to a <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> (<a href='https://github.com/tidyverse/dtplyr/issues/278'>#278</a>).</p></li>
-<li>
-<p>More translations for tidyr verbs have been added:</p>
-<ul>
-<li><p><code><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/194'>#194</a>)</p></li>
-<li><p><code><a href="https://tidyr.tidyverse.org/reference/complete.html">complete()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/225'>#225</a>)</p></li>
-<li><p><code><a href="https://tidyr.tidyverse.org/reference/expand.html">expand()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/225'>#225</a>)</p></li>
-<li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/nafill.html">fill()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/197'>#197</a>)</p></li>
-<li><p><code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/204'>#204</a>)</p></li>
-<li><p><code><a href="https://tidyr.tidyverse.org/reference/replace_na.html">replace_na()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/202'>#202</a>)</p></li>
-<li><p><code><a href="https://tidyr.tidyverse.org/reference/nest.html">nest()</a></code> (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/251'>#251</a>)</p></li>
-<li><p><code><a href="https://tidyr.tidyverse.org/reference/separate.html">separate()</a></code> (<a href='https://github.com/markfairbanks'>@markfairbanks</a>, <a href='https://github.com/tidyverse/dtplyr/issues/269'>#269</a>)</p></li>
+<li><p><code>slice_*()</code> functions after <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> are faster (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/216'>#216</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> works when ordering by a character column (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/218'>#218</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> supports the <code>.groups</code> argument (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/245'>#245</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> can change the value of a grouping variables (<a href='https://github.com/eutwt'>@eutwt</a>, <a href='https://github.com/tidyverse/dtplyr/issues/295'>#295</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute()</a></code> doesn’t produce duplicate columns when assigning to the same variable (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/249'>#249</a>). It correctly flags grouping variables so they selected (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/246'>#246</a>).</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> removes variables in <code>...</code> from grouping (<a href='https://github.com/mgirlich'>@mgirlich</a>, <a href='https://github.com/tidyverse/dtplyr/issues/253'>#253</a>).</p></li>
 </ul>
-</li>
-<li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> gains experimental new arguments <code>.before</code> and <code>.after</code> that allow you to control where the new columns are placed (as added in dplyr 1.0.0) (<a href='https://github.com/eutwt'>@eutwt</a> <a href='https://github.com/tidyverse/dtplyr/issues/291'>#291</a>).</p></li>
-<li>
-<p><code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> now handles <code>.fns</code> arguments provided in the forms listed below. (<a href='https://github.com/eutwt'>@eutwt</a> <a href='https://github.com/tidyverse/dtplyr/issues/288'>#288</a>)</p>
-<ul>
-<li><p>Anonymous functions, such as <code>function(x) x + 1</code></p></li>
-<li><p>Formulas which don’t require a function call, such as <code>~ 1</code></p></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
     <div id="dtplyr-110" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.0">
 <a href="#dtplyr-110" class="anchor"></a>dtplyr 1.1.0<small> 2021-02-20 </small>
 </h1>
-<div id="new-features" class="section level2">
+<div id="new-features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>New features</h2>
+<a href="#new-features-1" class="anchor"></a>New features</h2>
 <ul>
 <li><p>All verbs now have (very basic) documentation pointing back to the dplyr generic, and providing a (very rough) description of the translation accompanied with a few examples.</p></li>
 <li><p>Passing a data.table to a dplyr generic now converts it to a <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code>, making it a little easier to move between data.table and dplyr syntax.</p></li>
@@ -271,9 +288,9 @@
 </li>
 </ul>
 </div>
-<div id="minor-improvements-and-bug-fixes" class="section level2">
+<div id="minor-improvements-and-bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
+<a href="#minor-improvements-and-bug-fixes-1" class="anchor"></a>Minor improvements and bug fixes</h2>
 <ul>
 <li><p>Grouped filter, mutate, and slice no longer affect ordering of output (<a href='https://github.com/tidyverse/dtplyr/issues/178'>#178</a>).</p></li>
 <li><p><code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> gains a <code>.name_repair</code> argument (<a href='https://github.com/markfairbanks'>@markfairbanks</a>).</p></li>
