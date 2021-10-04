@@ -45,5 +45,5 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: {library(tidyr); list(markdown = TRUE)}
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Config/testthat/edition: 3
