@@ -3,6 +3,17 @@
 *  `slice()` helpers (`slice_head()`, `slice_tail()`, `slice_min()`, `slice_max()` 
    and `slice_sample()`) now accept negative values for `n` and `prop`.
 
+* `across()` handles named selections (@eutwt #293).
+
+* `tally()` and `count()` now follow the dplyr convention of creating a unique 
+  name if the default output `name` (n) already exists (@eutwt, #295).
+
+* Fixed a bug which prevented changing the value of a group variable with
+  `summarise()`, `tally()`, or `count()` (@eutwt, #295).
+
+* `if_any()` and `if_all()` now default to `.cols = everything()` when `.cols` 
+  isn't provided (@eutwt, #294).
+
 * `summarise()` now supports the `.groups` argument (@mgirlich, #245).
 
 * `filter()` now errors for named input, e.g. `filter(dt, x = 1)` (@mgirlich, #267).
@@ -73,7 +84,11 @@
 
 * `slice()` no longer returns excess rows (#10).
 
-* `n_distinct()` is now mapped to `uniqueN()`
+* `n_distinct()` is now mapped to `uniqueN()`.
+
+* `lag()`/`lead()` are now translated to `shift()`.
+
+* `intersect()`/`union()`/`union_all()`/`setdiff()` convert all data.table inputs to a `lazy_dt()` (#278).
 
 * More translations for tidyr verbs have been added:
   
@@ -92,6 +107,16 @@
   * `nest()` (@mgirlich, #251)
   
   * `separate()` (@markfairbanks, #269)
+
+* `mutate()` gains experimental new arguments `.before` and `.after` that allow 
+   you to control where the new columns are placed (as added in dplyr 1.0.0) 
+   (@eutwt #291).
+
+* `across()` now handles `.fns` arguments provided in the forms listed below. (@eutwt #288)
+
+  * Anonymous functions, such as `function(x) x + 1`
+
+  * Formulas which don't require a function call, such as `~ 1`
 
 # dtplyr 1.1.0
 

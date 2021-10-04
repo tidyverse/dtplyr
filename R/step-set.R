@@ -54,6 +54,9 @@ dt_call.dtplyr_step_set <- function(x, needs_copy = x$needs_copy) {
 #'
 # Exported onload
 intersect.dtplyr_step <- function(x, y, ...) {
+  if (!is_step(y)) {
+    y <- lazy_dt(y)
+  }
   step_set(x, y, style = "intersect")
 }
 
@@ -67,6 +70,9 @@ intersect.data.table <- function(x, y, ...) {
 #' @rdname intersect.dtplyr_step
 # Exported onload
 union.dtplyr_step <- function(x, y, ...) {
+  if (!is_step(y)) {
+    y <- lazy_dt(y)
+  }
   step_set(x, y, style = "union")
 }
 
@@ -80,6 +86,9 @@ union.data.table <- function(x, y, ...) {
 #' @rdname intersect.dtplyr_step
 #' @export
 union_all.dtplyr_step <- function(x, y, ...) {
+  if (!is_step(y)) {
+    y <- lazy_dt(y)
+  }
   step_set(x, y, style = "union_all")
 }
 
@@ -93,6 +102,9 @@ union_all.data.table <- function(x, y, ...) {
 #' @rdname intersect.dtplyr_step
 # Exported onload
 setdiff.dtplyr_step <- function(x, y, ...) {
+  if (!is_step(y)) {
+    y <- lazy_dt(y)
+  }
   step_set(x, y, style = "setdiff")
 }
 

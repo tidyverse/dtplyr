@@ -56,16 +56,23 @@ expand.dtplyr_step <- function(data, ..., .name_repair = "check_unique") {
     names(dots)[symbol_dots] <- lapply(dots[symbol_dots], as_name)
   }
   names(dots) <- vctrs::vec_as_names(names(dots), repair = .name_repair)
+  dots_names <- names(dots)
 
-  on <- names(dots)
-  cj <- expr(CJ(!!!syms(on), unique = TRUE))
+  out <- step_subset_j(
+    data, 
+    vars = union(data$groups, dots_names),
+    j = expr(CJ(!!!dots, unique = TRUE))
+  )
 
-  out <- distinct(data, !!!syms(data$groups), !!!dots)
-  if (length(data$groups) == 0) {
-    out <- step_subset(out, i = cj, on = on)
-  } else {
-    on <- call2(".", !!!syms(on))
-    out <- step_subset(out, j = expr(.SD[!!cj, on = !!on]))
+  # Delete duplicate columns if group vars are expanded
+  if (any(dots_names %in% out$groups)) {
+    group_vars <- out$groups
+    expanded_group_vars <- dots_names[dots_names %in% group_vars]
+
+    out <- step_subset(
+      out, groups = character(), j = expr(!!expanded_group_vars := NULL)
+    )
+    out <- group_by(out, !!!syms(group_vars))
   }
 
   out

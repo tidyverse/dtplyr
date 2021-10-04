@@ -51,6 +51,15 @@ summarise.dtplyr_step <- function(.data, ..., .groups = NULL) {
     )
   }
 
+  replaced_group_vars <- intersect(.data$groups, names(dots))
+  if (!is_empty(replaced_group_vars)) {
+    out <- step_subset(
+      out,
+      groups = character(),
+      j = expr(!!replaced_group_vars := NULL)
+    )
+  }
+
   out_groups <- summarise_groups(.data, .groups, caller_env())
   step_group(out, groups = out_groups)
 }

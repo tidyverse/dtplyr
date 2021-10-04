@@ -102,3 +102,21 @@ test_that("summarise(.groups=)", {
 
   expect_snapshot_error(df %>% summarise(.groups = "rowwise"))
 })
+
+test_that("can change group vars", {
+  dt <- lazy_dt(data.frame(a = 1), "DT") %>% group_by(a)
+
+  res <- dt %>% summarise(a = 2)
+  expect_equal(
+    show_query(res),
+    expr(DT[, .(a = 2), keyby = .(a)][, `:=`("a", NULL)])
+  )
+  expect_equal(
+    as_tibble(res), tibble(a = 2)
+  )
+
+  # but not with across
+  expect_error(
+    dt %>% summarise(across(a, ~ 2)), "Column `a` doesn't exist"
+  )
+})
