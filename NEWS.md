@@ -1,28 +1,78 @@
 # dtplyr (development version)
 
+## New authors
+
+@markfairbanks and @mgirlich are now dtplyr authors in recognition of their significant and sustained contributions. Along with @eutwt, they supplied the bulk of the improvements in this release!
+
+## New features
+
+* dtplyr gains translations for many more tidyr verbs:
+  
+  * `drop_na()` (@markfairbanks, #194)
+  * `complete()` (@markfairbanks, #225)
+  * `expand()` (@markfairbanks, #225)
+  * `fill()` (@markfairbanks, #197)
+  * `pivot_longer()` (@markfairbanks, #204)
+  * `replace_na()` (@markfairbanks, #202)
+  * `nest()` (@mgirlich, #251)
+  * `separate()` (@markfairbanks, #269)
+
+* `tally()` is now translated (@mgirlich, #201).
+
+* `ifelse()` is now mapped to `fifelse()` (@markfairbanks, #220).
+
+## Minor improvements and bug fixes
+
+* `across()` defaults to `.cols = everything()` when `.cols` isn't provided 
+  (@markfairbanks, #231).
 
 * `across()` handles named selections (@eutwt #293).
 
-* `tally()` and `count()` now follow the dplyr convention of creating a unique 
-  name if the default output `name` (n) already exists (@eutwt, #295).
+* `across()` now handles `.fns` arguments provided in the forms listed below. (@eutwt #288)
 
-* Fixed a bug which prevented changing the value of a group variable with
-  `summarise()`, `tally()`, or `count()` (@eutwt, #295).
+  * Anonymous functions, such as `function(x) x + 1`
+
+  * Formulas which don't require a function call, such as `~ 1`
+
+* `arrange(dt, desc(col))` is now translated to `dt[order(-col)]` in order to 
+  take advantage of data.table's fast order (@markfairbanks, #227).
+
+* `count()` applied to data.tables no longer breaks when dtplyr is loaded 
+  (@mgirlich, #201).
+  
+* `case_when()` supports use of `T` to specify the default (#272).
+
+* `filter()` now errors for named input, e.g. `filter(dt, x = 1)` 
+  (@mgirlich, #267).
+
+* `filter()` works for negated logical columns (@mgirlich, @211).
+
+* `group_by()` now ungroups when no grouping variables are specified
+  (@mgirlich, #248).
+  
+* `group_by(dt, y = x)` now works (@mgirlich, #246).
+
+* Group columns can now be mutated instead of creating another column with the
+  same name (@mgirlich, #246).
+  
+* Grouping variables can now be selected after a `transmute()` (@mgirlich, #246).
+
+* `if_else()` named arguments are translated to the correct arguments in 
+  `data.table::fifelse()` (@markfairbanks, #234). `if_else()` now
+  supports `.data` and `.env` pronouns (@markfairbanks, #220).
 
 * `if_any()` and `if_all()` now default to `.cols = everything()` when `.cols` 
   isn't provided (@eutwt, #294).
 
-* `summarise()` now supports the `.groups` argument (@mgirlich, #245).
+* `intersect()`/`union()`/`union_all()`/`setdiff()` convert all data.table 
+   inputs to a `lazy_dt()` (#278).
 
-* `filter()` now errors for named input, e.g. `filter(dt, x = 1)` (@mgirlich, #267).
+* `lag()`/`lead()` are now translated to `shift()`.
 
-* `pull()` now supports the `name` argument (@mgirlich, #263).
+* `lazy_dt()` now keeps groups (@mgirlich, #206).
 
-* @mgirlich is now a dtplyr author in recognition of his significant and
-  sustained contributions.
-  
-* @markfairbanks is now a dtplyr author in recognition of his significant and
-  sustained contributions.
+* `left_join()` now produces the same column order as dplyr 
+  (@markfairbanks, #139).
 
 * `left_join()`, `right_join()`, `full_join()`, and `inner_join()` perform a
   cross join for `by = character()` (@mgirlich, #242).
@@ -33,88 +83,37 @@
   names in `by` and duplicated variables names produced in the data.table join
   (@mgirlich, #222).
   
-* `transmute()` doesn't produce duplicate columns when assigning to the same
-  variable (@mgirlich, #249).
-
-* `group_by(dt, y = x)` now works (@mgirlich, #246).
-
-* Group columns can now be mutated instead of creating another column with the
-  same name (@mgirlich, #246).
+* `mutate()` gains experimental new arguments `.before` and `.after` that allow 
+   you to control where the new columns are placed (as added in dplyr 1.0.0) 
+   (@eutwt #291).
   
-* Grouping variables can now be selected after a `transmute()` (@mgirlich, #246).
+* `n_distinct()` is now mapped to `uniqueN()`.
 
-* `group_by()` now ungroups when no grouping variables are specified (@mgirlich, #248).
-  
-* `transmute()` and `mutate()` without any variables now work (@mgirlich, #248).
-
-* `ungroup()` removes variables in `...` from grouping (@mgirlich, #253).
-
-* `filter()` works for negated logical columns (@mgirlich, @211).
-
-* speed up `slice_*()` functions after `group_by()` (@mgirlich, #216).
-
-* `slice_max()` now works when ordering by a character column (@mgirlich, #218).
+* `tally()` and `count()` now follow the dplyr convention of creating a unique 
+  name if the default output `name` (n) already exists (@eutwt, #295).
 
 * `pivot_wider()` now names the columns correctly when `names_from` is a
   numeric column (@mgirlich, #214).
 
-* `left_join()` now produces the same column order as `dplyr` (@markfairbanks, #139).
-
-* `lazy_dt()` now keeps groups (@mgirlich, #206).
-
-* Loading `dtplyr` doesn't break the `count()` method on data.tables anymore (@mgirlich, #201).
-
-* `tally()` is now translated (@mgirlich, #201).
-
-* Named arguments in `if_else()` are translated to the correct arguments in `data.table::fifelse()` 
-(@markfairbanks, #234)
-
-* `ifelse()` is now mapped to `fifelse()` (@markfairbanks, #220).
-
-* `.data` and `.env` pronouns now work inside of `if_else()` (@markfairbanks, #220).
-
-* `arrange(dt, desc(col))` is now translated to `dt[order(-col)]` in order to utilize
-`data.table`'s fast order (@markfairbanks, #227).
-
-* `across()` now defaults to `.cols = everything()` when `.cols` isn't provided (@markfairbanks, #231).
-
-* Can use `T` to specify the default in `case_when()`, (#272).
+* `pull()` now supports the `name` argument (@mgirlich, #263).
 
 * `slice()` no longer returns excess rows (#10).
 
-* `n_distinct()` is now mapped to `uniqueN()`.
+* `slice_*()` functions after `group_by()` are now faster (@mgirlich, #216).
 
-* `lag()`/`lead()` are now translated to `shift()`.
+* `slice_max()` now works when ordering by a character column (@mgirlich, #218).
 
-* `intersect()`/`union()`/`union_all()`/`setdiff()` convert all data.table inputs to a `lazy_dt()` (#278).
+* `summarise()` now supports the `.groups` argument (@mgirlich, #245).
 
-* More translations for tidyr verbs have been added:
-  
-  * `drop_na()` (@markfairbanks, #194)
-  
-  * `complete()` (@markfairbanks, #225)
-  
-  * `expand()` (@markfairbanks, #225)
-  
-  * `fill()` (@markfairbanks, #197)
-  
-  * `pivot_longer()` (@markfairbanks, #204)
-  
-  * `replace_na()` (@markfairbanks, #202)
-  
-  * `nest()` (@mgirlich, #251)
-  
-  * `separate()` (@markfairbanks, #269)
+* `summarise()`, `tally()`, and `count()` can now change the value of a grouping
+  variables (@eutwt, #295).
 
-* `mutate()` gains experimental new arguments `.before` and `.after` that allow 
-   you to control where the new columns are placed (as added in dplyr 1.0.0) 
-   (@eutwt #291).
+* `transmute()` doesn't produce duplicate columns when assigning to the same
+  variable (@mgirlich, #249).
 
-* `across()` now handles `.fns` arguments provided in the forms listed below. (@eutwt #288)
+* `transmute()` and `mutate()` without any variables now work (@mgirlich, #248).
 
-  * Anonymous functions, such as `function(x) x + 1`
-
-  * Formulas which don't require a function call, such as `~ 1`
+* `ungroup()` removes variables in `...` from grouping (@mgirlich, #253).
 
 # dtplyr 1.1.0
 
