@@ -17,24 +17,20 @@
   * `nest()` (@mgirlich, #251)
   * `separate()` (@markfairbanks, #269)
 
-* `tally()` is now translated (@mgirlich, #201).
+* `tally()` gains a translation (@mgirlich, #201).
 
-* `ifelse()` is now mapped to `fifelse()` (@markfairbanks, #220).
+* `ifelse()` is mapped to `fifelse()` (@markfairbanks, #220).
 
 ## Minor improvements and bug fixes
 
-* `across()` defaults to `.cols = everything()` when `.cols` isn't provided 
-  (@markfairbanks, #231).
+* `across()` defaults to `everything()` when `.cols` isn't provided 
+  (@markfairbanks, #231), and handles named selections (@eutwt #293).
+  It ˜ow handles `.fns` arguments in more forms (@eutwt #288): 
 
-* `across()` handles named selections (@eutwt #293).
+    * Anonymous functions, such as `function(x) x + 1`
+    * Formulas which don't require a function call, such as `~ 1`
 
-* `across()` now handles `.fns` arguments provided in the forms listed below. (@eutwt #288)
-
-  * Anonymous functions, such as `function(x) x + 1`
-
-  * Formulas which don't require a function call, such as `~ 1`
-
-* `arrange(dt, desc(col))` is now translated to `dt[order(-col)]` in order to 
+* `arrange(dt, desc(col))` is translated to `dt[order(-col)]` in order to 
   take advantage of data.table's fast order (@markfairbanks, #227).
 
 * `count()` applied to data.tables no longer breaks when dtplyr is loaded 
@@ -42,76 +38,73 @@
   
 * `case_when()` supports use of `T` to specify the default (#272).
 
-* `filter()` now errors for named input, e.g. `filter(dt, x = 1)` 
-  (@mgirlich, #267).
+* `filter()` errors for named input, e.g. `filter(dt, x = 1)` 
+  (@mgirlich, #267) and works for negated logical columns (@mgirlich, @211).
 
-* `filter()` works for negated logical columns (@mgirlich, @211).
-
-* `group_by()` now ungroups when no grouping variables are specified
-  (@mgirlich, #248).
-  
-* `group_by(dt, y = x)` now works (@mgirlich, #246).
-
-* Group columns can now be mutated instead of creating another column with the
-  same name (@mgirlich, #246).
-  
-* Grouping variables can now be selected after a `transmute()` (@mgirlich, #246).
+* `group_by()` ungroups when no grouping variables are specified
+  (@mgirlich, #248), and supports inline mutation like `group_by(dt, y = x)` 
+  (@mgirlich, #246).
 
 * `if_else()` named arguments are translated to the correct arguments in 
-  `data.table::fifelse()` (@markfairbanks, #234). `if_else()` now
+  `data.table::fifelse()` (@markfairbanks, #234). `if_else()`
   supports `.data` and `.env` pronouns (@markfairbanks, #220).
 
-* `if_any()` and `if_all()` now default to `.cols = everything()` when `.cols` 
-  isn't provided (@eutwt, #294).
+* `if_any()` and `if_all()` default to `everything()` when `.cols` isn't
+   provided (@eutwt, #294).
 
-* `intersect()`/`union()`/`union_all()`/`setdiff()` convert all data.table 
-   inputs to a `lazy_dt()` (#278).
+* `intersect()`/`union()`/`union_all()`/`setdiff()` convert data.table inputs 
+   to `lazy_dt()` (#278).
 
-* `lag()`/`lead()` are now translated to `shift()`.
+* `lag()`/`lead()` are translated to `shift()`.
 
-* `lazy_dt()` now keeps groups (@mgirlich, #206).
+* `lazy_dt()` keeps groups (@mgirlich, #206).
 
-* `left_join()` now produces the same column order as dplyr 
+* `left_join()` produces the same column order as dplyr 
   (@markfairbanks, #139).
 
 * `left_join()`, `right_join()`, `full_join()`, and `inner_join()` perform a
   cross join for `by = character()` (@mgirlich, #242).
   
-* `left_join()`, `right_join()`, and `inner_join()` are now always translated to
+* `left_join()`, `right_join()`, and `inner_join()` are always translated to
   the `[.data.table` equivalent. For simple merges the translation gets a bit
   longer but thanks to the simpler code base it helps to better handle
   names in `by` and duplicated variables names produced in the data.table join
   (@mgirlich, #222).
   
-* `mutate()` gains experimental new arguments `.before` and `.after` that allow 
-   you to control where the new columns are placed (as added in dplyr 1.0.0) 
+* `mutate()` and `transmute()` work when called without variables 
+  (@mgirlich, #248).
+
+* `mutate()` gains new experimental arguments `.before` and `.after` that allow 
+   you to control where the new columns are placed (to match dplyr 1.0.0) 
    (@eutwt #291).
   
-* `n_distinct()` is now mapped to `uniqueN()`.
+* `mutate()` can modify grouping columns (instead of creating another 
+  column with the same name) (@mgirlich, #246).
+  
+* `n_distinct()` is translated to `uniqueN()`.
 
-* `tally()` and `count()` now follow the dplyr convention of creating a unique 
+* `tally()` and `count()` follow the dplyr convention of creating a unique 
   name if the default output `name` (n) already exists (@eutwt, #295).
 
-* `pivot_wider()` now names the columns correctly when `names_from` is a
+* `pivot_wider()` names the columns correctly when `names_from` is a
   numeric column (@mgirlich, #214).
 
-* `pull()` now supports the `name` argument (@mgirlich, #263).
+* `pull()` supports the `name` argument (@mgirlich, #263).
 
 * `slice()` no longer returns excess rows (#10).
 
-* `slice_*()` functions after `group_by()` are now faster (@mgirlich, #216).
+* `slice_*()` functions after `group_by()` are faster (@mgirlich, #216).
 
-* `slice_max()` now works when ordering by a character column (@mgirlich, #218).
+* `slice_max()` works when ordering by a character column (@mgirlich, #218).
 
-* `summarise()` now supports the `.groups` argument (@mgirlich, #245).
+* `summarise()` supports the `.groups` argument (@mgirlich, #245).
 
-* `summarise()`, `tally()`, and `count()` can now change the value of a grouping
+* `summarise()`, `tally()`, and `count()` can change the value of a grouping
   variables (@eutwt, #295).
 
 * `transmute()` doesn't produce duplicate columns when assigning to the same
-  variable (@mgirlich, #249).
-
-* `transmute()` and `mutate()` without any variables now work (@mgirlich, #248).
+  variable (@mgirlich, #249). It correctly flags grouping variables so they
+  selected (@mgirlich, #246).
 
 * `ungroup()` removes variables in `...` from grouping (@mgirlich, #253).
 
