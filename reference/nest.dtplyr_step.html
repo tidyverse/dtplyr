@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Replace NAs with specified values — replace_na.dtplyr_step • dtplyr</title>
+<title>Nest — nest.dtplyr_step • dtplyr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,11 +49,10 @@
 
 
 
-<meta property="og:title" content="Replace NAs with specified values — replace_na.dtplyr_step" />
-<meta property="og:description" content="This is a method for the tidyr replace_na() generic. It is translated to
-data.table::fcoalesce().
-Note that unlike tidyr::replace_na(), data.table::fcoalesce() cannot
-replace NULL values in lists." />
+<meta property="og:title" content="Nest — nest.dtplyr_step" />
+<meta property="og:description" content="This is a method for the tidyr tidyr::nest() generic. It is translated
+using the non-nested variables in the by argument and .SD in the j
+argument." />
 <meta property="og:image" content="https://dtplyr.tidyverse.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -164,64 +163,71 @@ replace NULL values in lists." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Replace NAs with specified values</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/replace_na.R'><code>R/replace_na.R</code></a></small>
-    <div class="hidden name"><code>replace_na.dtplyr_step.Rd</code></div>
+    <h1>Nest</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidyverse/dtplyr/blob/master/R/step-nest.R'><code>R/step-nest.R</code></a></small>
+    <div class="hidden name"><code>nest.dtplyr_step.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is a method for the tidyr <code><a href='https://tidyr.tidyverse.org/reference/replace_na.html'>replace_na()</a></code> generic. It is translated to
-<code><a href='https://Rdatatable.gitlab.io/data.table/reference/coalesce.html'>data.table::fcoalesce()</a></code>.</p>
-<p>Note that unlike <code><a href='https://tidyr.tidyverse.org/reference/replace_na.html'>tidyr::replace_na()</a></code>, <code><a href='https://Rdatatable.gitlab.io/data.table/reference/coalesce.html'>data.table::fcoalesce()</a></code> cannot
-replace <code>NULL</code> values in lists.</p>
+    <p>This is a method for the tidyr <code><a href='https://tidyr.tidyverse.org/reference/nest.html'>tidyr::nest()</a></code> generic. It is translated
+using the non-nested variables in the <code>by</code> argument and <code>.SD</code> in the <code>j</code>
+argument.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dtplyr_step</span>
-<span class='fu'><a href='https://tidyr.tidyverse.org/reference/replace_na.html'>replace_na</a></span><span class='op'>(</span><span class='va'>data</span>, replace <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, .names_sep <span class='op'>=</span> <span class='cn'>NULL</span>, .key <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Deprecated.html'>deprecated</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>A <code><a href='lazy_dt.html'>lazy_dt()</a></code>.</p></td>
+      <th>.data</th>
+      <td><p>A data frame.</p></td>
     </tr>
     <tr>
-      <th>replace</th>
-      <td><p>If <code>data</code> is a data frame, <code>replace</code> takes a list of values,
-with one value for each column that has <code>NA</code> values to be replaced.</p>
-<p>If <code>data</code> is a vector, <code>replace</code> takes a single value. This single value
-replaces all of the <code>NA</code> values in the vector.</p></td>
+      <th>...</th>
+      <td><p>&lt;<code><a href='https://tidyr.tidyverse.org/reference/tidyr_tidy_select.html'>tidy-select</a></code>&gt; Columns to nest, specified
+using name-variable pairs of the form <code>new_col = c(col1, col2, col3)</code>.
+The right hand side can be any valid tidy select expression.</p></td>
+    </tr>
+    <tr>
+      <th>.names_sep</th>
+      <td><p>If <code>NULL</code>, the default, the names will be left
+as is. In <code><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest()</a></code>, inner names will come from the former outer names;
+in <code><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest()</a></code>, the new outer names will come from the inner names.</p>
+<p>If a string, the inner and outer names will be used together. In <code><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest()</a></code>,
+the names of the new outer columns will be formed by pasting together the
+outer and the inner column names, separated by <code>names_sep</code>. In <code><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest()</a></code>,
+the new inner names will have the outer names (+ <code>names_sep</code>) automatically
+stripped. This makes <code>names_sep</code> roughly symmetric between nesting and
+unnesting.</p></td>
+    </tr>
+    <tr>
+      <th>.key</th>
+      <td><p>Not supported.</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>A <code><a href='lazy_dt.html'>lazy_dt()</a></code>.</p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://tidyr.tidyverse.org'>"tidyr"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span>
 
-<span class='co'># Replace NAs in a data frame</span>
-<span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='cn'>NA</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='cn'>NA</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/replace_na.html'>replace_na</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='st'>"unknown"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [3 x 2]
-#&gt; <span style='font-weight: bold;'>Call:   </span>copy(`_DT34`)[, `:=`(x = fcoalesce(x, 0), y = fcoalesce(y, "unknown"))]
+  <span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [2 x 2]
+#&gt; <span style='font-weight: bold;'>Groups: </span>x
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT24`[, .(data = .(.SD)), by = .(x)]
 #&gt; 
-#&gt;       x y      
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  
-#&gt; <span style='color: #BCBCBC;'>1</span>     1 a      
-#&gt; <span style='color: #BCBCBC;'>2</span>     2 unknown
-#&gt; <span style='color: #BCBCBC;'>3</span>     0 b      
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
-<span class='co'># Replace NAs using `dplyr::mutate()`</span>
-<span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/replace_na.html'>replace_na</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [3 x 2]
-#&gt; <span style='font-weight: bold;'>Call:   </span>copy(`_DT34`)[, `:=`(x = fcoalesce(x, 0))]
-#&gt; 
-#&gt;       x y    
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>     1 a    
-#&gt; <span style='color: #BCBCBC;'>2</span>     2 <span style='color: #BB0000;'>NA</span>   
-#&gt; <span style='color: #BCBCBC;'>3</span>     0 b    
+#&gt;       x data                
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>              
+#&gt; <span style='color: #BCBCBC;'>1</span>     1 <span style='color: #949494;'>&lt;data.table [2 × 1]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>2</span>     2 <span style='color: #949494;'>&lt;data.table [1 × 1]&gt;</span>
 #&gt; 
 #&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div></pre>
   </div>
