@@ -3,7 +3,7 @@ test_that("across() translates NULL", {
 
   expect_equal(
     capture_across(dt, across(a:b)),
-    list(expr(a), expr(b))
+    list(a = expr(a), b = expr(b))
   )
 })
 
@@ -12,11 +12,11 @@ test_that("across() drops groups", {
 
   expect_equal(
     capture_across(group_by(dt, a), across(everything())),
-    list(expr(b))
+    list(b = expr(b))
   )
   expect_equal(
     capture_across(group_by(dt, b), across(everything())),
-    list(expr(a))
+    list(a = expr(a))
   )
 })
 
@@ -108,6 +108,56 @@ test_that("across() gives informative errors", {
     capture_across(dt, across(a, 1))
     capture_across(dt, across(a, list(1)))
   })
+})
+
+test_that("across() can use named selections", {
+  dt <- lazy_dt(data.frame(x = 1, y = 2))
+
+  # no fns
+  expect_equal(
+    capture_across(dt, across(c(a = x, b = y))),
+    list(a = quote(x), b = quote(y))
+  )
+  expect_equal(
+    capture_across(dt, across(all_of(c(a = "x", b = "y")))),
+    list(a = quote(x), b = quote(y))
+  )
+
+  # one fn
+  expect_equal(
+    capture_across(dt, across(c(a = x, b = y), mean)),
+    list(a = quote(mean(x)), b = quote(mean(y)))
+  )
+  expect_equal(
+    capture_across(dt, across(all_of(c(a = "x", b = "y")), mean)),
+    list(a = quote(mean(x)), b = quote(mean(y)))
+  )
+
+  # multiple fns
+  expect_equal(
+    capture_across(dt, across(c(a = x, b = y), list(mean, nm = sum))),
+    list(
+      a_mean = quote(mean(x)), a_nm = quote(sum(x)),
+      b_mean = quote(mean(y)), b_nm = quote(sum(y))
+    )
+  )
+  expect_equal(
+    capture_across(dt, across(all_of(c(a = "x", b = "y")), list(mean, nm = sum))),
+    list(
+      a_mean = quote(mean(x)), a_nm = quote(sum(x)),
+      b_mean = quote(mean(y)), b_nm = quote(sum(y))
+    )
+  )
+
+})
+
+test_that("across() can handle empty selection", {
+  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
+
+  expect_equal(
+    dt %>% mutate(across(character(), c)) %>% show_query(),
+    expr(copy(DT)[, .SD])
+  )
 })
 
 

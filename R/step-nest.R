@@ -6,6 +6,10 @@
 #' argument.
 #'
 #' @inheritParams tidyr::nest
+#' @param ... <[`tidy-select`][tidyr::tidyr_tidy_select]> Columns to nest, specified
+#'   using name-variable pairs of the form `new_col = c(col1, col2, col3)`.
+#'   The right hand side can be any valid tidy select expression.
+#' @param .key Not supported.
 #' @param data A [lazy_dt()].
 #' @examples
 #' if (require("tidyr", quietly = TRUE)) {
