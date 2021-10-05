@@ -105,8 +105,8 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
       sym(paste0("..", var))
     }
   } else if (is_call(x, c("coalesce", "replace_na"))) {
-    x[[1L]] <- quote(fcoalesce)
-    x
+    args <- lapply(call_args(x), dt_squash, env = env, data = data, j = j)
+    call2("fcoalesce", !!!args)
   } else if (is_call(x, "case_when")) {
     # case_when(x ~ y) -> fcase(x, y)
     args <- unlist(lapply(x[-1], function(x) {

@@ -94,6 +94,19 @@ test_that("translates coalesce()", {
   )
 })
 
+test_that("can use local variable with coalesce() and replace_na()", {
+  dt <- lazy_dt(data.frame(x = c(1, NA)), "dt")
+  n <- 10
+  expect_equal(
+    capture_dot(dt, coalesce(x, n)),
+    expr(fcoalesce(x, 10))
+  )
+  expect_equal(
+    capture_dot(dt, replace_na(x, n)),
+    expr(fcoalesce(x, 10))
+  )
+})
+
 test_that("translates case_when()", {
   dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
 
