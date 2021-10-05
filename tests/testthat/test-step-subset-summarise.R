@@ -83,6 +83,7 @@ test_that("summarise(.groups=)", {
     expr(lazy_dt(data.frame(x = 1, y = 2), "DT") %>% group_by(x, y) %>% dplyr::summarise() %>% show_query()),
     env(global_env())
   ))
+  skip_if(utils::packageVersion("rlang") < "0.5.0")
   expect_snapshot(eval_bare(
     expr(lazy_dt(data.frame(x = 1, y = 2), "DT") %>% group_by(x, y) %>% dplyr::summarise() %>% show_query()),
     env(global_env())

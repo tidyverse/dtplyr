@@ -39,8 +39,15 @@ reference:
 
 - title: tidyr verbs
   contents:
+  - complete.dtplyr_step
   - drop_na.dtplyr_step
+  - expand.dtplyr_step
+  - fill.dtplyr_step
+  - nest.dtplyr_step
   - pivot_wider.dtplyr_step
+  - pivot_longer.dtplyr_step
+  - replace_na.dtplyr_step
+  - separate.dtplyr_step
 
 news:
   releases:
