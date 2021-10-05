@@ -105,7 +105,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
       sym(paste0("..", var))
     }
   } else if (is_call(x, c("coalesce", "replace_na"))) {
-    args <- lapply(call_args(x), dt_squash, env = env, data = data, j = j)
+    args <- lapply(x[-1], dt_squash, env = env, data = data, j = j)
     call2("fcoalesce", !!!args)
   } else if (is_call(x, "case_when")) {
     # case_when(x ~ y) -> fcase(x, y)
@@ -154,6 +154,8 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
       type <- "lead"
       call <- match.call(dplyr::lead, x)
     }
+    call[-1] <- lapply(call[-1], dt_squash, env = env, data = data, j = j)
+
     shift_call <- call2("shift", x[[2]])
     if (!is_null(call$n)) {
       shift_call$n <- call$n

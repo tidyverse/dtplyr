@@ -144,6 +144,15 @@ test_that("translates lag()/lead()", {
   )
 })
 
+test_that("can use local variable with lag()/lead()", {
+  dt <- lazy_dt(data.frame(x = c(1, NA)), "dt")
+  n <- 10
+  expect_equal(
+    capture_dot(dt, lag(x, n)),
+    expr(shift(x, n = 10, type = "lag"))
+  )
+})
+
 test_that("can process many expressions in one go", {
   dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
   n <- 10
