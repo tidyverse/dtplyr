@@ -286,9 +286,14 @@ subset_left_join_colorder <- function(x, y, on_x, on_y) {
   # y[x, on]: y-vars, x-vars - on_x
   # left_join(x, y, on): x-vars, y-vars - on_y
 
-  x_out_dt <- setdiff(x, on_x)
-  x_loc <- vctrs::vec_match(x, x_out_dt) + length(y)
-  x_loc[is.na(x_loc)] <- vctrs::vec_match(on_y, y)
+  x_loc <- rep_along(x, NA_integer_)
+  # locations of x-vars not used in `on_x`
+  used_in_on_x <- x %in% on_x
+  x_loc[!used_in_on_x] <- seq_along(x[!used_in_on_x]) + length(y)
+  # locations of x-vars used in `on_x`
+  # They have a matching column in `y`. Map `x-vars` according to `on_x` and `on_y`
+  x <- dplyr::recode(x, !!!set_names(on_y, on_x))
+  x_loc[used_in_on_x] <- vctrs::vec_match(x[used_in_on_x], y)
 
   y_out_dt <- setdiff(y, on_y)
   y_loc <- vctrs::vec_match(y_out_dt, y)
