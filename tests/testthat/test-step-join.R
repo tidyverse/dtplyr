@@ -102,8 +102,8 @@ test_that("full_join produces correct names", {
 })
 
 test_that("join can handle `by` where order doesn't match input", {
-  dt1 <- lazy_dt(data.frame(a = "a", b = "b", c = "c"), name = "dt1")
-  dt2 <- lazy_dt(data.frame(a = "a", b = "b", c = "c", d = "d"), name = "dt2")
+  dt1 <- lazy_dt(tibble(a = "a", b = "b", c = "c"), name = "dt1")
+  dt2 <- lazy_dt(tibble(a = "a", b = "b", c = "c", d = "d"), name = "dt2")
 
   dt3 <- left_join(dt1, dt2, by = c("c", "b", "a"))
   expect_equal(dt3$vars, letters[1:4])
