@@ -102,36 +102,21 @@ test_that("full_join produces correct names", {
 })
 
 test_that("join can handle `by` where order doesn't match input", {
-  df1 <- data.frame(a = "a", b = "b", c = "c")
-  df2 <- data.frame(a = "a", b = "b", c = "c", d = "d")
+  dt1 <- lazy_dt(data.frame(a = "a", b = "b", c = "c"), name = "dt1")
+  dt2 <- lazy_dt(data.frame(a = "a", b = "b", c = "c", d = "d"), name = "dt2")
 
-  dt1 <- lazy_dt(df1, name = "dt1")
-  dt2 <- lazy_dt(df2, name = "dt2")
+  dt3 <- left_join(dt1, dt2, by = c("c", "b", "a"))
+  expect_equal(dt3$vars, letters[1:4])
+  expect_equal(collect(dt3), collect(dt2))
 
-  joined_dt <- left_join(dt1, dt2, by = c("c", "b", "a"))
-  expected <- left_join(df1, df2, by = c("c", "b", "a")) %>% colnames()
+  dt4 <- full_join(dt1, dt2, by = c("c", "b", "a"))
+  expect_equal(dt4$vars, letters[1:4])
+  expect_equal(collect(dt4), collect(dt2))
 
+  dt5 <- left_join(dt1, dt2, by = c("c", "b"))
   expect_equal(
-    joined_dt %>% .$vars,
-    expected
-  )
-
-  expect_equal(
-    joined_dt %>% collect() %>% colnames(),
-    expected
-  )
-
-  joined_dt2 <- full_join(dt1, dt2, by = c("c", "b", "a"))
-  expected2 <- full_join(df1, df2, by = c("c", "b", "a")) %>% colnames()
-
-  expect_equal(
-    joined_dt2 %>% .$vars,
-    expected2
-  )
-
-  expect_equal(
-    joined_dt2 %>% collect() %>% colnames(),
-    expected2
+    collect(dt5),
+    tibble(a.x = "a", b = "b", c = "c", a.y = "a", d = "d")
   )
 })
 
