@@ -53,7 +53,7 @@ test_that("simple usage generates expected translation", {
     dt1 %>% inner_join(dt2, by = "x") %>% show_query(),
     expr(
       setnames(
-        dt1[dt2, on = .(x), nomatch = NULL],
+        dt1[dt2, on = .(x), nomatch = NULL, allow.cartesian = TRUE],
         !!c("y", "i.y"),
         !!c("y.x", "y.y")
       )
@@ -151,7 +151,13 @@ test_that("named by converted to by.x and by.y", {
   out_inner <- inner_join(dt1, dt2, by = c('a1' = 'a2'))
   expect_equal(
     out_inner %>% show_query(),
-    expr(setnames(dt1[dt2, on = .(a1 = a2), nomatch = NULL], !!c("z", "i.z"), !!c("z.x", "z.y")))
+    expr(
+      setnames(
+        dt1[dt2, on = .(a1 = a2), nomatch = NULL, allow.cartesian = TRUE],
+        !!c("z", "i.z"),
+        !!c("z.x", "z.y")
+      )
+    )
   )
   expect_setequal(tbl_vars(out_inner), c("a1", "z.x", "z.y"))
 
