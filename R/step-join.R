@@ -75,7 +75,7 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
   switch(x$style,
     full = call2("merge", lhs, rhs, all = TRUE, by.x = x$on$x, by.y = x$on$y, allow.cartesian = TRUE),
     left = call2("[", lhs, rhs, on = on, allow.cartesian = TRUE),
-    inner = call2("[", lhs, rhs, on = on, nomatch = NULL),
+    inner = call2("[", lhs, rhs, on = on, nomatch = NULL, allow.cartesian = TRUE),
     right = call2("[", lhs, rhs, on = on, allow.cartesian = TRUE),
     anti = call2("[", lhs, call2("!", rhs), on = on),
     semi = call2("[", lhs, call2("unique", call2("[", lhs, rhs, which = TRUE, nomatch = NULL, on = on)))
