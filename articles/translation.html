@@ -259,7 +259,7 @@
 <code class="sourceCode R"><span class="va">dt2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">dt</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">dt2</span>, by <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; `_DT1`[`_DT2`, on = .(a), nomatch = NULL]</span>
+<span class="co">#&gt; `_DT1`[`_DT2`, on = .(a), nomatch = NULL, allow.cartesian = TRUE]</span>
 <span class="va">dt</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join</a></span><span class="op">(</span><span class="va">dt2</span>, by <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; `_DT1`[`_DT2`, on = .(a), allow.cartesian = TRUE]</span>
 <span class="va">dt</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">dt2</span>, by <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span>
@@ -398,9 +398,9 @@
 <span class="co">#&gt; # A tibble: 3 × 6</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 filter     727.11µs 919.46µs     1015.        0B     14.9</span>
-<span class="co">#&gt; 2 mutate       1.39ms   1.72ms      559.        0B     13.3</span>
-<span class="co">#&gt; 3 summarise  972.01µs   1.22ms      746.        0B     12.8</span></code></pre></div>
+<span class="co">#&gt; 1 filter     677.71µs 722.41µs     1372.        0B     20.1</span>
+<span class="co">#&gt; 2 mutate       1.26ms   1.34ms      745.        0B     19.6</span>
+<span class="co">#&gt; 3 summarise  843.41µs 886.16µs     1122.        0B     17.1</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">

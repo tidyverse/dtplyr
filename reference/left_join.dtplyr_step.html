@@ -259,7 +259,7 @@ Should be a character vector of length 2.</p></td>
 #&gt; 
 #&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>band_dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>instrument_dt</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "name"</span></div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [2 x 3]
-#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT21`[`_DT22`, on = .(name), nomatch = NULL]
+#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT21`[`_DT22`, on = .(name), nomatch = NULL, allow.cartesian = TRUE]
 #&gt; 
 #&gt;   name  band    plays 
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> 
