@@ -101,6 +101,25 @@ test_that("full_join produces correct names", {
   )
 })
 
+test_that("join can handle `by` where order doesn't match input", {
+  dt1 <- lazy_dt(tibble(a = "a", b = "b", c = "c"), name = "dt1")
+  dt2 <- lazy_dt(tibble(a = "a", b = "b", c = "c", d = "d"), name = "dt2")
+
+  dt3 <- left_join(dt1, dt2, by = c("c", "b", "a"))
+  expect_equal(dt3$vars, letters[1:4])
+  expect_equal(collect(dt3), collect(dt2))
+
+  dt4 <- full_join(dt1, dt2, by = c("c", "b", "a"))
+  expect_equal(dt4$vars, letters[1:4])
+  expect_equal(collect(dt4), collect(dt2))
+
+  dt5 <- left_join(dt1, dt2, by = c("c", "b"))
+  expect_equal(
+    collect(dt5),
+    tibble(a.x = "a", b = "b", c = "c", a.y = "a", d = "d")
+  )
+})
+
 test_that("left_join produces correct names", {
   # data.table: uses y[x] which prefixes `x` vars with "i." and if name is not
   #   unique it appends ".<number>" with the smallest number without a collision
