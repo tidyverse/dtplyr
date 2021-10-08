@@ -72,6 +72,7 @@ add_grouping_param <- function(call, step, arrange = step$arrange) {
 group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), arrange = TRUE) {
   dots <- capture_dots(.data, ...)
   dots <- exprs_auto_name(dots)
+  dots <- dots[!sapply(dots, is.null)]
 
   if (lifecycle::is_present(add)) {
     lifecycle::deprecate_warn(
