@@ -4,6 +4,25 @@
 #' This is a method for the tidyr `expand()` generic. It is translated to
 #' [data.table::CJ()].
 #'
+#' @param ... Specification of columns to expand. Columns can be atomic vectors
+#'   or lists.
+#'
+#'   * To find all unique combinations of `x`, `y` and `z`, including those not
+#'     present in the data, supply each variable as a separate argument:
+#'     `expand(df, x, y, z)`.
+#'   * To find only the combinations that occur in the
+#'     data, use `nesting`: `expand(df, nesting(x, y, z))`.
+#'   * You can combine the two forms. For example,
+#'     `expand(df, nesting(school_id, student_id), date)` would produce
+#'     a row for each present school-student combination for all possible
+#'     dates.
+#'
+#'   Unlike the data.frame method, this method does not use the full set of
+#'   levels, just those that appear in the data.
+#'
+#'   When used with continuous variables, you may need to fill in values
+#'   that do not appear in the data: to do so use expressions like
+#'   `year = 2010:2020` or `year = full_seq(year,1)`.
 #' @param data A [lazy_dt()].
 #' @inheritParams tidyr::expand
 #' @examples
@@ -20,11 +39,12 @@
 #' ))
 #'
 #' # All possible combinations ---------------------------------------
-#' # Note that all defined, but not necessarily present, levels of the
-#' # factor variable `size` are retained.
+#' # Note that only present levels of the factor variable `size` are retained.
 #' fruits %>% expand(type)
 #' fruits %>% expand(type, size)
-#' fruits %>% expand(type, size, year)
+#'
+#' # This is different from the data frame behaviour:
+#' fruits %>% collect() %>% expand(type, size)
 #'
 #' # Other uses -------------------------------------------------------
 #' fruits %>% expand(type, size, 2010:2012)
@@ -59,7 +79,7 @@ expand.dtplyr_step <- function(data, ..., .name_repair = "check_unique") {
   dots_names <- names(dots)
 
   out <- step_subset_j(
-    data, 
+    data,
     vars = union(data$groups, dots_names),
     j = expr(CJ(!!!dots, unique = TRUE))
   )
