@@ -197,9 +197,8 @@ a row for each present school-student combination for all possible
 dates.</p></li>
 </ul>
 
-<p>When used with factors, <code><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand()</a></code> uses the full set of levels, not just
-those that appear in the data. If you want to use only the values seen in
-the data, use <code>forcats::fct_drop()</code>.</p>
+<p>Unlike the data.frame method, this method does not use the full set of
+levels, just those that appear in the data.</p>
 <p>When used with continuous variables, you may need to fill in values
 that do not appear in the data: to do so use expressions like
 <code>year = 2010:2020</code> or <code>year = full_seq(year,1)</code>.</p></td>
@@ -238,8 +237,7 @@ to enforce them.</p></td>
 <span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># All possible combinations ---------------------------------------</span>
-<span class='co'># Note that all defined, but not necessarily present, levels of the</span>
-<span class='co'># factor variable `size` are retained.</span>
+<span class='co'># Note that only present levels of the factor variable `size` are retained.</span>
 <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [2 x 1]
 #&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[, CJ(type = type, unique = TRUE)]
@@ -262,21 +260,20 @@ to enforce them.</p></td>
 #&gt; <span style='color: #BCBCBC;'>5</span> orange S    
 #&gt; <span style='color: #BCBCBC;'>6</span> orange M    
 #&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span>, <span class='va'>year</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [12 x 3]
-#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT8`[, CJ(type = type, size = size, year = year, unique = TRUE)]
-#&gt; 
-#&gt;   type  size   year
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> apple XS     <span style='text-decoration: underline;'>2</span>010
-#&gt; <span style='color: #BCBCBC;'>2</span> apple XS     <span style='text-decoration: underline;'>2</span>012
-#&gt; <span style='color: #BCBCBC;'>3</span> apple S      <span style='text-decoration: underline;'>2</span>010
-#&gt; <span style='color: #BCBCBC;'>4</span> apple S      <span style='text-decoration: underline;'>2</span>012
-#&gt; <span style='color: #BCBCBC;'>5</span> apple M      <span style='text-decoration: underline;'>2</span>010
-#&gt; <span style='color: #BCBCBC;'>6</span> apple M      <span style='text-decoration: underline;'>2</span>012
-#&gt; <span style='color: #949494;'># … with 6 more rows</span>
-#&gt; 
 #&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
+<span class='co'># This is different from the data frame behaviour:</span>
+<span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/compute.html'>collect</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 8 × 2</span>
+#&gt;   type   size 
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> apple  XS   
+#&gt; <span style='color: #BCBCBC;'>2</span> apple  S    
+#&gt; <span style='color: #BCBCBC;'>3</span> apple  M    
+#&gt; <span style='color: #BCBCBC;'>4</span> apple  L    
+#&gt; <span style='color: #BCBCBC;'>5</span> orange XS   
+#&gt; <span style='color: #BCBCBC;'>6</span> orange S    
+#&gt; <span style='color: #BCBCBC;'>7</span> orange M    
+#&gt; <span style='color: #BCBCBC;'>8</span> orange L    </div><div class='input'>
 <span class='co'># Other uses -------------------------------------------------------</span>
 <span class='va'>fruits</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/expand.html'>expand</a></span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>size</span>, <span class='fl'>2010</span><span class='op'>:</span><span class='fl'>2012</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [18 x 3]
