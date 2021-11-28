@@ -193,35 +193,38 @@ be used to select a range of variables.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>, warn.conflicts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='fl'>1</span>, x2 <span class='op'>=</span> <span class='fl'>2</span>, y1 <span class='op'>=</span> <span class='fl'>3</span>, y2 <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [1 x 2]
-#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT35`[, .(x1, x2)]
-#&gt; 
-#&gt;      x1    x2
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>     1     2
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span><span class='op'>(</span><span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [1 x 2]
-#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT35`[, .(x2, y2)]
-#&gt; 
-#&gt;      x2    y2
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>     2     4
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='va'>dt</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>z1 <span class='op'>=</span> <span class='va'>x1</span>, z2 <span class='op'>=</span> <span class='va'>x2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [1 x 2]
-#&gt; <span style='font-weight: bold;'>Call:   </span>`_DT35`[, .(z1 = x1, z2 = x2)]
-#&gt; 
-#&gt;      z1    z2
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>     1     2
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>, warn.conflicts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='fl'>1</span>, x2 <span class='op'>=</span> <span class='fl'>2</span>, y1 <span class='op'>=</span> <span class='fl'>3</span>, y2 <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>dt</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [1 x 2]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>`_DT35`[, .(x1, x2)]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      x1    x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     1     2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+<span class='r-in'><span class='va'>dt</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>ends_with</a></span><span class='op'>(</span><span class='st'>"2"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [1 x 2]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>`_DT35`[, .(x2, y2)]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      x2    y2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     2     4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+<span class='r-in'><span class='va'>dt</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>z1 <span class='op'>=</span> <span class='va'>x1</span>, z2 <span class='op'>=</span> <span class='va'>x2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [1 x 2]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>`_DT35`[, .(z1 = x1, z2 = x2)]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      z1    z2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     1     2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

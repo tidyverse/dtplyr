@@ -198,85 +198,87 @@ or "updown" (first up and then down).</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
-
-<span class='co'># Value (year) is recorded only when it changes</span>
-<span class='va'>sales</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span>
-  <span class='op'>~</span><span class='va'>quarter</span>, <span class='op'>~</span><span class='va'>year</span>, <span class='op'>~</span><span class='va'>sales</span>,
-  <span class='st'>"Q1"</span>,    <span class='fl'>2000</span>,    <span class='fl'>66013</span>,
-  <span class='st'>"Q2"</span>,      <span class='cn'>NA</span>,    <span class='fl'>69182</span>,
-  <span class='st'>"Q3"</span>,      <span class='cn'>NA</span>,    <span class='fl'>53175</span>,
-  <span class='st'>"Q4"</span>,      <span class='cn'>NA</span>,    <span class='fl'>21001</span>,
-  <span class='st'>"Q1"</span>,    <span class='fl'>2001</span>,    <span class='fl'>46036</span>,
-  <span class='st'>"Q2"</span>,      <span class='cn'>NA</span>,    <span class='fl'>58842</span>,
-  <span class='st'>"Q3"</span>,      <span class='cn'>NA</span>,    <span class='fl'>44568</span>,
-  <span class='st'>"Q4"</span>,      <span class='cn'>NA</span>,    <span class='fl'>50197</span>,
-  <span class='st'>"Q1"</span>,    <span class='fl'>2002</span>,    <span class='fl'>39113</span>,
-  <span class='st'>"Q2"</span>,      <span class='cn'>NA</span>,    <span class='fl'>41668</span>,
-  <span class='st'>"Q3"</span>,      <span class='cn'>NA</span>,    <span class='fl'>30144</span>,
-  <span class='st'>"Q4"</span>,      <span class='cn'>NA</span>,    <span class='fl'>52897</span>,
-  <span class='st'>"Q1"</span>,    <span class='fl'>2004</span>,    <span class='fl'>32129</span>,
-  <span class='st'>"Q2"</span>,      <span class='cn'>NA</span>,    <span class='fl'>67686</span>,
-  <span class='st'>"Q3"</span>,      <span class='cn'>NA</span>,    <span class='fl'>31768</span>,
-  <span class='st'>"Q4"</span>,      <span class='cn'>NA</span>,    <span class='fl'>49094</span>
-<span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># `fill()` defaults to replacing missing data from top to bottom</span>
-<span class='va'>sales</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/fill.html'>fill</a></span><span class='op'>(</span><span class='va'>year</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [16 x 3]
-#&gt; <span style='font-weight: bold;'>Call:   </span>copy(`_DT9`)[, `:=`(year = nafill(year, "locf"))]
-#&gt; 
-#&gt;   quarter  year sales
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> Q1       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>66</span>013
-#&gt; <span style='color: #BCBCBC;'>2</span> Q2       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>69</span>182
-#&gt; <span style='color: #BCBCBC;'>3</span> Q3       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>53</span>175
-#&gt; <span style='color: #BCBCBC;'>4</span> Q4       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>21</span>001
-#&gt; <span style='color: #BCBCBC;'>5</span> Q1       <span style='text-decoration: underline;'>2</span>001 <span style='text-decoration: underline;'>46</span>036
-#&gt; <span style='color: #BCBCBC;'>6</span> Q2       <span style='text-decoration: underline;'>2</span>001 <span style='text-decoration: underline;'>58</span>842
-#&gt; <span style='color: #949494;'># … with 10 more rows</span>
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
-<span class='co'># Value (n_squirrels) is missing above and below within a group</span>
-<span class='va'>squirrels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span>
-  <span class='op'>~</span><span class='va'>group</span>,    <span class='op'>~</span><span class='va'>name</span>,     <span class='op'>~</span><span class='va'>role</span>,     <span class='op'>~</span><span class='va'>n_squirrels</span>,
-  <span class='fl'>1</span>,      <span class='st'>"Sam"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,
-  <span class='fl'>1</span>,     <span class='st'>"Mara"</span>, <span class='st'>"Scorekeeper"</span>,    <span class='fl'>8</span>,
-  <span class='fl'>1</span>,    <span class='st'>"Jesse"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,
-  <span class='fl'>1</span>,      <span class='st'>"Tom"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,
-  <span class='fl'>2</span>,     <span class='st'>"Mike"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,
-  <span class='fl'>2</span>,  <span class='st'>"Rachael"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,
-  <span class='fl'>2</span>,  <span class='st'>"Sydekea"</span>, <span class='st'>"Scorekeeper"</span>,   <span class='fl'>14</span>,
-  <span class='fl'>2</span>, <span class='st'>"Gabriela"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,
-  <span class='fl'>3</span>,  <span class='st'>"Derrick"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,
-  <span class='fl'>3</span>,     <span class='st'>"Kara"</span>, <span class='st'>"Scorekeeper"</span>,    <span class='fl'>9</span>,
-  <span class='fl'>3</span>,    <span class='st'>"Emily"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,
-  <span class='fl'>3</span>, <span class='st'>"Danielle"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>
-<span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># The values are inconsistently missing by position within the group</span>
-<span class='co'># Use .direction = "downup" to fill missing values in both directions</span>
-<span class='va'>squirrels</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/fill.html'>fill</a></span><span class='op'>(</span><span class='va'>n_squirrels</span>, .direction <span class='op'>=</span> <span class='st'>"downup"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [12 x 4]
-#&gt; <span style='font-weight: bold;'>Call:   </span>copy(`_DT10`)[, `:=`(n_squirrels = nafill(nafill(n_squirrels, 
-#&gt;     "locf"), "nocb")), by = .(group)]
-#&gt; 
-#&gt;   group name    role        n_squirrels
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>     1 Sam     Observer              8
-#&gt; <span style='color: #BCBCBC;'>2</span>     1 Mara    Scorekeeper           8
-#&gt; <span style='color: #BCBCBC;'>3</span>     1 Jesse   Observer              8
-#&gt; <span style='color: #BCBCBC;'>4</span>     1 Tom     Observer              8
-#&gt; <span style='color: #BCBCBC;'>5</span>     2 Mike    Observer             14
-#&gt; <span style='color: #BCBCBC;'>6</span>     2 Rachael Observer             14
-#&gt; <span style='color: #949494;'># … with 6 more rows</span>
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
-<span class='co'># Using `.direction = "updown"` accomplishes the same goal in this example</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Value (year) is recorded only when it changes</span></span>
+<span class='r-in'><span class='va'>sales</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='op'>~</span><span class='va'>quarter</span>, <span class='op'>~</span><span class='va'>year</span>, <span class='op'>~</span><span class='va'>sales</span>,</span>
+<span class='r-in'>  <span class='st'>"Q1"</span>,    <span class='fl'>2000</span>,    <span class='fl'>66013</span>,</span>
+<span class='r-in'>  <span class='st'>"Q2"</span>,      <span class='cn'>NA</span>,    <span class='fl'>69182</span>,</span>
+<span class='r-in'>  <span class='st'>"Q3"</span>,      <span class='cn'>NA</span>,    <span class='fl'>53175</span>,</span>
+<span class='r-in'>  <span class='st'>"Q4"</span>,      <span class='cn'>NA</span>,    <span class='fl'>21001</span>,</span>
+<span class='r-in'>  <span class='st'>"Q1"</span>,    <span class='fl'>2001</span>,    <span class='fl'>46036</span>,</span>
+<span class='r-in'>  <span class='st'>"Q2"</span>,      <span class='cn'>NA</span>,    <span class='fl'>58842</span>,</span>
+<span class='r-in'>  <span class='st'>"Q3"</span>,      <span class='cn'>NA</span>,    <span class='fl'>44568</span>,</span>
+<span class='r-in'>  <span class='st'>"Q4"</span>,      <span class='cn'>NA</span>,    <span class='fl'>50197</span>,</span>
+<span class='r-in'>  <span class='st'>"Q1"</span>,    <span class='fl'>2002</span>,    <span class='fl'>39113</span>,</span>
+<span class='r-in'>  <span class='st'>"Q2"</span>,      <span class='cn'>NA</span>,    <span class='fl'>41668</span>,</span>
+<span class='r-in'>  <span class='st'>"Q3"</span>,      <span class='cn'>NA</span>,    <span class='fl'>30144</span>,</span>
+<span class='r-in'>  <span class='st'>"Q4"</span>,      <span class='cn'>NA</span>,    <span class='fl'>52897</span>,</span>
+<span class='r-in'>  <span class='st'>"Q1"</span>,    <span class='fl'>2004</span>,    <span class='fl'>32129</span>,</span>
+<span class='r-in'>  <span class='st'>"Q2"</span>,      <span class='cn'>NA</span>,    <span class='fl'>67686</span>,</span>
+<span class='r-in'>  <span class='st'>"Q3"</span>,      <span class='cn'>NA</span>,    <span class='fl'>31768</span>,</span>
+<span class='r-in'>  <span class='st'>"Q4"</span>,      <span class='cn'>NA</span>,    <span class='fl'>49094</span></span>
+<span class='r-in'><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># `fill()` defaults to replacing missing data from top to bottom</span></span>
+<span class='r-in'><span class='va'>sales</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/fill.html'>fill</a></span><span class='op'>(</span><span class='va'>year</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [16 x 3]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>copy(`_DT9`)[, `:=`(year = nafill(year, "locf"))]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   quarter  year sales</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> Q1       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>66</span>013</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> Q2       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>69</span>182</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> Q3       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>53</span>175</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> Q4       <span style='text-decoration: underline;'>2</span>000 <span style='text-decoration: underline;'>21</span>001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> Q1       <span style='text-decoration: underline;'>2</span>001 <span style='text-decoration: underline;'>46</span>036</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> Q2       <span style='text-decoration: underline;'>2</span>001 <span style='text-decoration: underline;'>58</span>842</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 10 more rows</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Value (n_squirrels) is missing above and below within a group</span></span>
+<span class='r-in'><span class='va'>squirrels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='op'>~</span><span class='va'>group</span>,    <span class='op'>~</span><span class='va'>name</span>,     <span class='op'>~</span><span class='va'>role</span>,     <span class='op'>~</span><span class='va'>n_squirrels</span>,</span>
+<span class='r-in'>  <span class='fl'>1</span>,      <span class='st'>"Sam"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,</span>
+<span class='r-in'>  <span class='fl'>1</span>,     <span class='st'>"Mara"</span>, <span class='st'>"Scorekeeper"</span>,    <span class='fl'>8</span>,</span>
+<span class='r-in'>  <span class='fl'>1</span>,    <span class='st'>"Jesse"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,</span>
+<span class='r-in'>  <span class='fl'>1</span>,      <span class='st'>"Tom"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,</span>
+<span class='r-in'>  <span class='fl'>2</span>,     <span class='st'>"Mike"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,</span>
+<span class='r-in'>  <span class='fl'>2</span>,  <span class='st'>"Rachael"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,</span>
+<span class='r-in'>  <span class='fl'>2</span>,  <span class='st'>"Sydekea"</span>, <span class='st'>"Scorekeeper"</span>,   <span class='fl'>14</span>,</span>
+<span class='r-in'>  <span class='fl'>2</span>, <span class='st'>"Gabriela"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,</span>
+<span class='r-in'>  <span class='fl'>3</span>,  <span class='st'>"Derrick"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,</span>
+<span class='r-in'>  <span class='fl'>3</span>,     <span class='st'>"Kara"</span>, <span class='st'>"Scorekeeper"</span>,    <span class='fl'>9</span>,</span>
+<span class='r-in'>  <span class='fl'>3</span>,    <span class='st'>"Emily"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span>,</span>
+<span class='r-in'>  <span class='fl'>3</span>, <span class='st'>"Danielle"</span>,    <span class='st'>"Observer"</span>,   <span class='cn'>NA</span></span>
+<span class='r-in'><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The values are inconsistently missing by position within the group</span></span>
+<span class='r-in'><span class='co'># Use .direction = "downup" to fill missing values in both directions</span></span>
+<span class='r-in'><span class='va'>squirrels</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>group</span><span class='op'>)</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/fill.html'>fill</a></span><span class='op'>(</span><span class='va'>n_squirrels</span>, .direction <span class='op'>=</span> <span class='st'>"downup"</span><span class='op'>)</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [12 x 4]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>copy(`_DT10`)[, `:=`(n_squirrels = nafill(nafill(n_squirrels, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     "locf"), "nocb")), by = .(group)]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   group name    role        n_squirrels</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     1 Sam     Observer              8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     1 Mara    Scorekeeper           8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     1 Jesse   Observer              8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>     1 Tom     Observer              8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>     2 Mike    Observer             14</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span>     2 Rachael Observer             14</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 6 more rows</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Using `.direction = "updown"` accomplishes the same goal in this example</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

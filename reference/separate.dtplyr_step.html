@@ -227,130 +227,135 @@ This is useful if the component columns are integer, numeric or logical.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
-<span class='co'># If you want to split by any non-alphanumeric value (the default):</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='st'>"x.y"</span>, <span class='st'>"x.z"</span>, <span class='st'>"y.z"</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"DT"</span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [4 x 2]
-#&gt; <span style='font-weight: bold;'>Call:   </span>copy(DT)[, `:=`(c("A", "B"), tstrsplit(x, split = "[^[:alnum:]]+"))][, 
-#&gt;     .(A, B)]
-#&gt; 
-#&gt;   A     B    
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>   
-#&gt; <span style='color: #BCBCBC;'>2</span> x     y    
-#&gt; <span style='color: #BCBCBC;'>3</span> x     z    
-#&gt; <span style='color: #BCBCBC;'>4</span> y     z    
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
-<span class='co'># If you just want the second variable:</span>
-<span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='st'>"B"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [4 x 1]
-#&gt; <span style='font-weight: bold;'>Call:   </span>copy(DT)[, `:=`("B", tstrsplit(x, split = "[^[:alnum:]]+", keep = 2L))][, 
-#&gt;     .(B)]
-#&gt; 
-#&gt;   B    
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> <span style='color: #BB0000;'>NA</span>   
-#&gt; <span style='color: #BCBCBC;'>2</span> y    
-#&gt; <span style='color: #BCBCBC;'>3</span> z    
-#&gt; <span style='color: #BCBCBC;'>4</span> z    
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
-<span class='co'># Use regular expressions to separate on multiple characters:</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='st'>"x?y"</span>, <span class='st'>"x.z"</span>, <span class='st'>"y:z"</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"DT"</span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"B"</span><span class='op'>)</span>, sep <span class='op'>=</span> <span class='st'>"([.?:])"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [4 x 2]
-#&gt; <span style='font-weight: bold;'>Call:   </span>copy(DT)[, `:=`(c("A", "B"), tstrsplit(x, split = "([.?:])"))][, 
-#&gt;     .(A, B)]
-#&gt; 
-#&gt;   A     B    
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>   
-#&gt; <span style='color: #BCBCBC;'>2</span> x     y    
-#&gt; <span style='color: #BCBCBC;'>3</span> x     z    
-#&gt; <span style='color: #BCBCBC;'>4</span> y     z    
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
-<span class='co'># convert = TRUE detects column classes:</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"x:1"</span>, <span class='st'>"x:2"</span>, <span class='st'>"y:4"</span>, <span class='st'>"z"</span>, <span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"DT"</span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"key"</span>,<span class='st'>"value"</span><span class='op'>)</span>, <span class='st'>":"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='va'>str</span>
-</div><div class='output co'>#&gt; List of 12
-#&gt;  $ parent         :List of 12
-#&gt;   ..$ parent         :List of 8
-#&gt;   .. ..$ parent       :Classes ‘data.table’ and 'data.frame':	5 obs. of  1 variable:
-#&gt;   .. .. ..$ x: chr [1:5] "x:1" "x:2" "y:4" "z" ...
-#&gt;   .. .. ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; 
-#&gt;   .. ..$ vars         : chr "x"
-#&gt;   .. ..$ groups       : chr(0) 
-#&gt;   .. ..$ locals       : list()
-#&gt;   .. ..$ implicit_copy: logi FALSE
-#&gt;   .. ..$ needs_copy   : logi FALSE
-#&gt;   .. ..$ env          :&lt;environment: 0x55ee021b73c8&gt; 
-#&gt;   .. ..$ name         : symbol DT
-#&gt;   .. ..- attr(*, "class")= chr [1:2] "dtplyr_step_first" "dtplyr_step"
-#&gt;   ..$ vars           : chr [1:3] "x" "key" "value"
-#&gt;   ..$ groups         : chr(0) 
-#&gt;   ..$ locals         : list()
-#&gt;   ..$ implicit_copy  : logi TRUE
-#&gt;   ..$ needs_copy     : logi TRUE
-#&gt;   ..$ env            :&lt;environment: 0x55ee021b73c8&gt; 
-#&gt;   ..$ arrange        : NULL
-#&gt;   ..$ i              : NULL
-#&gt;   ..$ j              : language `:=`(c("key", "value"), tstrsplit(x, split = ":"))
-#&gt;   ..$ on             : chr(0) 
-#&gt;   ..$ allow_cartesian: NULL
-#&gt;   ..- attr(*, "class")= chr [1:2] "dtplyr_step_subset" "dtplyr_step"
-#&gt;  $ vars           : chr [1:2] "key" "value"
-#&gt;  $ groups         : chr(0) 
-#&gt;  $ locals         : list()
-#&gt;  $ implicit_copy  : logi TRUE
-#&gt;  $ needs_copy     : logi TRUE
-#&gt;  $ env            :&lt;environment: 0x55ee021b73c8&gt; 
-#&gt;  $ arrange        : NULL
-#&gt;  $ i              : NULL
-#&gt;  $ j              : language .(key, value)
-#&gt;  $ on             : chr(0) 
-#&gt;  $ allow_cartesian: NULL
-#&gt;  - attr(*, "class")= chr [1:2] "dtplyr_step_subset" "dtplyr_step"</div><div class='input'><span class='va'>df</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"key"</span>,<span class='st'>"value"</span><span class='op'>)</span>, <span class='st'>":"</span>, convert <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='va'>str</span>
-</div><div class='output co'>#&gt; List of 12
-#&gt;  $ parent         :List of 12
-#&gt;   ..$ parent         :List of 8
-#&gt;   .. ..$ parent       :Classes ‘data.table’ and 'data.frame':	5 obs. of  1 variable:
-#&gt;   .. .. ..$ x: chr [1:5] "x:1" "x:2" "y:4" "z" ...
-#&gt;   .. .. ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; 
-#&gt;   .. ..$ vars         : chr "x"
-#&gt;   .. ..$ groups       : chr(0) 
-#&gt;   .. ..$ locals       : list()
-#&gt;   .. ..$ implicit_copy: logi FALSE
-#&gt;   .. ..$ needs_copy   : logi FALSE
-#&gt;   .. ..$ env          :&lt;environment: 0x55ee021b73c8&gt; 
-#&gt;   .. ..$ name         : symbol DT
-#&gt;   .. ..- attr(*, "class")= chr [1:2] "dtplyr_step_first" "dtplyr_step"
-#&gt;   ..$ vars           : chr [1:3] "x" "key" "value"
-#&gt;   ..$ groups         : chr(0) 
-#&gt;   ..$ locals         : list()
-#&gt;   ..$ implicit_copy  : logi TRUE
-#&gt;   ..$ needs_copy     : logi TRUE
-#&gt;   ..$ env            :&lt;environment: 0x55ee021b73c8&gt; 
-#&gt;   ..$ arrange        : NULL
-#&gt;   ..$ i              : NULL
-#&gt;   ..$ j              : language `:=`(c("key", "value"), tstrsplit(x, split = ":", type.convert = TRUE))
-#&gt;   ..$ on             : chr(0) 
-#&gt;   ..$ allow_cartesian: NULL
-#&gt;   ..- attr(*, "class")= chr [1:2] "dtplyr_step_subset" "dtplyr_step"
-#&gt;  $ vars           : chr [1:2] "key" "value"
-#&gt;  $ groups         : chr(0) 
-#&gt;  $ locals         : list()
-#&gt;  $ implicit_copy  : logi TRUE
-#&gt;  $ needs_copy     : logi TRUE
-#&gt;  $ env            :&lt;environment: 0x55ee021b73c8&gt; 
-#&gt;  $ arrange        : NULL
-#&gt;  $ i              : NULL
-#&gt;  $ j              : language .(key, value)
-#&gt;  $ on             : chr(0) 
-#&gt;  $ allow_cartesian: NULL
-#&gt;  - attr(*, "class")= chr [1:2] "dtplyr_step_subset" "dtplyr_step"</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># If you want to split by any non-alphanumeric value (the default):</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='st'>"x.y"</span>, <span class='st'>"x.z"</span>, <span class='st'>"y.z"</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"DT"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [4 x 2]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>copy(DT)[, `:=`(c("A", "B"), tstrsplit(x, split = "[^[:alnum:]]+"))][, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     .(A, B)]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   A     B    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> x     y    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> x     z    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> y     z    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># If you just want the second variable:</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='st'>"B"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [4 x 1]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>copy(DT)[, `:=`("B", tstrsplit(x, split = "[^[:alnum:]]+", keep = 2L))][, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     .(B)]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   B    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> <span style='color: #BB0000;'>NA</span>   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> y    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> z    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> z    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use regular expressions to separate on multiple characters:</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='st'>"x?y"</span>, <span class='st'>"x.z"</span>, <span class='st'>"y:z"</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"DT"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"B"</span><span class='op'>)</span>, sep <span class='op'>=</span> <span class='st'>"([.?:])"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [4 x 2]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>copy(DT)[, `:=`(c("A", "B"), tstrsplit(x, split = "([.?:])"))][, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     .(A, B)]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   A     B    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> <span style='color: #BB0000;'>NA</span>    <span style='color: #BB0000;'>NA</span>   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> x     y    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> x     z    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> y     z    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># convert = TRUE detects column classes:</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"x:1"</span>, <span class='st'>"x:2"</span>, <span class='st'>"y:4"</span>, <span class='st'>"z"</span>, <span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"DT"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"key"</span>,<span class='st'>"value"</span><span class='op'>)</span>, <span class='st'>":"</span><span class='op'>)</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='va'>str</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> List of 12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ parent         :List of 12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ parent         :List of 8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ parent       :Classes ‘data.table’ and 'data.frame':	5 obs. of  1 variable:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. .. ..$ x: chr [1:5] "x:1" "x:2" "y:4" "z" ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. .. ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ vars         : chr "x"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ groups       : chr(0) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ locals       : list()</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ implicit_copy: logi FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ needs_copy   : logi FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ env          :&lt;environment: 0x562e30e306a0&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ name         : symbol DT</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..- attr(*, "class")= chr [1:2] "dtplyr_step_first" "dtplyr_step"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ vars           : chr [1:3] "x" "key" "value"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ groups         : chr(0) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ locals         : list()</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ implicit_copy  : logi TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ needs_copy     : logi TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ env            :&lt;environment: 0x562e30e306a0&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ arrange        : NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ i              : NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ j              : language `:=`(c("key", "value"), tstrsplit(x, split = ":"))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ on             : chr(0) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ allow_cartesian: NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..- attr(*, "class")= chr [1:2] "dtplyr_step_subset" "dtplyr_step"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ vars           : chr [1:2] "key" "value"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ groups         : chr(0) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ locals         : list()</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ implicit_copy  : logi TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ needs_copy     : logi TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ env            :&lt;environment: 0x562e30e306a0&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ arrange        : NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ i              : NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ j              : language .(key, value)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ on             : chr(0) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ allow_cartesian: NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  - attr(*, "class")= chr [1:2] "dtplyr_step_subset" "dtplyr_step"</span>
+<span class='r-in'><span class='va'>df</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"key"</span>,<span class='st'>"value"</span><span class='op'>)</span>, <span class='st'>":"</span>, convert <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'><a href='https://tidyr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='va'>str</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> List of 12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ parent         :List of 12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ parent         :List of 8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ parent       :Classes ‘data.table’ and 'data.frame':	5 obs. of  1 variable:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. .. ..$ x: chr [1:5] "x:1" "x:2" "y:4" "z" ...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. .. ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ vars         : chr "x"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ groups       : chr(0) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ locals       : list()</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ implicit_copy: logi FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ needs_copy   : logi FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ env          :&lt;environment: 0x562e30e306a0&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..$ name         : symbol DT</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   .. ..- attr(*, "class")= chr [1:2] "dtplyr_step_first" "dtplyr_step"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ vars           : chr [1:3] "x" "key" "value"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ groups         : chr(0) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ locals         : list()</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ implicit_copy  : logi TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ needs_copy     : logi TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ env            :&lt;environment: 0x562e30e306a0&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ arrange        : NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ i              : NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ j              : language `:=`(c("key", "value"), tstrsplit(x, split = ":", type.convert = TRUE))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ on             : chr(0) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..$ allow_cartesian: NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   ..- attr(*, "class")= chr [1:2] "dtplyr_step_subset" "dtplyr_step"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ vars           : chr [1:2] "key" "value"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ groups         : chr(0) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ locals         : list()</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ implicit_copy  : logi TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ needs_copy     : logi TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ env            :&lt;environment: 0x562e30e306a0&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ arrange        : NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ i              : NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ j              : language .(key, value)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ on             : chr(0) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  $ allow_cartesian: NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  - attr(*, "class")= chr [1:2] "dtplyr_step_subset" "dtplyr_step"</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

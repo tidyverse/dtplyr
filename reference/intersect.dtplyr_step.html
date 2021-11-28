@@ -203,41 +203,44 @@ data.table::fsetdiff()." />
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>dt1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>dt2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://generics.r-lib.org/reference/setops.html'>intersect</a></span><span class='op'>(</span><span class='va'>dt1</span>, <span class='va'>dt2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [2 x 1]
-#&gt; <span style='font-weight: bold;'>Call:   </span>fintersect(`_DT15`, `_DT16`)
-#&gt; 
-#&gt;       x
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>     2
-#&gt; <span style='color: #BCBCBC;'>2</span>     4
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/setops.html'>union</a></span><span class='op'>(</span><span class='va'>dt1</span>, <span class='va'>dt2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [5 x 1]
-#&gt; <span style='font-weight: bold;'>Call:   </span>funion(`_DT15`, `_DT16`)
-#&gt; 
-#&gt;       x
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>     1
-#&gt; <span style='color: #BCBCBC;'>2</span>     2
-#&gt; <span style='color: #BCBCBC;'>3</span>     3
-#&gt; <span style='color: #BCBCBC;'>4</span>     4
-#&gt; <span style='color: #BCBCBC;'>5</span>     6
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'><span class='fu'><a href='https://generics.r-lib.org/reference/setops.html'>setdiff</a></span><span class='op'>(</span><span class='va'>dt1</span>, <span class='va'>dt2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='font-weight: bold;'>Source: </span>local data table [2 x 1]
-#&gt; <span style='font-weight: bold;'>Call:   </span>fsetdiff(`_DT15`, `_DT16`)
-#&gt; 
-#&gt;       x
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span>     1
-#&gt; <span style='color: #BCBCBC;'>2</span>     3
-#&gt; 
-#&gt; <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>dt1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dt2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lazy_dt.html'>lazy_dt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/setops.html'>intersect</a></span><span class='op'>(</span><span class='va'>dt1</span>, <span class='va'>dt2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [2 x 1]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>fintersect(`_DT15`, `_DT16`)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       x</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/setops.html'>union</a></span><span class='op'>(</span><span class='va'>dt1</span>, <span class='va'>dt2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [5 x 1]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>funion(`_DT15`, `_DT16`)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       x</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>     3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>     4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>     6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/setops.html'>setdiff</a></span><span class='op'>(</span><span class='va'>dt1</span>, <span class='va'>dt2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Source: </span>local data table [2 x 1]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Call:   </span>fsetdiff(`_DT15`, `_DT16`)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       x</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>     3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
