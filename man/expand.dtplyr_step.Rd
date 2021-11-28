@@ -69,7 +69,7 @@ fruits \%>\% expand(type)
 fruits \%>\% expand(type, size)
 
 # This is different from the data frame behaviour:
-fruits \%>\% collect() \%>\% expand(type, size)
+fruits \%>\% dplyr::collect() \%>\% expand(type, size)
 
 # Other uses -------------------------------------------------------
 fruits \%>\% expand(type, size, 2010:2012)
