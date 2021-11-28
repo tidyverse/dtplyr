@@ -17,9 +17,13 @@
 #'   proportion of rows to select. If neither are supplied, `n = 1` will be
 #'   used.
 #'
+#'   If a negative value of `n` or `prop` is provided, the specified number or
+#'   proportion of rows will be removed.
+#'
 #'   If `n` is greater than the number of rows in the group (or `prop > 1`),
 #'   the result will be silently truncated to the group size. If the
-#'   `prop`ortion of a group size is not an integer, it is rounded down.
+#'   `prop`ortion of a group size does not yield an integer number of rows, the
+#'   absolute value of `prop*n()` is rounded down.
 #' @param ... Positive integers giving rows to select, or negative
 #'   integers giving rows to drop.
 #' @export
@@ -83,11 +87,8 @@ slice.data.table <- function(.data, ...) {
 #' @export
 slice_head.dtplyr_step <- function(.data, ..., n, prop) {
   ellipsis::check_dots_empty()
-  size <- check_slice_size(n, prop)
-  i <- switch(size$type,
-    n = expr(seq.int(min(!!size$n, .N))),
-    prop = expr(seq.int(!!size$prop * .N)),
-  )
+  size <- get_slice_size(n, prop, "slice_head")
+  i <- expr(rlang::seq2(1L, !!size))
   step_subset_i(.data, i = i)
 }
 
@@ -102,12 +103,9 @@ slice_head.data.table <- function(.data, ..., n, prop) {
 #' @export
 slice_tail.dtplyr_step <- function(.data, ..., n, prop) {
   ellipsis::check_dots_empty()
-  size <- check_slice_size(n, prop)
-  n_sequence <- switch(size$type,
-    n = expr(min(!!size$n, .N)),
-    prop = expr(!!size$prop * .N),
-  )
-  step_subset_i(.data, i = expr(seq.int(.N - !!n_sequence + 1, .N)))
+  size <- get_slice_size(n, prop, "slice_tail")
+  i <- expr(rlang::seq2(.N - !!size + 1L, .N))
+  step_subset_i(.data, i = i)
 }
 
 #' @export
@@ -132,7 +130,8 @@ slice_min.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
     ...,
     n =  n,
     prop = prop,
-    with_ties = with_ties
+    with_ties = with_ties,
+    .slice_fn = "slice_min"
   )
 }
 
@@ -157,7 +156,8 @@ slice_max.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
     ...,
     n =  n,
     prop = prop,
-    with_ties = with_ties
+    with_ties = with_ties,
+    .slice_fn = "slice_max"
   )
 }
 
@@ -167,9 +167,10 @@ slice_max.data.table <- function(.data, order_by, ..., n, prop, with_ties = TRUE
   slice_max(.data, {{ order_by }}, ..., n = n, prop = prop, with_ties = with_ties)
 }
 
-slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties = TRUE) {
+slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties = TRUE,
+                          .slice_fn = "slice_min_max") {
   ellipsis::check_dots_empty()
-  size <- check_slice_size(n, prop)
+  size <- get_slice_size(n, prop, .slice_fn)
 
   order_by <- capture_dot(.data, {{ order_by }}, j = FALSE)
 
@@ -183,10 +184,7 @@ slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties =
     ties.method <- "first"
   }
 
-  i <- switch(size$type,
-    n = expr(!!smaller_ranks(!!order_by, !!size$n, ties.method = ties.method)),
-    prop = expr(!!smaller_ranks(!!order_by, !!size$prop * .N, ties.method = ties.method))
-  )
+  i <- expr(!!smaller_ranks(!!order_by, !!size, ties.method = ties.method))
 
   out <- step_subset_i(.data, i)
   arrange(out, !!order_by, .by_group = TRUE)
@@ -206,15 +204,12 @@ smaller_ranks <- function(x, y, ties.method = "min") {
 #' @inheritParams dplyr::slice
 #' @export
 slice_sample.dtplyr_step <- function(.data, ..., n, prop, weight_by = NULL, replace = FALSE) {
-  size <- check_slice_size(n, prop)
+  size <- get_slice_size(n, prop, "slice_sample")
   ellipsis::check_dots_empty()
 
   wt <- enexpr(weight_by)
 
-  i <- switch(size$type,
-    n =    sample_int(.N, !!size$n, replace = replace, wt = wt),
-    prop = sample_int(.N, !!size$prop * .N, replace = replace, wt = wt),
-  )
+  i <- sample_int(.N, !!size, replace = replace, wt = wt)
 
   step_subset_i(.data, i)
 }
@@ -282,28 +277,50 @@ sample_frac.data.table <- function(.data, ...) {
 
 # helpers -----------------------------------------------------------------
 
-check_slice_size <- function(n, prop) {
+check_constant <- function(x, name, fn) {
+  withCallingHandlers(force(x), error = function(e) {
+    abort(c(
+      glue("`{name}` must be a constant in `{fn}()`."),
+      x = conditionMessage(e)
+    ), parent = e)
+  })
+}
+
+check_slice_size <- function(n, prop, .slice_fn = "check_slice_size") {
   if (missing(n) && missing(prop)) {
     list(type = "n", n = 1L)
   } else if (!missing(n) && missing(prop)) {
-    if (!is.numeric(n) || length(n) != 1) {
+    n <- check_constant(n, "n", .slice_fn)
+    if (!is.numeric(n) || length(n) != 1 || is.na(n)) {
       abort("`n` must be a single number.")
     }
-    if (is.na(n) || n < 0) {
-      abort("`n` must be a non-missing positive number.")
-    }
-
     list(type = "n", n = as.integer(n))
   } else if (!missing(prop) && missing(n)) {
-    if (!is.numeric(prop) || length(prop) != 1) {
-      abort("`prop` must be a single number")
-    }
-    if (is.na(prop) || prop < 0) {
-      abort("`prop` must be a non-missing positive number.")
+    prop <- check_constant(prop, "prop", .slice_fn)
+    if (!is.numeric(prop) || length(prop) != 1 || is.na(prop)) {
+      abort("`prop` must be a single number.")
     }
     list(type = "prop", prop = prop)
   } else {
     abort("Must supply exactly one of `n` and `prop` arguments.")
+  }
+}
+
+get_slice_size <- function(n, prop, .slice_fn = "get_slice_size") {
+  slice_input <- check_slice_size(n, prop, .slice_fn)
+
+  if (slice_input$type == "n") {
+    if (slice_input$n < 0) {
+      expr(max(.N + !!slice_input$n, 0L))
+    } else {
+      expr(min(!!slice_input$n, .N))
+    }
+  } else if (slice_input$type == "prop") {
+    if (slice_input$prop < 0) {
+      expr(max(.N + as.integer(!!slice_input$prop * .N), 0L))
+    } else {
+      expr(min(as.integer(!!slice_input$prop * .N), .N))
+    }
   }
 }
 

@@ -23,6 +23,9 @@
 
 ## Minor improvements and bug fixes
 
+*  `slice()` helpers (`slice_head()`, `slice_tail()`, `slice_min()`, `slice_max()` 
+   and `slice_sample()`) now accept negative values for `n` and `prop`.
+
 * `across()` defaults to `everything()` when `.cols` isn't provided 
   (@markfairbanks, #231), and handles named selections (@eutwt #293).
   It ˜ow handles `.fns` arguments in more forms (@eutwt #288): 
