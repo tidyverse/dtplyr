@@ -38,6 +38,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -52,19 +54,13 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="index.html">dtplyr</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of the <a href="https://tidyverse.org">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.9000</span>
+          <span class="partof">part of the <a href="https://tidyverse.org" class="external-link">tidyverse</a></span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0.9000</span>
         </div>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -89,19 +85,20 @@
   <ul class="dropdown-menu" role="menu">
 <li class="dropdown-header">Releases</li>
     <li>
-      <a href="https://www.tidyverse.org/blog/2021/02/dplyr-backends/">Version 1.1.0</a>
+      <a href="https://www.tidyverse.org/blog/2021/02/dplyr-backends/" class="external-link">Version 1.1.0</a>
     </li>
     <li>
-      <a href="https://www.tidyverse.org/blog/2019/11/dtplyr-1-0-0/">Version 1.0.0</a>
+      <a href="https://www.tidyverse.org/blog/2019/11/dtplyr-1-0-0/" class="external-link">Version 1.0.0</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="news/index.html">Changelog</a>
     </li>
   </ul>
 </li>
         <li>
-  <a href="https://github.com/tidyverse/dtplyr/">
+  <a href="https://github.com/tidyverse/dtplyr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -118,46 +115,46 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="dtplyr-" class="section level1">
+<div class="section level1">
 
 <!-- badges: start -->
 
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p>dtplyr provides a <a href="http://r-datatable.com/">data.table</a> backend for dplyr. The goal of dtplyr is to allow you to write dplyr code that is automatically translated to the equivalent, but usually much faster, data.table code.</p>
-<p>Compared to the previous release, this version of dtplyr is a complete rewrite that focusses only on lazy evaluation triggered by use of <code><a href="reference/lazy_dt.html">lazy_dt()</a></code>. This means that no computation is performed until you explicitly request it with <code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table()</a></code>, <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> or <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code>. This has a considerable advantage over the previous version (which eagerly evaluated each step) because it allows dtplyr to generate significantly more performant translations. This is a large change that breaks all existing uses of dtplyr. But frankly, dtplyr was pretty useless before because it did such a bad job of generating data.table code. Fortunately few people used it, so a major overhaul was possible.</p>
-<p>See <code><a href="articles/translation.html">vignette("translation")</a></code> for details of the current translations, and <a href="https://github.com/asardaes/table.express">table.express</a> and <a href="https://github.com/WinVector/rqdatatable/">rqdatatable</a> for related work.</p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>dtplyr provides a <a href="http://r-datatable.com/" class="external-link">data.table</a> backend for dplyr. The goal of dtplyr is to allow you to write dplyr code that is automatically translated to the equivalent, but usually much faster, data.table code.</p>
+<p>Compared to the previous release, this version of dtplyr is a complete rewrite that focusses only on lazy evaluation triggered by use of <code><a href="reference/lazy_dt.html">lazy_dt()</a></code>. This means that no computation is performed until you explicitly request it with <code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table()</a></code>, <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> or <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble()</a></code>. This has a considerable advantage over the previous version (which eagerly evaluated each step) because it allows dtplyr to generate significantly more performant translations. This is a large change that breaks all existing uses of dtplyr. But frankly, dtplyr was pretty useless before because it did such a bad job of generating data.table code. Fortunately few people used it, so a major overhaul was possible.</p>
+<p>See <code><a href="articles/translation.html">vignette("translation")</a></code> for details of the current translations, and <a href="https://github.com/asardaes/table.express" class="external-link">table.express</a> and <a href="https://github.com/WinVector/rqdatatable/" class="external-link">rqdatatable</a> for related work.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>You can install from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"dtplyr"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"dtplyr"</span><span class="op">)</span></code></pre></div>
 <p>Or try the development version from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"tidyverse/dtplyr"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<p>To use dtplyr, you must at least load dtplyr and dplyr. You may also want to load <a href="http://r-datatable.com/">data.table</a> so you can access the other goodies that it provides:</p>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<p>To use dtplyr, you must at least load dtplyr and dplyr. You may also want to load <a href="http://r-datatable.com/" class="external-link">data.table</a> so you can access the other goodies that it provides:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com">data.table</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dtplyr.tidyverse.org">dtplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dtplyr.tidyverse.org">dtplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Then use <code><a href="reference/lazy_dt.html">lazy_dt()</a></code> to create a “lazy” data table that tracks the operations performed on it.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mtcars2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></code></pre></div>
 <p>You can preview the transformation (including the generated data.table code) by printing the result:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">wt</span> <span class="op">&lt;</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>l100k <span class="op">=</span> <span class="fl">235.21</span> <span class="op">/</span> <span class="va">mpg</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># liters / 100 km</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>l100k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">l100k</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">mtcars2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">wt</span> <span class="op">&lt;</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>l100k <span class="op">=</span> <span class="fl">235.21</span> <span class="op">/</span> <span class="va">mpg</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># liters / 100 km</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>l100k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">l100k</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Source: local data table [3 x 2]</span>
 <span class="co">#&gt; Call:   `_DT1`[wt &lt; 5][, `:=`(l100k = 235.21/mpg)][, .(l100k = mean(l100k)), </span>
 <span class="co">#&gt;     keyby = .(cyl)]</span>
@@ -169,14 +166,14 @@
 <span class="co">#&gt; 3     8 14.9 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Use as.data.table()/as.data.frame()/as_tibble() to access results</span></code></pre></div>
-<p>But generally you should reserve this only for debugging, and use <code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html">as.data.table()</a></code>, <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code>, or <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> to indicate that you’re done with the transformation and want to access the results:</p>
+<p>But generally you should reserve this only for debugging, and use <code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table()</a></code>, <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>, or <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble()</a></code> to indicate that you’re done with the transformation and want to access the results:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">wt</span> <span class="op">&lt;</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>l100k <span class="op">=</span> <span class="fl">235.21</span> <span class="op">/</span> <span class="va">mpg</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># liters / 100 km</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>l100k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">l100k</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">mtcars2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">wt</span> <span class="op">&lt;</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>l100k <span class="op">=</span> <span class="fl">235.21</span> <span class="op">/</span> <span class="va">mpg</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># liters / 100 km</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>l100k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">l100k</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 × 2</span>
 <span class="co">#&gt;     cyl l100k</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -184,19 +181,19 @@
 <span class="co">#&gt; 2     6 12.0 </span>
 <span class="co">#&gt; 3     8 14.9</span></code></pre></div>
 </div>
-<div id="why-is-dtplyr-slower-than-datatable" class="section level2">
-<h2 class="hasAnchor">
-<a href="#why-is-dtplyr-slower-than-datatable" class="anchor"></a>Why is dtplyr slower than data.table?</h2>
+<div class="section level2">
+<h2 id="why-is-dtplyr-slower-than-datatable">Why is dtplyr slower than data.table?<a class="anchor" aria-label="anchor" href="#why-is-dtplyr-slower-than-datatable"></a>
+</h2>
 <p>There are three primary reasons that dtplyr will always be somewhat slower than data.table:</p>
 <ul>
 <li><p>Each dplyr verb must do some work to convert dplyr syntax to data.table syntax. This takes time proportional to the complexity of the input code, not the input <em>data</em>, so should be a negligible overhead for large datasets. <a href="https://dtplyr.tidyverse.org/articles/translation.html#performance">Initial benchmarks</a> suggest that the overhead should be under 1ms per dplyr call.</p></li>
 <li><p>Some data.table expressions have no direct dplyr equivalent. For example, there’s no way to express cross- or rolling-joins with dplyr.</p></li>
-<li><p>To match dplyr semantics, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> does not modify in place by default. This means that most expressions involving <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> must make a copy that would not be necessary if you were using data.table directly. (You can opt out of this behaviour in <code><a href="reference/lazy_dt.html">lazy_dt()</a></code> with <code>immutable = FALSE</code>).</p></li>
+<li><p>To match dplyr semantics, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> does not modify in place by default. This means that most expressions involving <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> must make a copy that would not be necessary if you were using data.table directly. (You can opt out of this behaviour in <code><a href="reference/lazy_dt.html">lazy_dt()</a></code> with <code>immutable = FALSE</code>).</p></li>
 </ul>
 </div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
 <p>Please note that the dtplyr project is released with a <a href="https://dtplyr.tidyverse.org/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
@@ -204,63 +201,71 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=dtplyr">https://​cloud.r-project.org/​package=dtplyr</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/tidyverse/dtplyr/">https://​github.com/​tidyverse/​dtplyr/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/tidyverse/dtplyr/issues">https://​github.com/​tidyverse/​dtplyr/​issues</a>
-</li>
-<li>Learn more about data.table at <br><a href="https://rdatatable.gitlab.io/data.table/">https://​rdatatable.gitlab.io/​data.table/​</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=dtplyr" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/tidyverse/dtplyr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/tidyverse/dtplyr/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://rdatatable.gitlab.io/data.table/" class="external-link">Learn more about data.table</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>
-<a href="http://hadley.nz">Hadley Wickham</a> <br><small class="roles"> Maintainer, author </small>  </li>
-<li>Maximilian Girlich <br><small class="roles"> Author </small>  </li>
-<li>Mark Fairbanks <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing dtplyr</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=dtplyr"><img src="https://www.r-pkg.org/badges/version/dtplyr" alt="CRAN status"></a></li>
-<li><a href="https://github.com/tidyverse/dtplyr/actions"><img src="https://github.com/tidyverse/dtplyr/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/tidyverse/dtplyr?branch=main"><img src="https://codecov.io/gh/tidyverse/dtplyr/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li>
+<a href="http://hadley.nz" class="external-link">Hadley Wickham</a> <br><small class="roles"> Maintainer, author </small>  </li>
+<li>Maximilian Girlich <br><small class="roles"> Author </small>  </li>
+<li>Mark Fairbanks <br><small class="roles"> Author </small>  </li>
+<li>Ryan Dickerson <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=dtplyr" class="external-link"><img src="https://www.r-pkg.org/badges/version/dtplyr" alt="CRAN status"></a></li>
+<li><a href="https://github.com/tidyverse/dtplyr/actions" class="external-link"><img src="https://github.com/tidyverse/dtplyr/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://codecov.io/gh/tidyverse/dtplyr?branch=main" class="external-link"><img src="https://codecov.io/gh/tidyverse/dtplyr/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="tidyverse">
-  <p>dtplyr is a part of the <strong>tidyverse</strong>, an ecosystem of packages designed with common APIs and a shared philosophy. Learn more at <a href="https://tidyverse.org">tidyverse.org</a>.</p>
+  <p>dtplyr is a part of the <strong>tidyverse</strong>, an ecosystem of packages designed with common APIs and a shared philosophy. Learn more at <a href="https://tidyverse.org" class="external-link">tidyverse.org</a>.</p>
 </div>
 
 <div class="author">
   <p>
-    Developed by <a href="http://hadley.nz">Hadley Wickham</a>, Maximilian Girlich, Mark Fairbanks.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 
@@ -269,6 +274,8 @@
 
   
 
+
+  
 
   </body>
 </html>

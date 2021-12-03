@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://dtplyr.tidyverse.org/404.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/SUPPORT.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/articles/translation.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/authors.html</loc>
+  </url>
+  <url>
     <loc>https://dtplyr.tidyverse.org/index.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/news/index.html</loc>
   </url>
   <url>
     <loc>https://dtplyr.tidyverse.org/reference/arrange.dtplyr_step.html</loc>
@@ -41,6 +71,9 @@
   </url>
   <url>
     <loc>https://dtplyr.tidyverse.org/reference/head.dtplyr_step.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/reference/index.html</loc>
   </url>
   <url>
     <loc>https://dtplyr.tidyverse.org/reference/intersect.dtplyr_step.html</loc>
@@ -86,8 +119,5 @@
   </url>
   <url>
     <loc>https://dtplyr.tidyverse.org/reference/transmute.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/articles/translation.html</loc>
   </url>
 </urlset>
