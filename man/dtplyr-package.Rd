@@ -26,6 +26,7 @@ Authors:
 \itemize{
   \item Maximilian Girlich
   \item Mark Fairbanks
+  \item Ryan Dickerson
 }
 
 Other contributors:
