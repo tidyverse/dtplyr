@@ -2,7 +2,7 @@
 
 ## New authors
 
-@markfairbanks and @mgirlich are now dtplyr authors in recognition of their significant and sustained contributions. Along with @eutwt, they supplied the bulk of the improvements in this release!
+@markfairbanks, @mgirlich, and @eutwt are now dtplyr authors in recognition of their significant and sustained contributions. Along with @eutwt, they supplied the bulk of the improvements in this release!
 
 ## New features
 
