@@ -8,7 +8,7 @@ dt_squash_across <- function(call, env, data, j = j) {
 
   tbl <- simulate_vars(data, drop_groups = TRUE)
   .cols <- call$.cols %||% expr(everything())
-  locs <- tidyselect::eval_select(.cols, tbl)
+  locs <- tidyselect::eval_select(.cols, tbl, env = env)
   cols <- syms(names(tbl))[locs]
 
   funs <- across_funs(call$.fns, env, data, j = j)
