@@ -53,6 +53,8 @@ reference:
 
 news:
   releases:
+  - text: "Version 1.2.0"
+    href: https://www.tidyverse.org/blog/2021/12/dtplyr-1-2-0/
   - text: "Version 1.1.0"
     href: https://www.tidyverse.org/blog/2021/02/dplyr-backends/
   - text: "Version 1.0.0"
