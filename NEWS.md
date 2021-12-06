@@ -1,3 +1,5 @@
+# dtplyr (development version)
+
 # dtplyr 1.2.0
 
 ## New authors
