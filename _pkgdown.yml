@@ -2,9 +2,11 @@ url: https://dtplyr.tidyverse.org
 
 template:
   package: tidytemplate
-
+  bootstrap: 5
+  includes:
+    in_header: |
+      <script defer data-domain="dtplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 home:
-  strip_header: true
   links:
   - text: Learn more about data.table
     href: https://rdatatable.gitlab.io/data.table/

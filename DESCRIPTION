@@ -16,7 +16,7 @@ Authors@R:
              family = "Dickerson",
              role = "aut"),
       person(given = "RStudio",
-             role = "cph"))
+             role = c("cph", "fnd")))
 Description: Provides a data.table backend for 'dplyr'. The goal
     of 'dtplyr' is to allow you to write 'dplyr' code that is
     automatically translated to the equivalent, but usually much faster,
@@ -49,4 +49,5 @@ VignetteBuilder:
 Encoding: UTF-8
 Roxygen: {library(tidyr); list(markdown = TRUE)}
 RoxygenNote: 7.1.2
+Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
