@@ -1,7 +1,7 @@
 # dtplyr (development version)
 
- * When called within a function, `across()` can access variables in that 
-   function's execution environment.
+ * The `.cols` argument of `across` is evaluated in the environment from which 
+   `across` was called
 
 # dtplyr 1.2.0
 
