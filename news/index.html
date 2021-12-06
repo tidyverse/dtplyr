@@ -26,7 +26,7 @@
         <a class="navbar-brand" href="../index.html">dtplyr</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of the <a href="https://tidyverse.org" class="external-link">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
         </div>
       </div>
     </div>
@@ -82,13 +82,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="development version" id="dtplyr-development-version">dtplyr (development version)<a class="anchor" aria-label="anchor" href="#dtplyr-development-version"></a></h2>
+<h2 class="page-header" data-toc-text="1.2.0" id="dtplyr-120">dtplyr 1.2.0<small>2021-12-05</small><a class="anchor" aria-label="anchor" href="#dtplyr-120"></a></h2>
 <div class="section level3">
-<h3 id="new-authors-development-version">New authors<a class="anchor" aria-label="anchor" href="#new-authors-development-version"></a></h3>
+<h3 id="new-authors-1-2-0">New authors<a class="anchor" aria-label="anchor" href="#new-authors-1-2-0"></a></h3>
 <p>@markfairbanks, <a href="https://github.com/mgirlich" class="external-link">@mgirlich</a>, and <a href="https://github.com/eutwt" class="external-link">@eutwt</a> are now dtplyr authors in recognition of their significant and sustained contributions. Along with <a href="https://github.com/eutwt" class="external-link">@eutwt</a>, they supplied the bulk of the improvements in this release!</p>
 </div>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-1-2-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-2-0"></a></h3>
 <ul><li>
 <p>dtplyr gains translations for many more tidyr verbs:</p>
 <ul><li>
@@ -112,7 +112,7 @@
 <li><p><code><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html" class="external-link">ifelse()</a></code> is mapped to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html" class="external-link">fifelse()</a></code> (<a href="https://github.com/markfairbanks" class="external-link">@markfairbanks</a>, <a href="https://github.com/tidyverse/dtplyr/issues/220" class="external-link">#220</a>).</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<h3 id="minor-improvements-and-bug-fixes-1-2-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-1-2-0"></a></h3>
 <ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice()</a></code> helpers (<code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_tail()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_min()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_max()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_sample()</a></code>) now accept negative values for <code>n</code> and <code>prop</code>.</p></li>
 <li>
 <p><code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across()</a></code> defaults to <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> when <code>.cols</code> isn’t provided (<a href="https://github.com/markfairbanks" class="external-link">@markfairbanks</a>, <a href="https://github.com/tidyverse/dtplyr/issues/231" class="external-link">#231</a>), and handles named selections (<a href="https://github.com/eutwt" class="external-link">@eutwt</a> <a href="https://github.com/tidyverse/dtplyr/issues/293" class="external-link">#293</a>). It ˜ow handles <code>.fns</code> arguments in more forms (<a href="https://github.com/eutwt" class="external-link">@eutwt</a> <a href="https://github.com/tidyverse/dtplyr/issues/288" class="external-link">#288</a>):</p>

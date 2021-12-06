@@ -3,7 +3,7 @@ pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   translation: translation.html
-last_built: 2021-12-03T14:52Z
+last_built: 2021-12-06T12:57Z
 urls:
   reference: https://dtplyr.tidyverse.org/reference
   article: https://dtplyr.tidyverse.org/articles

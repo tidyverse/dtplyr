@@ -52,7 +52,7 @@
         <a class="navbar-brand" href="../index.html">dtplyr</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of the <a href="https://tidyverse.org" class="external-link">tidyverse</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
         </div>
       </div>
     </div>
@@ -395,9 +395,9 @@
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     734.91µs 922.71µs     <span style="text-decoration: underline;">1</span>022.        0B     17.2</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.22ms    1.5ms      648.        0B     17.2</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise  855.31µs   1.04ms      926.        0B     14.9</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter      834.6µs   1.04ms      937.        0B     15.1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.52ms   1.86ms      524.        0B     13.5</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.05ms   1.26ms      782.        0B     12.8</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
