@@ -81,3 +81,17 @@ test_that("only transmuting groups works", {
   expect_equal(transmute(dt, x) %>% collect(), dt %>% collect())
   expect_equal(transmute(dt, x)$vars, "x")
 })
+
+
+test_that("can remove previously created var with var = NULL", {
+  dt <- lazy_dt(data.frame(x = 1))
+  expect_equal(
+    collect(transmute(dt, y = 2, z = y*2, y = NULL)),
+    tibble(z = 4)
+  )
+  expect_equal(
+    transmute(dt, y = 2, z = y*2, y = NULL)$vars,
+    "z"
+  )
+})
+

@@ -29,6 +29,9 @@ transmute.dtplyr_step <- function(.data, ...) {
     dots <- dots[!is_group_var]
   }
 
+  remove_vars <- get_remove_vars(dots)
+  if (!is_empty(remove_vars)) dots <- dots[-remove_vars]
+
   if (is_empty(dots)) {
     # grouping variables have been removed from `dots` so `select()` would
     # produce a message "Adding grouping vars".
@@ -37,12 +40,13 @@ transmute.dtplyr_step <- function(.data, ...) {
     return(select(.data, !!!group_vars(.data)))
   }
 
-  if (!nested) {
+  if (!nested & is_empty(remove_vars)) {
     j <- call2(".", !!!dots)
   } else {
-    j <- mutate_nested_vars(dots)$expr
+    j <- mutate_braces_expr(dots, remove_vars)$expr
   }
   vars <- union(group_vars(.data), names(dots))
+  vars <- setdiff(vars, names(remove_vars))
   step_subset_j(.data, vars = vars, j = j)
 }
 
