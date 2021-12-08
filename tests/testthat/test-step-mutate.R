@@ -106,6 +106,18 @@ test_that("emtpy mutate returns input", {
   expect_equal(mutate(dt, !!!list()), dt)
 })
 
+test_that("can remove previously created var with var = NULL", {
+  dt <- lazy_dt(data.frame(x = 1))
+  expect_equal(
+    collect(mutate(dt, y = 2, z = y*2, y = NULL)),
+    tibble(x = 1, z = 4)
+  )
+  expect_equal(
+    mutate(dt, y = 2, z = y*2, y = NULL)$vars,
+    c("x", "z")
+  )
+})
+
 # .before and .after -----------------------------------------------------------
 
 test_that("can use .before and .after to control column position", {
