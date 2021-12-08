@@ -18,9 +18,7 @@ step_mutate <- function(parent, new_vars = list(), remove_vars = integer(), nest
 
 dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
   # i is always empty because we never mutate a subset
-  if (is_empty(x$new_vars)) {
-    j <- quote(.SD)
-  } else if (!x$nested & is_empty(x$remove_vars)) {
+  if (!x$nested & is_empty(x$remove_vars)) {
     j <- call2(":=", !!!x$new_vars)
   } else {
     mutate_list <- mutate_braces_expr(x$new_vars, x$remove_vars)
@@ -82,6 +80,9 @@ mutate.dtplyr_step <- function(.data, ...,
 
   remove_vars <- get_remove_vars(dots)
   if (!is_empty(remove_vars)) dots <- dots[-remove_vars]
+  if (is_empty(setdiff(names(dots), names(remove_vars)))) {
+    return(.data)
+  }
 
   nested <- nested_vars(.data, dots, .data$vars)
   out <- step_mutate(.data, dots, remove_vars, nested)

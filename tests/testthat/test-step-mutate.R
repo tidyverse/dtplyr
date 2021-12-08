@@ -116,6 +116,15 @@ test_that("can remove previously created var with var = NULL", {
     mutate(dt, y = 2, z = y*2, y = NULL)$vars,
     c("x", "z")
   )
+  # even when no other vars are added
+  expect_equal(
+    collect(mutate(dt, y = 2, y = NULL)),
+    tibble(x = 1)
+  )
+  expect_equal(
+    mutate(dt, y = 2, y = NULL)$vars,
+    "x"
+  )
 })
 
 # .before and .after -----------------------------------------------------------
