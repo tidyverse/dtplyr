@@ -125,7 +125,7 @@ nested_vars <- function(.data, dots, all_vars) {
 get_remove_vars <- function(dots){
   # Detect vars created and then set to NULL in same mutate
   n_used <- tapply(seq_along(dots), names(dots), length)
-  last_i <- tapply(seq_along(dots), names(dots), last)
+  last_i <- tapply(seq_along(dots), names(dots), function(x) x[[length(x)]])
   last_is_null <- vapply(dots[last_i], is.null, lgl(1))
   last_i[last_is_null & n_used > 1]
 }
