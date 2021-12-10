@@ -134,9 +134,11 @@ remove_vars <- function(.data, vars) {
   if (is_empty(vars)) {
     return(.data)
   } 
-  step_subset(
+  group_vars <- .data$groups
+  out <- step_subset(
     .data, groups = character(), j = expr(!!unique(vars) := NULL),
     vars = setdiff(.data$vars, vars)
   )
+  group_by(out, !!!syms(group_vars))
 }
 
