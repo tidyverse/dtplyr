@@ -44,7 +44,7 @@ capture_new_vars <- function(.data, ...) {
   dots <- as.list(enquos(..., .named = TRUE))
   for (i in seq_along(dots)) {
     dot <- dt_squash(dots[[i]], data = .data) 
-    dots[[i]] <- dot %||% structure('zap', class = 'rlang_zap')
+    if (!is.null(dot)) dots[[i]] <- dot
     .data$vars <- union(.data$vars, names(dots)[i])
   }
 
@@ -54,7 +54,21 @@ capture_new_vars <- function(.data, ...) {
 
   # Auto-splice list results from dt_squash()
   dots[!is_list] <- lapply(dots[!is_list], list)
-  unlist(dots, recursive = FALSE)
+  out <- unlist(dots, recursive = FALSE)
+
+  # detect temp vars i.e. repeated vars where last is var = NULL
+  var_is_null <- vapply(out, identical, y = quo(NULL), lgl(1))
+  if (any(var_is_null)) {
+    var_is_last <- rev(data.table::rowid(rev(names(out))) == 1)
+    temp_var_removal <- var_is_null & var_is_last
+    for (i in seq_along(out)) {
+      if (temp_var_removal[i]) {
+        out[[i]] <- structure(list(), class = 'dtplyr_temp_var_removal')
+      }
+    }
+  }
+
+  out
 }
 
 capture_dot <- function(.data, x, j = TRUE) {

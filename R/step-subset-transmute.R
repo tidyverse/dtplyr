@@ -14,9 +14,6 @@
 #' dt %>% transmute(name, sh = paste0(species, "/", homeworld))
 transmute.dtplyr_step <- function(.data, ...) {
   dots <- capture_new_vars(.data, ...)
-  to_remove <- vapply(dots, is_zap, lgl(1))
-  dots <- dots[!to_remove]
-  nested <- nested_vars(.data, dots, .data$vars)
 
   groups <- group_vars(.data)
   if (!is_empty(groups)) {
@@ -39,14 +36,17 @@ transmute.dtplyr_step <- function(.data, ...) {
     return(select(.data, !!!group_vars(.data)))
   }
 
-  if (!nested) {
+  nested <- nested_vars(.data, dots, .data$vars)
+  repeated <- any(tapply(dots, names(dots), length) > 1)
+  if (!(nested | repeated)) {
     j <- call2(".", !!!dots)
+    vars <- union(group_vars(.data), names(dots))
   } else {
-    j <- mutate_nested_vars(dots)$expr
+    mutate_list <- mutate_with_braces(dots)
+    j <- mutate_list$expr
+    vars <- mutate_list$new_vars
   }
-  vars <- union(group_vars(.data), names(dots))
-  out <- step_subset_j(.data, vars = vars, j = j)
-  remove_vars(out, names(to_remove)[to_remove])
+  step_subset_j(.data, vars = vars, j = j)
 }
 
 #' @export

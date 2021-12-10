@@ -1,6 +1,7 @@
-step_mutate <- function(parent, new_vars = list(), nested = FALSE) {
+step_mutate <- function(parent, new_vars = list(), use_braces = FALSE) {
   vars <- union(parent$vars, names(new_vars))
-  vars <- setdiff(vars, names(new_vars)[vapply(new_vars, is_null, lgl(1))])
+  null_or_temp <- function(x) is_null(x) | is_temp_var(x)
+  vars <- setdiff(vars, names(new_vars)[vapply(new_vars, null_or_temp, lgl(1))])
 
   new_step(
     parent,
@@ -9,7 +10,7 @@ step_mutate <- function(parent, new_vars = list(), nested = FALSE) {
     arrange = parent$arrange,
     needs_copy = !parent$implicit_copy,
     new_vars = new_vars,
-    nested = nested,
+    use_braces = use_braces,
     class = "dtplyr_step_mutate"
   )
 }
@@ -18,11 +19,15 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
   # i is always empty because we never mutate a subset
   if (is_empty(x$new_vars)) {
     j <- quote(.SD)
-  } else if (!x$nested) {
+  } else if (!x$use_braces) {
     j <- call2(":=", !!!x$new_vars)
   } else {
-    mutate_list <- mutate_nested_vars(x$new_vars)
-    j <- call2(":=", call2("c", !!!mutate_list$new_vars), mutate_list$expr)
+    mutate_list <- mutate_with_braces(x$new_vars)
+    if (is_empty(mutate_list$new_vars)) {
+      j <- expr(.SD)
+    } else {
+      j <- call2(":=", call2("c", !!!mutate_list$new_vars), mutate_list$expr)
+    }
   }
 
   out <- call2("[", dt_call(x$parent, needs_copy), , j)
@@ -30,9 +35,11 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
   add_grouping_param(out, x, arrange = FALSE)
 }
 
-mutate_nested_vars <- function(mutate_vars) {
+mutate_with_braces <- function(mutate_vars) {
+  temp_var <- vapply(mutate_vars, is_temp_var, lgl(1))
+  mutate_vars <- mutate_vars[!temp_var]
   assign <- map2(syms(names(mutate_vars)), mutate_vars, function(x, y) call2("<-", x, y))
-  new_vars <- unique(names(mutate_vars))
+  new_vars <- setdiff(names(mutate_vars), names(temp_var)[temp_var])
   output <- call2(".", !!!syms(new_vars))
 
   list(
@@ -77,11 +84,10 @@ mutate.dtplyr_step <- function(.data, ...,
   if (is_null(dots)) {
     return(.data)
   }
-  to_remove <- vapply(dots, is_zap, lgl(1))
-  dots <- dots[!to_remove]
 
   nested <- nested_vars(.data, dots, .data$vars)
-  out <- step_mutate(.data, dots, nested)
+  repeated <- any(tapply(dots, names(dots), length) > 1)
+  out <- step_mutate(.data, dots, use_braces = nested | repeated)
 
   .before <- enquo(.before)
   .after <- enquo(.after)
@@ -91,7 +97,7 @@ mutate.dtplyr_step <- function(.data, ...,
     out <- relocate(out, !!new, .before = !!.before, .after = !!.after)
   }
 
-  remove_vars(out, names(to_remove)[to_remove])
+  out
 }
 
 #' @export
@@ -127,3 +133,8 @@ all_names <- function(x) {
 
   unique(unlist(lapply(x[-1], all_names), use.names = FALSE))
 }
+
+is_temp_var <- function(x) {
+  inherits(x, 'dtplyr_temp_var_removal')
+}
+
