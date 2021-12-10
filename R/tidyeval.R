@@ -44,7 +44,11 @@ capture_new_vars <- function(.data, ...) {
   dots <- as.list(enquos(..., .named = TRUE))
   for (i in seq_along(dots)) {
     dot <- dt_squash(dots[[i]], data = .data) 
-    if (!is.null(dot)) dots[[i]] <- dot
+    if (!is.null(dot)) {
+      dots[[i]] <- dot
+    } else {
+      dots[i] <- list(NULL)
+    }
     .data$vars <- union(.data$vars, names(dots)[i])
   }
 
@@ -57,7 +61,7 @@ capture_new_vars <- function(.data, ...) {
   out <- unlist(dots, recursive = FALSE)
 
   # detect temp vars i.e. repeated vars where last is var = NULL
-  var_is_null <- vapply(out, identical, y = quo(NULL), lgl(1))
+  var_is_null <- vapply(out, is.null, lgl(1))
   if (any(var_is_null)) {
     is_repeated <- duplicated(names(out))
     is_last <- !duplicated(names(out), fromLast = TRUE)

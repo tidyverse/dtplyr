@@ -1,6 +1,6 @@
 step_mutate <- function(parent, new_vars = list(), use_braces = FALSE) {
   vars <- union(parent$vars, names(new_vars))
-  null_or_temp <- function(x) is_temp_var(x) | (is_quosure(x) && quo_is_null(x))
+  null_or_temp <- function(x) is_null(x) | is_temp_var(x)
   vars <- setdiff(vars, names(new_vars)[vapply(new_vars, null_or_temp, lgl(1))])
 
   new_step(
