@@ -81,3 +81,33 @@ test_that("only transmuting groups works", {
   expect_equal(transmute(dt, x) %>% collect(), dt %>% collect())
   expect_equal(transmute(dt, x)$vars, "x")
 })
+
+test_that("can remove previously created var with var = NULL", {
+  dt <- lazy_dt(data.frame(x = 1))
+  expect_equal(
+    collect(transmute(dt, y = 2, z = y*2, y = NULL)),
+    tibble(z = 4)
+  )
+  expect_equal(
+    transmute(dt, y = 2, z = y*2, y = NULL)$vars,
+    "z"
+  )
+})
+
+test_that("across() can access previously created variables", {
+  dt <- lazy_dt(data.frame(x = 1))
+  expect_equal(
+    collect(transmute(dt, y = 2, across(y, sqrt))),
+    tibble(y = sqrt(2))
+  )
+})
+
+test_that("new columns take precedence over global variables", {
+  dt <- lazy_dt(data.frame(x = 1))
+  y <- 'global var'
+  expect_equal(
+    collect(transmute(dt, y = 2, z = y + 1)),
+    tibble(y = 2, z = 3)
+  )
+})
+

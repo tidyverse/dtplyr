@@ -73,10 +73,12 @@ mutate_nested_vars <- function(mutate_vars) {
 #'   mutate(x1 = x + 1, x2 = x1 + 1)
 mutate.dtplyr_step <- function(.data, ...,
                                .before = NULL, .after = NULL) {
-  dots <- capture_dots(.data, ...)
+  dots <- capture_new_vars(.data, ...)
   if (is_null(dots)) {
     return(.data)
   }
+  to_remove <- vapply(dots, is_zap, lgl(1))
+  dots <- dots[!to_remove]
 
   nested <- nested_vars(.data, dots, .data$vars)
   out <- step_mutate(.data, dots, nested)
@@ -89,7 +91,7 @@ mutate.dtplyr_step <- function(.data, ...,
     out <- relocate(out, !!new, .before = !!.before, .after = !!.after)
   }
 
-  out
+  remove_vars(out, names(to_remove)[to_remove])
 }
 
 #' @export

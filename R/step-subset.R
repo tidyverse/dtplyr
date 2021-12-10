@@ -129,3 +129,14 @@ dt_call.dtplyr_step_subset <- function(x, needs_copy = x$needs_copy) {
   }
   out
 }
+
+remove_vars <- function(.data, vars) {
+  if (is_empty(vars)) {
+    return(.data)
+  } 
+  step_subset(
+    .data, groups = character(), j = expr(!!unique(vars) := NULL),
+    vars = setdiff(.data$vars, vars)
+  )
+}
+

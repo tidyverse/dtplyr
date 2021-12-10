@@ -106,6 +106,44 @@ test_that("emtpy mutate returns input", {
   expect_equal(mutate(dt, !!!list()), dt)
 })
 
+test_that("can remove previously created var with var = NULL", {
+  dt <- lazy_dt(data.frame(x = 1))
+  expect_equal(
+    collect(mutate(dt, y = 2, z = y*2, y = NULL)),
+    tibble(x = 1, z = 4)
+  )
+  expect_equal(
+    mutate(dt, y = 2, z = y*2, y = NULL)$vars,
+    c("x", "z")
+  )
+  # even when no other vars are added
+  expect_equal(
+    collect(mutate(dt, y = 2, y = NULL)),
+    tibble(x = 1)
+  )
+  expect_equal(
+    mutate(dt, y = 2, y = NULL)$vars,
+    "x"
+  )
+})
+
+test_that("across() can access previously created variables", {
+  dt <- lazy_dt(data.frame(x = 1))
+  expect_equal(
+    collect(mutate(dt, y = 2, across(y, sqrt))),
+    tibble(x = 1, y = sqrt(2))
+  )
+})
+
+test_that("new columns take precedence over global variables", {
+  dt <- lazy_dt(data.frame(x = 1))
+  y <- 'global var'
+  expect_equal(
+    collect(mutate(dt, y = 2, z = y + 1)),
+    tibble(x = 1, y = 2, z = 3)
+  )
+})
+
 # .before and .after -----------------------------------------------------------
 
 test_that("can use .before and .after to control column position", {
