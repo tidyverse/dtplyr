@@ -135,6 +135,14 @@ test_that("across() can access previously created variables", {
   )
 })
 
+test_that("can have repeated non-nested variables", {
+  dt <- lazy_dt(data.frame(x = 1))
+  expect_equal(
+    collect(mutate(dt, y = 2, y = 3)),
+    tibble(x = 1, y = 3)
+  )
+})
+
 test_that("new columns take precedence over global variables", {
   dt <- lazy_dt(data.frame(x = 1))
   y <- 'global var'
