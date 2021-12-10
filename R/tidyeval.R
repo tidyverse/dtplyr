@@ -59,8 +59,9 @@ capture_new_vars <- function(.data, ...) {
   # detect temp vars i.e. repeated vars where last is var = NULL
   var_is_null <- vapply(out, identical, y = quo(NULL), lgl(1))
   if (any(var_is_null)) {
-    var_is_last <- rev(data.table::rowid(rev(names(out))) == 1)
-    temp_var_removal <- var_is_null & var_is_last
+    is_repeated <- duplicated(names(out))
+    is_last <- !duplicated(names(out), fromLast = TRUE)
+    temp_var_removal <- var_is_null & is_repeated & is_last
     for (i in seq_along(out)) {
       if (temp_var_removal[i]) {
         out[[i]] <- structure(list(), class = 'dtplyr_temp_var_removal')

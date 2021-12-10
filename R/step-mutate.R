@@ -1,6 +1,6 @@
 step_mutate <- function(parent, new_vars = list(), use_braces = FALSE) {
   vars <- union(parent$vars, names(new_vars))
-  null_or_temp <- function(x) is_null(x) | is_temp_var(x)
+  null_or_temp <- function(x) is_temp_var(x) | (is_quosure(x) && quo_is_null(x))
   vars <- setdiff(vars, names(new_vars)[vapply(new_vars, null_or_temp, lgl(1))])
 
   new_step(
@@ -86,7 +86,7 @@ mutate.dtplyr_step <- function(.data, ...,
   }
 
   nested <- nested_vars(.data, dots, .data$vars)
-  repeated <- any(duplicated(names(dots)))
+  repeated <- anyDuplicated(names(dots))
   out <- step_mutate(.data, dots, use_braces = nested | repeated)
 
   .before <- enquo(.before)
