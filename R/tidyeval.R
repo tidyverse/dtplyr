@@ -43,8 +43,8 @@ capture_dots <- function(.data, ..., .j = TRUE) {
 capture_new_vars <- function(.data, ...) {
   dots <- enquos(..., .named = TRUE)
   for (i in seq_along(dots)) {
-    dot <- dt_squash(dots[[i]], data = .data) %||% structure('zap', class = 'rlang_zap')
-    dots[[i]] <- dot
+    dot <- dt_squash(dots[[i]], data = .data) 
+    dots[[i]] <- dot %||% structure('zap', class = 'rlang_zap')
     .data$vars <- union(.data$vars, names(dots)[i])
   }
 
