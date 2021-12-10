@@ -44,10 +44,10 @@ capture_new_vars <- function(.data, ...) {
   dots <- as.list(enquos(..., .named = TRUE))
   for (i in seq_along(dots)) {
     dot <- dt_squash(dots[[i]], data = .data) 
-    if (!is.null(dot)) {
-      dots[[i]] <- dot
-    } else {
+    if (is.null(dot)) {
       dots[i] <- list(NULL)
+    } else {
+      dots[[i]] <- dot
     }
     .data$vars <- union(.data$vars, names(dots)[i])
   }

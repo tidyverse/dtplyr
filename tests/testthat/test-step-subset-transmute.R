@@ -92,6 +92,15 @@ test_that("can remove previously created var with var = NULL", {
     transmute(dt, y = 2, z = y*2, y = NULL)$vars,
     "z"
   )
+  # even when no other vars are added
+  expect_equal(
+    collect(transmute(dt, y = 2, y = NULL)),
+    tibble()
+  )
+  expect_equal(
+    transmute(dt, y = 2, y = NULL)$vars,
+    character()
+  )
 })
 
 test_that("across() can access previously created variables", {
