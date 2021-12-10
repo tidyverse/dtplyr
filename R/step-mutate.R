@@ -93,7 +93,7 @@ mutate.dtplyr_step <- function(.data, ...,
   .after <- enquo(.after)
   if (!quo_is_null(.before) || !quo_is_null(.after)) {
     # Only change the order of new columns
-    new <- setdiff(names(dots), .data$vars)
+    new <- setdiff(out$vars, .data$vars)
     out <- relocate(out, !!new, .before = !!.before, .after = !!.after)
   }
 
