@@ -13,8 +13,8 @@
 #' dt <- lazy_dt(dplyr::starwars)
 #' dt %>% transmute(name, sh = paste0(species, "/", homeworld))
 transmute.dtplyr_step <- function(.data, ...) {
-  dots <- capture_dots(.data, ...)
-  nested <- nested_vars(.data, dots, .data$vars)
+  dots <- capture_new_vars(.data, ...)
+  use_braces <- nested_vars(.data, dots, .data$vars) | anyDuplicated(names(dots))
 
   groups <- group_vars(.data)
   if (!is_empty(groups)) {
@@ -37,13 +37,20 @@ transmute.dtplyr_step <- function(.data, ...) {
     return(select(.data, !!!group_vars(.data)))
   }
 
-  if (!nested) {
+  if (!use_braces) {
     j <- call2(".", !!!dots)
   } else {
-    j <- mutate_nested_vars(dots)$expr
+    mutate_list <- mutate_with_braces(dots)
+    j <- mutate_list$expr
   }
   vars <- union(group_vars(.data), names(dots))
-  step_subset_j(.data, vars = vars, j = j)
+  out <- step_subset_j(.data, vars = vars, j = j)
+
+  if (use_braces) {
+    out <- remove_vars(out, mutate_list$removed_vars)
+  }
+
+  out
 }
 
 #' @export

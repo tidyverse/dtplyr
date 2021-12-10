@@ -40,6 +40,27 @@ capture_dots <- function(.data, ..., .j = TRUE) {
   unlist(dots, recursive = FALSE)
 }
 
+capture_new_vars <- function(.data, ...) {
+  dots <- as.list(enquos(..., .named = TRUE))
+  for (i in seq_along(dots)) {
+    dot <- dt_squash(dots[[i]], data = .data)
+    if (is.null(dot)) {
+      dots[i] <- list(NULL)
+    } else {
+      dots[[i]] <- dot
+    }
+    .data$vars <- union(.data$vars, names(dots)[i])
+  }
+
+  # Remove names from any list elements
+  is_list <- vapply(dots, is.list, logical(1))
+  names(dots)[is_list] <- ""
+
+  # Auto-splice list results from dt_squash()
+  dots[!is_list] <- lapply(dots[!is_list], list)
+  unlist(dots, recursive = FALSE)
+}
+
 capture_dot <- function(.data, x, j = TRUE) {
   dt_squash(enquo(x), data = .data, j = j)
 }

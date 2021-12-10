@@ -81,3 +81,74 @@ test_that("only transmuting groups works", {
   expect_equal(transmute(dt, x) %>% collect(), dt %>% collect())
   expect_equal(transmute(dt, x)$vars, "x")
 })
+
+test_that("var = NULL works when var is in original data", {
+  dt <- lazy_dt(data.frame(x = 1))
+  step <-  dt %>% mutate(x = 2, z = x*2, x = NULL)
+  expect_equal(
+    collect(step),
+    tibble(z = 4)
+  )
+  expect_equal(
+    step$vars,
+    "z"
+  )
+})
+
+test_that("var = NULL works when var is not in original data", {
+  dt <- lazy_dt(data.frame(x = 1))
+  step <- transmute(dt, y = 2, z = y*2, y = NULL)
+  expect_equal(
+    collect(step),
+    tibble(z = 4)
+  )
+  expect_equal(
+    step$vars,
+    "z"
+  )
+  # when no other vars are added
+  step <- transmute(dt, y = 2, y = NULL)
+  expect_equal(
+    collect(step),
+    tibble()
+  )
+  expect_equal(
+    step$vars,
+    character()
+  )
+})
+
+test_that("across() can access previously created variables", {
+  dt <- lazy_dt(data.frame(x = 1))
+  step <- transmute(dt, y = 2, across(y, sqrt))
+  expect_equal(
+    collect(step),
+    tibble(y = sqrt(2))
+  )
+})
+
+test_that("can repeat named arguments", {
+  dt <- lazy_dt(data.frame(x = 1))
+  step <- transmute(dt, y = 2, y = 3)
+  expect_equal(
+    collect(step),
+    tibble(y = 3)
+  )
+  # even when first is NULL
+  step <- transmute(dt, y = NULL, y = 3)
+  expect_equal(
+    collect(step),
+    tibble(y = 3)
+  )
+})
+
+test_that("new columns take precedence over global variables", {
+  y <- 'global var'
+  dt <- lazy_dt(data.frame(x = 1))
+  step <- transmute(dt, y = 2, z = y + 1)
+  expect_equal(
+    collect(step),
+    tibble(y = 2, z = 3)
+  )
+})
+
