@@ -37,7 +37,7 @@ transmute.dtplyr_step <- function(.data, ...) {
   }
 
   nested <- nested_vars(.data, dots, .data$vars)
-  repeated <- any(tapply(dots, names(dots), length) > 1)
+  repeated <- any(duplicated(names(dots)))
   if (!(nested | repeated)) {
     j <- call2(".", !!!dots)
     vars <- union(group_vars(.data), names(dots))

@@ -86,7 +86,7 @@ mutate.dtplyr_step <- function(.data, ...,
   }
 
   nested <- nested_vars(.data, dots, .data$vars)
-  repeated <- any(tapply(dots, names(dots), length) > 1)
+  repeated <- any(duplicated(names(dots)))
   out <- step_mutate(.data, dots, use_braces = nested | repeated)
 
   .before <- enquo(.before)
