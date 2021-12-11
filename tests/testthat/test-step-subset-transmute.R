@@ -83,47 +83,93 @@ test_that("only transmuting groups works", {
 })
 
 test_that("can remove previously created var with var = NULL", {
-  dt <- lazy_dt(data.frame(x = 1))
+  dt <- lazy_dt(data.frame(x = 1), "DT")
+
+  step <- transmute(dt, y = 2, z = y * 2, y = NULL)
   expect_equal(
-    collect(transmute(dt, y = 2, z = y*2, y = NULL)),
+    collect(step),
     tibble(z = 4)
   )
   expect_equal(
-    transmute(dt, y = 2, z = y*2, y = NULL)$vars,
+    show_query(step),
+    expr(
+      DT[, {
+        y <- 2
+        z <- y * 2
+        .(z)
+      }]
+    )
+  )
+  expect_equal(
+    step$vars,
     "z"
   )
   # even when no other vars are added
+  step <- transmute(dt, y = 2, y = NULL)
   expect_equal(
-    collect(transmute(dt, y = 2, y = NULL)),
+    collect(step),
     tibble()
   )
   expect_equal(
-    transmute(dt, y = 2, y = NULL)$vars,
-    character()
+    step$vars,
+    character(0)
   )
 })
 
 test_that("across() can access previously created variables", {
-  dt <- lazy_dt(data.frame(x = 1))
+  dt <- lazy_dt(data.frame(x = 1), "DT")
+  step <- transmute(dt, y = 2, across(y, sqrt))
   expect_equal(
-    collect(transmute(dt, y = 2, across(y, sqrt))),
+    collect(step),
     tibble(y = sqrt(2))
+  )
+  expect_equal(
+    show_query(step),
+    expr(
+      DT[, {
+        y <- 2
+        y <- sqrt(y)
+        .(y)
+      }]
+    )
   )
 })
 
 test_that("can have repeated non-nested variables", {
-  dt <- lazy_dt(data.frame(x = 1))
+  dt <- lazy_dt(data.frame(x = 1), "DT")
+  step <- transmute(dt, y = 2, y = 3)
   expect_equal(
-    collect(transmute(dt, y = 2, y = 3)),
+    collect(step),
     tibble(y = 3)
+  )
+  expect_equal(
+    show_query(step),
+    expr(
+      DT[, {
+        y <- 2
+        y <- 3
+        .(y)
+      }]
+    )
   )
 })
 
 test_that("new columns take precedence over global variables", {
-  dt <- lazy_dt(data.frame(x = 1))
-  y <- 'global var'
+  y <- "global var"
+  dt <- lazy_dt(data.frame(x = 1), "DT")
+  step <- transmute(dt, y = 2, z = y + 1)
   expect_equal(
-    collect(transmute(dt, y = 2, z = y + 1)),
+    collect(step),
     tibble(y = 2, z = 3)
+  )
+  expect_equal(
+    show_query(step),
+    expr(
+      DT[, {
+        y <- 2
+        z <- y + 1
+        .(y, z)
+      }]
+    )
   )
 })
