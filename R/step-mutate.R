@@ -35,7 +35,7 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 }
 
 mutate_with_braces <- function(mutate_vars) {
-  # var removals with var = NULL don't work well with expressions using braces
+  # removing vars with var = NULL doesn't work well with expressions using braces
   # need to identify those cases to deal with them in a separate step
   var_is_null <- vapply(mutate_vars, is.null, lgl(1))
   is_last <- !duplicated(names(mutate_vars), fromLast = TRUE)
