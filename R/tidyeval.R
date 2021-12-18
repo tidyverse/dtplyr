@@ -58,7 +58,19 @@ capture_new_vars <- function(.data, ...) {
 
   # Auto-splice list results from dt_squash()
   dots[!is_list] <- lapply(dots[!is_list], list)
-  unlist(dots, recursive = FALSE)
+  out <- unlist(dots, recursive = FALSE)
+
+  # identify & mark when var = NULL is being used to remove a variable
+  var_is_null <- vapply(out, is.null, logical(1))
+  is_last <- !duplicated(names(out), fromLast = TRUE)
+  is_var_removal <- var_is_null & is_last
+  map2(out, is_var_removal, function(dot, is_rm) {
+    if (is_rm) {
+      structure(list(), class = 'var_removal')
+    } else {
+      dot
+    }
+  })
 }
 
 capture_dot <- function(.data, x, j = TRUE) {

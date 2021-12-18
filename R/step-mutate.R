@@ -27,29 +27,17 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
 
   out <- call2("[", dt_call(x$parent, needs_copy), , j)
 
-  if (x$use_braces && !is_empty(mutate_list$removed_vars)) {
-    out <- call2("[", out, , call2(":=", mutate_list$removed_vars, NULL))
-  }
-
   add_grouping_param(out, x, arrange = FALSE)
 }
 
 mutate_with_braces <- function(mutate_vars) {
-  # removing vars with var = NULL doesn't work well with expressions using braces
-  # need to identify those cases to deal with them in a separate step
-  var_is_null <- vapply(mutate_vars, is.null, lgl(1))
-  is_last <- !duplicated(names(mutate_vars), fromLast = TRUE)
-  var_removal <- var_is_null & is_last
-  mutate_vars <- mutate_vars[!var_removal]
-
   assign <- map2(syms(names(mutate_vars)), mutate_vars, function(x, y) call2("<-", x, y))
   new_vars <- unique(names(mutate_vars))
   output <- call2(".", !!!syms(new_vars))
 
   list(
     expr = call2("{", !!!assign, output),
-    new_vars = new_vars,
-    removed_vars = names(var_removal)[var_removal]
+    new_vars = new_vars
   )
 }
 
@@ -86,11 +74,22 @@ mutate_with_braces <- function(mutate_vars) {
 mutate.dtplyr_step <- function(.data, ...,
                                .before = NULL, .after = NULL) {
   dots <- capture_new_vars(.data, ...)
-  if (is_null(dots)) {
+  if (is_empty(dots)) {
     return(.data)
   }
 
-  use_braces <- nested_vars(.data, dots, .data$vars) | anyDuplicated(names(dots))
+  var_removals <- vapply(dots, is_var_removal, logical(1))
+  vars_removed <- names(var_removals)[var_removals]
+  nested_vars <- nested_vars(.data, dots, .data$vars)
+  repeated_vars <- anyDuplicated(names(dots))
+  use_braces <- nested_vars | repeated_vars
+  grouped_data <- !is_empty(.data$groups)
+  need_removal_step <- any(var_removals) && (use_braces | grouped_data)
+  if (need_removal_step) {
+    dots <- dots[!var_removals]
+  } else {
+    dots <- unmark_var_removals(dots, var_removals)  
+  }
   out <- step_mutate(.data, dots, use_braces)
 
   .before <- enquo(.before)
@@ -99,6 +98,10 @@ mutate.dtplyr_step <- function(.data, ...,
     # Only change the order of new columns
     new <- setdiff(names(dots), .data$vars)
     out <- relocate(out, !!new, .before = !!.before, .after = !!.after)
+  }
+
+  if (need_removal_step) {
+    out <- remove_vars(out, vars_removed)
   }
 
   out
@@ -137,3 +140,18 @@ all_names <- function(x) {
 
   unique(unlist(lapply(x[-1], all_names), use.names = FALSE))
 }
+
+is_var_removal <- function(arg) {
+  inherits(arg, 'var_removal')
+}
+
+unmark_var_removals <- function(dots, var_removals) {
+  map2(dots, var_removals, function(dot, is_rm) {
+    if (is_rm) {
+      NULL
+    } else {
+      dot
+    }
+  })
+}
+
