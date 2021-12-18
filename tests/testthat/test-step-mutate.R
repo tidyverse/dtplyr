@@ -142,6 +142,31 @@ test_that("var = NULL works when var is not in original data", {
   )
 })
 
+test_that("var = NULL works when data is grouped", {
+  # when var is not in original data
+  dt <- lazy_dt(data.frame(x = 1, g = 1)) %>% group_by(g)
+  step <- mutate(dt, y = 2, z = y*2, y = NULL)
+  expect_equal(
+    collect(step),
+    tibble(x = 1, g = 1, z = 4) %>% group_by(g)
+  )
+  expect_equal(
+    step$vars,
+    c("x", "g", "z")
+  )
+  # when var is in original data
+  dt <- lazy_dt(data.frame(x = 1, g = 1)) %>% group_by(g)
+  step <-  dt %>% mutate(x = 2, z = x*2, x = NULL)
+  expect_equal(
+    collect(step),
+    tibble(g = 1, z = 4) %>% group_by(g)
+  )
+  expect_equal(
+    step$vars,
+    c("g", "z")
+  )
+})
+
 test_that("across() can access previously created variables", {
   dt <- lazy_dt(data.frame(x = 1))
   step <- mutate(dt, y = 2, across(y, sqrt))

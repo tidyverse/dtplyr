@@ -84,7 +84,7 @@ test_that("only transmuting groups works", {
 
 test_that("var = NULL works when var is in original data", {
   dt <- lazy_dt(data.frame(x = 1))
-  step <-  dt %>% mutate(x = 2, z = x*2, x = NULL)
+  step <- dt %>% transmute(x = 2, z = x*2, x = NULL)
   expect_equal(
     collect(step),
     tibble(z = 4)
@@ -115,6 +115,31 @@ test_that("var = NULL works when var is not in original data", {
   expect_equal(
     step$vars,
     character()
+  )
+})
+
+test_that("var = NULL works when data is grouped", {
+  # when var is in original data
+  dt <- lazy_dt(data.frame(x = 1, g = 1)) %>% group_by(g)
+  step <- dt %>% transmute(x = 2, z = x*2, x = NULL)
+  expect_equal(
+    collect(step),
+    tibble(g = 1, z = 4) %>% group_by(g)
+  )
+  expect_equal(
+    step$vars,
+    c("g", "z")
+  )
+  # when var is not in original data
+  dt <- lazy_dt(data.frame(x = 1, g = 1)) %>% group_by(g)
+  step <- transmute(dt, y = 2, z = y*2, y = NULL)
+  expect_equal(
+    collect(step),
+    tibble(g = 1, z = 4) %>% group_by(g)
+  )
+  expect_equal(
+    step$vars,
+    c("g", "z")
   )
 })
 
