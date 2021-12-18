@@ -53,7 +53,7 @@ transmute.dtplyr_step <- function(.data, ...) {
   if (!use_braces) {
     j <- call2(".", !!!dots)
   } else {
-    j <- mutate_nested_vars(dots)$expr
+    j <- mutate_with_braces(dots)$expr
   }
   vars <- union(group_vars(.data), names(dots))
   out <- step_subset_j(.data, vars = vars, j = j)
