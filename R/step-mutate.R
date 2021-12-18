@@ -83,7 +83,7 @@ mutate.dtplyr_step <- function(.data, ...,
   nested <- nested_vars(.data, dots, .data$vars)
   repeated <- anyDuplicated(names(dots))
   use_braces <- nested | repeated
-  grouped_data <- !is_empty(.data$groups)
+  grouped_data <- !is_empty(group_vars(.data))
   need_removal_step <- any(var_removals) && (use_braces | grouped_data)
   if (need_removal_step) {
     dots <- dots[!var_removals]
