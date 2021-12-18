@@ -34,15 +34,12 @@ transmute.dtplyr_step <- function(.data, ...) {
     # TODO could check if there is actually anything mutated, e.g. to avoid
     # DT[, .(x = x)]
     is_group_var <- names(dots) %in% groups
+    group_dots <- dots[is_group_var]
 
-    if (any(is_group_var)) {
-      group_dots <- dots[is_group_var]
+    .data <- mutate(ungroup(.data), !!!group_dots)
+    .data <- group_by(.data, !!!syms(groups))
 
-      .data <- mutate(ungroup(.data), !!!group_dots)
-      .data <- group_by(.data, !!!syms(groups))
-
-      dots <- dots[!is_group_var]
-    }
+    dots <- dots[!is_group_var]
   }
 
   if (is_empty(dots)) {
@@ -56,12 +53,10 @@ transmute.dtplyr_step <- function(.data, ...) {
   if (!use_braces) {
     j <- call2(".", !!!dots)
   } else {
-    mutate_list <- mutate_with_braces(dots)
-    j <- mutate_list$expr
+    j <- mutate_nested_vars(dots)$expr
   }
   vars <- union(group_vars(.data), names(dots))
   out <- step_subset_j(.data, vars = vars, j = j)
-
   if (need_removal_step) {
     out <- remove_vars(out, vars_removed)
   }

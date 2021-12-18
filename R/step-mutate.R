@@ -74,7 +74,7 @@ mutate_with_braces <- function(mutate_vars) {
 mutate.dtplyr_step <- function(.data, ...,
                                .before = NULL, .after = NULL) {
   dots <- capture_new_vars(.data, ...)
-  if (is_empty(dots)) {
+  if (is_null(dots) | is_empty(dots)) {
     return(.data)
   }
 
