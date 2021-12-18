@@ -80,9 +80,9 @@ mutate.dtplyr_step <- function(.data, ...,
 
   var_removals <- vapply(dots, is_var_removal, logical(1))
   vars_removed <- names(var_removals)[var_removals]
-  nested_vars <- nested_vars(.data, dots, .data$vars)
-  repeated_vars <- anyDuplicated(names(dots))
-  use_braces <- nested_vars | repeated_vars
+  nested <- nested_vars(.data, dots, .data$vars)
+  repeated <- anyDuplicated(names(dots))
+  use_braces <- nested | repeated
   grouped_data <- !is_empty(.data$groups)
   need_removal_step <- any(var_removals) && (use_braces | grouped_data)
   if (need_removal_step) {
