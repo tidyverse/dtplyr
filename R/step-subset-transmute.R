@@ -14,23 +14,11 @@
 #' dt %>% transmute(name, sh = paste0(species, "/", homeworld))
 transmute.dtplyr_step <- function(.data, ...) {
   dots <- capture_new_vars(.data, ...)
-  nested <- nested_vars(.data, dots, .data$vars)
+  dots_list <- process_new_vars(.data, dots)
+  dots <- dots_list$dots
 
-  var_removals <- vapply(dots, is_var_removal, logical(1))
-  vars_removed <- names(var_removals)[var_removals]
-  repeated <- anyDuplicated(names(dots))
-  use_braces <- nested | repeated
   groups <- group_vars(.data)
-  grouped_data <- !is_empty(groups)
-  need_removal_step <- any(var_removals) && (use_braces | grouped_data)
-
-  if (need_removal_step) {
-    dots <- dots[!var_removals]
-  } else {
-    dots <- unmark_var_removals(dots, var_removals)  
-  }
-
-  if (grouped_data) {
+  if (!is_empty(groups)) {
     # TODO could check if there is actually anything mutated, e.g. to avoid
     # DT[, .(x = x)]
     is_group_var <- names(dots) %in% groups
@@ -50,15 +38,15 @@ transmute.dtplyr_step <- function(.data, ...) {
     return(select(.data, !!!group_vars(.data)))
   }
 
-  if (!use_braces) {
+  if (!dots_list$use_braces) {
     j <- call2(".", !!!dots)
   } else {
     j <- mutate_with_braces(dots)$expr
   }
   vars <- union(group_vars(.data), names(dots))
   out <- step_subset_j(.data, vars = vars, j = j)
-  if (need_removal_step) {
-    out <- remove_vars(out, vars_removed)
+  if (dots_list$need_removal_step) {
+    out <- remove_vars(out, dots_list$vars_removed)
   }
 
   out

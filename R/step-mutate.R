@@ -74,23 +74,13 @@ mutate_with_braces <- function(mutate_vars) {
 mutate.dtplyr_step <- function(.data, ...,
                                .before = NULL, .after = NULL) {
   dots <- capture_new_vars(.data, ...)
+  dots_list <- process_new_vars(.data, dots)
+  dots <- dots_list$dots
   if (is_null(dots) | is_empty(dots)) {
     return(.data)
   }
 
-  var_removals <- vapply(dots, is_var_removal, logical(1))
-  vars_removed <- names(var_removals)[var_removals]
-  nested <- nested_vars(.data, dots, .data$vars)
-  repeated <- anyDuplicated(names(dots))
-  use_braces <- nested | repeated
-  grouped_data <- !is_empty(group_vars(.data))
-  need_removal_step <- any(var_removals) && (use_braces | grouped_data)
-  if (need_removal_step) {
-    dots <- dots[!var_removals]
-  } else {
-    dots <- unmark_var_removals(dots, var_removals)  
-  }
-  out <- step_mutate(.data, dots, use_braces)
+  out <- step_mutate(.data, dots, dots_list$use_braces)
 
   .before <- enquo(.before)
   .after <- enquo(.after)
@@ -100,8 +90,8 @@ mutate.dtplyr_step <- function(.data, ...,
     out <- relocate(out, !!new, .before = !!.before, .after = !!.after)
   }
 
-  if (need_removal_step) {
-    out <- remove_vars(out, vars_removed)
+  if (dots_list$need_removal_step) {
+    out <- remove_vars(out, dots_list$vars_removed)
   }
 
   out
@@ -141,17 +131,26 @@ all_names <- function(x) {
   unique(unlist(lapply(x[-1], all_names), use.names = FALSE))
 }
 
-is_var_removal <- function(arg) {
-  inherits(arg, 'var_removal')
-}
+process_new_vars <- function(.data, dots) {
+  # identify where var = NULL is being used to remove a variable
+  var_is_null <- vapply(dots, is.null, logical(1))
+  is_last <- !duplicated(names(dots), fromLast = TRUE)
+  var_removals <- var_is_null & is_last
+  vars_removed <- names(var_removals)[var_removals]
 
-unmark_var_removals <- function(dots, var_removals) {
-  map2(dots, var_removals, function(dot, is_rm) {
-    if (is_rm) {
-      NULL
-    } else {
-      dot
-    }
-  })
+  nested <- nested_vars(.data, dots, .data$vars)
+  repeated <- anyDuplicated(names(dots))
+  use_braces <- nested | repeated
+  grouped <- !is_empty(group_vars(.data))
+  need_removal_step <- any(var_removals) && (use_braces | grouped)
+  if (need_removal_step) {
+    dots <- dots[!var_removals]
+  } 
+  
+  list(
+    dots = dots,
+    use_braces = use_braces,
+    need_removal_step = need_removal_step,
+    vars_removed = vars_removed
+  )
 }
-
