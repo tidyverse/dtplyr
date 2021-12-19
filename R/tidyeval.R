@@ -49,7 +49,7 @@ capture_new_vars <- function(.data, ...) {
     } else {
       dots[[i]] <- dot
     }
-    .data$vars <- union(.data$vars, names(dots)[i])
+    .data$vars <- union(.data$vars, names(dot) %||% names(dots)[i])
   }
 
   # Remove names from any list elements
