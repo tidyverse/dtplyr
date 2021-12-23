@@ -1,6 +1,8 @@
 step_mutate <- function(parent, new_vars = list(), use_braces = FALSE) {
   vars <- union(parent$vars, names(new_vars))
-  vars <- setdiff(vars, names(new_vars)[vapply(new_vars, is_null, lgl(1))])
+  var_is_null <- vapply(new_vars, is_null, lgl(1)) 
+  is_last <- !duplicated(names(new_vars), fromLast = TRUE)
+  vars <- setdiff(vars, names(new_vars)[var_is_null & is_last])
 
   new_step(
     parent,
