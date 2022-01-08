@@ -78,7 +78,7 @@ mutate.dtplyr_step <- function(.data, ...,
   dots <- capture_new_vars(.data, ...)
   dots_list <- process_new_vars(.data, dots)
   dots <- dots_list$dots
-  if (is_null(dots) | is_empty(dots)) {
+  if (is_null(dots) || is_empty(dots)) {
     return(.data)
   }
 
