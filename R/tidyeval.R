@@ -104,10 +104,10 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     } else if (is_symbol(x[[2]], ".env")) {
       sym(paste0("..", var))
     }
-  } else if (is_call(x, c("coalesce", "replace_na"))) {
+  } else if (is_call(x, c("coalesce", "replace_na"), ns = '')) {
     args <- lapply(x[-1], dt_squash, env = env, data = data, j = j)
     call2("fcoalesce", !!!args)
-  } else if (is_call(x, "case_when")) {
+  } else if (is_call(x, "case_when", ns = '')) {
     # case_when(x ~ y) -> fcase(x, y)
     args <- unlist(lapply(x[-1], function(x) {
       list(
@@ -136,7 +136,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     x[[1]] <- sym("-")
     x[[2]] <- get_expr(x[[2]])
     x
-  } else if (is_call(x, c("if_else", "ifelse"))) {
+  } else if (is_call(x, c("if_else", "ifelse"), ns = '')) {
     if (is_call(x, "if_else")) {
       x <- unname(match.call(dplyr::if_else, x))
     } else {
@@ -146,7 +146,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     x[[1]] <- quote(fifelse)
     x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
     x
-  } else if (is_call(x, c("lag", "lead"))) {
+  } else if (is_call(x, c("lag", "lead"), ns = '')) {
     if (is_call(x, "lag")) {
       type <- "lag"
       call <- match.call(dplyr::lag, x)

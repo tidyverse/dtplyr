@@ -69,6 +69,16 @@ test_that("translates if_else()/ifelse()", {
     expr(fifelse(x < 0, 1, 2))
   )
 
+  # does not translate namespaced call
+  expect_equal(
+    capture_dot(df, base::ifelse(x < 0, 1, 2)),
+    expr(base::ifelse(x < 0, 1, 2))
+  )
+  expect_equal(
+    capture_dot(df, dplyr::if_else(x < 0, 1, 2)),
+    expr(dplyr::if_else(x < 0, 1, 2))
+  )
+
   # Handles unusual argument names/order
   expect_equal(
     capture_dot(df, ifelse(x < 0, n = 2, yes = 1)),
@@ -86,11 +96,24 @@ test_that("translates if_else()/ifelse()", {
   )
 })
 
-test_that("translates coalesce()", {
+test_that("translates coalesce() and replace_na()", {
   df <- data.frame(x = 1:5)
   expect_equal(
     capture_dot(df, coalesce(x, 1)),
     expr(fcoalesce(x, 1))
+  )
+  expect_equal(
+    capture_dot(df, replace_na(x, 1)),
+    expr(fcoalesce(x, 1))
+  )
+  # does not translate namespaced call
+  expect_equal(
+    capture_dot(df, dplyr::coalesce(x, 1)),
+    expr(dplyr::coalesce(x, 1))
+  )
+  expect_equal(
+    capture_dot(df, tidyr::replace_na(x, 1)),
+    expr(tidyr::replace_na(x, 1))
   )
 })
 
@@ -126,6 +149,12 @@ test_that("translates case_when()", {
     capture_dot(dt, case_when(x == 1 ~ n())),
     quote(fcase(x == 1, .N))
   )
+
+  # does not translate namespaced call
+  expect_equal(
+    capture_dot(dt, dplyr::case_when(x == 1 ~ 2)),
+    quote(dplyr::case_when(x == 1 ~ 2))
+  )
 })
 
 test_that("translates lag()/lead()", {
@@ -137,6 +166,15 @@ test_that("translates lag()/lead()", {
   expect_equal(
     capture_dot(df, lead(x, 2, default = 3)),
     expr(shift(x, n = 2, fill = 3, type = "lead"))
+  )
+  # does not translate namespaced call
+  expect_equal(
+    capture_dot(df, dplyr::lag(x)),
+    expr(dplyr::lag(x))
+  )
+  expect_equal(
+    capture_dot(df, dplyr::lead(x, 2, default = 3)),
+    expr(dplyr::lead(x, 2, default = 3))
   )
   # Errors with order_by
   expect_snapshot_error(
