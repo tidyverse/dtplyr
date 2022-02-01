@@ -69,7 +69,7 @@ add_grouping_param <- function(call, step, arrange = step$arrange) {
 #' dt %>%
 #'  group_by(cyl, arrange = FALSE) %>%
 #'  summarise(mpg = mean(mpg))
-group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), arrange = TRUE) {
+group_by.dtplyr_step <- function(.data, ..., .add = FALSE, arrange = TRUE) {
   dots <- capture_dots(.data, ..., .j = TRUE)
   dots <- dots[!vapply(dots, is.null, logical(1))]
   if (!is.null(dots)) {
@@ -77,16 +77,8 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
     names(dots)[names2(dots) == auto_labels] <- ""
   }
 
-  if (lifecycle::is_present(add)) {
-    lifecycle::deprecate_warn(
-      "1.0.0",
-      "dplyr::group_by(add = )",
-      "group_by(.add = )"
-    )
-    .add <- add
-  }
-
-  groups <- dplyr::group_by_prepare(.data, !!!dots, .add = .add)
+  # need `eval(expr(...))` to trigger warning for `add`
+  groups <- eval(rlang::expr(dplyr::group_by_prepare(.data, !!!dots, .add = .add)))
   arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
 
   step_group(groups$data, as.character(groups$groups), arranged)
