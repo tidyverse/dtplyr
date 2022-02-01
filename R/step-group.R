@@ -70,9 +70,12 @@ add_grouping_param <- function(call, step, arrange = step$arrange) {
 #'  group_by(cyl, arrange = FALSE) %>%
 #'  summarise(mpg = mean(mpg))
 group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), arrange = TRUE) {
-  dots <- capture_dots(.data, ...)
-  dots <- exprs_auto_name(dots)
+  dots <- capture_dots(.data, ..., .j = TRUE)
   dots <- dots[!vapply(dots, is.null, logical(1))]
+  if (!is.null(dots)) {
+    auto_labels <- purrr::map_chr(dots, as_label)
+    names(dots)[names2(dots) == auto_labels] <- ""
+  }
 
   if (lifecycle::is_present(add)) {
     lifecycle::deprecate_warn(
@@ -83,25 +86,10 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
     .add <- add
   }
 
-  existing <- vapply(
-    seq_along(dots),
-    function(i) {
-      x <- dots[[i]]
-      name <- names(dots)[[i]]
-      is_symbol(x) && (as_name(x) == name)
-    },
-    logical(1)
-  )
-
-  if (!all(existing)) {
-    .data <- mutate(.data, !!!dots[!existing])
-    dots[!existing] <- syms(names(dots[!existing]))
-  }
-
-  groups <- c(if (.add) .data$groups, names(dots)) %||% character()
+  groups <- dplyr::group_by_prepare(.data, !!!dots, .add = .add)
   arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
 
-  step_group(.data, groups, arranged)
+  step_group(groups$data, as.character(groups$groups), arranged)
 }
 
 can_step_group_return_early <- function(parent, groups, arrange) {
