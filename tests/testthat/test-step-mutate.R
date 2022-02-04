@@ -138,6 +138,12 @@ test_that("emtpy mutate returns input", {
   expect_equal(mutate(dt, !!!list()), dt)
 })
 
+test_that("unnamed arguments matching column names are ignored", {
+  dt <- lazy_dt(data.frame(x = 1), "DT")
+  expect_identical(mutate(dt, x), dt)
+  expect_snapshot(mutate(dt, y), error = TRUE)
+})
+
 test_that("new columns take precedence over global variables", {
   dt <- lazy_dt(data.frame(x = 1), "DT")
   y <- 'global var'

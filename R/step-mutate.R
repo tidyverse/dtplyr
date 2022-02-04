@@ -76,6 +76,8 @@ mutate_with_braces <- function(mutate_vars) {
 mutate.dtplyr_step <- function(.data, ...,
                                .before = NULL, .after = NULL) {
   dots <- capture_new_vars(.data, ...)
+  trivial_dot <- imap(dots, ~ is_symbol(.x) && sym(.y) == .x && .y %in% .data$vars)
+  dots <- dots[!as.vector(trivial_dot, "logical")]
   dots_list <- process_new_vars(.data, dots)
   dots <- dots_list$dots
   if (is_null(dots) || is_empty(dots)) {
