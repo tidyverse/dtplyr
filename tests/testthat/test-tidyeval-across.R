@@ -156,7 +156,7 @@ test_that("across() can handle empty selection", {
 
   expect_equal(
     dt %>% mutate(across(character(), c)) %>% show_query(),
-    expr(copy(DT)[, .SD])
+    expr(DT)
   )
 })
 

@@ -2,6 +2,10 @@
 
 * `if_any()` and `if_all()` now work without specifying the `.fns` argument (@mgirlich, #325).
 
+# dtplyr 1.2.1
+
+* Fix for upcoming rlang release.
+
 # dtplyr 1.2.0
 
 ## New authors
