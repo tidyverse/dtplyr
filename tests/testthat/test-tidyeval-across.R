@@ -160,6 +160,14 @@ test_that("across() can handle empty selection", {
   )
 })
 
+test_that("across() .cols is evaluated in across()'s calling environment", {
+  dt <- lazy_dt(data.frame(y = 1))
+  fun <- function(x) capture_across(dt, across(all_of(x)))
+  expect_equal(
+    fun("y"),
+    list(y = expr(y))
+  )
+})
 
 # if_all ------------------------------------------------------------------
 
