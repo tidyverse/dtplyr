@@ -175,3 +175,8 @@ test_that("if_all collapses multiple expresions", {
   dt <- lazy_dt(data.frame(a = 1,  b = 2))
   expect_equal(capture_if_all(dt, if_all(everything(), is.na)), expr(is.na(a) & is.na(b)))
 })
+
+test_that("if_all works without `.fns` argument", {
+  dt <- lazy_dt(data.frame(a = 1,  b = 2))
+  expect_equal(capture_if_all(dt, if_all(c(a:b))), expr(a & b))
+})
