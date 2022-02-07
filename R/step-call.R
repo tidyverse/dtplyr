@@ -106,7 +106,7 @@ rename_with.dtplyr_step <- function(.data, .fn, .cols = everything(), ...) {
       env = env,
       data = .data,
       j = FALSE,
-      replace = quote(x)
+      replace_x = quote(x)
     )
     fn <- new_function(exprs(x =), call, env)
   } else {
