@@ -191,7 +191,7 @@ test_that("if_all() drops groups", {
   )
   expect_equal(
     capture_if_all(group_by(dt, b), if_all(everything())),
-    sym("b")
+    sym("a")
   )
 })
 
@@ -267,7 +267,7 @@ test_that("if_all() translates formulas", {
 
   expect_equal(
     capture_if_all(dt, if_all(a:b, list(~log(.x)))),
-    exprs(log(a) & log(b))
+    expr(log(a) & log(b))
   )
 })
 
