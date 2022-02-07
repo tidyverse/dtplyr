@@ -171,14 +171,6 @@ test_that("across() .cols is evaluated in across()'s calling environment", {
 
 # if_all ------------------------------------------------------------------
 
-test_that("if_all translations names, strings, and formulas", {
-  dt <- lazy_dt(data.frame(a = 1,  b = 2))
-
-  expect_equal(capture_if_all(dt, if_all(a, is.na)), expr(is.na(a)))
-  expect_equal(capture_if_all(dt, if_all(a, "is.na")), expr(is.na(a)))
-  expect_equal(capture_if_all(dt, if_all(a, ~ is.na(.))), expr(is.na(a)))
-})
-
 test_that("if_all collapses multiple expresions", {
   dt <- lazy_dt(data.frame(a = 1,  b = 2))
   expect_equal(capture_if_all(dt, if_all(everything(), is.na)), expr(is.na(a) & is.na(b)))
@@ -187,4 +179,130 @@ test_that("if_all collapses multiple expresions", {
 test_that("if_all works without `.fns` argument", {
   dt <- lazy_dt(data.frame(a = 1,  b = 2))
   expect_equal(capture_if_all(dt, if_all(c(a:b))), expr(a & b))
+})
+
+
+test_that("if_all() drops groups", {
+  dt <- lazy_dt(data.frame(a = 1, b = 2))
+
+  expect_equal(
+    capture_if_all(group_by(dt, a), if_all(everything())),
+    sym("b")
+  )
+  expect_equal(
+    capture_if_all(group_by(dt, b), if_all(everything())),
+    sym("b")
+  )
+})
+
+test_that("if_all() translates character vectors", {
+  dt <- lazy_dt(data.frame(a = 1,  b = 2))
+
+  expect_equal(
+    capture_if_all(dt, if_all(a:b, "log")),
+    expr(log(a) & log(b))
+  )
+
+  expect_equal(
+    capture_if_all(dt, if_all(a:b, "log", base = 2)),
+    expr(log(a, base = 2) & log(b, base = 2))
+  )
+
+  expect_equal(
+    capture_if_all(dt, if_all(a, c("log", "exp"))),
+    expr(log(a) & exp(a))
+  )
+})
+
+test_that("if_all() translates functions", {
+  dt <- lazy_dt(data.frame(a = 1,  b = 2))
+
+  expect_equal(
+    capture_if_all(dt, if_all(a:b, log)),
+    expr(log(a) & log(b))
+  )
+
+  expect_equal(
+    capture_if_all(dt, if_all(a:b, log, base = 2)),
+    expr(log(a, base = 2) & log(b, base = 2))
+  )
+
+  expect_equal(
+    capture_if_all(dt, if_all(a, list(log, exp))),
+    expr(log(a) & exp(a))
+  )
+})
+
+test_that("if_all() captures anonymous functions", {
+  dt <- lazy_dt(data.frame(a = 1))
+
+  expect_equal(
+   capture_if_all(dt, if_all(a, function(x) log(x))),
+   call2(function(x) log(x), quote(a))
+  )
+})
+
+test_that("if_all() translates dots", {
+  fun <- function() {
+    dt <- lazy_dt(data.frame(a = 1, b = 2))
+    z <- TRUE
+    capture_if_all(dt, if_all(a, mean, na.rm = z))
+  }
+
+  expect_equal(fun(), expr(mean(a, na.rm = TRUE)))
+})
+
+test_that("if_all() translates formulas", {
+  dt <- lazy_dt(data.frame(a = 1,  b = 2))
+
+  expect_equal(
+    capture_if_all(dt, if_all(a:b, ~ log(.x))),
+    expr(log(a) & log(b))
+  )
+
+  expect_equal(
+    capture_if_all(dt, if_all(a:b, ~2)),
+    expr(2 & 2)
+  )
+
+  expect_equal(
+    capture_if_all(dt, if_all(a:b, list(~log(.x)))),
+    exprs(log(a) & log(b))
+  )
+})
+
+test_that("if_all() gives informative errors", {
+  dt <- lazy_dt(data.frame(a = 1,  b = 2))
+  expect_snapshot(error = TRUE, {
+    capture_if_all(dt, if_all(a, 1))
+    capture_if_all(dt, if_all(a, list(1)))
+  })
+})
+
+test_that("if_all() cannot rename variables", {
+  dt <- lazy_dt(data.frame(x = 1, y = 2))
+
+  # no fns
+  expect_snapshot(
+    (expect_error(capture_if_all(dt, if_all(c(a = x, b = y)))))
+  )
+})
+
+test_that("if_all() can handle empty selection", {
+  skip("tidyselect issue #221")
+  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
+
+  expect_equal(
+    dt %>% mutate(if_all(character(), c)) %>% show_query(),
+    expr(DT)
+  )
+})
+
+test_that("across() .cols is evaluated in across()'s calling environment", {
+  dt <- lazy_dt(data.frame(y = 1))
+  fun <- function(x) capture_if_all(dt, if_all(all_of(x)))
+  expect_equal(
+    fun("y"),
+    expr(y)
+  )
 })
