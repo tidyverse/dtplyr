@@ -1,5 +1,6 @@
-step_join <- function(x, y, on, style, suffix = c(".x", ".y")) {
+step_join <- function(x, y, on, style, copy, suffix = c(".x", ".y")) {
   stopifnot(is_step(x))
+  y <- dtplyr_auto_copy(x, y, copy = copy)
   stopifnot(is_step(y))
   stopifnot(is.null(on) || is.character(on))
   style <- match.arg(style, c("inner", "full", "right", "left", "semi", "anti"))
@@ -113,9 +114,7 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
 #' band_dt %>% semi_join(instrument_dt)
 #' band_dt %>% anti_join(instrument_dt)
 left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
-  y <- dtplyr_auto_copy(x, y, copy = copy)
-
-  step_join(x, y, by, style = "left", suffix = suffix)
+  step_join(x, y, by, style = "left", copy = copy, suffix = suffix)
 }
 
 #' @export
@@ -127,9 +126,7 @@ left_join.data.table <- function(x, y, ...) {
 #' @importFrom dplyr right_join
 #' @export
 right_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
-  y <- dtplyr_auto_copy(x, y, copy = copy)
-
-  step_join(x, y, by, style = "right", suffix = suffix)
+  step_join(x, y, by, style = "right", copy = copy, suffix = suffix)
 }
 
 #' @export
@@ -142,9 +139,7 @@ right_join.data.table <- function(x, y, ...) {
 #' @importFrom dplyr inner_join
 #' @export
 inner_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
-  y <- dtplyr_auto_copy(x, y, copy = copy)
-
-  step_join(x, y, on = by, style = "inner", suffix = suffix)
+  step_join(x, y, on = by, style = "inner", copy = copy, suffix = suffix)
 }
 
 #' @export
@@ -156,9 +151,7 @@ inner_join.data.table <- function(x, y, ...) {
 #' @importFrom dplyr full_join
 #' @export
 full_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
-  y <- dtplyr_auto_copy(x, y, copy = copy)
-
-  step_join(x, y, on = by, style = "full", suffix = suffix)
+  step_join(x, y, on = by, style = "full", copy = copy, suffix = suffix)
 }
 
 #' @export
@@ -170,9 +163,7 @@ full_join.data.table <- function(x, y, ...) {
 #' @importFrom dplyr anti_join
 #' @export
 anti_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE) {
-  y <- dtplyr_auto_copy(x, y, copy = copy)
-
-  step_join(x, y, on = by, style = "anti")
+  step_join(x, y, on = by, style = "anti", copy = copy)
 }
 
 #' @export
@@ -184,7 +175,7 @@ anti_join.data.table <- function(x, y, ...) {
 #' @importFrom dplyr semi_join
 #' @export
 semi_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE) {
-  step_join(x, y, on = by, style = "semi")
+  step_join(x, y, on = by, style = "semi", copy = copy)
 }
 
 #' @export
