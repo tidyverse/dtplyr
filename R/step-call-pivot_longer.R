@@ -358,27 +358,7 @@ list_indices <- function(x, max = 20) {
   paste(x, collapse = ", ")
 }
 
-# pmap()/pmap_chr()  -----------------------------------------------------------------
-
-args_recycle <- function(args) {
-  lengths <- vapply(args, length, integer(1))
-  n <- max(lengths)
-
-  stopifnot(all(lengths == 1L | lengths == n))
-  to_recycle <- lengths == 1L
-  args[to_recycle] <- lapply(args[to_recycle], function(x) rep.int(x, n))
-
-  args
-}
-
-pmap <- function(.l, .f, ...) {
-  args <- args_recycle(.l)
-  do.call("mapply", c(
-    FUN = list(quote(.f)),
-    args, MoreArgs = quote(list(...)),
-    SIMPLIFY = FALSE, USE.NAMES = FALSE
-  ))
-}
+# pmap_chr()  -----------------------------------------------------------------
 
 pmap_chr <- function(.l, .f, ...) {
   as.character(pmap(.l, .f, ...))
