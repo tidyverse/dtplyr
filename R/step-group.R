@@ -72,10 +72,6 @@ add_grouping_param <- function(call, step, arrange = step$arrange) {
 group_by.dtplyr_step <- function(.data, ..., .add = FALSE, arrange = TRUE) {
   dots <- capture_dots(.data, ..., .j = TRUE)
   dots <- dots[!vapply(dots, is.null, logical(1))]
-  if (!is.null(dots)) {
-    auto_labels <- purrr::map_chr(dots, as_label)
-    names(dots)[names2(dots) == auto_labels] <- ""
-  }
 
   # need `eval(expr(...))` to trigger warning for `add`
   groups <- eval(rlang::expr(dplyr::group_by_prepare(.data, !!!dots, .add = .add)))
