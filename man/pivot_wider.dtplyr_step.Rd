@@ -68,8 +68,8 @@ front of the output column.}
 \item{values_fill}{Optionally, a (scalar) value that specifies what each
 \code{value} should be filled in with when missing.
 
-This can be a named list if you want to apply different aggregations
-to different value columns.}
+This can be a named list if you want to apply different fill values to
+different value columns.}
 
 \item{values_fn}{A function, the default is \code{length()}. Note this is different
 behavior than \code{tidyr::pivot_wider()}, which returns a list column by default.}
