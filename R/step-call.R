@@ -173,7 +173,7 @@ distinct.dtplyr_step <- function(.data, ..., .keep_all = FALSE) {
   dots <- capture_dots(.data, ...)
 
   if (length(dots) > 0) {
-    only_syms <- all(vapply(dots, is_symbol, logical(1)))
+    only_syms <- all(map_lgl(dots, is_symbol))
 
     if (.keep_all) {
       if (only_syms) {

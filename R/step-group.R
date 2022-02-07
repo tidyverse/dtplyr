@@ -72,7 +72,7 @@ add_grouping_param <- function(call, step, arrange = step$arrange) {
 group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), arrange = TRUE) {
   dots <- capture_dots(.data, ...)
   dots <- exprs_auto_name(dots)
-  dots <- dots[!vapply(dots, is.null, logical(1))]
+  dots <- dots[!map_lgl(dots, is.null)]
 
   if (lifecycle::is_present(add)) {
     lifecycle::deprecate_warn(
@@ -83,14 +83,13 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), a
     .add <- add
   }
 
-  existing <- vapply(
+  existing <- map_lgl(
     seq_along(dots),
     function(i) {
       x <- dots[[i]]
       name <- names(dots)[[i]]
       is_symbol(x) && (as_name(x) == name)
-    },
-    logical(1)
+    }
   )
 
   if (!all(existing)) {
