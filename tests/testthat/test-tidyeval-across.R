@@ -20,25 +20,6 @@ test_that("across() drops groups", {
   )
 })
 
-test_that("across() translates character vectors", {
-  dt <- lazy_dt(data.frame(a = 1,  b = 2))
-
-  expect_equal(
-    capture_across(dt, across(a:b, "log")),
-    exprs(a = log(a), b = log(b))
-  )
-
-  expect_equal(
-    capture_across(dt, across(a:b, "log", base = 2)),
-    exprs(a = log(a, base = 2), b = log(b, base = 2))
-  )
-
-  expect_equal(
-    capture_across(dt, across(a, c("log", "exp"))),
-    exprs(a_log = log(a), a_exp = exp(a))
-  )
-})
-
 test_that("across() translates functions", {
   dt <- lazy_dt(data.frame(a = 1,  b = 2))
 
@@ -54,7 +35,7 @@ test_that("across() translates functions", {
 
   expect_equal(
     capture_across(dt, across(a, list(log, exp))),
-    exprs(a_log = log(a), a_exp = exp(a))
+    exprs(a_1 = log(a), a_2 = exp(a))
   )
 })
 
@@ -98,7 +79,7 @@ test_that("across() translates formulas", {
 
   expect_equal(
     capture_across(dt, across(a:b, list(~log(.x)))),
-    exprs(a = log(a), b = log(b))
+    exprs(a_1 = log(a), b_1 = log(b))
   )
 })
 
@@ -137,18 +118,17 @@ test_that("across() can use named selections", {
   expect_equal(
     capture_across(dt, across(c(a = x, b = y), list(mean, nm = sum))),
     list(
-      a_mean = quote(mean(x)), a_nm = quote(sum(x)),
-      b_mean = quote(mean(y)), b_nm = quote(sum(y))
+      a_1 = quote(mean(x)), a_nm = quote(sum(x)),
+      b_1 = quote(mean(y)), b_nm = quote(sum(y))
     )
   )
   expect_equal(
     capture_across(dt, across(all_of(c(a = "x", b = "y")), list(mean, nm = sum))),
     list(
-      a_mean = quote(mean(x)), a_nm = quote(sum(x)),
-      b_mean = quote(mean(y)), b_nm = quote(sum(y))
+      a_1 = quote(mean(x)), a_nm = quote(sum(x)),
+      b_1 = quote(mean(y)), b_nm = quote(sum(y))
     )
   )
-
 })
 
 test_that("across() can handle empty selection", {
@@ -192,25 +172,6 @@ test_that("if_all() drops groups", {
   expect_equal(
     capture_if_all(group_by(dt, b), if_all(everything())),
     sym("a")
-  )
-})
-
-test_that("if_all() translates character vectors", {
-  dt <- lazy_dt(data.frame(a = 1,  b = 2))
-
-  expect_equal(
-    capture_if_all(dt, if_all(a:b, "log")),
-    expr(log(a) & log(b))
-  )
-
-  expect_equal(
-    capture_if_all(dt, if_all(a:b, "log", base = 2)),
-    expr(log(a, base = 2) & log(b, base = 2))
-  )
-
-  expect_equal(
-    capture_if_all(dt, if_all(a, c("log", "exp"))),
-    expr(log(a) & exp(a))
   )
 })
 
