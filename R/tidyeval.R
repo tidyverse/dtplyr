@@ -253,23 +253,11 @@ simplify_function_call <- function(x, env, data, j = TRUE) {
   }
 }
 
-call_has_dot_y <- function(call) {
-  if (is_symbol(call, ".y")) {
-    TRUE
-  } else if (is_call(call)) {
-    any(vapply(call, call_has_dot_y, logical(1)))
-  } else {
-    FALSE
-  }
-}
-
-replace_dot <- function(call, sym_x, sym_y) {
+replace_dot <- function(call, sym_x) {
   if (is_symbol(call, ".") || is_symbol(call, ".x")) {
     sym_x
-  } else if (is_symbol(call, ".y")) {
-    sym_y
   } else if (is_call(call)) {
-    call[] <- lapply(call, replace_dot, sym_x, sym_y)
+    call[] <- lapply(call, replace_dot, sym_x)
     call
   } else {
     call

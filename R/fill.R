@@ -67,7 +67,7 @@ fill.dtplyr_step <- function(data, ..., .direction = c("down", "up", "downup", "
 
   if (.direction %in% c("down", "up")) {
     type <- switch(.direction, "down" = "locf", "up" = "nocb")
-    mutate(data, dplyr::across(c(!!!dots), nafill, type))
+    mutate(data, dplyr::across(c(!!!dots), ~ nafill(.x, type)))
   } else {
     if (.direction == "downup") {
       type1 <- "locf"

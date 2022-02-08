@@ -1,3 +1,13 @@
+# across() does not support dots
+
+    Code
+      (expect_error(capture_across(dt, across(a, log, base = 2))))
+    Output
+      <error/rlang_error>
+      Error in `across_setup()`:
+      ! `dtplyr` does not support `...` in `across()` and `if_all()`.
+      i Use a (purrr-style) lambda instead.
+
 # across() gives informative errors
 
     Code

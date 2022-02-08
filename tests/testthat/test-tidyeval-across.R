@@ -29,13 +29,16 @@ test_that("across() translates functions", {
   )
 
   expect_equal(
-    capture_across(dt, across(a:b, log, base = 2)),
-    exprs(a = log(a, base = 2), b = log(b, base = 2))
-  )
-
-  expect_equal(
     capture_across(dt, across(a, list(log, exp))),
     exprs(a_1 = log(a), a_2 = exp(a))
+  )
+})
+
+test_that("across() does not support dots", {
+  dt <- lazy_dt(data.frame(a = 1))
+
+  expect_snapshot(
+    (expect_error(capture_across(dt, across(a, log, base = 2))))
   )
 })
 
@@ -46,16 +49,6 @@ test_that("across() captures anonymous functions", {
    capture_across(dt, across(a, function(x) log(x))),
    list(a = call2(function(x) log(x), quote(a)))
   )
-})
-
-test_that("dots are translated too", {
-  fun <- function() {
-    dt <- lazy_dt(data.frame(a = 1, b = 2))
-    z <- TRUE
-    capture_across(dt, across(a, mean, na.rm = z))
-  }
-
-  expect_equal(fun(), exprs(a = mean(a, na.rm = TRUE)))
 })
 
 test_that("across() translates formulas", {
@@ -184,11 +177,6 @@ test_that("if_all() translates functions", {
   )
 
   expect_equal(
-    capture_if_all(dt, if_all(a:b, log, base = 2)),
-    expr(log(a, base = 2) & log(b, base = 2))
-  )
-
-  expect_equal(
     capture_if_all(dt, if_all(a, list(log, exp))),
     expr(log(a) & exp(a))
   )
@@ -201,16 +189,6 @@ test_that("if_all() captures anonymous functions", {
    capture_if_all(dt, if_all(a, function(x) log(x))),
    call2(function(x) log(x), quote(a))
   )
-})
-
-test_that("if_all() translates dots", {
-  fun <- function() {
-    dt <- lazy_dt(data.frame(a = 1, b = 2))
-    z <- TRUE
-    capture_if_all(dt, if_all(a, mean, na.rm = z))
-  }
-
-  expect_equal(fun(), expr(mean(a, na.rm = TRUE)))
 })
 
 test_that("if_all() translates formulas", {
