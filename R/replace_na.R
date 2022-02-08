@@ -53,5 +53,5 @@ check_replacement <- function(x, var) {
     return()
   }
 
-  abort(glue::glue("Replacement for `{var}` is length {n}, not length 1"))
+  abort(glue::glue("Replacement for `{var}` is length {n}, not length 1"), call = caller_env())
 }

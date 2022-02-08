@@ -69,7 +69,7 @@ check_filter <- function(...) {
         x = glue::glue("Input `..{i}` is named."),
         i = glue::glue("This usually means that you've used `=` instead of `==`."),
         i = glue::glue("Did you mean `{name} == {as_label(expr)}`?", name = names(dots)[i])
-      ))
+      ), call = caller_env())
     }
 
   }

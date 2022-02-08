@@ -1,28 +1,28 @@
 # check_slice_catches common errors
 
     Code
-      check_slice_size(n = 1, prop = 1)
+      slice_head(dt, n = 1, prop = 1)
     Condition
-      Error in `check_slice_size()`:
+      Error in `slice_head()`:
       ! Must supply exactly one of `n` and `prop` arguments.
     Code
-      check_slice_size(n = "a")
+      slice_head(dt, n = "a")
     Condition
-      Error in `check_slice_size()`:
+      Error in `slice_head()`:
       ! `n` must be a single number.
     Code
-      check_slice_size(prop = "a")
+      slice_head(dt, prop = "a")
     Condition
-      Error in `check_slice_size()`:
+      Error in `slice_head()`:
       ! `prop` must be a single number.
     Code
-      check_slice_size(n = NA)
+      slice_head(dt, n = NA)
     Condition
-      Error in `check_slice_size()`:
+      Error in `slice_head()`:
       ! `n` must be a single number.
     Code
-      check_slice_size(prop = NA)
+      slice_head(dt, prop = NA)
     Condition
-      Error in `check_slice_size()`:
+      Error in `slice_head()`:
       ! `prop` must be a single number.
 

@@ -144,12 +144,14 @@ test_that("slice_*() checks for constant n= and prop=", {
 })
 
 test_that("check_slice_catches common errors", {
+  dt <- lazy_dt(data.frame(x = 1:10))
+
   expect_snapshot(error = TRUE, {
-    check_slice_size(n = 1, prop = 1)
-    check_slice_size(n = "a")
-    check_slice_size(prop = "a")
-    check_slice_size(n = NA)
-    check_slice_size(prop = NA)
+    slice_head(dt, n = 1, prop = 1)
+    slice_head(dt, n = "a")
+    slice_head(dt, prop = "a")
+    slice_head(dt, n = NA)
+    slice_head(dt, prop = NA)
   })
 })
 
