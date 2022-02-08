@@ -110,7 +110,7 @@ pivot_wider.dtplyr_step <- function(data,
   )
 
   # Clean up call args if defaults are used
-  args <- args[!vapply(args, is.null, lgl(1))]
+  args <- args[!map_lgl(args, is.null)]
 
   if (names_sep == "_") {
     args$sep <- NULL
