@@ -2,6 +2,7 @@
 
     Code
       mutate(dt, y)
-    Error <simpleError>
-      object 'y' not found
+    Condition
+      Error:
+      ! object 'y' not found
 

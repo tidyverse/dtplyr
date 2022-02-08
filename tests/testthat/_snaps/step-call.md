@@ -2,8 +2,9 @@
 
     Code
       dt %>% rename_with(1)
-    Error <rlang_error>
-      `.fn` must be a function name or formula
+    Condition
+      Error in `rename_with()`:
+      ! `.fn` must be a function name or formula
 
 # rename_with generates minimal spec
 
@@ -20,7 +21,8 @@
 
     Code
       collect(drop_na(dt, "z"))
-    Error <vctrs_error_subscript_oob>
-      Can't subset columns that don't exist.
+    Condition
+      Error in `stop_subscript()`:
+      ! Can't subset columns that don't exist.
       x Column `z` doesn't exist.
 

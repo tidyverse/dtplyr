@@ -12,25 +12,30 @@
 
     Code
       pivot_longer(dt, everything(), names_to = c(".value", "id"), names_sep = "_")
-    Error <rlang_error>
-      `data.table::melt()` doesn't currently support melting of unbalanced datasets.
+    Condition
+      Error in `pivot_longer()`:
+      ! `data.table::melt()` doesn't currently support melting of unbalanced datasets.
 
 # informative errors on unsupported features
 
     Code
       dt %>% pivot_longer(names_ptypes = list())
-    Error <rlang_error>
-      `names_ptypes` is not supported by dtplyr
+    Condition
+      Error in `tidyr::pivot_longer()`:
+      ! `names_ptypes` is not supported by dtplyr
     Code
       dt %>% pivot_longer(names_transform = list())
-    Error <rlang_error>
-      `names_transform` is not supported by dtplyr
+    Condition
+      Error in `tidyr::pivot_longer()`:
+      ! `names_transform` is not supported by dtplyr
     Code
       dt %>% pivot_longer(values_ptypes = list())
-    Error <rlang_error>
-      `values_ptypes` is not supported by dtplyr
+    Condition
+      Error in `tidyr::pivot_longer()`:
+      ! `values_ptypes` is not supported by dtplyr
     Code
       dt %>% pivot_longer(values_transform = list())
-    Error <rlang_error>
-      `values_transform` is not supported by dtplyr
+    Condition
+      Error in `tidyr::pivot_longer()`:
+      ! `values_transform` is not supported by dtplyr
 

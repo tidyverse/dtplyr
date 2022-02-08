@@ -27,13 +27,14 @@
 
     Code
       pivot_wider(df, names_from = lab, values_from = val)
-    Error <vctrs_error_names_must_be_unique>
-      Names must be unique.
+    Condition
+      Error in `stop_vctrs()`:
+      ! Names must be unique.
       x These names are duplicated:
         * "x" at locations 1 and 2.
     Code
       pivot_wider(df, names_from = lab, values_from = val, names_repair = "unique")
-    Message <simpleMessage>
+    Message
       New names:
       * x -> x...1
       * x -> x...2

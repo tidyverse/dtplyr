@@ -2,13 +2,15 @@
 
     Code
       separate(dt, x, "x", FALSE)
-    Error <simpleError>
-      is.character(sep) is not TRUE
+    Condition
+      Error in `separate.dtplyr_step()`:
+      ! is.character(sep) is not TRUE
 
 ---
 
     Code
       separate(dt, x, FALSE)
-    Error <simpleError>
-      is.character(into) is not TRUE
+    Condition
+      Error in `separate.dtplyr_step()`:
+      ! is.character(into) is not TRUE
 
