@@ -71,7 +71,7 @@ add_grouping_param <- function(call, step, arrange = step$arrange) {
 #'  summarise(mpg = mean(mpg))
 group_by.dtplyr_step <- function(.data, ..., .add = FALSE, arrange = TRUE) {
   dots <- capture_dots(.data, ..., .j = TRUE)
-  dots <- dots[!vapply(dots, is.null, logical(1))]
+  dots <- dots[!map_lgl(dots, is.null)]
 
   # need `eval(expr(...))` to trigger warning for `add`
   groups <- eval(expr(dplyr::group_by_prepare(.data, !!!dots, .add = .add)))
