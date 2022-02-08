@@ -5,7 +5,7 @@
 \alias{ungroup.dtplyr_step}
 \title{Group and ungroup}
 \usage{
-\method{group_by}{dtplyr_step}(.data, ..., .add = FALSE, add = deprecated(), arrange = TRUE)
+\method{group_by}{dtplyr_step}(.data, ..., .add = FALSE, arrange = TRUE)
 
 \method{ungroup}{dtplyr_step}(.data, ...)
 }

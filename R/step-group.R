@@ -69,39 +69,15 @@ add_grouping_param <- function(call, step, arrange = step$arrange) {
 #' dt %>%
 #'  group_by(cyl, arrange = FALSE) %>%
 #'  summarise(mpg = mean(mpg))
-group_by.dtplyr_step <- function(.data, ..., .add = FALSE, add = deprecated(), arrange = TRUE) {
-  dots <- capture_dots(.data, ...)
-  dots <- exprs_auto_name(dots)
-  dots <- dots[!vapply(dots, is.null, logical(1))]
+group_by.dtplyr_step <- function(.data, ..., .add = FALSE, arrange = TRUE) {
+  dots <- capture_dots(.data, ..., .j = TRUE)
+  dots <- dots[!map_lgl(dots, is.null)]
 
-  if (lifecycle::is_present(add)) {
-    lifecycle::deprecate_warn(
-      "1.0.0",
-      "dplyr::group_by(add = )",
-      "group_by(.add = )"
-    )
-    .add <- add
-  }
-
-  existing <- vapply(
-    seq_along(dots),
-    function(i) {
-      x <- dots[[i]]
-      name <- names(dots)[[i]]
-      is_symbol(x) && (as_name(x) == name)
-    },
-    logical(1)
-  )
-
-  if (!all(existing)) {
-    .data <- mutate(.data, !!!dots[!existing])
-    dots[!existing] <- syms(names(dots[!existing]))
-  }
-
-  groups <- c(if (.add) .data$groups, names(dots)) %||% character()
+  # need `eval(expr(...))` to trigger warning for `add`
+  groups <- eval(expr(dplyr::group_by_prepare(.data, !!!dots, .add = .add)))
   arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
 
-  step_group(.data, groups, arranged)
+  step_group(groups$data, as.character(groups$groups), arranged)
 }
 
 can_step_group_return_early <- function(parent, groups, arrange) {

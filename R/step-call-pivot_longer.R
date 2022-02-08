@@ -114,10 +114,9 @@ pivot_longer.dtplyr_step <- function(data,
       # Make sure data is "balanced"
       # https://github.com/Rdatatable/data.table/issues/2575
       # The list passed to measure.vars also needs the same number of column names per element
-      equal_ids <- vapply(
+      equal_ids <- map_lgl(
         .value_ids[-1],
-        function(.x) isTRUE(all.equal(.value_id, .x)),
-        logical(1)
+        function(.x) isTRUE(all.equal(.value_id, .x))
       )
       if (all(equal_ids)) {
         .value_id <- vctrs::vec_rep_each(.value_id, length(pull(data)))
@@ -358,27 +357,7 @@ list_indices <- function(x, max = 20) {
   paste(x, collapse = ", ")
 }
 
-# pmap()/pmap_chr()  -----------------------------------------------------------------
-
-args_recycle <- function(args) {
-  lengths <- vapply(args, length, integer(1))
-  n <- max(lengths)
-
-  stopifnot(all(lengths == 1L | lengths == n))
-  to_recycle <- lengths == 1L
-  args[to_recycle] <- lapply(args[to_recycle], function(x) rep.int(x, n))
-
-  args
-}
-
-pmap <- function(.l, .f, ...) {
-  args <- args_recycle(.l)
-  do.call("mapply", c(
-    FUN = list(quote(.f)),
-    args, MoreArgs = quote(list(...)),
-    SIMPLIFY = FALSE, USE.NAMES = FALSE
-  ))
-}
+# pmap_chr()  -----------------------------------------------------------------
 
 pmap_chr <- function(.l, .f, ...) {
   as.character(pmap(.l, .f, ...))
