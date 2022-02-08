@@ -1,14 +1,12 @@
 # translates if_else()/ifelse()
 
     Code
-      expect_equal(capture_dot(df, ifelse(x < 0, n = 2, yes = 1)), expr(fifelse(x < 0,
-      1, 2)))
+      out_n <- capture_dot(df, ifelse(x < 0, n = 2, yes = 1))
     Condition
       Warning in `match.call()`:
       partial argument match of 'n' to 'no'
     Code
-      expect_equal(capture_dot(df, if_else(x < 0, f = 2, true = 1)), expr(fifelse(x <
-        0, 1, 2)))
+      out_f <- capture_dot(df, if_else(x < 0, f = 2, true = 1))
     Condition
       Warning in `match.call()`:
       partial argument match of 'f' to 'false'
