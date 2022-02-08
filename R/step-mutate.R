@@ -1,6 +1,6 @@
 step_mutate <- function(parent, new_vars = list(), use_braces = FALSE) {
   vars <- union(parent$vars, names(new_vars))
-  var_is_null <- vapply(new_vars, is_null, lgl(1)) 
+  var_is_null <- map_lgl(new_vars, is_null)
   is_last <- !duplicated(names(new_vars), fromLast = TRUE)
   vars <- setdiff(vars, names(new_vars)[var_is_null & is_last])
 
@@ -48,7 +48,7 @@ mutate_with_braces <- function(mutate_vars) {
 #' Create and modify columns
 #'
 #' This is a method for the dplyr [mutate()] generic. It is translated to
-#' the `j` argument of `[.data.table`, using `:=` to modify "in place". If 
+#' the `j` argument of `[.data.table`, using `:=` to modify "in place". If
 #' `.before` or `.after` is provided, the new columns are relocated with a call
 #' to [data.table::setcolorder()].
 #'
@@ -137,7 +137,7 @@ all_names <- function(x) {
 
 process_new_vars <- function(.data, dots) {
   # identify where var = NULL is being used to remove a variable
-  var_is_null <- vapply(dots, is.null, logical(1))
+  var_is_null <- map_lgl(dots, is.null)
   is_last <- !duplicated(names(dots), fromLast = TRUE)
   var_removals <- var_is_null & is_last
   vars_removed <- names(var_removals)[var_removals]
@@ -149,8 +149,8 @@ process_new_vars <- function(.data, dots) {
   need_removal_step <- any(var_removals) && (use_braces | grouped)
   if (need_removal_step) {
     dots <- dots[!var_removals]
-  } 
-  
+  }
+
   list(
     dots = dots,
     use_braces = use_braces,

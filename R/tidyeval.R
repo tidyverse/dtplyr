@@ -32,7 +32,7 @@ capture_dots <- function(.data, ..., .j = TRUE) {
   dots <- lapply(dots, dt_squash, data = .data, j = .j)
 
   # Remove names from any list elements
-  is_list <- vapply(dots, is.list, logical(1))
+  is_list <- map_lgl(dots, is.list)
   names(dots)[is_list] <- ""
 
   # Auto-splice list results from dt_squash()
@@ -53,7 +53,7 @@ capture_new_vars <- function(.data, ...) {
   }
 
   # Remove names from any list elements
-  is_list <- vapply(dots, is.list, logical(1))
+  is_list <- map_lgl(dots, is.list)
   names(dots)[is_list] <- ""
 
   # Auto-splice list results from dt_squash()

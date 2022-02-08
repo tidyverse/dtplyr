@@ -20,7 +20,7 @@
 # exported onLoad
 complete.dtplyr_step <- function(data, ..., fill = list()) {
   dots <- enquos(...)
-  dots <- dots[!vapply(dots, quo_is_null, logical(1))]
+  dots <- dots[!map_lgl(dots, quo_is_null)]
   if (length(dots) == 0) {
     return(data)
   }
