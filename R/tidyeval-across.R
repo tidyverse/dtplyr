@@ -51,7 +51,7 @@ across_fun <- function(fun, env, data, j) {
     function(x) call2(fun, x)
   } else if (is_call(fun, "~")) {
     call <- dt_squash_formula(fun, env, data, j = j, replace_x = quote(!!.x))
-    function(x) expr_interp(call, child_env(emptyenv(), .x = x))
+    function(x) inject(expr(!!call), child_env(empty_env(), .x = x, expr = rlang::expr))
   } else {
     abort(c(
       ".fns argument to dtplyr::across() must contain a function or a formula",
