@@ -3,14 +3,14 @@
     Code
       separate(dt, x, "x", FALSE)
     Condition
-      Error in `separate.dtplyr_step()`:
-      ! is.character(sep) is not TRUE
+      Error in `separate()`:
+      ! `sep` must be a character vector.
 
 ---
 
     Code
       separate(dt, x, FALSE)
     Condition
-      Error in `separate.dtplyr_step()`:
-      ! is.character(into) is not TRUE
+      Error in `separate()`:
+      ! `into` must be a character vector.
 
