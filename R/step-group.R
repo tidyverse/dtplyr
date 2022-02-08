@@ -74,7 +74,7 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, arrange = TRUE) {
   dots <- dots[!vapply(dots, is.null, logical(1))]
 
   # need `eval(expr(...))` to trigger warning for `add`
-  groups <- eval(rlang::expr(dplyr::group_by_prepare(.data, !!!dots, .add = .add)))
+  groups <- eval(expr(dplyr::group_by_prepare(.data, !!!dots, .add = .add)))
   arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
 
   step_group(groups$data, as.character(groups$groups), arranged)
