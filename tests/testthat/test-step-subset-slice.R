@@ -118,6 +118,7 @@ test_that("arguments to sample are passed along", {
 })
 
 test_that("slice_*() checks for empty ...", {
+  skip_if_not_installed("rlang", "1.0.0")
   dt <- lazy_dt(data.frame(x = 1:10))
   expect_error(slice_head(dt, 5), class = "rlib_error_dots_nonempty")
   expect_error(slice_tail(dt, 5), class = "rlib_error_dots_nonempty")
