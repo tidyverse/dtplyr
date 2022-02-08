@@ -70,13 +70,17 @@ test_that("translates if_else()/ifelse()", {
   )
 
   # Handles unusual argument names/order
-  expect_snapshot({
-    out_n <- capture_dot(df, ifelse(x < 0, n = 2, yes = 1))
-    out_f <- capture_dot(df, if_else(x < 0, f = 2, true = 1))
+  suppressWarnings({
+    expect_equal(
+      capture_dot(df, ifelse(x < 0, n = 2, yes = 1)),
+      expr(fifelse(x < 0, 1, 2))
+    )
+    expect_equal(
+      capture_dot(df, if_else(x < 0, f = 2, true = 1)),
+      expr(fifelse(x < 0, 1, 2))
+    )
   })
 
-  expect_equal(out_n, expr(fifelse(x < 0, 1, 2)))
-  expect_equal(out_f, expr(fifelse(x < 0, 1, 2)))
 
   # tidyeval works inside if_else, #220
   expect_equal(
