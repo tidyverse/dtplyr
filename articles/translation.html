@@ -368,9 +368,9 @@
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     804.01µs 860.31µs     <span style="text-decoration: underline;">1</span>116.     2.2KB     12.7</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.14ms   1.22ms      779.        0B     10.9</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise     1.2ms   1.37ms      717.     2.2KB     10.5</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     574.15µs 685.66µs     <span style="text-decoration: underline;">1</span>458.     2.2KB     14.7</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate     897.18µs 971.08µs     <span style="text-decoration: underline;">1</span>037.        0B     15.2</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.04ms   1.12ms      895.     2.2KB     14.7</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Unless a copy is performed.&lt;/p&gt;"><sup>1</sup></a>.</p>
 </div>
 
