@@ -1,12 +1,22 @@
-# across() does not support dots
+# across() does not support formulas with dots
 
     Code
-      (expect_error(capture_across(dt, across(a, log, base = 2))))
+      (expect_error(capture_across(dt, across(a:b, ~ log(.x, base = .y), base = 2))))
     Output
       <error/rlang_error>
-      Error in `across_setup()`:
+      Error in `across_fun()`:
       ! `dtplyr` does not support `...` in `across()` and `if_all()`.
-      i Use a (purrr-style) lambda instead.
+      i Use a lambda instead.
+      i Or inline them via purrr-style lambdas.
+    Code
+      (expect_error(capture_across(dt, across(a:b, list(~ log(.x, base = .y)), base = 2)))
+      )
+    Output
+      <error/rlang_error>
+      Error in `FUN()`:
+      ! `dtplyr` does not support `...` in `across()` and `if_all()`.
+      i Use a lambda instead.
+      i Or inline them via purrr-style lambdas.
 
 # across() gives informative errors
 

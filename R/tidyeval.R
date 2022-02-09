@@ -253,11 +253,11 @@ simplify_function_call <- function(x, env, data, j = TRUE) {
   }
 }
 
-replace_dot <- function(call, sym_x) {
+replace_dot <- function(call, sym) {
   if (is_symbol(call, ".") || is_symbol(call, ".x")) {
-    sym_x
+    sym
   } else if (is_call(call)) {
-    call[] <- lapply(call, replace_dot, sym_x)
+    call[] <- lapply(call, replace_dot, sym)
     call
   } else {
     call

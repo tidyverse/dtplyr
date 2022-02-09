@@ -19,25 +19,25 @@ dt_squash_if <- function(call, env, data, j = j, reduce = "&") {
   Reduce(function(x, y) call2(reduce, x, y), out)
 }
 
-across_funs <- function(funs, env, data, j, names_spec = NULL) {
+across_funs <- function(funs, env, data, j, dots, names_spec = NULL) {
   if (is.null(funs)) {
     fns <- list(`1` = function(x, ...) x)
     names_spec <- names_spec %||% "{.col}"
     return(list(fns = fns, names = names_spec))
   } else if (is_symbol(funs) || is_function(funs)) {
-    fns <- list(`1` = across_fun(funs, env, data, j = j))
+    fns <- list(`1` = across_fun(funs, env, data, j = j, dots = dots))
     names_spec <- names_spec %||% "{.col}"
   } else if (is_call(funs, "~")) {
-    fns <- list(`1` = across_fun(funs, env, data, j = j))
+    fns <- list(`1` = across_fun(funs, env, data, j = j, dots = dots))
     names_spec <- names_spec %||% "{.col}"
   } else if (is_call(funs, "list")) {
     args <- rlang::call_args(funs)
-    fns <- lapply(args, across_fun, env, data, j = j)
+    fns <- lapply(args, across_fun, env, data, j = j, dots = dots)
     names_spec <- names_spec %||% "{.col}_{.fn}"
   } else if (!is.null(env)) {
     # Try evaluating once, just in case
     funs <- eval(funs, env)
-    return(across_funs(funs, NULL, j = j))
+    return(across_funs(funs, NULL, j = j, dots = dots))
   } else {
     abort("`.fns` argument to dtplyr::across() must be a NULL, a function, formula, or list")
   }
@@ -45,12 +45,20 @@ across_funs <- function(funs, env, data, j, names_spec = NULL) {
   list(fns = fns, names = names_spec)
 }
 
-across_fun <- function(fun, env, data, j) {
+across_fun <- function(fun, env, data, j, dots) {
   if (is_symbol(fun) || is_string(fun) ||
     is_call(fun, "function") || is_function(fun)) {
-    function(x) call2(fun, x)
+    function(x) call2(fun, x, !!!dots)
   } else if (is_call(fun, "~")) {
-    call <- dt_squash_formula(fun, env, data, j = j, replace_x = quote(!!.x))
+    if (!is_empty(dots)) {
+      msg <- c(
+        "`dtplyr` does not support `...` in `across()` and `if_all()`.",
+        i = "Use a lambda instead.",
+        i = "Or inline them via purrr-style lambdas."
+      )
+      abort(msg)
+    }
+    call <- dt_squash_formula(fun, env, data, j = j, replace = quote(!!.x))
     function(x) inject(expr(!!call), child_env(empty_env(), .x = x, expr = rlang::expr))
   } else {
     abort(c(
@@ -60,10 +68,9 @@ across_fun <- function(fun, env, data, j) {
   }
 }
 
-dt_squash_formula <- function(x, env, data, j = TRUE,
-                              replace_x = quote(!!.x)) {
+dt_squash_formula <- function(x, env, data, j = TRUE, replace = quote(!!.x)) {
   call <- f_rhs(x)
-  call <- replace_dot(call, replace_x)
+  call <- replace_dot(call, replace)
   if (is_call(call)) {
     call <- dt_squash_call(call, env, data, j = j)
   }
@@ -75,14 +82,6 @@ across_setup <- function(data,
                          env,
                          allow_rename,
                          j) {
-  if (!is_empty(call$...)) {
-    msg <- c(
-      "`dtplyr` does not support `...` in `across()` and `if_all()`.",
-      i = "Use a (purrr-style) lambda instead."
-    )
-    abort(msg)
-  }
-
   tbl <- simulate_vars(data, drop_groups = TRUE)
   .cols <- call$.cols %||% expr(everything())
   locs <- tidyselect::eval_select(.cols, tbl, env = env, allow_rename = allow_rename)
@@ -94,8 +93,9 @@ across_setup <- function(data,
     names_vars <- names(tbl)[locs]
   }
 
+  dots <- lapply(call$..., dt_squash, env = env, data = data, j = j)
   names_spec <- eval(call$.names, env)
-  funs_across_data <- across_funs(call$.fns, env, data, j = j, names_spec)
+  funs_across_data <- across_funs(call$.fns, env, data, j = j, dots, names_spec)
   fns_is_null <- funs_across_data$fns_is_null
   fns <- funs_across_data$fns
   names_spec <- funs_across_data$names
