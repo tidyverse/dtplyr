@@ -5,7 +5,7 @@ capture_across <- function(data, x, j = TRUE) {
 
 dt_squash_across <- function(call, env, data, j = j) {
   call <- match.call(dplyr::across, call, expand.dots = FALSE, envir = env)
-  across_setup(data, call, env, allow_rename = TRUE, j = j)
+  across_setup(data, call, env, allow_rename = TRUE, j = j, fn = "across()")
 }
 
 capture_if_all <- function(data, x, j = TRUE) {
@@ -15,29 +15,34 @@ capture_if_all <- function(data, x, j = TRUE) {
 
 dt_squash_if <- function(call, env, data, j = j, reduce = "&") {
   call <- match.call(dplyr::if_any, call, expand.dots = FALSE, envir = env)
-  out <- across_setup(data, call, env, allow_rename = FALSE, j = j)
+  if (reduce == "&") {
+    fn <- "if_all()"
+  } else {
+    fn <- "if_any()"
+  }
+  out <- across_setup(data, call, env, allow_rename = FALSE, j = j, fn = fn)
   Reduce(function(x, y) call2(reduce, x, y), out)
 }
 
-across_funs <- function(funs, env, data, j, dots, names_spec = NULL) {
+across_funs <- function(funs, env, data, j, dots, names_spec, fn) {
   if (is.null(funs)) {
     fns <- list(`1` = function(x, ...) x)
     names_spec <- names_spec %||% "{.col}"
     return(list(fns = fns, names = names_spec))
   } else if (is_symbol(funs) || is_function(funs)) {
-    fns <- list(`1` = across_fun(funs, env, data, j = j, dots = dots))
+    fns <- list(`1` = across_fun(funs, env, data, j = j, dots = dots, fn = fn))
     names_spec <- names_spec %||% "{.col}"
   } else if (is_call(funs, "~")) {
-    fns <- list(`1` = across_fun(funs, env, data, j = j, dots = dots))
+    fns <- list(`1` = across_fun(funs, env, data, j = j, dots = dots, fn = fn))
     names_spec <- names_spec %||% "{.col}"
   } else if (is_call(funs, "list")) {
-    args <- rlang::call_args(funs)
-    fns <- lapply(args, across_fun, env, data, j = j, dots = dots)
+    args <- call_args(funs)
+    fns <- lapply(args, across_fun, env, data, j = j, dots = dots, fn = fn)
     names_spec <- names_spec %||% "{.col}_{.fn}"
   } else if (!is.null(env)) {
     # Try evaluating once, just in case
     funs <- eval(funs, env)
-    return(across_funs(funs, NULL, j = j, dots = dots))
+    return(across_funs(funs, NULL, j = j, dots = dots, names_spec = NULL, fn = fn))
   } else {
     abort("`.fns` argument to dtplyr::across() must be a NULL, a function, formula, or list")
   }
@@ -45,16 +50,16 @@ across_funs <- function(funs, env, data, j, dots, names_spec = NULL) {
   list(fns = fns, names = names_spec)
 }
 
-across_fun <- function(fun, env, data, j, dots) {
+across_fun <- function(fun, env, data, j, dots, fn) {
   if (is_symbol(fun) || is_string(fun) ||
     is_call(fun, "function") || is_function(fun)) {
     function(x) call2(fun, x, !!!dots)
   } else if (is_call(fun, "~")) {
     if (!is_empty(dots)) {
       msg <- c(
-        "`dtplyr` does not support `...` in `across()` and `if_all()`.",
+        paste0("`dtplyr::", fn, "` does not support `...` when a purrr-style lambda is used in `.fns`."),
         i = "Use a lambda instead.",
-        i = "Or inline them via purrr-style lambdas."
+        i = "Or inline them via a purrr-style lambda."
       )
       abort(msg)
     }
@@ -81,7 +86,8 @@ across_setup <- function(data,
                          call,
                          env,
                          allow_rename,
-                         j) {
+                         j,
+                         fn) {
   tbl <- simulate_vars(data, drop_groups = TRUE)
   .cols <- call$.cols %||% expr(everything())
   locs <- tidyselect::eval_select(.cols, tbl, env = env, allow_rename = allow_rename)
@@ -95,7 +101,15 @@ across_setup <- function(data,
 
   dots <- lapply(call$..., dt_squash, env = env, data = data, j = j)
   names_spec <- eval(call$.names, env)
-  funs_across_data <- across_funs(call$.fns, env, data, j = j, dots, names_spec)
+  funs_across_data <- across_funs(
+    funs = call$.fns,
+    env = env,
+    data = data,
+    j = j,
+    dots = dots,
+    names_spec = names_spec,
+    fn = fn
+  )
   fns_is_null <- funs_across_data$fns_is_null
   fns <- funs_across_data$fns
   names_spec <- funs_across_data$names

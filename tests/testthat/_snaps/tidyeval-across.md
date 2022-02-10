@@ -5,18 +5,18 @@
     Output
       <error/rlang_error>
       Error in `across_fun()`:
-      ! `dtplyr` does not support `...` in `across()` and `if_all()`.
+      ! `dtplyr::across()` does not support `...` when a purrr-style lambda is used in `.fns`.
       i Use a lambda instead.
-      i Or inline them via purrr-style lambdas.
+      i Or inline them via a purrr-style lambda.
     Code
       (expect_error(capture_across(dt, across(a:b, list(~ log(.x, base = .y)), base = 2)))
       )
     Output
       <error/rlang_error>
       Error in `FUN()`:
-      ! `dtplyr` does not support `...` in `across()` and `if_all()`.
+      ! `dtplyr::across()` does not support `...` when a purrr-style lambda is used in `.fns`.
       i Use a lambda instead.
-      i Or inline them via purrr-style lambdas.
+      i Or inline them via a purrr-style lambda.
 
 # across() gives informative errors
 
