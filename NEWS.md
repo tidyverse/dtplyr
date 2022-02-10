@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* Implemented `add_count()` (#298)
+
 * `if_any()` and `if_all()` now work for a list of functions specified in the
   `.fns` argument(@mgirlich, #335).
   
