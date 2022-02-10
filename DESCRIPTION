@@ -1,23 +1,17 @@
 Package: dtplyr
 Title: Data Table Back-End for 'dplyr'
-Version: 1.1.0.9000
-Authors@R: 
-    c(person(given = "Hadley",
-             family = "Wickham",
-             role = c("cre", "aut"),
-             email = "hadley@rstudio.com"),
-      person(given = "Maximilian",
-             family = "Girlich",
-             role = "aut"),
-      person(given = "Mark",
-             family = "Fairbanks",
-             role = "aut"),
-      person(given = "RStudio",
-             role = "cph"))
-Description: Provides a data.table backend for 'dplyr'. The goal
-    of 'dtplyr' is to allow you to write 'dplyr' code that is
-    automatically translated to the equivalent, but usually much faster,
-    data.table code.
+Version: 1.2.1.9000
+Authors@R: c(
+    person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("cre", "aut")),
+    person("Maximilian", "Girlich", role = "aut"),
+    person("Mark", "Fairbanks", role = "aut"),
+    person("Ryan", "Dickerson", role = "aut"),
+    person("RStudio", role = c("cph", "fnd"))
+  )
+Description: Provides a data.table backend for 'dplyr'. The goal of
+    'dtplyr' is to allow you to write 'dplyr' code that is automatically
+    translated to the equivalent, but usually much faster, data.table
+    code.
 License: MIT + file LICENSE
 URL: https://dtplyr.tidyverse.org, https://github.com/tidyverse/dtplyr
 BugReports: https://github.com/tidyverse/dtplyr/issues
@@ -43,8 +37,8 @@ Suggests:
     tidyr (>= 1.1.0)
 VignetteBuilder: 
     knitr
-Encoding: UTF-8
-LazyData: true
-Roxygen: {library(tidyr); list(markdown = TRUE)}
-RoxygenNote: 7.1.1
+Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: {library(tidyr); list(markdown = TRUE)}
+RoxygenNote: 7.1.2

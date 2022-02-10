@@ -32,7 +32,28 @@ capture_dots <- function(.data, ..., .j = TRUE) {
   dots <- lapply(dots, dt_squash, data = .data, j = .j)
 
   # Remove names from any list elements
-  is_list <- vapply(dots, is.list, logical(1))
+  is_list <- map_lgl(dots, is.list)
+  names(dots)[is_list] <- ""
+
+  # Auto-splice list results from dt_squash()
+  dots[!is_list] <- lapply(dots[!is_list], list)
+  unlist(dots, recursive = FALSE)
+}
+
+capture_new_vars <- function(.data, ...) {
+  dots <- as.list(enquos(..., .named = TRUE))
+  for (i in seq_along(dots)) {
+    dot <- dt_squash(dots[[i]], data = .data)
+    if (is.null(dot)) {
+      dots[i] <- list(NULL)
+    } else {
+      dots[[i]] <- dot
+    }
+    .data$vars <- union(.data$vars, names(dot) %||% names(dots)[i])
+  }
+
+  # Remove names from any list elements
+  is_list <- map_lgl(dots, is.list)
   names(dots)[is_list] <- ""
 
   # Auto-splice list results from dt_squash()
@@ -105,8 +126,8 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
       sym(paste0("..", var))
     }
   } else if (is_call(x, c("coalesce", "replace_na"))) {
-    x[[1L]] <- quote(fcoalesce)
-    x
+    args <- lapply(x[-1], dt_squash, env = env, data = data, j = j)
+    call2("fcoalesce", !!!args)
   } else if (is_call(x, "case_when")) {
     # case_when(x ~ y) -> fcase(x, y)
     args <- unlist(lapply(x[-1], function(x) {
@@ -130,6 +151,9 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, "cur_group_rows")) {
     quote(.I)
   } else if (is_call(x, "desc")) {
+      if (!has_length(x, 2L)) {
+        abort("`desc()` expects exactly one argument.")
+      }
     x[[1]] <- sym("-")
     x[[2]] <- get_expr(x[[2]])
     x
@@ -151,6 +175,8 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
       type <- "lead"
       call <- match.call(dplyr::lead, x)
     }
+    call[-1] <- lapply(call[-1], dt_squash, env = env, data = data, j = j)
+
     shift_call <- call2("shift", x[[2]])
     if (!is_null(call$n)) {
       shift_call$n <- call$n

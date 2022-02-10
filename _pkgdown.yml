@@ -2,9 +2,11 @@ url: https://dtplyr.tidyverse.org
 
 template:
   package: tidytemplate
-
+  bootstrap: 5
+  includes:
+    in_header: |
+      <script defer data-domain="dtplyr.tidyverse.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 home:
-  strip_header: true
   links:
   - text: Learn more about data.table
     href: https://rdatatable.gitlab.io/data.table/
@@ -39,11 +41,20 @@ reference:
 
 - title: tidyr verbs
   contents:
+  - complete.dtplyr_step
   - drop_na.dtplyr_step
+  - expand.dtplyr_step
+  - fill.dtplyr_step
+  - nest.dtplyr_step
   - pivot_wider.dtplyr_step
+  - pivot_longer.dtplyr_step
+  - replace_na.dtplyr_step
+  - separate.dtplyr_step
 
 news:
   releases:
+  - text: "Version 1.2.0"
+    href: https://www.tidyverse.org/blog/2021/12/dtplyr-1-2-0/
   - text: "Version 1.1.0"
     href: https://www.tidyverse.org/blog/2021/02/dplyr-backends/
   - text: "Version 1.0.0"

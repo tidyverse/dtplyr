@@ -53,6 +53,11 @@ test_that("functions silently truncate results", {
   expect_equal(dt %>% slice_sample(n = 6) %>% as_tibble() %>% nrow(), 5)
   expect_equal(dt %>% slice_min(x, n = 6) %>% as_tibble() %>% nrow(), 5)
   expect_equal(dt %>% slice_max(x, n = 6) %>% as_tibble() %>% nrow(), 5)
+  expect_equal(dt %>% slice_head(n = -6) %>% as_tibble() %>% nrow(), 0)
+  expect_equal(dt %>% slice_tail(n = -6) %>% as_tibble() %>% nrow(), 0)
+  expect_equal(dt %>% slice_sample(n = -6) %>% as_tibble() %>% nrow(), 0)
+  expect_equal(dt %>% slice_min(x, n = -6) %>% as_tibble() %>% nrow(), 0)
+  expect_equal(dt %>% slice_max(x, n = -6) %>% as_tibble() %>% nrow(), 0)
 })
 
 test_that("proportion rounds down", {
@@ -114,14 +119,28 @@ test_that("arguments to sample are passed along", {
 
 test_that("slice_*() checks for empty ...", {
   dt <- lazy_dt(data.frame(x = 1:10))
-  expect_error(slice_head(dt, 5), "not empty")
-  expect_error(slice_tail(dt, 5), "not empty")
-  expect_error(slice_min(dt, x, 5), "not empty")
-  expect_error(slice_max(dt, x, 5), "not empty")
-  expect_error(slice_sample(dt, 5), "not empty")
+  expect_error(slice_head(dt, 5), class = "rlib_error_dots_nonempty")
+  expect_error(slice_tail(dt, 5), class = "rlib_error_dots_nonempty")
+  expect_error(slice_min(dt, x, 5), class = "rlib_error_dots_nonempty")
+  expect_error(slice_max(dt, x, 5), class = "rlib_error_dots_nonempty")
+  expect_error(slice_sample(dt, 5), class = "rlib_error_dots_nonempty")
 
   expect_error(slice_min(dt), "missing")
   expect_error(slice_max(dt), "missing")
+})
+
+test_that("slice_*() checks for constant n= and prop=", {
+  dt <- lazy_dt(data.frame(x = 1:10))
+  expect_error(slice_head(dt, n = n()), "constant")
+  expect_error(slice_head(dt, prop = n()), "constant")
+  expect_error(slice_tail(dt, n = n()), "constant")
+  expect_error(slice_tail(dt, prop = n()), "constant")
+  expect_error(slice_min(dt, x, n = n()), "constant")
+  expect_error(slice_min(dt, x, prop = n()), "constant")
+  expect_error(slice_max(dt, x, n = n()), "constant")
+  expect_error(slice_max(dt, x, prop = n()), "constant")
+  expect_error(slice_sample(dt, n = n()), "constant")
+  expect_error(slice_sample(dt, prop = n()), "constant")
 })
 
 test_that("check_slice_catches common errors", {
@@ -129,9 +148,54 @@ test_that("check_slice_catches common errors", {
     check_slice_size(n = 1, prop = 1)
     check_slice_size(n = "a")
     check_slice_size(prop = "a")
-    check_slice_size(n = -1)
-    check_slice_size(prop = -1)
+    check_slice_size(n = NA)
+    check_slice_size(prop = NA)
   })
+})
+
+test_that("slice_head/slice_tail correctly slice ungrouped dt when n < 0", {
+  dt <- lazy_dt(data.frame(x = 1:10))
+
+  expect_equal(
+    slice_head(dt, n = -2) %>% as_tibble(),
+    slice_head(dt, n = nrow(dt) - 2) %>% as_tibble()
+  )
+  expect_equal(
+    slice_tail(dt, n = -2) %>% as_tibble(),
+    slice_tail(dt, n = nrow(dt) - 2) %>% as_tibble()
+  )
+})
+
+test_that("slice_head/slice_tail correctly slice grouped dt when n < 0", {
+  dt <-
+    data.frame(x = 1:10, g = c(rep(1, 8), rep(2, 2))) %>%
+    lazy_dt() %>%
+    group_by(g)
+
+  expect_equal(
+    slice_head(dt, n = -3) %>% as_tibble(),
+    slice(dt, rlang::seq2(1L, n() - 3)) %>% as_tibble()
+  )
+  expect_equal(
+    n_groups(slice_head(dt, n = -3)),
+    1L
+  )
+  expect_equal(
+    slice_tail(dt, n = -3) %>% as_tibble(),
+    slice(dt, rlang::seq2(3 + 1, n())) %>% as_tibble()
+  )
+  expect_equal(
+    n_groups(slice_tail(dt, n = -3)),
+    1L
+  )
+
+})
+
+test_that("Non-integer number of rows computed correctly", {
+  expect_equal(eval_tidy(get_slice_size(n = 1.6), list(.N = 10)), 1)
+  expect_equal(eval_tidy(get_slice_size(prop = 0.16), list(.N = 10)), 1)
+  expect_equal(eval_tidy(get_slice_size(n = -1.6), list(.N = 10)), 9)
+  expect_equal(eval_tidy(get_slice_size(prop = -0.16), list(.N = 10)), 9)
 })
 
 

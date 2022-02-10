@@ -94,6 +94,19 @@ test_that("translates coalesce()", {
   )
 })
 
+test_that("can use local variable with coalesce() and replace_na()", {
+  dt <- lazy_dt(data.frame(x = c(1, NA)), "dt")
+  n <- 10
+  expect_equal(
+    capture_dot(dt, coalesce(x, n)),
+    expr(fcoalesce(x, 10))
+  )
+  expect_equal(
+    capture_dot(dt, replace_na(x, n)),
+    expr(fcoalesce(x, 10))
+  )
+})
+
 test_that("translates case_when()", {
   dt <- lazy_dt(data.frame(x = 1:10, y = 1:10))
 
@@ -128,6 +141,15 @@ test_that("translates lag()/lead()", {
   # Errors with order_by
   expect_snapshot_error(
     capture_dot(df, lag(x, order_by = y)),
+  )
+})
+
+test_that("can use local variable with lag()/lead()", {
+  dt <- lazy_dt(data.frame(x = c(1, NA)), "dt")
+  n <- 10
+  expect_equal(
+    capture_dot(dt, lag(x, n)),
+    expr(shift(x, n = 10, type = "lag"))
   )
 })
 
@@ -260,6 +282,10 @@ test_that("`desc(col)` is translated to `-col` inside arrange", {
 
   expect_equal(show_query(step), expr(DT[order(-x)]))
   expect_equal(out$x, c("b", "a"))
+})
+
+test_that("desc() checks the number of arguments", {
+  expect_snapshot(error = TRUE, capture_dot(df, desc(a, b)))
 })
 
 test_that("n_distinct() is translated to uniqueN()", {

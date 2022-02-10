@@ -1,6 +1,8 @@
-step_mutate <- function(parent, new_vars = list(), nested = FALSE) {
+step_mutate <- function(parent, new_vars = list(), use_braces = FALSE) {
   vars <- union(parent$vars, names(new_vars))
-  vars <- setdiff(vars, names(new_vars)[vapply(new_vars, is_null, lgl(1))])
+  var_is_null <- map_lgl(new_vars, is_null)
+  is_last <- !duplicated(names(new_vars), fromLast = TRUE)
+  vars <- setdiff(vars, names(new_vars)[var_is_null & is_last])
 
   new_step(
     parent,
@@ -9,17 +11,19 @@ step_mutate <- function(parent, new_vars = list(), nested = FALSE) {
     arrange = parent$arrange,
     needs_copy = !parent$implicit_copy,
     new_vars = new_vars,
-    nested = nested,
+    use_braces = use_braces,
     class = "dtplyr_step_mutate"
   )
 }
 
 dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
   # i is always empty because we never mutate a subset
-  if (!x$nested) {
+  if (is_empty(x$new_vars)) {
+    j <- quote(.SD)
+  } else if (!x$use_braces) {
     j <- call2(":=", !!!x$new_vars)
   } else {
-    mutate_list <- mutate_nested_vars(x$new_vars)
+    mutate_list <- mutate_with_braces(x$new_vars)
     j <- call2(":=", call2("c", !!!mutate_list$new_vars), mutate_list$expr)
   }
 
@@ -28,7 +32,7 @@ dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
   add_grouping_param(out, x, arrange = FALSE)
 }
 
-mutate_nested_vars <- function(mutate_vars) {
+mutate_with_braces <- function(mutate_vars) {
   assign <- map2(syms(names(mutate_vars)), mutate_vars, function(x, y) call2("<-", x, y))
   new_vars <- unique(names(mutate_vars))
   output <- call2(".", !!!syms(new_vars))
@@ -44,7 +48,7 @@ mutate_nested_vars <- function(mutate_vars) {
 #' Create and modify columns
 #'
 #' This is a method for the dplyr [mutate()] generic. It is translated to
-#' the `j` argument of `[.data.table`, using `:=` to modify "in place". If 
+#' the `j` argument of `[.data.table`, using `:=` to modify "in place". If
 #' `.before` or `.after` is provided, the new columns are relocated with a call
 #' to [data.table::setcolorder()].
 #'
@@ -71,13 +75,16 @@ mutate_nested_vars <- function(mutate_vars) {
 #'   mutate(x1 = x + 1, x2 = x1 + 1)
 mutate.dtplyr_step <- function(.data, ...,
                                .before = NULL, .after = NULL) {
-  dots <- capture_dots(.data, ...)
-  if (is_null(dots)) {
+  dots <- capture_new_vars(.data, ...)
+  trivial_dot <- imap(dots, ~ is_symbol(.x) && sym(.y) == .x && .y %in% .data$vars)
+  dots <- dots[!as.vector(trivial_dot, "logical")]
+  dots_list <- process_new_vars(.data, dots)
+  dots <- dots_list$dots
+  if (is_null(dots) || is_empty(dots)) {
     return(.data)
   }
 
-  nested <- nested_vars(.data, dots, .data$vars)
-  out <- step_mutate(.data, dots, nested)
+  out <- step_mutate(.data, dots, dots_list$use_braces)
 
   .before <- enquo(.before)
   .after <- enquo(.after)
@@ -85,6 +92,10 @@ mutate.dtplyr_step <- function(.data, ...,
     # Only change the order of new columns
     new <- setdiff(names(dots), .data$vars)
     out <- relocate(out, !!new, .before = !!.before, .after = !!.after)
+  }
+
+  if (dots_list$need_removal_step) {
+    out <- remove_vars(out, dots_list$vars_removed)
   }
 
   out
@@ -122,4 +133,28 @@ all_names <- function(x) {
   if (!is.call(x)) return(NULL)
 
   unique(unlist(lapply(x[-1], all_names), use.names = FALSE))
+}
+
+process_new_vars <- function(.data, dots) {
+  # identify where var = NULL is being used to remove a variable
+  var_is_null <- map_lgl(dots, is.null)
+  is_last <- !duplicated(names(dots), fromLast = TRUE)
+  var_removals <- var_is_null & is_last
+  vars_removed <- names(var_removals)[var_removals]
+
+  nested <- nested_vars(.data, dots, .data$vars)
+  repeated <- anyDuplicated(names(dots))
+  use_braces <- nested | repeated
+  grouped <- !is_empty(group_vars(.data))
+  need_removal_step <- any(var_removals) && (use_braces | grouped)
+  if (need_removal_step) {
+    dots <- dots[!var_removals]
+  }
+
+  list(
+    dots = dots,
+    use_braces = use_braces,
+    need_removal_step = need_removal_step,
+    vars_removed = vars_removed
+  )
 }

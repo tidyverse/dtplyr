@@ -1,6 +1,7 @@
 #' @import rlang
 #' @importFrom data.table data.table as.data.table is.data.table
 #' @importFrom lifecycle deprecated
+#' @importFrom glue glue
 #' @keywords internal
 "_PACKAGE"
 

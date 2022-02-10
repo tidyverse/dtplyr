@@ -41,6 +41,7 @@ test_that("empty select returns no columns", {
   )
 
   # unless it's grouped
+  skip_if(utils::packageVersion("rlang") < "0.5.0")
   expect_snapshot(out <- lz %>% group_by(x) %>% select())
   expect_equal(
     out %>% collect(),

@@ -76,9 +76,10 @@ test_that("`key` switches between keyby= and by=", {
   )
 })
 
-test_that("emtpy group_by ungroups", {
+test_that("emtpy and NULL group_by ungroups", {
   dt <- lazy_dt(data.frame(x = 1)) %>% group_by(x)
   expect_equal(group_by(dt) %>% group_vars(), character())
+  expect_equal(group_by(dt, NULL) %>% group_vars(), character())
   expect_equal(group_by(dt, !!!list()) %>% group_vars(), character())
 })
 

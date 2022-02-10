@@ -23,9 +23,8 @@ a row for each present school-student combination for all possible
 dates.
 }
 
-When used with factors, \code{expand()} uses the full set of levels, not just
-those that appear in the data. If you want to use only the values seen in
-the data, use \code{forcats::fct_drop()}.
+Unlike the data.frame method, this method does not use the full set of
+levels, just those that appear in the data.
 
 When used with continuous variables, you may need to fill in values
 that do not appear in the data: to do so use expressions like
@@ -65,11 +64,12 @@ fruits <- lazy_dt(tibble(
 ))
 
 # All possible combinations ---------------------------------------
-# Note that all defined, but not necessarily present, levels of the
-# factor variable `size` are retained.
+# Note that only present levels of the factor variable `size` are retained.
 fruits \%>\% expand(type)
 fruits \%>\% expand(type, size)
-fruits \%>\% expand(type, size, year)
+
+# This is different from the data frame behaviour:
+fruits \%>\% dplyr::collect() \%>\% expand(type, size)
 
 # Other uses -------------------------------------------------------
 fruits \%>\% expand(type, size, 2010:2012)

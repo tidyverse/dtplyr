@@ -7,12 +7,9 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/dtplyr)](https://cran.r-project.org/package=dtplyr)
-[![Travis build
-status](https://travis-ci.org/tidyverse/dtplyr.svg?branch=master)](https://travis-ci.org/tidyverse/dtplyr)
+[![R-CMD-check](https://github.com/tidyverse/dtplyr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/dtplyr/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyverse/dtplyr?branch=master)
-[![R build
-status](https://github.com/tidyverse/dtplyr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/dtplyr)
+coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dtplyr?branch=main)
 <!-- badges: end -->
 
 ## Overview
@@ -106,7 +103,7 @@ mtcars2 %>%
   group_by(cyl) %>% 
   summarise(l100k = mean(l100k)) %>% 
   as_tibble()
-#> # A tibble: 3 x 2
+#> # A tibble: 3 × 2
 #>     cyl l100k
 #>   <dbl> <dbl>
 #> 1     4  9.05
