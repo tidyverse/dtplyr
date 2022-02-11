@@ -2,13 +2,15 @@
 
     Code
       separate(dt, x, "x", FALSE)
-    Error <simpleError>
-      is.character(sep) is not TRUE
+    Condition
+      Error in `separate()`:
+      ! `sep` must be a character vector.
 
 ---
 
     Code
       separate(dt, x, FALSE)
-    Error <simpleError>
-      is.character(into) is not TRUE
+    Condition
+      Error in `separate()`:
+      ! `into` must be a character vector.
 

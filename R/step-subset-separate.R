@@ -43,8 +43,12 @@ separate.dtplyr_step <- function(data, col, into,
                                  remove = TRUE,
                                  convert = FALSE,
                                  ...) {
-  stopifnot(is.character(into))
-  stopifnot(is.character(sep))
+  if (!vctrs::vec_is(into, character())) {
+    abort("`into` must be a character vector.")
+  }
+  if (!vctrs::vec_is(sep, character())) {
+    abort("`sep` must be a character vector.")
+  }
 
   col <- enexpr(col)
 

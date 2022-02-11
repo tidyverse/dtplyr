@@ -2,6 +2,6 @@
 
     Code
       out <- lz %>% group_by(x) %>% select()
-    Message <rlang_message>
+    Message
       Adding missing grouping variables: `x`
 

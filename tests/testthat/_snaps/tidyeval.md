@@ -6,6 +6,7 @@
 
     Code
       capture_dot(df, desc(a, b))
-    Error <rlang_error>
-      `desc()` expects exactly one argument.
+    Condition
+      Error in `dt_squash_call()`:
+      ! `desc()` expects exactly one argument.
 

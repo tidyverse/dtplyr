@@ -82,7 +82,7 @@ check_summarise_vars <- function(dots) {
         "`", names(dots)[[i]], "` ",
         "refers to a variable created earlier in this summarise().\n",
         "Do you need an extra mutate() step?"
-      ))
+      ), call = caller_env())
     }
   }
 }
@@ -95,7 +95,7 @@ summarise_groups <- function(.data, .groups, env_caller) {
         if (.groups == "rowwise") " in dtplyr"
       ),
       i = 'Possible values are NULL (default), "drop_last", "drop", and "keep"'
-    ))
+    ), call = caller_env())
   }
 
   group_vars <- .data$groups
