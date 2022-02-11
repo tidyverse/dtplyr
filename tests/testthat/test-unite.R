@@ -1,0 +1,43 @@
+test_that("unite pastes columns together & removes old col", {
+  df <- lazy_dt(data.table(x = "a", y = "b"), "DT")
+  step <- unite(df, "z", x:y)
+  out <- as.data.table(step)
+  expect_equal(names(out), "z")
+  expect_equal(out$z, "a_b")
+  expect_equal(
+    show_query(step),
+    expr(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))][, .(z)])
+  )
+})
+
+test_that("unite does not remove new col in case of name clash", {
+  df <- lazy_dt(data.table(x = "a", y = "b"), "DT")
+  step <- unite(df, x, x:y)
+  out <- as.data.table(step)
+  expect_equal(names(out), "x")
+  expect_equal(out$x, "a_b")
+})
+
+test_that("unite preserves grouping", {
+  df <- lazy_dt(data.table(g = 1, x = "a"), "DT") %>% group_by(g)
+  step <- df %>% unite(x, x)
+  expect_equal(dplyr::group_vars(df), dplyr::group_vars(step))
+})
+
+test_that("drops grouping when needed", {
+  df <- lazy_dt(data.table(g = 1, x = "a"), "DT") %>% group_by(g)
+  step <- df %>% unite(gx, g, x)
+  rs <- as.data.table(step)
+  expect_equal(rs$gx, "1_a")
+  expect_equal(dplyr::group_vars(rs), character())
+})
+
+test_that("empty var spec uses all vars", {
+  df <- lazy_dt(data.table(x = "a", y = "b"), "DT")
+  expect_equal(collect(unite(df, "z")), tibble(z = "a_b"))
+})
+
+test_that("errors on na.rm", {
+  df <- lazy_dt(data.table(x = c("a", NA), y = c("b", NA)), "DT")
+  expect_snapshot_error(unite(df, "z", x:y, na.rm = TRUE))
+})
