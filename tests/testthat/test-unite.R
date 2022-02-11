@@ -24,6 +24,19 @@ test_that("unite preserves grouping", {
   expect_equal(dplyr::group_vars(df), dplyr::group_vars(step))
 })
 
+test_that("doesn't use `by` for unite step", {
+  df <- lazy_dt(data.table(x = "a", y = "b", z = "c"), "DT") %>% group_by(z)
+  step <- unite(df, "z", x:y)
+  out <- as.data.table(step)
+  expect_equal(names(out), "z")
+  expect_equal(out$z, "a_b")
+  expect_equal(step$groups, "z")
+  expect_equal(
+    show_query(step),
+    expr(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))][, .(z)])
+  )
+})
+
 test_that("drops grouping when needed", {
   df <- lazy_dt(data.table(g = 1, x = "a"), "DT") %>% group_by(g)
   step <- df %>% unite(gx, g, x)

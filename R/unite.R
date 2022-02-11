@@ -33,18 +33,20 @@ unite.dtplyr_step <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = 
     .cols <- names(tidyselect::eval_select(expr(c(!!!dots)), sim_data))
   }
 
-  if (any(.cols %in% data$groups)) {
-    data <- ungroup(data)
-  }
+  out <- mutate(ungroup(data), !!.col := paste(!!!syms(.cols), sep = sep))
 
-  out <- mutate(data, !!.col := paste(!!!syms(.cols), sep = sep))
-
-  if (is_true(remove)) {
+  remove <- is_true(remove)
+  if (remove) {
     .drop_cols <- setdiff(.cols, .col)
     out <- select(out, -tidyselect::all_of(.drop_cols))
   }
 
-  out
+  group_vars <- data$groups
+  if (remove && any(.cols %in% group_vars)) {
+    out
+  } else {
+    group_by(out, !!!syms(group_vars))
+  }
 }
 
 # exported onLoad
