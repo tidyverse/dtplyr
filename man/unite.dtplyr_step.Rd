@@ -31,7 +31,9 @@ each value.}
 This is a method for the tidyr \code{unite()} generic.
 }
 \examples{
-df <- lazy_dt(tidyr::expand_grid(x = c("a", NA), y = c("b", NA)))
+library(tidyr)
+
+df <- lazy_dt(expand_grid(x = c("a", NA), y = c("b", NA)))
 df
 
 df \%>\% unite("z", x:y, remove = FALSE)

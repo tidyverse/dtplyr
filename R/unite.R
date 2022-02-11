@@ -5,7 +5,9 @@
 #'
 #' @inheritParams tidyr::unite
 #' @examples
-#' df <- lazy_dt(tidyr::expand_grid(x = c("a", NA), y = c("b", NA)))
+#' library(tidyr)
+#'
+#' df <- lazy_dt(expand_grid(x = c("a", NA), y = c("b", NA)))
 #' df
 #'
 #' df %>% unite("z", x:y, remove = FALSE)
@@ -39,7 +41,7 @@ unite.dtplyr_step <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = 
 
   if (is_true(remove)) {
     .drop_cols <- setdiff(.cols, .col)
-    out <- select(out, -all_of(.drop_cols))
+    out <- select(out, -tidyselect::all_of(.drop_cols))
   }
 
   out
