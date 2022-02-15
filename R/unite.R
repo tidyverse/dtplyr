@@ -30,7 +30,7 @@ unite.dtplyr_step <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = 
     .cols <- data$vars
   } else {
     sim_data <- simulate_vars(data)
-    locs <- tidyselect::eval_select(expr(c(x, y)), sim_data, allow_rename = FALSE)
+    locs <- tidyselect::eval_select(expr(c(!!!dots)), sim_data, allow_rename = FALSE)
     .cols <- data$vars[locs]
   }
 
