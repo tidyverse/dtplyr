@@ -34,7 +34,7 @@ unite.dtplyr_step <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = 
     .cols <- data$vars[locs]
   }
 
-  out <- mutate(ungroup(data), !!.col := paste(!!!syms(.cols), sep = sep))
+  out <- mutate(ungroup(data), !!.col := paste(!!!syms(.cols), sep = sep), .before = !!sym(.cols[[1]]))
 
   remove <- is_true(remove)
   if (remove) {
