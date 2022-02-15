@@ -6,7 +6,7 @@ test_that("unite pastes columns together & removes old col", {
   expect_equal(out$z, "a_b")
   expect_equal(
     show_query(step),
-    expr(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))][, .(z)])
+    expr(setcolorder(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))], c("z", "x", "y"))[, .(z)])
   )
 })
 
@@ -43,6 +43,14 @@ test_that("drops grouping when needed", {
   rs <- as.data.table(step)
   expect_equal(rs$gx, "1_a")
   expect_equal(dplyr::group_vars(rs), character())
+})
+
+test_that("keeps groups when needed", {
+  df <- lazy_dt(data.table(x = "x", y = "y"), "DT") %>% group_by(x, y)
+  step <- df %>% unite("z", x)
+  rs <- as.data.table(step)
+  expect_equal(rs$z, "x")
+  expect_equal(dplyr::group_vars(step), "y")
 })
 
 test_that("empty var spec uses all vars", {
