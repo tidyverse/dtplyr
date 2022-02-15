@@ -44,10 +44,14 @@ unite.dtplyr_step <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = 
 
   group_vars <- data$groups
   if (remove && any(.cols %in% group_vars)) {
-    out
-  } else {
-    group_by(out, !!!syms(group_vars))
+    group_vars <- setdiff(group_vars, .cols)
   }
+
+  if (length(group_vars) > 0) {
+    out <- group_by(out, !!!syms(group_vars))
+  }
+
+  out
 }
 
 # exported onLoad
