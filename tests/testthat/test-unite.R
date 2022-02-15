@@ -6,7 +6,7 @@ test_that("unite pastes columns together & removes old col", {
   expect_equal(out$z, "a_b")
   expect_equal(
     show_query(step),
-    expr(setcolorder(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))], c("z", "x", "y"))[, .(z)])
+    expr(setcolorder(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))], !!c("z", "x", "y"))[, .(z)])
   )
 })
 
