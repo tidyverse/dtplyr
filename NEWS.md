@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* `glue::glue()` and `stringr::str_glue()` now work inside `mutate()`/`transmute()` without needing
+  to specify `.envir`
+
 * Implemented `add_count()` (#298)
 
 * `if_any()` and `if_all()` now work for a list of functions specified in the
