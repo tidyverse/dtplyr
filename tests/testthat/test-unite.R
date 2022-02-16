@@ -6,7 +6,7 @@ test_that("unite pastes columns together & removes old col", {
   expect_equal(out$z, "a_b")
   expect_equal(
     show_query(step),
-    expr(setcolorder(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))], !!c("z", "x", "y"))[, .(z)])
+    expr(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))][, .(z)])
   )
 })
 
@@ -16,6 +16,14 @@ test_that("unite does not remove new col in case of name clash", {
   out <- as.data.table(step)
   expect_equal(names(out), "x")
   expect_equal(out$x, "a_b")
+})
+
+test_that("correct column order when remove = FALSE", {
+  df <- lazy_dt(data.table(x = "a", y = "b"), "DT")
+  step <- unite(df, "united", y, x, remove = FALSE)
+  out <- as.data.table(step)
+  expect_equal(names(out), c("united", "x", "y"))
+  expect_equal(out$united, "b_a")
 })
 
 test_that("unite preserves grouping", {

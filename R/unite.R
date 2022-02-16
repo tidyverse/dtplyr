@@ -28,13 +28,14 @@ unite.dtplyr_step <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = 
   dots <- enquos(...)
   if (length(dots) == 0) {
     .cols <- data$vars
+    locs <- seq_along(.cols)
   } else {
     sim_data <- simulate_vars(data)
     locs <- tidyselect::eval_select(expr(c(!!!dots)), sim_data, allow_rename = FALSE)
     .cols <- data$vars[locs]
   }
 
-  out <- mutate(ungroup(data), !!.col := paste(!!!syms(.cols), sep = sep), .before = !!sym(.cols[[1]]))
+  out <- mutate(ungroup(data), !!.col := paste(!!!syms(.cols), sep = sep))
 
   remove <- is_true(remove)
   if (remove) {
@@ -46,6 +47,7 @@ unite.dtplyr_step <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = 
   if (remove && any(.cols %in% group_vars)) {
     group_vars <- setdiff(group_vars, .cols)
   }
+  out <- relocate(out, !!.col, .before = min(locs))
 
   if (length(group_vars) > 0) {
     out <- group_by(out, !!!syms(group_vars))
