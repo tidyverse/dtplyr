@@ -13,6 +13,7 @@
   register_s3_method("tidyr", "replace_na", "data.table")
   register_s3_method("tidyr", "nest", "data.table")
   register_s3_method("tidyr", "separate", "data.table")
+  register_s3_method("tidyr", "unite", "data.table")
 
   register_s3_method("dplyr", "filter", "dtplyr_step")
   register_s3_method("dplyr", "intersect", "dtplyr_step")
@@ -27,6 +28,7 @@
   register_s3_method("tidyr", "replace_na", "dtplyr_step")
   register_s3_method("tidyr", "nest", "dtplyr_step")
   register_s3_method("tidyr", "separate", "dtplyr_step")
+  register_s3_method("tidyr", "unite", "dtplyr_step")
 }
 
 register_s3_method <- function(pkg, generic, class, fun = NULL) {
