@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* Can use `.data` pronoun inside `desc()` in `arrange()` (#346)
+
 * New translations:
 
   * `add_count()`
