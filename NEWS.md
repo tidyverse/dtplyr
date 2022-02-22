@@ -3,7 +3,6 @@
 * `glue::glue()` and `stringr::str_glue()` now work inside `mutate()`/`transmute()` without needing
   to specify `.envir`
 
-* Implemented `add_count()` (#298)
 * Can use `.data` pronoun inside `desc()` in `arrange()` (#346)
 
 * New translations:
