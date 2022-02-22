@@ -52,6 +52,6 @@
       (expect_error(capture_if_all(dt, if_all(c(a = x, b = y)))))
     Output
       <error/rlang_error>
-      Error in `ensure_named()`:
+      Error in `across_setup()`:
       ! Can't rename variables in this context.
 
