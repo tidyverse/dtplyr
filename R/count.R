@@ -36,9 +36,9 @@ add_count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NU
   if (!missing(...)) {
     out <- group_by(.data, ..., .add = TRUE)
   } else {
-    out <- .data 
+    out <- .data
   }
-  out <- add_tally(out, wt = !!enquo(wt), sort = sort, name = name)
+  out <- dplyr::add_tally(out, wt = !!enquo(wt), sort = sort, name = name)
   out <- group_by(out, !!!syms(group_vars(.data)))
   out
 }

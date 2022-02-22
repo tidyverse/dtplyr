@@ -4,6 +4,12 @@
   to specify `.envir`
 
 * Implemented `add_count()` (#298)
+* Can use `.data` pronoun inside `desc()` in `arrange()` (#346)
+
+* New translations:
+
+  * `add_count()`
+  * `unite()`
 
 * `if_any()` and `if_all()` now work for a list of functions specified in the
   `.fns` argument(@mgirlich, #335).
