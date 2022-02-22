@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* `glue::glue()` and `stringr::str_glue()` now work inside `mutate()`/`transmute()` without needing
+  to specify `.envir`
+
 * Can use `.data` pronoun inside `desc()` in `arrange()` (#346)
 
 * New translations:

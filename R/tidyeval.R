@@ -213,6 +213,12 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     expr(frank(!!arg, ties.method = "first", na.last = "keep"))
   } else if (is.function(x[[1]]) || is_call(x, "function")) {
     simplify_function_call(x, env, data, j = j)
+  } else if (is_call(x, c("glue", "str_glue")) && j) {
+    call <- call_match(x, glue::glue)
+    if (is.null(call$.envir)) {
+      call$.envir <- quote(.SD)
+    }
+    call
   } else {
     x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
     x

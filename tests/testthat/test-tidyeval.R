@@ -179,6 +179,23 @@ test_that("can splice a data frame", {
   expect_equal(dots, as.list(df))
 })
 
+test_that("can use glue, (#344)", {
+  df <- data.table(a = letters[1:3], b = letters[1:3])
+  expect_equal(
+    capture_dot(df, glue::glue("{a}_{b}")),
+    quote(glue::glue("{a}_{b}", .envir = .SD))
+  )
+  expect_equal(
+    capture_dot(df, glue::glue("{a}_{b}"), j = FALSE),
+    quote(glue::glue("{a}_{b}"))
+  )
+
+  out <- df %>%
+    transmute(a_b = glue::glue("{a}_{b}")) %>%
+    collect()
+  expect_equal(out$a_b, c("a_a", "b_b", "c_c"))
+})
+
 # evaluation --------------------------------------------------------------
 
 test_that("can access functions in local env", {
