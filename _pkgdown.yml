@@ -54,6 +54,7 @@ reference:
   - pivot_longer.dtplyr_step
   - replace_na.dtplyr_step
   - separate.dtplyr_step
+  - unite.dtplyr_step
 
 news:
   releases:
