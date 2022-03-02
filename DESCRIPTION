@@ -26,7 +26,7 @@ Imports:
     lifecycle,
     rlang (>= 1.0.0),
     tibble,
-    tidyselect,
+    tidyselect (>= 1.1.2),
     vctrs
 Suggests:
     bench,
