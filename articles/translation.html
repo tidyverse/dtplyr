@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">dtplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,8 @@
 
 
 
-<script src="translation_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Translation</h1>
             
@@ -368,9 +369,9 @@
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     751.91µs 915.42µs      818.     2.2KB    10.5 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.11ms   1.29ms      572.        0B     8.63</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    2.05ms   2.38ms      328.     2.2KB     9.06</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter        797µs  868.3µs     <span style="text-decoration: underline;">1</span>101.     2.2KB     12.7</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate      923.3µs   1.01ms      916.        0B     11.1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.27ms   1.36ms      695.     2.2KB     10.6</span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Unless a copy is performed.&lt;/p&gt;"><sup>1</sup></a>.</p>
 </div>
 

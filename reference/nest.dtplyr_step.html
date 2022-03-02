@@ -14,7 +14,7 @@ argument."><meta property="og:image" content="https://dtplyr.tidyverse.org/logo.
     
     <a class="navbar-brand me-2" href="../index.html">dtplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,12 +87,12 @@ The right hand side can be any valid tidy select expression.</p></dd>
 <dd><p>If <code>NULL</code>, the default, the names will be left
 as is. In <code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest()</a></code>, inner names will come from the former outer names;
 in <code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest()</a></code>, the new outer names will come from the inner names.</p>
-<p>If a string, the inner and outer names will be used together. In
-<code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest()</a></code>, the names of the new outer columns will be formed by pasting
-together the outer and the inner column names, separated by <code>names_sep</code>. In
-<code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest()</a></code>, the new inner names will have the outer names + <code>names_sep</code>
-automatically stripped. This makes <code>names_sep</code> roughly symmetric between
-nesting and unnesting.</p></dd>
+<p>If a string, the inner and outer names will be used together. In <code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest()</a></code>,
+the names of the new outer columns will be formed by pasting together the
+outer and the inner column names, separated by <code>names_sep</code>. In <code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest()</a></code>,
+the new inner names will have the outer names (+ <code>names_sep</code>) automatically
+stripped. This makes <code>names_sep</code> roughly symmetric between nesting and
+unnesting.</p></dd>
 <dt>.key</dt>
 <dd><p>Not supported.</p></dd>
 <dt>data</dt>

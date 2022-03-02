@@ -14,7 +14,7 @@ Grouping is translated to the either keyby and by argument of
     
     <a class="navbar-brand me-2" href="../index.html">dtplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@ Grouping is translated to the either <code>keyby</code> and <code>by</code> argu
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for dtplyr_step</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .add <span class="op">=</span> <span class="cn">FALSE</span>, arrange <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .add <span class="op">=</span> <span class="cn">FALSE</span>, add <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>, arrange <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># S3 method for dtplyr_step</span>
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
@@ -84,6 +84,10 @@ Grouping is translated to the either <code>keyby</code> and <code>by</code> argu
 <dd><p>A <code><a href="lazy_dt.html">lazy_dt()</a></code></p></dd>
 <dt>...</dt>
 <dd><p>In <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code>, variables or computations to group by.
+Computations are always done on the ungrouped data frame.
+To perform computations on the grouped data, you need to use
+a separate <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> step before the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code>.
+Computations are not allowed in <code><a href="https://dplyr.tidyverse.org/reference/nest_by.html" class="external-link">nest_by()</a></code>.
 In <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup()</a></code>, variables to remove from the grouping.</p></dd>
 <dt>.add, add</dt>
 <dd><p>When <code>FALSE</code>, the default, <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> will
