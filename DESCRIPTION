@@ -26,15 +26,16 @@ Imports:
     lifecycle,
     rlang (>= 1.0.0),
     tibble,
-    tidyselect,
+    tidyselect (>= 1.1.2),
     vctrs
 Suggests:
     bench,
     covr,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0),
-    tidyr (>= 1.1.0)
+    testthat (>= 3.1.2),
+    tidyr (>= 1.1.0),
+    waldo (>= 0.3.1)
 VignetteBuilder: 
     knitr
 Config/Needs/website: tidyverse/tidytemplate
