@@ -34,7 +34,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    tidyr (>= 1.1.0)
+    tidyr (>= 1.1.0),
+    waldo (>= 0.3.1)
 VignetteBuilder: 
     knitr
 Config/Needs/website: tidyverse/tidytemplate
