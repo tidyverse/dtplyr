@@ -21,6 +21,8 @@
    
 * `if_any()` and `if_all()` now work without specifying the `.fns` argument (@mgirlich, #325).
 
+* `mutate()` can now use `.keep`
+
 # dtplyr 1.2.1
 
 * Fix for upcoming rlang release.
