@@ -22,7 +22,7 @@
     Code
       collect(drop_na(dt, "z"))
     Condition
-      Error in `stop_subscript()`:
+      Error in `chr_as_locations()`:
       ! Can't subset columns that don't exist.
       x Column `z` doesn't exist.
 
