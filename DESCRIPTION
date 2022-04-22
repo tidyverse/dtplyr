@@ -27,7 +27,7 @@ Imports:
     rlang (>= 1.0.0),
     tibble,
     tidyselect (>= 1.1.2),
-    vctrs
+    vctrs (>= 0.4.0)
 Suggests:
     bench,
     covr,
