@@ -56,6 +56,19 @@ mutate_with_braces <- function(mutate_vars) {
 #' @param ... <[data-masking][dplyr::dplyr_data_masking]> Name-value pairs.
 #'   The name gives the name of the column in the output, and the value should
 #'   evaluate to a vector.
+#' @param .keep `r lifecycle::badge("experimental")`
+#'   Control which columns from `.data` are retained in the output. Grouping
+#'   columns and columns created by `...` are always kept.
+#'
+#'   * `"all"` retains all columns from `.data`. This is the default.
+#'   * `"used"` retains only the columns used in `...` to create new
+#'     columns. This is useful for checking your work, as it displays inputs
+#'     and outputs side-by-side.
+#'   * `"unused"` retains only the columns _not_ used in `...` to create new
+#'     columns. This is useful if you generate new columns, but no longer need
+#'     the columns used to generate them.
+#'   * `"none"` doesn't retain any extra columns from `.data`. Only the grouping
+#'     variables and columns created by `...` are kept.
 #' @param .before,.after \Sexpr[results=rd]{lifecycle::badge("experimental")}
 #'   <[`tidy-select`][dplyr_tidy_select]> Optionally, control where new columns
 #'   should appear (the default is to add to the right hand side). See
@@ -74,6 +87,7 @@ mutate_with_braces <- function(mutate_vars) {
 #' dt %>%
 #'   mutate(x1 = x + 1, x2 = x1 + 1)
 mutate.dtplyr_step <- function(.data, ...,
+                               .keep = c("all", "used", "unused", "none"),
                                .before = NULL, .after = NULL) {
   dots <- capture_new_vars(.data, ...)
   trivial_dot <- imap(dots, ~ is_symbol(.x) && sym(.y) == .x && .y %in% .data$vars)
@@ -96,6 +110,12 @@ mutate.dtplyr_step <- function(.data, ...,
 
   if (dots_list$need_removal_step) {
     out <- remove_vars(out, dots_list$vars_removed)
+  }
+
+  .keep <- arg_match(.keep)
+  if (.keep != "all") {
+    keep <- keep_vars(out, dots, .keep)
+    out <- select(out, all_of(keep))
   }
 
   out
@@ -157,4 +177,22 @@ process_new_vars <- function(.data, dots) {
     need_removal_step = need_removal_step,
     vars_removed = vars_removed
   )
+}
+
+keep_vars <- function(data, dots, .keep) {
+  data_vars <- data$vars
+  group_vars <- data$groups
+  dots_vars <- names(dots)
+  used_vars <- unique(unlist(map(dots, all_names))) %||% character()
+
+  if (.keep == "used") {
+    vars <- c(group_vars, used_vars, dots_vars)
+  } else if (.keep == "unused") {
+    unused_vars <- data_vars[!data_vars %in% used_vars]
+    vars <- c(group_vars, unused_vars, dots_vars)
+  } else {
+    vars <- c(group_vars, dots_vars)
+  }
+  vars <- unique(vars)
+  data_vars[data_vars %in% vars] # Preserve column order
 }
