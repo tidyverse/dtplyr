@@ -89,32 +89,33 @@ mutate_with_braces <- function(mutate_vars) {
 mutate.dtplyr_step <- function(.data, ...,
                                .keep = c("all", "used", "unused", "none"),
                                .before = NULL, .after = NULL) {
-  dots <- capture_new_vars(.data, ...)
-  trivial_dot <- imap(dots, ~ is_symbol(.x) && sym(.y) == .x && .y %in% .data$vars)
-  dots <- dots[!as.vector(trivial_dot, "logical")]
+  all_dots <- capture_new_vars(.data, ...)
+  trivial_dot <- imap(all_dots, ~ is_symbol(.x) && sym(.y) == .x && .y %in% .data$vars)
+  dots <- all_dots[!as.vector(trivial_dot, "logical")]
   dots_list <- process_new_vars(.data, dots)
   dots <- dots_list$dots
+
   if (is_null(dots) || is_empty(dots)) {
-    return(.data)
-  }
+    out <- .data
+  } else {
+    out <- step_mutate(.data, dots, dots_list$use_braces)
 
-  out <- step_mutate(.data, dots, dots_list$use_braces)
+    .before <- enquo(.before)
+    .after <- enquo(.after)
+    if (!quo_is_null(.before) || !quo_is_null(.after)) {
+      # Only change the order of new columns
+      new <- setdiff(names(dots), .data$vars)
+      out <- relocate(out, !!new, .before = !!.before, .after = !!.after)
+    }
 
-  .before <- enquo(.before)
-  .after <- enquo(.after)
-  if (!quo_is_null(.before) || !quo_is_null(.after)) {
-    # Only change the order of new columns
-    new <- setdiff(names(dots), .data$vars)
-    out <- relocate(out, !!new, .before = !!.before, .after = !!.after)
-  }
-
-  if (dots_list$need_removal_step) {
-    out <- remove_vars(out, dots_list$vars_removed)
+    if (dots_list$need_removal_step) {
+      out <- remove_vars(out, dots_list$vars_removed)
+    }
   }
 
   .keep <- arg_match(.keep)
   if (.keep != "all") {
-    keep <- keep_vars(out, dots, .keep)
+    keep <- keep_vars(out, all_dots, .keep)
     out <- select(out, all_of(keep))
   }
 
