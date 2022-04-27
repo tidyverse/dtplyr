@@ -69,6 +69,9 @@ mutate_with_braces <- function(mutate_vars) {
 #'     the columns used to generate them.
 #'   * `"none"` doesn't retain any extra columns from `.data`. Only the grouping
 #'     variables and columns created by `...` are kept.
+#'
+#'  Note: With dtplyr `.keep` will only work with column names passed as symbols, and won't
+#'  work with other workflows (e.g. `eval(parse(text = "x + 1"))`)
 #' @param .before,.after \Sexpr[results=rd]{lifecycle::badge("experimental")}
 #'   <[`tidy-select`][dplyr_tidy_select]> Optionally, control where new columns
 #'   should appear (the default is to add to the right hand side). See
