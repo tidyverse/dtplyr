@@ -381,3 +381,20 @@ test_that(".keep = 'none' retains original ordering", {
 
   expect_named(out2, c("x", "y"))
 })
+
+test_that("works with empty dots", {
+  df <- data.table(x = 1, y = 2)
+  out <- df %>%
+    mutate(.keep = "used") %>%
+    as.data.table()
+
+  expect_equal(ncol(out), 0)
+})
+
+test_that("works with trivial dots", {
+  out <- lazy_dt(mtcars) %>%
+    mutate(mpg, .keep = 'used') %>%
+    as.data.table()
+
+  expect_named(out, "mpg")
+})
