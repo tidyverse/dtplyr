@@ -119,7 +119,7 @@ mutate.dtplyr_step <- function(.data, ...,
   .keep <- arg_match(.keep)
   if (.keep != "all") {
     keep <- keep_vars(out, all_dots, .keep)
-    out <- select(out, all_of(keep))
+    out <- select(out, tidyselect::all_of(keep))
   }
 
   out
