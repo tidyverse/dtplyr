@@ -118,7 +118,7 @@ mutate.dtplyr_step <- function(.data, ...,
 
   .keep <- arg_match(.keep)
   if (.keep != "all") {
-    keep <- keep_vars(out, all_dots, .keep)
+    keep <- keep_vars(.data, out, all_dots, .keep)
     out <- select(out, tidyselect::all_of(keep))
   }
 
@@ -183,20 +183,32 @@ process_new_vars <- function(.data, dots) {
   )
 }
 
-keep_vars <- function(data, dots, .keep) {
-  data_vars <- data$vars
-  group_vars <- data$groups
-  dots_vars <- names(dots)
-  used_vars <- unique(unlist(map(dots, all_names))) %||% character()
+keep_vars <- function(.data, out, dots, keep) {
+  used <- unique(unlist(map(dots, all_names))) %||% character()
+  used <- setNames(out$vars %in% used, out$vars)
 
-  if (.keep == "used") {
-    vars <- c(group_vars, used_vars, dots_vars)
-  } else if (.keep == "unused") {
-    unused_vars <- data_vars[!data_vars %in% used_vars]
-    vars <- c(group_vars, unused_vars, dots_vars)
-  } else {
-    vars <- c(group_vars, dots_vars)
+  cols_data <- .data$vars
+  cols_group <- .data$groups
+
+  cols_expr <- names(dots)
+  cols_expr_modified <- intersect(cols_expr, cols_data)
+  cols_expr_new <- setdiff(cols_expr, cols_expr_modified)
+
+  cols_used <- setdiff(cols_data, c(cols_group, cols_expr_modified, names(used)[!used]))
+  cols_unused <- setdiff(cols_data, c(cols_group, cols_expr_modified, names(used)[used]))
+
+  cols_out <- out$vars
+
+  if (keep == "all") {
+    cols_retain <- cols_out
+  } else if (keep == "used") {
+    cols_retain <- setdiff(cols_out, cols_unused)
+  } else if (keep == "unused") {
+    cols_retain <- setdiff(cols_out, cols_used)
+  } else if (keep == "none") {
+    cols_retain <- setdiff(cols_out, c(cols_used, cols_unused))
   }
-  vars <- unique(vars)
-  data_vars[data_vars %in% vars] # Preserve column order
+
+  cols_retain
 }
+
