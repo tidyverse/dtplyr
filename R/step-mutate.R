@@ -56,6 +56,22 @@ mutate_with_braces <- function(mutate_vars) {
 #' @param ... <[data-masking][dplyr::dplyr_data_masking]> Name-value pairs.
 #'   The name gives the name of the column in the output, and the value should
 #'   evaluate to a vector.
+#' @param .keep `r lifecycle::badge("experimental")`
+#'   Control which columns from `.data` are retained in the output. Grouping
+#'   columns and columns created by `...` are always kept.
+#'
+#'   * `"all"` retains all columns from `.data`. This is the default.
+#'   * `"used"` retains only the columns used in `...` to create new
+#'     columns. This is useful for checking your work, as it displays inputs
+#'     and outputs side-by-side.
+#'   * `"unused"` retains only the columns _not_ used in `...` to create new
+#'     columns. This is useful if you generate new columns, but no longer need
+#'     the columns used to generate them.
+#'   * `"none"` doesn't retain any extra columns from `.data`. Only the grouping
+#'     variables and columns created by `...` are kept.
+#'
+#'  Note: With dtplyr `.keep` will only work with column names passed as symbols, and won't
+#'  work with other workflows (e.g. `eval(parse(text = "x + 1"))`)
 #' @param .before,.after \Sexpr[results=rd]{lifecycle::badge("experimental")}
 #'   <[`tidy-select`][dplyr_tidy_select]> Optionally, control where new columns
 #'   should appear (the default is to add to the right hand side). See
@@ -74,28 +90,36 @@ mutate_with_braces <- function(mutate_vars) {
 #' dt %>%
 #'   mutate(x1 = x + 1, x2 = x1 + 1)
 mutate.dtplyr_step <- function(.data, ...,
+                               .keep = c("all", "used", "unused", "none"),
                                .before = NULL, .after = NULL) {
-  dots <- capture_new_vars(.data, ...)
-  trivial_dot <- imap(dots, ~ is_symbol(.x) && sym(.y) == .x && .y %in% .data$vars)
-  dots <- dots[!as.vector(trivial_dot, "logical")]
+  all_dots <- capture_new_vars(.data, ...)
+  trivial_dot <- imap(all_dots, ~ is_symbol(.x) && sym(.y) == .x && .y %in% .data$vars)
+  dots <- all_dots[!as.vector(trivial_dot, "logical")]
   dots_list <- process_new_vars(.data, dots)
   dots <- dots_list$dots
+
   if (is_null(dots) || is_empty(dots)) {
-    return(.data)
+    out <- .data
+  } else {
+    out <- step_mutate(.data, dots, dots_list$use_braces)
+
+    .before <- enquo(.before)
+    .after <- enquo(.after)
+    if (!quo_is_null(.before) || !quo_is_null(.after)) {
+      # Only change the order of new columns
+      new <- setdiff(names(dots), .data$vars)
+      out <- relocate(out, !!new, .before = !!.before, .after = !!.after)
+    }
+
+    if (dots_list$need_removal_step) {
+      out <- remove_vars(out, dots_list$vars_removed)
+    }
   }
 
-  out <- step_mutate(.data, dots, dots_list$use_braces)
-
-  .before <- enquo(.before)
-  .after <- enquo(.after)
-  if (!quo_is_null(.before) || !quo_is_null(.after)) {
-    # Only change the order of new columns
-    new <- setdiff(names(dots), .data$vars)
-    out <- relocate(out, !!new, .before = !!.before, .after = !!.after)
-  }
-
-  if (dots_list$need_removal_step) {
-    out <- remove_vars(out, dots_list$vars_removed)
+  .keep <- arg_match(.keep)
+  if (.keep != "all") {
+    cols_retain <- keep_vars(.data, out, all_dots, .keep)
+    out <- select(out, tidyselect::all_of(cols_retain))
   }
 
   out
@@ -157,4 +181,31 @@ process_new_vars <- function(.data, dots) {
     need_removal_step = need_removal_step,
     vars_removed = vars_removed
   )
+}
+
+keep_vars <- function(.data, out, dots, .keep) {
+  used <- unique(unlist(map(dots, all_names))) %||% character()
+  used <- set_names(out$vars %in% used, out$vars)
+
+  cols_data <- .data$vars
+  cols_group <- .data$groups
+
+  cols_expr <- names(dots)
+  cols_expr_modified <- intersect(cols_expr, cols_data)
+  cols_expr_new <- setdiff(cols_expr, cols_expr_modified)
+
+  cols_used <- setdiff(cols_data, c(cols_group, cols_expr_modified, names(used)[!used]))
+  cols_unused <- setdiff(cols_data, c(cols_group, cols_expr_modified, names(used)[used]))
+
+  cols_out <- out$vars
+
+  if (.keep == "used") {
+    cols_retain <- setdiff(cols_out, cols_unused)
+  } else if (.keep == "unused") {
+    cols_retain <- setdiff(cols_out, cols_used)
+  } else if (.keep == "none") {
+    cols_retain <- setdiff(cols_out, c(cols_used, cols_unused))
+  }
+
+  cols_retain
 }

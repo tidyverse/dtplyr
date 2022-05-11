@@ -317,3 +317,84 @@ test_that("can use .before and .after to control column position", {
     c("x", "y")
   )
 })
+
+# .before and .after -----------------------------------------------------------
+
+test_that(".keep = 'unused' keeps variables explicitly mentioned", {
+  df <- data.table(x = 1, y = 2)
+  out <- df %>%
+    mutate(x1 = x + 1, y = y, .keep = "unused") %>%
+    as.data.table()
+  expect_named(out, c("y", "x1"))
+})
+
+test_that(".keep = 'used' not affected by across()", {
+  df <- data.table(x = 1, y = 2, z = 3, a = "a", b = "b", c = "c")
+
+  # This must evaluate every column in order to figure out if should
+  # be included in the set or not, but that shouldn't be counted for
+  # the purposes of "used" variables
+  out <- df %>%
+    mutate(across(c(x, y, z), identity), .keep = "unused") %>%
+    as.data.table()
+  expect_named(out, names(df))
+})
+
+test_that(".keep = 'used' keeps variables used in expressions", {
+  df <- data.table(a = 1, b = 2, c = 3, x = 1, y = 2)
+  out <- df %>%
+    mutate(xy = x + y, .keep = "used") %>%
+    as.data.table()
+  expect_named(out, c("x", "y", "xy"))
+})
+
+test_that(".keep = 'none' only keeps grouping variables", {
+  df <- data.table(x = 1, y = 2)
+  gf <- df %>% group_by(x)
+
+  out1 <- df %>%
+    mutate(z = 1, .keep = "none") %>%
+    as.data.table()
+
+  expect_named(out1, "z")
+
+  out2 <- gf %>%
+    mutate(z = 1, .keep = "none") %>%
+    as.data.table()
+
+  expect_named(out2, c("x", "z"))
+})
+
+test_that(".keep = 'none' retains original ordering", {
+  df <- data.table(x = 1, y = 2)
+  out1 <- df %>%
+    mutate(y = 1, x = 2, .keep = "none") %>%
+    as.data.table()
+
+  expect_named(out1, c("x", "y"))
+
+  # even when grouped
+  out2 <- df %>%
+    group_by(x) %>%
+    mutate(y = 1, x = 2, .keep = "none") %>%
+    as.data.table()
+
+  expect_named(out2, c("x", "y"))
+})
+
+test_that("works with empty dots", {
+  df <- data.table(x = 1, y = 2)
+  out <- df %>%
+    mutate(.keep = "used") %>%
+    as.data.table()
+
+  expect_equal(ncol(out), 0)
+})
+
+test_that("works with trivial dots", {
+  out <- lazy_dt(mtcars) %>%
+    mutate(mpg, .keep = 'used') %>%
+    as.data.table()
+
+  expect_named(out, "mpg")
+})
