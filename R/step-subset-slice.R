@@ -86,7 +86,7 @@ slice.data.table <- function(.data, ...) {
 #' @inheritParams dplyr::slice
 #' @export
 slice_head.dtplyr_step <- function(.data, ..., n, prop) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   size <- get_slice_size(n, prop, "slice_head")
   i <- expr(rlang::seq2(1L, !!size))
   step_subset_i(.data, i = i)
@@ -102,7 +102,7 @@ slice_head.data.table <- function(.data, ..., n, prop) {
 #' @importFrom dplyr slice_tail
 #' @export
 slice_tail.dtplyr_step <- function(.data, ..., n, prop) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   size <- get_slice_size(n, prop, "slice_tail")
   i <- expr(rlang::seq2(.N - !!size + 1L, .N))
   step_subset_i(.data, i = i)
@@ -169,7 +169,7 @@ slice_max.data.table <- function(.data, order_by, ..., n, prop, with_ties = TRUE
 
 slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties = TRUE,
                           .slice_fn = "slice_min_max") {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   size <- get_slice_size(n, prop, .slice_fn)
 
   order_by <- capture_dot(.data, {{ order_by }}, j = FALSE)
@@ -204,8 +204,8 @@ smaller_ranks <- function(x, y, ties.method = "min") {
 #' @inheritParams dplyr::slice
 #' @export
 slice_sample.dtplyr_step <- function(.data, ..., n, prop, weight_by = NULL, replace = FALSE) {
+  check_dots_empty()
   size <- get_slice_size(n, prop, "slice_sample")
-  ellipsis::check_dots_empty()
 
   wt <- enexpr(weight_by)
 
