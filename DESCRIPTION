@@ -21,7 +21,6 @@ Imports:
     crayon,
     data.table (>= 1.13.0),
     dplyr (>= 1.0.3),
-    ellipsis,
     glue,
     lifecycle,
     rlang (>= 1.0.0),
