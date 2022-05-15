@@ -8,7 +8,7 @@ test_that("can be used grouped or ungrouped", {
   )
   expect_equal(
     dt %>% group_by(x) %>% count() %>% collect(),
-    tibble(x = c(1, 2), n = c(3, 1))
+    tibble(x = c(1, 2), n = c(3, 1)) %>% group_by(x)
   )
 })
 

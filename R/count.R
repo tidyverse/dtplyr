@@ -17,11 +17,15 @@
 count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) {
   if (!missing(...)) {
     out <- group_by(.data, ..., .add = TRUE)
+    .groups <- "drop"
   } else {
     out <- .data
+    .groups <- "keep"
   }
 
-  tally(out, wt = !!enquo(wt), sort = sort, name = name)
+  out <- tally_count(out, {{ wt }}, sort, name, .groups)
+
+  out
 }
 
 #' @export
@@ -52,21 +56,7 @@ add_count.data.table <- function(.data, ...) {
 #' @importFrom dplyr tally
 #' @export
 tally.dtplyr_step <- function(.data, wt = NULL, sort = FALSE, name = NULL) {
-  wt <- enquo(wt)
-  if (quo_is_null(wt)) {
-    n <- expr(n())
-  } else {
-    n <- expr(sum(!!wt, na.rm = TRUE))
-  }
-  name <- check_name(name, .data$groups)
-
-  out <- summarise(.data, !!name := !!n)
-
-  if (sort) {
-    out <- arrange(out, desc(!!sym(name)))
-  }
-
-  out
+  tally_count(.data, {{ wt }}, sort, name, "drop_last")
 }
 
 #' @export
@@ -76,6 +66,24 @@ tally.data.table <- function(.data, ...) {
 }
 
 # Helpers -----------------------------------------------------------------
+
+tally_count <- function(.data, wt = NULL, sort = FALSE, name = NULL, .groups = "drop_last") {
+  wt <- enquo(wt)
+  if (quo_is_null(wt)) {
+    n <- expr(n())
+  } else {
+    n <- expr(sum(!!wt, na.rm = TRUE))
+  }
+  name <- check_name(name, .data$groups)
+
+  out <- summarise(.data, !!name := !!n, .groups = .groups)
+
+  if (sort) {
+    out <- arrange(out, desc(!!sym(name)))
+  }
+
+  out
+}
 
 check_name <- function(name, vars) {
   if (is.null(name)) {
@@ -88,7 +96,7 @@ check_name <- function(name, vars) {
       ))
     }
   } else if (!is_string(name)) {
-    abort("`name` must be a string", call = caller_env())
+    abort("`name` must be a string")
   }
 
   name

@@ -23,6 +23,10 @@
 
 * `mutate()` can now use `.keep`
 
+* `dtplyr` no longer directly depends on `ellipsis`
+
+* `count()` properly handles grouping variables (#356)
+
 # dtplyr 1.2.1
 
 * Fix for upcoming rlang release.
