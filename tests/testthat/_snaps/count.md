@@ -3,6 +3,6 @@
     Code
       dt %>% count(name = 10) %>% collect()
     Condition
-      Error in `tally_count()`:
+      Error in `check_name()`:
       ! `name` must be a string
 
