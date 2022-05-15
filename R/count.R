@@ -96,7 +96,7 @@ check_name <- function(name, vars) {
       ))
     }
   } else if (!is_string(name)) {
-    abort("`name` must be a string", call = caller_env())
+    abort("`name` must be a string")
   }
 
   name
