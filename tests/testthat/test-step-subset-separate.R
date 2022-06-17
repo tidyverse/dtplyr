@@ -78,3 +78,12 @@ test_that("can pass quosure to `col` arg, #359", {
   expect_equal(out$a, c("a", "a"))
   expect_equal(out$b, c("b", "b"))
 })
+
+test_that("can use numeric `col` arg", {
+  dt <- lazy_dt(tibble(combined = c("a_b", "a_b")), "DT")
+
+  out <- collect(separate(dt, 1, into = c("a", "b")))
+  expect_named(out, c("a", "b"))
+  expect_equal(out$a, c("a", "a"))
+  expect_equal(out$b, c("b", "b"))
+})
