@@ -89,12 +89,16 @@ data.table::dcast()"><meta property="og:image" content="https://dtplyr.tidyverse
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>A <code><a href="lazy_dt.html">lazy_dt()</a></code>.</p></dd>
+
+
 <dt>id_cols</dt>
 <dd><p>&lt;<code><a href="https://tidyr.tidyverse.org/reference/tidyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; A set of columns that
 uniquely identifies each observation. Defaults to all columns in <code>data</code>
 except for the columns specified in <code>names_from</code> and <code>values_from</code>.
 Typically used when you have redundant variables, i.e. variables whose
 values are perfectly correlated with existing variables.</p></dd>
+
+
 <dt>names_from</dt>
 <dd><p>&lt;<code><a href="https://tidyr.tidyverse.org/reference/tidyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; A pair of
 arguments describing which column (or columns) to get the name of the
@@ -102,27 +106,39 @@ output column (<code>names_from</code>), and which column (or columns) to get th
 cell values from (<code>values_from</code>).</p>
 <p>If <code>values_from</code> contains multiple values, the value will be added to the
 front of the output column.</p></dd>
+
+
 <dt>names_prefix</dt>
 <dd><p>String added to the start of every variable name. This is
 particularly useful if <code>names_from</code> is a numeric vector and you want to
 create syntactic variable names.</p></dd>
+
+
 <dt>names_sep</dt>
 <dd><p>If <code>names_from</code> or <code>values_from</code> contains multiple
 variables, this will be used to join their values together into a single
 string to use as a column name.</p></dd>
+
+
 <dt>names_glue</dt>
 <dd><p>Instead of <code>names_sep</code> and <code>names_prefix</code>, you can supply
 a glue specification that uses the <code>names_from</code> columns (and special
 <code>.value</code>) to create custom column names.</p></dd>
+
+
 <dt>names_sort</dt>
 <dd><p>Should the column names be sorted? If <code>FALSE</code>, the default,
 column names are ordered by first appearance.</p></dd>
+
+
 <dt>names_repair</dt>
 <dd><p>What happens if the output has invalid column names?
 The default, <code>"check_unique"</code> is to error if the columns are duplicated.
 Use <code>"minimal"</code> to allow duplicates in the output, or <code>"unique"</code> to
 de-duplicated by adding numeric suffixes. See <code><a href="https://vctrs.r-lib.org/reference/vec_as_names.html" class="external-link">vctrs::vec_as_names()</a></code>
 for more options.</p></dd>
+
+
 <dt>values_from</dt>
 <dd><p>&lt;<code><a href="https://tidyr.tidyverse.org/reference/tidyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; A pair of
 arguments describing which column (or columns) to get the name of the
@@ -130,16 +146,23 @@ output column (<code>names_from</code>), and which column (or columns) to get th
 cell values from (<code>values_from</code>).</p>
 <p>If <code>values_from</code> contains multiple values, the value will be added to the
 front of the output column.</p></dd>
+
+
 <dt>values_fill</dt>
 <dd><p>Optionally, a (scalar) value that specifies what each
 <code>value</code> should be filled in with when missing.</p>
 <p>This can be a named list if you want to apply different fill values to
 different value columns.</p></dd>
+
+
 <dt>values_fn</dt>
 <dd><p>A function, the default is <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>. Note this is different
 behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">tidyr::pivot_wider()</a></code>, which returns a list column by default.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments passed on to methods.</p></dd>
+
 </dl></div>
 
     <div class="section level2">
@@ -304,7 +327,7 @@ behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.h
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
   </div></footer></body></html>

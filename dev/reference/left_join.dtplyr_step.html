@@ -94,8 +94,12 @@ Semi-joins don't have a direct data.table equivalent.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x, y</dt>
 <dd><p>A pair of <code><a href="lazy_dt.html">lazy_dt()</a></code>s.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other parameters passed onto methods.</p></dd>
+
+
 <dt>by</dt>
 <dd><p>A character vector of variables to join by.</p>
 <p>If <code>NULL</code>, the default, <code>*_join()</code> will perform a natural join, using all
@@ -110,15 +114,20 @@ For example, <code>by = c("a" = "b", "c" = "d")</code> will match <code>x$a</cod
 <code>x$c</code> to <code>y$d</code>.</p>
 <p>To perform a cross-join, generating all combinations of <code>x</code> and <code>y</code>,
 use <code>by = character()</code>.</p></dd>
+
+
 <dt>copy</dt>
 <dd><p>If <code>x</code> and <code>y</code> are not from the same data source,
 and <code>copy</code> is <code>TRUE</code>, then <code>y</code> will be copied into the
 same src as <code>x</code>.  This allows you to join tables across srcs, but
 it is a potentially expensive operation so you must opt into it.</p></dd>
+
+
 <dt>suffix</dt>
 <dd><p>If there are non-joined duplicate variables in <code>x</code> and
 <code>y</code>, these suffixes will be added to the output to disambiguate them.
 Should be a character vector of length 2.</p></dd>
+
 </dl></div>
 
     <div class="section level2">
@@ -214,7 +223,7 @@ Should be a character vector of length 2.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
   </div></footer></body></html>
