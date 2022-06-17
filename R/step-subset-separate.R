@@ -50,7 +50,7 @@ separate.dtplyr_step <- function(data, col, into,
     abort("`sep` must be a character vector.")
   }
 
-  col <- as.symbol(tidyselect::vars_pull(data$vars, !!enquo(col)))
+  col <- sym(tidyselect::vars_pull(data$vars, !!enquo(col)))
 
   into_length <- length(into)
 
