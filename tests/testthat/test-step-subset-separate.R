@@ -67,3 +67,14 @@ test_that("only copies when necessary", {
     expr(DT[y < 4][, `:=`(!!c("left", "right"), tstrsplit(x, split = "-"))][, .(y, left, right)])
   )
 })
+
+test_that("can pass quosure to `col` arg, #359", {
+  dt <- lazy_dt(tibble(combined = c("a_b", "a_b")), "DT")
+  separate2 <- function(df, col, into) {
+    collect(separate(df, {{ col }}, into))
+  }
+  out <- separate2(dt, combined, into = c("a", "b"))
+  expect_named(out, c("a", "b"))
+  expect_equal(out$a, c("a", "a"))
+  expect_equal(out$b, c("b", "b"))
+})
