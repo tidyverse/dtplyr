@@ -50,7 +50,8 @@ separate.dtplyr_step <- function(data, col, into,
     abort("`sep` must be a character vector.")
   }
 
-  col <- enexpr(col)
+  sim_data <- simulate_vars(data)
+  col <- syms(names(tidyselect::eval_select(enquo(col), sim_data)))[[1]]
 
   into_length <- length(into)
 
@@ -82,10 +83,10 @@ separate.dtplyr_step <- function(data, col, into,
 
 # exported onLoad
 separate.data.table <- function(data, col, into,
-                              sep = "[^[:alnum:]]+",
-                              remove = TRUE,
-                              convert = FALSE,
-                              ...) {
+                                sep = "[^[:alnum:]]+",
+                                remove = TRUE,
+                                convert = FALSE,
+                                ...) {
   data <- lazy_dt(data)
   tidyr::separate(
     data,
