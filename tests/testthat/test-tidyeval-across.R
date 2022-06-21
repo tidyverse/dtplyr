@@ -97,6 +97,8 @@ test_that("across() gives informative errors", {
   expect_snapshot(error = TRUE, {
     capture_across(dt, across(a, 1))
     capture_across(dt, across(a, list(1)))
+    capture_across(dt, across(where(is.numeric)))
+    capture_across(dt, across(c(where(is.numeric), a)))
   })
 })
 
