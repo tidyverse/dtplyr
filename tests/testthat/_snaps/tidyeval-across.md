@@ -31,6 +31,16 @@
       Error in `FUN()`:
       ! .fns argument to dtplyr::across() must contain a function or a formula
       x Problem with 1
+    Code
+      capture_across(dt, across(where(is.numeric)))
+    Condition
+      Error in `across_setup()`:
+      ! The use of `where()` is not supported by dtplyr.
+    Code
+      capture_across(dt, across(c(where(is.numeric), a)))
+    Condition
+      Error in `across_setup()`:
+      ! The use of `where()` is not supported by dtplyr.
 
 # if_all() gives informative errors
 
