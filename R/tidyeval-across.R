@@ -90,6 +90,9 @@ across_setup <- function(data,
                          fn) {
   tbl <- simulate_vars(data, drop_groups = TRUE)
   .cols <- call$.cols %||% expr(everything())
+  if (across_uses_where(.cols)) {
+    abort("The use of `where()` is not supported by dtplyr.")
+  }
   locs <- tidyselect::eval_select(.cols, tbl, env = env, allow_rename = allow_rename)
 
   vars <- syms(names(tbl))[locs]
@@ -150,4 +153,23 @@ across_glue_mask <- function(.col, .fn, .caller_env) {
     glue_mask, col = function() glue_mask$.col, fn = function() glue_mask$.fn
   )
   glue_mask
+}
+
+across_uses_where <- function(x) {
+  if (is_call(x, "where")) {
+    TRUE
+  } else {
+    is_predicate <- unlist(lapply(x, uses_where))
+    any(is_predicate)
+  }
+}
+
+uses_where <- function(x) {
+  if (is_call(x, "where")) {
+    TRUE
+  } else if (is_symbol(x) || is_atomic(x)) {
+    FALSE
+  } else {
+    lapply(x[-1], uses_where)
+  }
 }
