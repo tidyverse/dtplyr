@@ -70,7 +70,7 @@ separate.dtplyr_step <- function(data, col, into,
     data,
     vars = union(data$vars, into),
     j = call2(":=", into, t_str_split),
-    needs_copy = if (data$implicit_copy) FALSE else TRUE
+    needs_copy = data$needs_copy || !data$implicit_copy
   )
 
   if (remove && !as.character(col) %in% into) {
