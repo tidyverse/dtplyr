@@ -249,7 +249,10 @@ simplify_function_call <- function(x, env, data, j = TRUE) {
     dt_squash(out, env, data, j = j)
   } else {
     name <- fun_name(x[[1]])
-    if (is.null(name)) {
+    if (is_call(x, "function")) {
+      x[[3]] <- dt_squash(x[[3]], env, data, j)
+      return(x)
+    } else if (is.null(name)) {
       return(x)
     }
 
