@@ -156,6 +156,7 @@ across_glue_mask <- function(.col, .fn, .caller_env) {
 }
 
 across_uses_where <- function(x) {
+  x <- quo_squash(x)
   if (is_call(x, "where")) {
     TRUE
   } else {
