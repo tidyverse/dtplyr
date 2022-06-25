@@ -17,8 +17,7 @@
 #' dt %>% select(ends_with("2"))
 #' dt %>% select(z1 = x1, z2 = x2)
 select.dtplyr_step <- function(.data, ...) {
-  sim_data <- simulate_vars(.data)
-  locs <- tidyselect::eval_select(expr(c(...)), sim_data)
+  locs <- dtplyr_tidyselect(.data, ...)
   locs <- ensure_group_vars(locs, .data$vars, .data$groups)
 
   vars <- set_names(.data$vars[locs], names(locs))
@@ -45,6 +44,34 @@ select.dtplyr_step <- function(.data, ...) {
 select.data.table <- function(.data, ...) {
   .data <- lazy_dt(.data)
   select(.data, ...)
+}
+
+dtplyr_tidyselect <- function(.data, ...,
+                              .env = caller_env(),
+                              .allow_rename = TRUE,
+                              .drop_groups = FALSE) {
+  dots <- enquos(...)
+  if (selection_uses_where(dots)) {
+    abort("The use of `where()` is not supported by dtplyr.")
+  }
+  sim_data <- simulate_vars(.data, drop_groups = .drop_groups)
+  tidyselect::eval_select(expr(c(!!!dots)), sim_data, allow_rename = .allow_rename)
+}
+
+selection_uses_where <- function(x) {
+  is_predicate <- unlist(lapply(x, dot_uses_where))
+  any(is_predicate)
+}
+
+dot_uses_where <- function(x) {
+  x <- quo_squash(x)
+  if (is_call(x, "where")) {
+    TRUE
+  } else if (is_symbol(x) || is_atomic(x)) {
+    FALSE
+  } else {
+    lapply(x[-1], dot_uses_where)
+  }
 }
 
 simulate_vars <- function(x, drop_groups = FALSE) {
