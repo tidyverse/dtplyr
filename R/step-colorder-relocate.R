@@ -16,8 +16,7 @@
 #' dt %>% relocate(y, .before = x)
 #' dt %>% relocate(y, .after = y)
 relocate.dtplyr_step <- function(.data, ..., .before = NULL, .after = NULL) {
-  sim_data <- simulate_vars(.data)
-  to_move <- tidyselect::eval_select(expr(c(...)), sim_data)
+  to_move <- dtplyr_tidyselect(.data, ...)
 
   if (length(to_move) == 0) {
     return(.data)
@@ -31,12 +30,12 @@ relocate.dtplyr_step <- function(.data, ..., .before = NULL, .after = NULL) {
   if (has_before && has_after) {
     abort("Must supply only one of `.before` and `.after`.")
   } else if (has_before) {
-    where <- min(unname(tidyselect::eval_select(.before, sim_data)))
+    where <- min(unname(dtplyr_tidyselect(.data, !!.before)))
     if (!where %in% to_move) {
       to_move <- c(to_move, where)
     }
   } else if (has_after) {
-    where <- max(unname(tidyselect::eval_select(.after, sim_data)))
+    where <- max(unname(dtplyr_tidyselect(.data, !!.after)))
     if (!where %in% to_move) {
       to_move <- c(where, to_move)
     }

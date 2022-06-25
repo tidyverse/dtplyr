@@ -88,10 +88,17 @@ across_setup <- function(data,
                          allow_rename,
                          j,
                          fn) {
-  tbl <- simulate_vars(data, drop_groups = TRUE)
   .cols <- call$.cols %||% expr(everything())
-  locs <- tidyselect::eval_select(.cols, tbl, env = env, allow_rename = allow_rename)
+  .cols <- as_quosure(.cols, env)
+  locs <- dtplyr_tidyselect(
+    data,
+    !!.cols,
+    .env = env,
+    .allow_rename = allow_rename,
+    .drop_groups = TRUE
+  )
 
+  tbl <- simulate_vars(data, drop_groups = TRUE)
   vars <- syms(names(tbl))[locs]
   if (allow_rename) {
     names_vars <- names(locs)
