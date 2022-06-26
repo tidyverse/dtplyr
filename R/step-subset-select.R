@@ -47,12 +47,12 @@ select.data.table <- function(.data, ...) {
 }
 
 dtplyr_tidyselect <- function(.data, ...,
-                              .env = caller_env(),
+                              .call = caller_env(),
                               .allow_rename = TRUE,
                               .drop_groups = FALSE) {
   dots <- enquos(...)
   if (selection_uses_where(dots)) {
-    abort("The use of `where()` is not supported by dtplyr.")
+    abort("The use of `where()` is not supported by dtplyr.", call = .call)
   }
   sim_data <- simulate_vars(.data, drop_groups = .drop_groups)
   tidyselect::eval_select(expr(c(!!!dots)), sim_data, allow_rename = .allow_rename)

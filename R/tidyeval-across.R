@@ -93,7 +93,7 @@ across_setup <- function(data,
   locs <- dtplyr_tidyselect(
     data,
     !!.cols,
-    .env = env,
+    .call = call2(fn),
     .allow_rename = allow_rename,
     .drop_groups = TRUE
   )
