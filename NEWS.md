@@ -2,6 +2,8 @@
 
 * An error now occurs when `where()` is used for selection (#271)
 
+* Anonymous functions are translated correctly in `mutate`/`summarize` (#362)
+
 * Custom functions can pass a quosure to `col` arg in `separate()` (#359)
 
 * `glue::glue()` and `stringr::str_glue()` now work inside `mutate()`/`transmute()` without needing

@@ -196,6 +196,14 @@ test_that("can use glue, (#344)", {
   expect_equal(out$a_b, c("a_a", "b_b", "c_c"))
 })
 
+test_that("properly handles anonymous functions, #362", {
+  df <- data.table(a = list(1, 1, 1))
+  expect_equal(
+    capture_dot(df, sapply(a, function(x) x + n())),
+    quote(sapply(a, function(x) x + .N))
+  )
+})
+
 # evaluation --------------------------------------------------------------
 
 test_that("can access functions in local env", {
