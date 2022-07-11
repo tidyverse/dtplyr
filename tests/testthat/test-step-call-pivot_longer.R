@@ -140,7 +140,7 @@ test_that("can use names_sep w/out .value in names_to", {
 })
 
 test_that("informative errors on unsupported features", {
-  dt <- data.table(a1_1 = 1, b2_2 = 2)
+  dt <- lazy_dt(data.table(a1_1 = 1, b2_2 = 2))
 
   expect_snapshot(error = TRUE, {
     dt %>% pivot_longer(names_ptypes = list())
