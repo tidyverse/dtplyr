@@ -75,13 +75,6 @@ test_that("rename_with generates minimal spec", {
   })
 })
 
-test_that("can rename_with() a data.table", {
-  dt <- data.table(x = 1:5, y = 1:5)
-  out <- rename_with(dt, toupper, x)
-  expect_s3_class(out, "dtplyr_step")
-  expect_named(as_tibble(out), c("X", "y"))
-})
-
 # distinct ----------------------------------------------------------------
 
 test_that("no input uses all variables", {
@@ -188,9 +181,4 @@ test_that("errors are raised", {
   tb <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
   dt <- lazy_dt(tb, "DT")
   expect_snapshot(collect(drop_na(dt, "z")), error = TRUE)
-})
-
-test_that("converts data.table to dtplyr_step", {
-  df <- data.table(x = c(1, 2, NA), y = c("a", NA, "b"))
-  expect_s3_class(drop_na(df), "dtplyr_step_call")
 })
