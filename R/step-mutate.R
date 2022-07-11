@@ -125,12 +125,6 @@ mutate.dtplyr_step <- function(.data, ...,
   out
 }
 
-#' @export
-mutate.data.table <- function(.data, ...) {
-  .data <- lazy_dt(.data)
-  mutate(.data, ...)
-}
-
 nested_vars <- function(.data, dots, all_vars) {
   new_vars <- character()
   all_new_vars <- unique(names(dots))

@@ -28,12 +28,6 @@ count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) 
   out
 }
 
-#' @export
-count.data.table <- function(.data, ...) {
-  .data <- lazy_dt(.data)
-  count(.data, ...)
-}
-
 #' @importFrom dplyr add_count
 #' @export
 add_count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NULL) {
@@ -47,22 +41,10 @@ add_count.dtplyr_step <- function(.data, ..., wt = NULL, sort = FALSE, name = NU
   out
 }
 
-#' @export
-add_count.data.table <- function(.data, ...) {
-  .data <- lazy_dt(.data)
-  add_count(.data, ...)
-}
-
 #' @importFrom dplyr tally
 #' @export
 tally.dtplyr_step <- function(.data, wt = NULL, sort = FALSE, name = NULL) {
   tally_count(.data, {{ wt }}, sort, name, "drop_last")
-}
-
-#' @export
-tally.data.table <- function(.data, ...) {
-  .data <- lazy_dt(.data)
-  tally(.data, ...)
 }
 
 # Helpers -----------------------------------------------------------------

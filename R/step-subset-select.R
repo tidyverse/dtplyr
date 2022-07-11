@@ -40,12 +40,6 @@ select.dtplyr_step <- function(.data, ...) {
   step_group(out, groups)
 }
 
-#' @export
-select.data.table <- function(.data, ...) {
-  .data <- lazy_dt(.data)
-  select(.data, ...)
-}
-
 dtplyr_tidyselect <- function(.data, ...,
                               .call = caller_env(),
                               .allow_rename = TRUE,

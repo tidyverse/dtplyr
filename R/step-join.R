@@ -117,22 +117,10 @@ left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
   step_join(x, y, by, style = "left", copy = copy, suffix = suffix)
 }
 
-#' @export
-left_join.data.table <- function(x, y, ...) {
-  x <- lazy_dt(x)
-  left_join(x, y, ...)
-}
-
 #' @importFrom dplyr right_join
 #' @export
 right_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
   step_join(x, y, by, style = "right", copy = copy, suffix = suffix)
-}
-
-#' @export
-right_join.data.table <- function(x, y, ...) {
-  x <- lazy_dt(x)
-  right_join(x, y, ...)
 }
 
 
@@ -142,22 +130,10 @@ inner_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = 
   step_join(x, y, on = by, style = "inner", copy = copy, suffix = suffix)
 }
 
-#' @export
-inner_join.data.table <- function(x, y, ...) {
-  x <- lazy_dt(x)
-  inner_join(x, y, ...)
-}
-
 #' @importFrom dplyr full_join
 #' @export
 full_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
   step_join(x, y, on = by, style = "full", copy = copy, suffix = suffix)
-}
-
-#' @export
-full_join.data.table <- function(x, y, ...) {
-  x <- lazy_dt(x)
-  full_join(x, y, ...)
 }
 
 #' @importFrom dplyr anti_join
@@ -166,22 +142,10 @@ anti_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE) {
   step_join(x, y, on = by, style = "anti", copy = copy)
 }
 
-#' @export
-anti_join.data.table <- function(x, y, ...) {
-  x <- lazy_dt(x)
-  anti_join(x, y, ...)
-}
-
 #' @importFrom dplyr semi_join
 #' @export
 semi_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE) {
   step_join(x, y, on = by, style = "semi", copy = copy)
-}
-
-#' @export
-semi_join.data.table <- function(x, y, ...) {
-  x <- lazy_dt(x)
-  semi_join(x, y, ...)
 }
 
 # helpers -----------------------------------------------------------------

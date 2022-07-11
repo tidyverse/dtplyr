@@ -52,9 +52,3 @@ relocate.dtplyr_step <- function(.data, ..., .before = NULL, .after = NULL) {
   out <- step_colorder(.data, new_vars)
   step_group(out, .data$groups)
 }
-
-#' @export
-relocate.data.table <- function(.data, ..., .before = NULL, .after = NULL) {
-  .data <- lazy_dt(.data)
-  relocate(.data, ..., .before = {{ .before }}, .after = {{ .after }})
-}

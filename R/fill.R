@@ -80,9 +80,3 @@ fill.dtplyr_step <- function(data, ..., .direction = c("down", "up", "downup", "
     mutate(data, dplyr::across(c(!!!dots), ~ nafill(nafill(.x, type1), type2)))
   }
 }
-
-# exported onLoad
-fill.data.table <- function(data, ..., .direction = c("down", "up", "downup", "updown")) {
-  data <- lazy_dt(data)
-  tidyr::fill(data, ..., .direction = .direction)
-}
