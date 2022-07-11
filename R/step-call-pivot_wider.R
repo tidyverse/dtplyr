@@ -56,17 +56,14 @@ pivot_wider.dtplyr_step <- function(data,
                                     values_fill = NULL,
                                     values_fn = NULL,
                                     ...) {
-
-  sim_data <- simulate_vars(data)
-  names_from <- names(tidyselect::eval_select(enquo(names_from), sim_data))
-  values_from <- names(tidyselect::eval_select(enquo(values_from), sim_data))
+  names_from <- names(dtplyr_tidyselect(data, {{ names_from }}))
+  values_from <- names(dtplyr_tidyselect(data, {{ values_from}}))
 
   id_cols <- enquo(id_cols)
   if (quo_is_null(id_cols)) {
-    sim_vars <- names(sim_data)
-    id_cols <- sim_vars[!sim_vars %in% c(names_from, values_from)]
+    id_cols <- setdiff(data$vars, c(names_from, values_from))
   } else {
-    id_cols <- names(tidyselect::eval_select(id_cols, sim_data))
+    id_cols <- names(dtplyr_tidyselect(data, !!id_cols))
   }
 
   if (length(names_from) > 1) {

@@ -77,8 +77,7 @@ pivot_longer.dtplyr_step <- function(data,
     abort("`values_transform` is not supported by dtplyr")
   }
 
-  sim_data <- simulate_vars(data)
-  measure_vars <- names(tidyselect::eval_select(enquo(cols), sim_data))
+  measure_vars <- names(dtplyr_tidyselect(data, {{ cols }}))
   if (length(measure_vars) == 0) {
     abort("`cols` must select at least one column.")
   }
@@ -156,8 +155,7 @@ pivot_longer.dtplyr_step <- function(data,
     args$na.rm <- NULL
   }
 
-  sim_vars <- names(sim_data)
-  id_vars <- sim_vars[!sim_vars %in% unlist(measure_vars)]
+  id_vars <- setdiff(data$vars, unlist(measure_vars))
 
   out <- step_call(
     data,

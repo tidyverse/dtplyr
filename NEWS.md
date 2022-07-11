@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* An error now occurs when `where()` is used for selection (#271)
+
 * Anonymous functions are translated correctly in `mutate`/`summarize` (#362)
 
 * Custom functions can pass a quosure to `col` arg in `separate()` (#359)
