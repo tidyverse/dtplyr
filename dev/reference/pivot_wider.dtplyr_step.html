@@ -68,21 +68,21 @@ data.table::dcast()"><meta property="og:image" content="https://dtplyr.tidyverse
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for dtplyr_step</span>
-<span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>
-  <span class="va">data</span>,
-  id_cols <span class="op">=</span> <span class="cn">NULL</span>,
-  names_from <span class="op">=</span> <span class="va">name</span>,
-  names_prefix <span class="op">=</span> <span class="st">""</span>,
-  names_sep <span class="op">=</span> <span class="st">"_"</span>,
-  names_glue <span class="op">=</span> <span class="cn">NULL</span>,
-  names_sort <span class="op">=</span> <span class="cn">FALSE</span>,
-  names_repair <span class="op">=</span> <span class="st">"check_unique"</span>,
-  values_from <span class="op">=</span> <span class="va">value</span>,
-  values_fill <span class="op">=</span> <span class="cn">NULL</span>,
-  values_fn <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for dtplyr_step</span></span>
+<span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  id_cols <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  names_from <span class="op">=</span> <span class="va">name</span>,</span>
+<span>  names_prefix <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  names_sep <span class="op">=</span> <span class="st">"_"</span>,</span>
+<span>  names_glue <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  names_sort <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  names_repair <span class="op">=</span> <span class="st">"check_unique"</span>,</span>
+<span>  values_from <span class="op">=</span> <span class="va">value</span>,</span>
+<span>  values_fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  values_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -167,10 +167,10 @@ behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.h
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fish_encounters_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="va">fish_encounters</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fish_encounters_dt</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fish_encounters_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="va">fish_encounters</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fish_encounters_dt</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [114 x 3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT29`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -185,8 +185,8 @@ behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 108 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
-<span class="r-in"><span class="va">fish_encounters_dt</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">station</span>, values_from <span class="op">=</span> <span class="va">seen</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">fish_encounters_dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">station</span>, values_from <span class="op">=</span> <span class="va">seen</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [19 x 12]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>dcast(`_DT29`, formula = fish ~ station, value.var = "seen")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -201,9 +201,9 @@ behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 13 more rows, and 1 more variable: MAW &lt;int&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
-<span class="r-in"><span class="co"># Fill in missing values</span></span>
-<span class="r-in"><span class="va">fish_encounters_dt</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">station</span>, values_from <span class="op">=</span> <span class="va">seen</span>, values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Fill in missing values</span></span></span>
+<span class="r-in"><span><span class="va">fish_encounters_dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">station</span>, values_from <span class="op">=</span> <span class="va">seen</span>, values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [19 x 12]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>dcast(`_DT29`, formula = fish ~ station, value.var = "seen", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fill = 0)</span>
@@ -219,10 +219,10 @@ behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 13 more rows, and 1 more variable: MAW &lt;int&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Generate column names from multiple variables</span></span>
-<span class="r-in"><span class="va">us_rent_income_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="va">us_rent_income</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">us_rent_income_dt</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate column names from multiple variables</span></span></span>
+<span class="r-in"><span><span class="va">us_rent_income_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="va">us_rent_income</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">us_rent_income_dt</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [104 x 5]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT30`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -237,8 +237,8 @@ behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 98 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
-<span class="r-in"><span class="va">us_rent_income_dt</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">variable</span>, values_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">moe</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">us_rent_income_dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">variable</span>, values_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">moe</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [52 x 6]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>dcast(`_DT30`, formula = GEOID + NAME ~ variable, value.var = c("estimate", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "moe"))</span>
@@ -254,15 +254,15 @@ behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 46 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># When there are multiple `names_from` or `values_from`, you can use</span></span>
-<span class="r-in"><span class="co"># use `names_sep` or `names_glue` to control the output variable names</span></span>
-<span class="r-in"><span class="va">us_rent_income_dt</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span></span>
-<span class="r-in">    names_from <span class="op">=</span> <span class="va">variable</span>,</span>
-<span class="r-in">    names_sep <span class="op">=</span> <span class="st">"."</span>,</span>
-<span class="r-in">    values_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">moe</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># When there are multiple `names_from` or `values_from`, you can use</span></span></span>
+<span class="r-in"><span><span class="co"># use `names_sep` or `names_glue` to control the output variable names</span></span></span>
+<span class="r-in"><span><span class="va">us_rent_income_dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    names_from <span class="op">=</span> <span class="va">variable</span>,</span></span>
+<span class="r-in"><span>    names_sep <span class="op">=</span> <span class="st">"."</span>,</span></span>
+<span class="r-in"><span>    values_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">moe</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [52 x 6]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>dcast(`_DT30`, formula = GEOID + NAME ~ variable, value.var = c("estimate", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "moe"), sep = ".")</span>
@@ -278,10 +278,10 @@ behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 46 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Can perform aggregation with values_fn</span></span>
-<span class="r-in"><span class="va">warpbreaks_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">warpbreaks</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wool"</span>, <span class="st">"tension"</span>, <span class="st">"breaks"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">warpbreaks_dt</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Can perform aggregation with values_fn</span></span></span>
+<span class="r-in"><span><span class="va">warpbreaks_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">warpbreaks</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wool"</span>, <span class="st">"tension"</span>, <span class="st">"breaks"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">warpbreaks_dt</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [54 x 3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT31`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -296,12 +296,12 @@ behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.h
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 48 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
-<span class="r-in"><span class="va">warpbreaks_dt</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span></span>
-<span class="r-in">    names_from <span class="op">=</span> <span class="va">wool</span>,</span>
-<span class="r-in">    values_from <span class="op">=</span> <span class="va">breaks</span>,</span>
-<span class="r-in">    values_fn <span class="op">=</span> <span class="va">mean</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span><span class="va">warpbreaks_dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    names_from <span class="op">=</span> <span class="va">wool</span>,</span></span>
+<span class="r-in"><span>    values_from <span class="op">=</span> <span class="va">breaks</span>,</span></span>
+<span class="r-in"><span>    values_fn <span class="op">=</span> <span class="va">mean</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [3 x 3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>dcast(`_DT31`, formula = tension ~ wool, value.var = "breaks", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fun.aggregate = function (x, ...) </span>
@@ -327,7 +327,7 @@ behavior than <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.h
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>
