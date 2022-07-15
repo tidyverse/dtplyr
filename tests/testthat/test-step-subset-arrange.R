@@ -59,3 +59,36 @@ test_that("only add step if necessary", {
   expect_equal(dt %>% arrange(), dt)
   expect_equal(dt %>% arrange(!!!list()), dt)
 })
+
+test_that("uses setorder when there is already a copy", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3), "DT")
+
+  # Works with implicit copy
+  step_implicit <- dt %>%
+    filter(x < 4) %>%
+    arrange(x, y)
+
+  expect_equal(
+    show_query(step_implicit),
+    expr(setorder(DT[x < 4], x, y))
+  )
+
+  # Works with explicit copy
+  step_explicit <- dt %>%
+    mutate(x = x * 2) %>%
+    arrange(x, -y)
+
+  expect_equal(
+    show_query(step_explicit),
+    expr(setorder(copy(DT)[, `:=`(x = x * 2)], x, -y))
+  )
+})
+
+test_that("works with a transmute expression", {
+  dt <- lazy_dt(data.frame(x = 1:3, y = 1:3), "DT")
+
+  step <- dt %>%
+    arrange(x + 1)
+
+  expect_equal(show_query(step), expr(DT[order(x + 1)]))
+})
