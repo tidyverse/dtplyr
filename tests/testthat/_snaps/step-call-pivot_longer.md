@@ -21,21 +21,21 @@
     Code
       dt %>% pivot_longer(names_ptypes = list())
     Condition
-      Error in `tidyr::pivot_longer()`:
+      Error in `pivot_longer()`:
       ! `names_ptypes` is not supported by dtplyr
     Code
       dt %>% pivot_longer(names_transform = list())
     Condition
-      Error in `tidyr::pivot_longer()`:
+      Error in `pivot_longer()`:
       ! `names_transform` is not supported by dtplyr
     Code
       dt %>% pivot_longer(values_ptypes = list())
     Condition
-      Error in `tidyr::pivot_longer()`:
+      Error in `pivot_longer()`:
       ! `values_ptypes` is not supported by dtplyr
     Code
       dt %>% pivot_longer(values_transform = list())
     Condition
-      Error in `tidyr::pivot_longer()`:
+      Error in `pivot_longer()`:
       ! `values_transform` is not supported by dtplyr
 

@@ -61,12 +61,6 @@ nest.dtplyr_step <- function(.data, ..., .names_sep = NULL, .key = deprecated())
   group_by(out, !!!syms(groups))
 }
 
-# exported onLoad
-nest.data.table <- function(.data, ..., .names_sep = NULL, .key = deprecated()) {
-  .data <- lazy_dt(.data)
-  tidyr::nest(.data, ..., .names_sep = .names_sep, .key = .key)
-}
-
 eval_nest_dots <- function(.data, ...) {
   if (missing(...)) {
     groups <- group_vars(.data)

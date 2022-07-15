@@ -1,5 +1,9 @@
 # dtplyr (development version)
 
+* `dplyr` and `tidyr` verbs no longer dispatch to `dtplyr` translations when used
+  directly on `data.table` objects. `lazy_dt()` must now explicitly be called by
+  the user. (#312)
+
 * An error now occurs when `where()` is used for selection (#271)
 
 * Anonymous functions are translated correctly in `mutate`/`summarize` (#362)

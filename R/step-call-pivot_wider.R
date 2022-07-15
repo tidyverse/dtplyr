@@ -150,35 +150,6 @@ pivot_wider.dtplyr_step <- function(data,
 
 globalVariables(c(".", ".names_from", "name", "value", "pivot_wider"))
 
-# exported onLoad
-pivot_wider.data.table <- function(data,
-                                   id_cols = NULL,
-                                   names_from = name,
-                                   names_prefix = "",
-                                   names_sep = "_",
-                                   names_glue = NULL,
-                                   names_sort = FALSE,
-                                   names_repair = "check_unique",
-                                   values_from = value,
-                                   values_fill = NULL,
-                                   values_fn = NULL,
-                                   ...) {
-  data <- lazy_dt(data)
-
-  pivot_wider(
-    data,
-    id_cols = {{ id_cols }},
-    names_from = {{ names_from }},
-    names_prefix = names_prefix,
-    names_sep = names_sep,
-    names_glue = names_glue,
-    names_sort = names_sort,
-    names_repair = names_repair,
-    values_from = {{ values_from }},
-    values_fn = values_fn
-  )
-}
-
 step_repair <- function(data, repair = "check_unique", in_place = TRUE) {
   sim_data <- simulate_vars(data)
   data_names <- names(sim_data)

@@ -26,7 +26,7 @@ test_that("can control name", {
 })
 
 test_that("name can match existing group var", {
-  dt <- data.table(a = 2)
+  dt <- lazy_dt(data.table(a = 2))
 
   expect_equal(
     dt %>% group_by(a) %>% tally(name = 'a') %>% collect(),

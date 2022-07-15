@@ -30,9 +30,3 @@ complete.dtplyr_step <- function(data, ..., fill = list()) {
   full <- tidyr::replace_na(full, replace = fill)
   full
 }
-
-# exported onLoad
-complete.data.table <- function(data, ..., fill = list()) {
-  data <- lazy_dt(data)
-  tidyr::complete(data, ..., fill = fill)
-}

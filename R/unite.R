@@ -54,9 +54,3 @@ unite.dtplyr_step <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = 
 
   out
 }
-
-# exported onLoad
-unite.data.table <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = FALSE) {
-  data <- lazy_dt(data)
-  tidyr::unite(data, {{ col }}, ..., sep = sep, remove = remove, na.rm = na.rm)
-}
