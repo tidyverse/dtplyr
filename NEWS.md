@@ -37,6 +37,8 @@
 
 * `count()` properly handles grouping variables (#356)
 
+* `arrange()` now utilizes `setorder()` when possible for improved performance (#364)
+
 # dtplyr 1.2.1
 
 * Fix for upcoming rlang release.
