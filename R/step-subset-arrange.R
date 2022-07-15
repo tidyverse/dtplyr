@@ -24,8 +24,13 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
     return(.data)
   }
 
+  no_transmute <- !any(map_lgl(dots, ~ !is_symbol(.x) && !is_call(.x, "-", 1)))
   # Order without grouping then restore
   dots <- set_names(dots, NULL)
-  step <- step_subset(.data, i = call2("order", !!!dots), groups = character())
+  if ((.data$implicit_copy || .data$needs_copy) && no_transmute) {
+    step <- step_call(.data, "setorder", dots)
+  } else {
+    step <- step_subset(.data, i = call2("order", !!!dots), groups = character())
+  }
   step_group(step, groups = .data$groups)
 }
