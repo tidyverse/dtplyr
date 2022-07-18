@@ -27,10 +27,14 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   no_transmute <- all(map_lgl(dots, ~ is_symbol(.x) || is_call(.x, "-", 1)))
   # Order without grouping then restore
   dots <- set_names(dots, NULL)
-  if ((.data$implicit_copy || .data$needs_copy) && no_transmute) {
+  if (is_copied(.data) && no_transmute) {
     step <- step_call(.data, "setorder", dots)
   } else {
     step <- step_subset(.data, i = call2("order", !!!dots), groups = character())
   }
   step_group(step, groups = .data$groups)
+}
+
+is_copied <- function(x) {
+  x$implicit_copy || x$needs_copy
 }
