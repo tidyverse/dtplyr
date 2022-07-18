@@ -33,6 +33,18 @@ test_that("unless there's already an implicit copy", {
   expect_false(dt %>% head() %>% mutate(y = 1) %>% .$needs_copy)
 })
 
+test_that("properly copies with chained operations, #210", {
+  dt <- lazy_dt(data.table(x = 1))
+
+  query <- dt %>%
+    mutate(z1 = 1) %>%
+    summarize(z2 = 2) %>%
+    mutate(z3 = 4)
+
+  expect_true(query$implicit_copy)
+  expect_true(query$needs_copy)
+})
+
 # dplyr verbs -------------------------------------------------------------
 
 test_that("generates single calls as expect", {

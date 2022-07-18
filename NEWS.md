@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* Chained operations properly prevent modify-by-reference (#210)
+
 * `dplyr` and `tidyr` verbs no longer dispatch to `dtplyr` translations when used
   directly on `data.table` objects. `lazy_dt()` must now explicitly be called by
   the user. (#312)

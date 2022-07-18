@@ -9,7 +9,7 @@ step_mutate <- function(parent, new_vars = list(), use_braces = FALSE) {
     vars = vars,
     groups = parent$groups,
     arrange = parent$arrange,
-    needs_copy = !parent$implicit_copy,
+    needs_copy = parent$needs_copy || !parent$implicit_copy,
     new_vars = new_vars,
     use_braces = use_braces,
     class = "dtplyr_step_mutate"
