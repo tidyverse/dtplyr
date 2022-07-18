@@ -77,8 +77,7 @@ pivot_longer.dtplyr_step <- function(data,
     abort("`values_transform` is not supported by dtplyr")
   }
 
-  sim_data <- simulate_vars(data)
-  measure_vars <- names(tidyselect::eval_select(enquo(cols), sim_data))
+  measure_vars <- names(dtplyr_tidyselect(data, {{ cols }}))
   if (length(measure_vars) == 0) {
     abort("`cols` must select at least one column.")
   }
@@ -156,8 +155,7 @@ pivot_longer.dtplyr_step <- function(data,
     args$na.rm <- NULL
   }
 
-  sim_vars <- names(sim_data)
-  id_vars <- sim_vars[!sim_vars %in% unlist(measure_vars)]
+  id_vars <- setdiff(data$vars, unlist(measure_vars))
 
   out <- step_call(
     data,
@@ -193,40 +191,6 @@ pivot_longer.dtplyr_step <- function(data,
   }
 
   step_repair(out, repair = names_repair)
-}
-
-# exported onLoad
-pivot_longer.data.table <- function(data,
-                                    cols,
-                                    names_to = "name",
-                                    names_prefix = NULL,
-                                    names_sep = NULL,
-                                    names_pattern = NULL,
-                                    names_ptypes = NULL,
-                                    names_transform = NULL,
-                                    names_repair = "check_unique",
-                                    values_to = "value",
-                                    values_drop_na = FALSE,
-                                    values_ptypes = NULL,
-                                    values_transform = NULL,
-                                    ...) {
-  data <- lazy_dt(data)
-  tidyr::pivot_longer(
-    data = data,
-    cols = {{ cols }},
-    names_to = names_to,
-    names_prefix = names_prefix,
-    names_sep = names_sep,
-    names_pattern = names_pattern,
-    names_ptypes = names_ptypes,
-    names_transform = names_transform,
-    names_repair = names_repair,
-    values_to = values_to,
-    values_drop_na = values_drop_na,
-    values_ptypes = values_ptypes,
-    values_transform = values_transform,
-    ...
-  )
 }
 
 # ==============================================================================

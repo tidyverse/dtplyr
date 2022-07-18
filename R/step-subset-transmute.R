@@ -51,9 +51,3 @@ transmute.dtplyr_step <- function(.data, ...) {
 
   out
 }
-
-#' @export
-transmute.data.table <- function(.data, ...) {
-  .data <- lazy_dt(.data)
-  transmute(.data, ...)
-}

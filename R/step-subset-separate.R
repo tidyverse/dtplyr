@@ -79,21 +79,3 @@ separate.dtplyr_step <- function(data, col, into,
 
   out
 }
-
-# exported onLoad
-separate.data.table <- function(data, col, into,
-                                sep = "[^[:alnum:]]+",
-                                remove = TRUE,
-                                convert = FALSE,
-                                ...) {
-  data <- lazy_dt(data)
-  tidyr::separate(
-    data,
-    col = {{ col }},
-    into = into,
-    sep = sep,
-    remove = remove,
-    convert = convert,
-    ...
-  )
-}

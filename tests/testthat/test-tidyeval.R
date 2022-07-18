@@ -237,6 +237,16 @@ test_that("locals are executed before call", {
   )
 })
 
+test_that("errors when `where()` is used, #271/#368", {
+  dt <- lazy_dt(data.frame(x = 1, y = 2))
+  expect_snapshot_error(
+    select(dt, where(is.numeric))
+  )
+  expect_snapshot_error(
+    mutate(dt, across(!where(is.character), ~ .x + 1))
+  )
+})
+
 # dplyr verbs -------------------------------------------------------------
 
 test_that("n() is equivalent to .N", {

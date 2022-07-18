@@ -97,9 +97,3 @@ expand.dtplyr_step <- function(data, ..., .name_repair = "check_unique") {
 
   out
 }
-
-# exported onLoad
-expand.data.table <- function(data, ..., .name_repair = "check_unique") {
-  data <- lazy_dt(data)
-  tidyr::expand(data, ..., .name_repair = .name_repair)
-}

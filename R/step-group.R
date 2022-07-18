@@ -90,12 +90,6 @@ can_step_group_return_early <- function(parent, groups, arrange) {
   same_arrange && same_groups
 }
 
-#' @export
-group_by.data.table <- function(.data, ...) {
-  .data <- lazy_dt(.data)
-  group_by(.data, ...)
-}
-
 #' @importFrom dplyr ungroup
 #' @export
 #' @rdname group_by.dtplyr_step
@@ -108,10 +102,5 @@ ungroup.dtplyr_step <- function(.data, ...) {
     new_groups <- setdiff(old_groups, to_remove)
     step_group(.data, groups = new_groups)
   }
-}
-
-#' @export
-ungroup.data.table <- function(.data, ...) {
-  abort("Can't ungroup a data.table")
 }
 

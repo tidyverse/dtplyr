@@ -64,12 +64,6 @@ summarise.dtplyr_step <- function(.data, ..., .groups = NULL) {
   step_group(out, groups = out_groups)
 }
 
-#' @export
-summarise.data.table <- function(.data, ..., .groups = NULL) {
-  .data <- lazy_dt(.data)
-  summarise(.data, ..., .groups = .groups)
-}
-
 
 # For each expression, check if it uses any newly created variables
 check_summarise_vars <- function(dots) {

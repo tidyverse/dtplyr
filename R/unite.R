@@ -30,8 +30,7 @@ unite.dtplyr_step <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = 
     .cols <- data$vars
     locs <- seq_along(.cols)
   } else {
-    sim_data <- simulate_vars(data)
-    locs <- tidyselect::eval_select(expr(c(!!!dots)), sim_data, allow_rename = FALSE)
+    locs <- dtplyr_tidyselect(data, !!!dots, .allow_rename = FALSE)
     .cols <- data$vars[locs]
   }
 
@@ -54,10 +53,4 @@ unite.dtplyr_step <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = 
   }
 
   out
-}
-
-# exported onLoad
-unite.data.table <- function(data, col, ..., sep = "_", remove = TRUE, na.rm = FALSE) {
-  data <- lazy_dt(data)
-  tidyr::unite(data, {{ col }}, ..., sep = sep, remove = remove, na.rm = na.rm)
 }

@@ -22,9 +22,3 @@ do.dtplyr_step <- function(.data, ...) {
 
   step_subset_j(.data, vars = vars, j = j)
 }
-
-#' @export
-do.data.table <- function(.data, ...) {
-  .data <- lazy_dt(.data)
-  do(.data, ...)
-}

@@ -47,12 +47,6 @@ filter_by_lgl_col <- function(dots) {
   is_call(dot, name = "!", n = 1) && is_symbol(dot[[2]])
 }
 
-# exported onLoad
-filter.data.table <- function(.data, ...) {
-  .data <- lazy_dt(.data)
-  filter(.data, ...)
-}
-
 check_filter <- function(...) {
   dots <- enquos(...)
   named <- have_name(dots)
