@@ -6,7 +6,7 @@ test_that("unite pastes columns together & removes old col", {
   expect_equal(out$z, "a_b")
   expect_equal(
     show_query(step),
-    expr(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))][, .(z)])
+    expr(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))][, `:=`(!!c("x", "y"), NULL)])
   )
 })
 
@@ -41,7 +41,7 @@ test_that("doesn't use `by` for unite step", {
   expect_equal(step$groups, "z")
   expect_equal(
     show_query(step),
-    expr(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))][, .(z)])
+    expr(copy(DT)[, `:=`(z = paste(x, y, sep = "_"))][, `:=`(!!c("x", "y"), NULL)])
   )
 })
 

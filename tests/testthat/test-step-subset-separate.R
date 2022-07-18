@@ -64,7 +64,7 @@ test_that("only copies when necessary", {
     separate(x, into = c("left", "right"), sep = "-")
   expect_equal(
     show_query(step),
-    expr(DT[y < 4][, `:=`(!!c("left", "right"), tstrsplit(x, split = "-"))][, .(y, left, right)])
+    expr(DT[y < 4][, `:=`(!!c("left", "right"), tstrsplit(x, split = "-"))][, `:=`("x", NULL)])
   )
 })
 
