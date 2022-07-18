@@ -29,9 +29,9 @@ step_colorder <- function(x, col_order) {
   }
 
   step_call(x,
-            "setcolorder",
-            args = list(col_order),
-            vars = vars,
-            in_place = !x$implicit_copy
+    "setcolorder",
+    args = list(col_order),
+    vars = vars,
+    in_place = !x$implicit_copy
   )
 }
