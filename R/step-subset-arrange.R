@@ -24,7 +24,7 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
     return(.data)
   }
 
-  no_transmute <- !any(map_lgl(dots, ~ !is_symbol(.x) && !is_call(.x, "-", 1)))
+  no_transmute <- all(map_lgl(dots, ~ is_symbol(.x) || is_call(.x, "-", 1)))
   # Order without grouping then restore
   dots <- set_names(dots, NULL)
   if ((.data$implicit_copy || .data$needs_copy) && no_transmute) {
