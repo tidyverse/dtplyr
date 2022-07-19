@@ -37,7 +37,7 @@ select.dtplyr_step <- function(.data, ...) {
     j <- call2(".", !!!syms(vars))
   }
 
-  if ((.data$implicit_copy || .data$needs_copy) && is_unnamed && !can_merge_subset(.data)) {
+  if (is_copied(.data) && is_unnamed && !can_merge_subset(.data)) {
     # Drop columns by reference if:
     #  * Data has been copied (implicitly or explicitly)
     #  * There is no renaming in the select statement
