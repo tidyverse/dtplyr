@@ -16,7 +16,7 @@ dt_eval <- function(x) {
 dt_funs <- c(
   "between", "CJ", "copy", "data.table", "dcast", "melt", "nafill",
   "fcase", "fcoalesce", "fifelse", "fintersect", "frank", "frankv", "fsetdiff", "funion",
-  "setcolorder", "setnames", "shift", "tstrsplit", "uniqueN"
+  "setcolorder", "setnames", "setorder", "shift", "tstrsplit", "uniqueN"
 )
 add_dt_wrappers <- function(env) {
   env_bind(env, !!!env_get_list(ns_env("data.table"), dt_funs))

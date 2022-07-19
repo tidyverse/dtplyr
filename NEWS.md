@@ -40,6 +40,7 @@
 * `count()` properly handles grouping variables (#356)
 
 * `select()` now drops columns by reference when possible for improved performance (#367)
+* `arrange()` now utilizes `setorder()` when possible for improved performance (#364)
 
 # dtplyr 1.2.1
 
