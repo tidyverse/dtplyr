@@ -89,6 +89,10 @@ test_that("works with a transmute expression", {
 
   step <- dt %>%
     arrange(x + 1)
-
   expect_equal(show_query(step), expr(DT[order(x + 1)]))
+
+  # Works with complex expression
+  step <- dt %>%
+    arrange(-(x + y))
+  expect_equal(show_query(step), expr(DT[order(-(x + y))]))
 })
