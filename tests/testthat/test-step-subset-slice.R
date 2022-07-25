@@ -1,4 +1,3 @@
-
 test_that("can slice", {
   dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
 
@@ -8,11 +7,17 @@ test_that("can slice", {
   )
   expect_equal(
     dt %>% slice(c(1, 2)) %>% show_query(),
-    expr(DT[c(1, 2)[between(c(1, 2), -.N, .N)]])
+    expr(DT[{
+      .rows <- c(1, 2)
+      .rows[between(.rows, -.N, .N)]
+    }])
   )
   expect_equal(
     dt %>% slice(1, 2, 3) %>% show_query(),
-    expr(DT[c(1, 2, 3)[between(c(1, 2, 3), -.N, .N)]])
+    expr(DT[{
+      .rows <- c(1, 2, 3)
+      .rows[between(.rows, -.N, .N)]
+    }])
   )
 })
 
@@ -22,7 +27,10 @@ test_that("can slice when grouped", {
 
   expect_equal(
     dt2 %>% show_query(),
-    expr(DT[DT[, .I[1[between(1, -.N, .N)]], by = .(x)]$V1])
+    expr(DT[DT[, .I[{
+      .rows <- 1
+      .rows[between(.rows, -.N, .N)]
+    }], by = .(x)]$V1])
   )
   expect_equal(as_tibble(dt2), tibble(x = c(1, 2), y = c(1, 3)))
 })

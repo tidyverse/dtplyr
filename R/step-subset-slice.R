@@ -68,8 +68,9 @@ slice.dtplyr_step <- function(.data, ...) {
     }
     # Update logic once data.table #4353 is merged
     # https://github.com/Rdatatable/data.table/pull/4353
-    between <- call2("between", .rows, quote(-.N), quote(.N))
-    i <- call2("[", .rows, between)
+    assign_rows_var <- expr(.rows <- !!.rows)
+    subset_valid_rows <- expr(.rows[between(.rows, -.N, .N)])
+    i <- call2("{", assign_rows_var, subset_valid_rows)
   }
 
   step_subset_i(.data, i)

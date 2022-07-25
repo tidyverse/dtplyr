@@ -41,6 +41,8 @@
 
 * `arrange()` now utilizes `setorder()` when possible for improved performance (#364)
 
+* `slice()` uses an intermediate variable to reduce computation time of row selection (#377)
+
 # dtplyr 1.2.1
 
 * Fix for upcoming rlang release.
