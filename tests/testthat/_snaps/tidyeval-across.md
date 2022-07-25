@@ -52,6 +52,6 @@
       (expect_error(capture_if_all(dt, if_all(c(a = x, b = y)))))
     Output
       <error/rlang_error>
-      Error in `if_all()`:
+      Error in `dtplyr_tidyselect()`:
       ! Can't rename variables in this context.
 
