@@ -370,9 +370,9 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     549.61µs 574.11µs     <span style="text-decoration: underline;">1</span>731.     2.2KB     20.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate     978.72µs   1.01ms      989.    15.1KB     17.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.55ms   1.59ms      628.    22.5KB     15.2</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter      455.7µs  472.5µs     <span style="text-decoration: underline;">2</span>092.     2.2KB     24.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate      809.6µs  849.3µs     <span style="text-decoration: underline;">1</span>169.    15.1KB     19.2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.32ms   1.37ms      726.    22.5KB     19.4</span></span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Unless a copy is performed.&lt;/p&gt;"><sup>1</sup></a>.</p>
 </div>
 
