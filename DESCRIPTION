@@ -23,7 +23,7 @@ Imports:
     dplyr (>= 1.0.3),
     glue,
     lifecycle,
-    rlang (>= 1.0.0),
+    rlang (>= 1.0.4),
     tibble,
     tidyselect (>= 1.1.2.9000),
     vctrs (>= 0.4.1)
