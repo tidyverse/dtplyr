@@ -317,7 +317,7 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Joining, by = "x"</span></span>
 <span><span class="co">#&gt; setcolorder(`_DT5`[`_DT4`, on = .(x), allow.cartesian = TRUE], </span></span>
-<span><span class="co">#&gt;     c(1L, 7L, 2L, 3L, 4L, 5L, 6L))[, .(x, a, b, c)]</span></span></code></pre></div>
+<span><span class="co">#&gt;     c(1L, 7L, 2L, 3L, 4L, 5L, 6L))[, `:=`(c("y", "d", "e"), NULL)]</span></span></code></pre></div>
 <p>Note, however, that <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code>ing and then <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>ing must generate two separate calls to <code>[</code>, because data.table evaluates <code>i</code> before <code>j</code>.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -370,9 +370,9 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter      455.7µs  472.5µs     <span style="text-decoration: underline;">2</span>092.     2.2KB     24.4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate      809.6µs  849.3µs     <span style="text-decoration: underline;">1</span>169.    15.1KB     19.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.32ms   1.37ms      726.    22.5KB     19.4</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     597.22µs 655.12µs     <span style="text-decoration: underline;">1</span>514.     2.2KB     18.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.05ms   1.16ms      862.    15.1KB     15.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.69ms   1.82ms      544.    22.5KB     12.9</span></span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Unless a copy is performed.&lt;/p&gt;"><sup>1</sup></a>.</p>
 </div>
 

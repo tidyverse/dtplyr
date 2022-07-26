@@ -79,6 +79,7 @@
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> can now use <code>.keep</code></p></li>
 <li><p><code>dtplyr</code> no longer directly depends on <code>ellipsis</code></p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count()</a></code> properly handles grouping variables (<a href="https://github.com/tidyverse/dtplyr/issues/356" class="external-link">#356</a>)</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> now drops columns by reference when possible for improved performance (<a href="https://github.com/tidyverse/dtplyr/issues/367" class="external-link">#367</a>)</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange()</a></code> now utilizes <code><a href="https://Rdatatable.gitlab.io/data.table/reference/setorder.html" class="external-link">setorder()</a></code> when possible for improved performance (<a href="https://github.com/tidyverse/dtplyr/issues/364" class="external-link">#364</a>)</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice()</a></code> uses an intermediate variable to reduce computation time of row selection (<a href="https://github.com/tidyverse/dtplyr/issues/377" class="external-link">#377</a>)</p></li>
 </ul></div>
