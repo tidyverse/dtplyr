@@ -61,7 +61,12 @@ dtplyr_tidyselect <- function(.data, ...,
     abort("The use of `where()` is not supported by dtplyr.", call = .call)
   }
   sim_data <- simulate_vars(.data, drop_groups = .drop_groups)
-  tidyselect::eval_select(expr(c(!!!dots)), sim_data, allow_rename = .allow_rename)
+  tidyselect::eval_select(
+    expr(c(!!!dots)),
+    sim_data,
+    allow_rename = .allow_rename,
+    error_call = .call
+  )
 }
 
 selection_uses_where <- function(x) {

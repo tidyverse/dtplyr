@@ -23,9 +23,9 @@ Imports:
     dplyr (>= 1.0.3),
     glue,
     lifecycle,
-    rlang (>= 1.0.0),
+    rlang (>= 1.0.4),
     tibble,
-    tidyselect (>= 1.1.2),
+    tidyselect (>= 1.1.2.9000),
     vctrs (>= 0.4.1)
 Suggests:
     bench,
@@ -35,6 +35,8 @@ Suggests:
     testthat (>= 3.1.2),
     tidyr (>= 1.1.0),
     waldo (>= 0.3.1)
+Remotes:
+    r-lib/tidyselect
 VignetteBuilder: 
     knitr
 Config/Needs/website: tidyverse/tidytemplate
