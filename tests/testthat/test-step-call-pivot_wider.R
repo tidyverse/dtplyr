@@ -7,7 +7,7 @@ test_that("can pivot all cols to wide", {
   expect_equal(nrow(pv), 1)
   expect_equal(
     show_query(step),
-    expr(dcast(DT, formula = "..." ~ key, value.var = "val")[, .(x, y, z)])
+    expr(dcast(DT, formula = "..." ~ key, value.var = "val")[, `:=`(".", NULL)])
   )
 })
 
@@ -65,7 +65,7 @@ test_that("column with `...j` name can be used as `names_from`", {
 
 # column names -------------------------------------------------------------
 
-test_that("names_glue affects output names & auto-converts data.table to lazy_dt", {
+test_that("names_glue affects output names", {
   df <- lazy_dt(
     data.frame(
       x = c("X", "Y"),

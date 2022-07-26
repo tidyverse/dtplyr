@@ -112,7 +112,7 @@ mutate.dtplyr_step <- function(.data, ...,
     }
 
     if (dots_list$need_removal_step) {
-      out <- remove_vars(out, dots_list$vars_removed)
+      out <- select(out, -tidyselect::all_of(dots_list$vars_removed))
     }
   }
 

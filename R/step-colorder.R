@@ -6,6 +6,7 @@ step_colorder <- function(x, col_order) {
     abort("Every element of `col_order` must be unique.")
   }
 
+  col_order <- unname(col_order)
   if (is.integer(col_order)) {
     if (identical(col_order, seq_along(col_order))) {
       return(x)
