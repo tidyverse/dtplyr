@@ -85,7 +85,7 @@ test_that("uses setorder when there is already a copy", {
 })
 
 test_that("setorder places NAs last", {
-  dt <- lazy_dt(data.frame(x = c("b", NA, "a")), "DT")
+  dt <- lazy_dt(tibble(x = c("b", NA, "a")), "DT")
   dt$needs_copy <- TRUE
 
   # Works with implicit copy
