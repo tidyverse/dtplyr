@@ -70,7 +70,7 @@ test_that("uses setorder when there is already a copy", {
 
   expect_equal(
     show_query(step_implicit),
-    expr(setorder(DT[x < 4], x, y))
+    expr(setorder(DT[x < 4], x, y, na.last = TRUE))
   )
 
   # Works with explicit copy
@@ -80,7 +80,7 @@ test_that("uses setorder when there is already a copy", {
 
   expect_equal(
     show_query(step_explicit),
-    expr(setorder(copy(DT)[, `:=`(x = x * 2)], x, -y))
+    expr(setorder(copy(DT)[, `:=`(x = x * 2)], x, -y, na.last = TRUE))
   )
 })
 
