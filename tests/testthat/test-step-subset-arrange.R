@@ -84,6 +84,18 @@ test_that("uses setorder when there is already a copy", {
   )
 })
 
+test_that("setorder places NAs last", {
+  dt <- lazy_dt(data.frame(x = c("b", NA, "a")), "DT")
+  dt$needs_copy <- TRUE
+
+  # Works with implicit copy
+  res <- dt %>%
+    arrange(x) %>%
+    as.data.table()
+
+  expect_equal(res$x, c("a", "b", NA))
+})
+
 test_that("works with a transmute expression", {
   dt <- lazy_dt(data.frame(x = 1:3, y = 1:3), "DT")
 
