@@ -75,25 +75,21 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
   on <- call2(".", !!!syms(on2))
 
   join_call <- switch(x$style,
-    full = call2("merge",
-      lhs,
-      rhs,
-      all = TRUE,
-      by.x = x$on$x,
-      by.y = x$on$y,
-      suffixes = x$suffix,
-      allow.cartesian = TRUE
-    ),
+    full = call2("merge", lhs, rhs, all = TRUE, by.x = x$on$x, by.y = x$on$y, allow.cartesian = TRUE),
     left = call2("[", lhs, rhs, on = on, allow.cartesian = TRUE),
     inner = call2("[", lhs, rhs, on = on, nomatch = NULL, allow.cartesian = TRUE),
     right = call2("[", lhs, rhs, on = on, allow.cartesian = TRUE),
     anti = call2("[", lhs, call2("!", rhs), on = on),
     semi = call2("[", lhs, call2("unique", call2("[", lhs, rhs, which = TRUE, nomatch = NULL, on = on)))
   )
-  # remove arguments if they are the same as the default value
-  if (x$style == "full" && identical(x$suffix, c(".x", ".y"))) {
-    join_call <- call_modify(join_call, suffixes = zap())
+  
+  if (x$style == "full") {
+    default_suffix <- c(".x", ".y")
+    if (!identical(x$suffix, default_suffix)) {
+      join_call <- call_modify(join_call, suffixes = x$suffix)
+    }
   }
+
   join_call
 }
 
