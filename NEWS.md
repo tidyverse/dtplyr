@@ -1,6 +1,6 @@
 # dtplyr (development version)
 
-* `full_join()` now produces outupt with correctly named columns when a non-default 
+* `full_join()` now produces output with correctly named columns when a non-default 
   value for `suffix` is supplied. Previously the `suffix` argument was ignored (#382).
 
 * Chained operations properly prevent modify-by-reference (#210)
