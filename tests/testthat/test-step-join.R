@@ -76,7 +76,20 @@ test_that("simple usage generates expected translation", {
   )
 })
 
-test_that("full_join produces correct names", {
+test_that("full_join produces correct names with default suffix", {
+  ### names are set correctly for basic join
+
+  df1 <- tibble(a = "a", b = "b.x")
+  df2 <- tibble(a = "a", b = "b.y")
+  dt1 <- lazy_dt(df1, "dt1")
+  dt2 <- lazy_dt(df2, "dt2")
+  expect_equal(
+    full_join(dt1, dt2, by = "a") %>% collect,
+    full_join(df1, df2, by = "a")
+  )
+
+  ### names are set correctly for join which requires `setnames()`
+
   # data.table: use merge which simply appends the corresponding suffix
   #   producing duplicates
   # dplyr: appends suffix until name is unique
@@ -87,16 +100,54 @@ test_that("full_join produces correct names", {
   dt2 <- lazy_dt(df2, "dt2")
 
   joined_dt <- full_join(dt1, dt2, by = "a")
-  expected <- full_join(df1, df2, by = "a") %>% colnames()
+  expected <- full_join(df1, df2, by = "a")
 
   expect_equal(
     joined_dt %>% .$vars,
-    expected
+    colnames(expected)
   )
 
   # suppress warning created by `data.table::merge()`
   expect_equal(
-    suppressWarnings(joined_dt %>% collect() %>% colnames()),
+    suppressWarnings(joined_dt %>% collect()),
+    expected
+  )
+})
+
+test_that("full_join produces correct names with user-supplied suffix", {
+  ### names are set correctly for basic join
+
+  df1 <- tibble(a = "a", b = "b.x")
+  df2 <- tibble(a = "a", b = "b.y")
+  dt1 <- lazy_dt(df1, "dt1")
+  dt2 <- lazy_dt(df2, "dt2")
+  expect_equal(
+    full_join(dt1, dt2, by = "a", suffix = c(".one", ".two")) %>% collect,
+    full_join(df1, df2, by = "a", suffix = c(".one", ".two"))
+  )
+
+  ### names are set correctly for join which requires `setnames()`
+
+  # data.table: use merge which simply appends the corresponding suffix
+  #   producing duplicates
+  # dplyr: appends suffix until name is unique
+  df1 <- tibble(a = "a", b = "b.one", b.one = "b.one.one.one")
+  df2 <- tibble(a = "a", b = "b.two", b.one.one = "b.one.one")
+
+  dt1 <- lazy_dt(df1, "dt1")
+  dt2 <- lazy_dt(df2, "dt2")
+
+  joined_dt <- full_join(dt1, dt2, by = "a", suffix = c(".one", ".two"))
+  expected <- full_join(df1, df2, by = "a", suffix = c(".one", ".two"))
+
+  expect_equal(
+    joined_dt %>% .$vars,
+    colnames(expected)
+  )
+
+  # suppress warning created by `data.table::merge()`
+  expect_equal(
+    suppressWarnings(joined_dt %>% collect()),
     expected
   )
 })
