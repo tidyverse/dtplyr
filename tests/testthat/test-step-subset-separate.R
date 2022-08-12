@@ -92,5 +92,5 @@ test_that("errors on multiple columns in `col`", {
   dt <- lazy_dt(tibble(x = c("a_b", "a_b"), y = x), "DT")
 
   expect_error(separate(dt, c(x, y), into = c("left", "right")),
-               "must be size 1")
+               "must select exactly one column")
 })
