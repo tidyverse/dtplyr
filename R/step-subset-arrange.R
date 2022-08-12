@@ -28,6 +28,7 @@ arrange.dtplyr_step <- function(.data, ..., .by_group = FALSE) {
   # Order without grouping then restore
   dots <- set_names(dots, NULL)
   if (is_copied(.data) && no_transmute) {
+    dots <- c(dots, na.last = TRUE)
     step <- step_call(.data, "setorder", dots)
   } else {
     step <- step_subset(.data, i = call2("order", !!!dots), groups = character())

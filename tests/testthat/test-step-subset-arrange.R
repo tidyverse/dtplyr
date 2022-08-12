@@ -70,7 +70,7 @@ test_that("uses setorder when there is already a copy", {
 
   expect_equal(
     show_query(step_implicit),
-    expr(setorder(DT[x < 4], x, y))
+    expr(setorder(DT[x < 4], x, y, na.last = TRUE))
   )
 
   # Works with explicit copy
@@ -80,8 +80,20 @@ test_that("uses setorder when there is already a copy", {
 
   expect_equal(
     show_query(step_explicit),
-    expr(setorder(copy(DT)[, `:=`(x = x * 2)], x, -y))
+    expr(setorder(copy(DT)[, `:=`(x = x * 2)], x, -y, na.last = TRUE))
   )
+})
+
+test_that("setorder places NAs last", {
+  dt <- lazy_dt(tibble(x = c("b", NA, "a")), "DT")
+  dt$needs_copy <- TRUE
+
+  # Works with implicit copy
+  res <- dt %>%
+    arrange(x) %>%
+    as.data.table()
+
+  expect_equal(res$x, c("a", "b", NA))
 })
 
 test_that("works with a transmute expression", {
