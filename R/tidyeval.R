@@ -18,6 +18,7 @@ dt_funs <- c(
   "fcase", "fcoalesce", "fifelse", "fintersect", "frank", "frankv", "fsetdiff", "funion",
   "setcolorder", "setnames", "setorder", "shift", "tstrsplit", "uniqueN"
 )
+dt_symbols <- c(".SD", ".BY", ".N", ".I", ".GRP", ".NGRP")
 add_dt_wrappers <- function(env) {
   env_bind(env, !!!env_get_list(ns_env("data.table"), dt_funs))
 }
@@ -77,7 +78,7 @@ dt_squash <- function(x, env, data, j = TRUE) {
 
       if (var %in% c("T", "F")) {
         as.logical(var)
-      } else if (nchar(x) > 0 && substr(var, 1, 1) == ".") {
+      } else if (var %in% dt_symbols) {
         # data table pronouns are bound to NULL
         x
       } else if (!var %in% data$vars && env_has(env, var, inherit = TRUE)) {
