@@ -1,3 +1,5 @@
+# dtplyr 1.2.2
+
 # dtplyr 1.2.1
 
 * Fix for upcoming rlang release.
