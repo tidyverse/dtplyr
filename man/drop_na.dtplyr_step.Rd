@@ -10,7 +10,7 @@
 \item{data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
 
 \item{...}{<\code{\link[tidyr:tidyr_tidy_select]{tidy-select}}> Columns to inspect for
-missing values.}
+missing values. If empty, all columns are used.}
 }
 \description{
 This is a method for the tidyr \code{drop_na()} generic. It is translated to
