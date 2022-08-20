@@ -4,4 +4,4 @@
 
 ## revdepcheck results
 
-This was a patch release to fix a problem with the upcoming rlang release; I did not check revdeps.
+Hot patch release to resolve R CMD check failures; I did not check revdeps.
