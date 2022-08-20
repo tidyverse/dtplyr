@@ -1,5 +1,7 @@
 # dtplyr 1.2.2
 
+* Hot patch release to resolve R CMD check failures.
+
 # dtplyr 1.2.1
 
 * Fix for upcoming rlang release.
