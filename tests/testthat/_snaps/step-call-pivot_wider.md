@@ -33,10 +33,10 @@
         * "x" at locations 1 and 2.
     Code
       pivot_wider(df, names_from = lab, values_from = val, names_repair = "unique")
-    Message <simpleMessage>
+    Message <rlib_message_name_repair>
       New names:
-      * x -> x...1
-      * x -> x...2
+      * `x` -> `x...1`
+      * `x` -> `x...2`
     Output
       Source: local data table [1 x 2]
       Call:   setnames(dcast(copy(DT), formula = x ~ lab, value.var = "val"), 
