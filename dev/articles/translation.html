@@ -370,9 +370,9 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     748.11µs 841.81µs     <span style="text-decoration: underline;">1</span>085.     2.2KB     13.4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.29ms   1.45ms      673.    15.1KB     10.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.91ms   2.17ms      454.    22.5KB     13.0</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter      725.9µs  770.3µs     <span style="text-decoration: underline;">1</span>258.     2.2KB     13.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.25ms   1.31ms      748.    15.1KB     15.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.98ms   2.09ms      464.    22.5KB     12.9</span></span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that the performance overhead of dtplyr should be negligible for realistic data sizes. Note that dtplyr run-time scales with the complexity of the pipeline, not the size of the data, so these timings should apply regardless of the size of the underlying data<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Unless a copy is performed.&lt;/p&gt;"><sup>1</sup></a>.</p>
 </div>
 
