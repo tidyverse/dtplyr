@@ -1,7 +1,6 @@
 # can add groups if requested
 
     Code
-      withr::local_options(lifecycle_verbosity = "quiet")
       . <- dt %>% group_by(x) %>% group_by(y, add = TRUE)
     Condition
       Warning:

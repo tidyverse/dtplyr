@@ -27,7 +27,6 @@ test_that("can add groups if requested", {
   )
 
   expect_snapshot({
-    withr::local_options(lifecycle_verbosity = "quiet")
     . <- dt %>% group_by(x) %>% group_by(y, add = TRUE)
   })
 })

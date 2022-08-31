@@ -34,8 +34,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.1.2),
     tidyr (>= 1.1.0),
-    waldo (>= 0.3.1),
-    withr
+    waldo (>= 0.3.1)
 Remotes:
     r-lib/tidyselect
 VignetteBuilder: 
