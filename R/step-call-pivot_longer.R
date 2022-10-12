@@ -77,7 +77,7 @@ pivot_longer.dtplyr_step <- function(data,
     abort("`values_transform` is not supported by dtplyr")
   }
 
-  measure_vars <- names(dtplyr_tidyselect(data, {{ cols }}))
+  measure_vars <- names(tidyselect::eval_select(enquo(cols), data))
   if (length(measure_vars) == 0) {
     abort("`cols` must select at least one column.")
   }

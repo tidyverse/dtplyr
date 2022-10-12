@@ -49,21 +49,7 @@ overriding \code{values_to} entirely.
 \item{names_prefix}{A regular expression used to remove matching text
 from the start of each variable name.}
 
-\item{names_sep}{If \code{names_to} contains multiple values,
-these arguments control how the column name is broken up.
-
-\code{names_sep} takes the same specification as \code{\link[tidyr:separate]{separate()}}, and can either
-be a numeric vector (specifying positions to break on), or a single string
-(specifying a regular expression to split on).
-
-\code{names_pattern} takes the same specification as \code{\link[tidyr:extract]{extract()}}, a regular
-expression containing matching groups (\verb{()}).
-
-If these arguments do not give you enough control, use
-\code{pivot_longer_spec()} to create a spec object and process manually as
-needed.}
-
-\item{names_pattern}{If \code{names_to} contains multiple values,
+\item{names_sep, names_pattern}{If \code{names_to} contains multiple values,
 these arguments control how the column name is broken up.
 
 \code{names_sep} takes the same specification as \code{\link[tidyr:separate]{separate()}}, and can either

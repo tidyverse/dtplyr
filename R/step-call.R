@@ -109,7 +109,7 @@ rename_with.dtplyr_step <- function(.data, .fn, .cols = everything(), ...) {
   # But this should be fast, so doing it twice shouldn't matter
   .fn <- as_function(.fn)
 
-  locs <- unname(dtplyr_tidyselect(.data, {{ .cols }}))
+  locs <- unname(tidyselect::eval_select(enquo(.cols), .data))
   old_vars <- .data$vars[locs]
   new_vars <- .fn(old_vars)
 
@@ -215,7 +215,7 @@ unique.dtplyr_step <- function(x, incomparables = FALSE, ...) {
 #' dt %>% drop_na(x, any_of(vars))
 # exported onLoad
 drop_na.dtplyr_step <- function(data, ...) {
-  locs <- names(dtplyr_tidyselect(data, ...))
+  locs <- names(tidyselect::eval_select(expr(c(...)), data))
 
   args <- list()
   if (length(locs) > 0) {
