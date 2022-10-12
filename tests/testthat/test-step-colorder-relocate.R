@@ -62,7 +62,7 @@ test_that("no .before/.after moves to front", {
 test_that("can only supply one of .before and .after", {
   dt <- lazy_dt(data.table(x = 1, y = 1), "DT")
 
-  expect_error(relocate(dt, y, .before = x, .after = x), "only one")
+  expect_error(relocate(dt, y, .before = x, .after = x))
 })
 
 test_that("relocate() respects order specified by ...", {
