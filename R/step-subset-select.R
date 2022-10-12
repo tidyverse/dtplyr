@@ -17,7 +17,7 @@
 #' dt %>% select(ends_with("2"))
 #' dt %>% select(z1 = x1, z2 = x2)
 select.dtplyr_step <- function(.data, ...) {
-  locs <- dtplyr_tidyselect(.data, ...)
+  locs <- tidyselect::eval_select(expr(c(...)), .data)
   locs <- ensure_group_vars(locs, .data$vars, .data$groups)
 
   vars <- set_names(.data$vars[locs], names(locs))
@@ -52,37 +52,16 @@ select.dtplyr_step <- function(.data, ...) {
   step_group(out, groups)
 }
 
-dtplyr_tidyselect <- function(.data, ...,
-                              .call = caller_env(),
-                              .allow_rename = TRUE,
-                              .drop_groups = FALSE) {
-  dots <- enquos(...)
-  if (selection_uses_where(dots)) {
-    abort("The use of `where()` is not supported by dtplyr.", call = .call)
-  }
-  sim_data <- simulate_vars(.data, drop_groups = .drop_groups)
-  tidyselect::eval_select(
-    expr(c(!!!dots)),
-    sim_data,
-    allow_rename = .allow_rename,
-    error_call = .call
-  )
+#' @importFrom tidyselect tidyselect_data_proxy
+#' @exportS3Method
+tidyselect_data_proxy.dtplyr_step <- function(x) {
+  simulate_vars(x)
 }
 
-selection_uses_where <- function(x) {
-  is_predicate <- unlist(lapply(x, dot_uses_where))
-  any(is_predicate)
-}
-
-dot_uses_where <- function(x) {
-  x <- quo_squash(x)
-  if (is_call(x, "where")) {
-    TRUE
-  } else if (is_symbol(x) || is_atomic(x)) {
-    FALSE
-  } else {
-    lapply(x[-1], dot_uses_where)
-  }
+#' @importFrom tidyselect tidyselect_data_has_predicates
+#' @exportS3Method
+tidyselect_data_has_predicates.dtplyr_step <- function(x) {
+  FALSE
 }
 
 simulate_vars <- function(x, drop_groups = FALSE) {
