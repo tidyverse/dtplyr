@@ -20,7 +20,9 @@ relocate.dtplyr_step <- function(.data, ..., .before = NULL, .after = NULL) {
     expr(c(...)),
     .data,
     before = enquo(.before),
-    after = enquo(.after)
+    after = enquo(.after),
+    before_arg = ".before",
+    after_arg = ".after"
   ))
   out <- step_colorder(.data, new_vars)
   step_group(out, .data$groups)
