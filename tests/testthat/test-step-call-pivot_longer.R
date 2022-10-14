@@ -151,3 +151,32 @@ test_that("informative errors on unsupported features", {
 
 })
 
+test_that("can pivot all cols to long", {
+  tbl <- tibble(x = 1:2, y = 3:4)
+  dt <- lazy_dt(tbl, "DT")
+  step <- pivot_longer(dt, x:y)
+  out <- collect(step)
+
+  expect_equal(
+    show_query(step),
+    expr(melt(DT, measure.vars = !!c("x", "y"), variable.name = "name",
+              variable.factor = FALSE))
+  )
+  expect_equal(step$vars, c("name", "value"))
+  expect_equal(out$name, c("x", "x", "y", "y"))
+  expect_equal(out$value, c(1, 2, 3, 4))
+})
+
+test_that("correctly handles columns named NA when using names_glue, #394", {
+  df <- tibble(x = c("a", "a"), y = c("a", NA), z = 1:2)
+
+  res <- lazy_dt(df) %>%
+    pivot_wider(names_from = y,
+                values_from = z,
+                names_glue = "{y}_new",
+                names_repair = "minimal") %>%
+    collect()
+
+  expect_named(res, c("x", "NA_new", "a_new"))
+})
+
