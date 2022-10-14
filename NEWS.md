@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `names_glue` now works in `pivot_wider()` when `names_from` contains `NA`s (#394)
+
 * `full_join()` now produces output with correctly named columns when a non-default 
   value for `suffix` is supplied. Previously the `suffix` argument was ignored (#382).
 
