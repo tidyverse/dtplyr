@@ -6,13 +6,17 @@ step_setnames <- function(x, old, new, in_place, rename_groups = FALSE) {
   stopifnot(is_bool(in_place))
   stopifnot(is_bool(rename_groups))
 
+  x_vars <- replace_setnames_na(x$vars)
+  old <- replace_setnames_na(old)
+  new <- replace_setnames_na(new)
+
   if (is.integer(old)) {
     locs <- old
   } else {
-    locs <- vctrs::vec_match(old, x$vars)
+    locs <- vctrs::vec_match(old, x_vars)
   }
 
-  name_changed <- x$vars[locs] != new
+  name_changed <- x_vars[locs] != new
   old <- old[name_changed]
   new <- new[name_changed]
   locs <- locs[name_changed]
@@ -21,7 +25,7 @@ step_setnames <- function(x, old, new, in_place, rename_groups = FALSE) {
     return(x)
   }
 
-  new_vars <- x$vars
+  new_vars <- x_vars
   new_vars[locs] <- new
   out <- step_call(x,
     "setnames",
@@ -36,4 +40,16 @@ step_setnames <- function(x, old, new, in_place, rename_groups = FALSE) {
   }
 
   out
+}
+
+# Replace character `NA` names with "NA"
+# Replace position `NA` with column position
+replace_setnames_na <- function(x) {
+  if (is.character(x)) {
+    vctrs::vec_assign(x, vctrs::vec_equal_na(x), "NA")
+  } else {
+    is_na <- vctrs::vec_equal_na(x)
+    na_locs <- seq_along(x)[is_na]
+    vctrs::vec_assign(x, is_na, na_locs)
+  }
 }
