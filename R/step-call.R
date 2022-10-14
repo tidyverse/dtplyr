@@ -71,8 +71,7 @@ tail.dtplyr_step <- function(x, n = 6L, ...) {
 #' dt %>% rename(new_x = x, new_y = y)
 #' dt %>% rename_with(toupper)
 rename.dtplyr_step <- function(.data, ...) {
-  sim_data <- simulate_vars(.data)
-  locs <- tidyselect::eval_rename(expr(c(...)), sim_data)
+  locs <- tidyselect::eval_rename(expr(c(...)), .data)
 
   step_setnames(.data, .data$vars[locs], names(locs), in_place = TRUE, rename_groups = TRUE)
 }
