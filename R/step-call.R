@@ -71,8 +71,7 @@ tail.dtplyr_step <- function(x, n = 6L, ...) {
 #' dt %>% rename(new_x = x, new_y = y)
 #' dt %>% rename_with(toupper)
 rename.dtplyr_step <- function(.data, ...) {
-  sim_data <- simulate_vars(.data)
-  locs <- tidyselect::eval_rename(expr(c(...)), sim_data)
+  locs <- tidyselect::eval_rename(expr(c(...)), .data)
 
   step_setnames(.data, .data$vars[locs], names(locs), in_place = TRUE, rename_groups = TRUE)
 }
@@ -109,7 +108,7 @@ rename_with.dtplyr_step <- function(.data, .fn, .cols = everything(), ...) {
   # But this should be fast, so doing it twice shouldn't matter
   .fn <- as_function(.fn)
 
-  locs <- unname(dtplyr_tidyselect(.data, {{ .cols }}))
+  locs <- unname(tidyselect::eval_select(enquo(.cols), .data))
   old_vars <- .data$vars[locs]
   new_vars <- .fn(old_vars)
 
@@ -215,7 +214,7 @@ unique.dtplyr_step <- function(x, incomparables = FALSE, ...) {
 #' dt %>% drop_na(x, any_of(vars))
 # exported onLoad
 drop_na.dtplyr_step <- function(data, ...) {
-  locs <- names(dtplyr_tidyselect(data, ...))
+  locs <- names(tidyselect::eval_select(expr(c(...)), data))
 
   args <- list()
   if (length(locs) > 0) {

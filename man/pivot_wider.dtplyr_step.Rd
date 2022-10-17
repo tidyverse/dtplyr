@@ -28,7 +28,7 @@ except for the columns specified in \code{names_from} and \code{values_from}.
 Typically used when you have redundant variables, i.e. variables whose
 values are perfectly correlated with existing variables.}
 
-\item{names_from}{<\code{\link[tidyr:tidyr_tidy_select]{tidy-select}}> A pair of
+\item{names_from, values_from}{<\code{\link[tidyr:tidyr_tidy_select]{tidy-select}}> A pair of
 arguments describing which column (or columns) to get the name of the
 output column (\code{names_from}), and which column (or columns) to get the
 cell values from (\code{values_from}).
@@ -56,14 +56,6 @@ The default, \code{"check_unique"} is to error if the columns are duplicated.
 Use \code{"minimal"} to allow duplicates in the output, or \code{"unique"} to
 de-duplicated by adding numeric suffixes. See \code{\link[vctrs:vec_as_names]{vctrs::vec_as_names()}}
 for more options.}
-
-\item{values_from}{<\code{\link[tidyr:tidyr_tidy_select]{tidy-select}}> A pair of
-arguments describing which column (or columns) to get the name of the
-output column (\code{names_from}), and which column (or columns) to get the
-cell values from (\code{values_from}).
-
-If \code{values_from} contains multiple values, the value will be added to the
-front of the output column.}
 
 \item{values_fill}{Optionally, a (scalar) value that specifies what each
 \code{value} should be filled in with when missing.
