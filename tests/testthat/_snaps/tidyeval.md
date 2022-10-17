@@ -4,11 +4,11 @@
 
 # errors when `where()` is used, #271/#368
 
-    The use of `where()` is not supported by dtplyr.
+    This tidyselect interface doesn't support predicates.
 
 ---
 
-    The use of `where()` is not supported by dtplyr.
+    This tidyselect interface doesn't support predicates.
 
 # desc() checks the number of arguments
 

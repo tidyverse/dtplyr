@@ -25,7 +25,7 @@ Imports:
     lifecycle,
     rlang (>= 1.0.4),
     tibble,
-    tidyselect (>= 1.1.2.9000),
+    tidyselect (>= 1.2.0),
     vctrs (>= 0.4.1)
 Suggests:
     bench,
@@ -35,12 +35,10 @@ Suggests:
     testthat (>= 3.1.2),
     tidyr (>= 1.1.0),
     waldo (>= 0.3.1)
-Remotes:
-    r-lib/tidyselect
 VignetteBuilder: 
     knitr
 Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: {library(tidyr); list(markdown = TRUE)}
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1

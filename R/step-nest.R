@@ -75,6 +75,6 @@ eval_nest_dots <- function(.data, ...) {
     list(data = nest_vars)
   } else {
     cols <- enquos(...)
-    lapply(cols, function(.x) names(dtplyr_tidyselect(.data, !!.x)))
+    lapply(cols, function(.x) names(tidyselect::eval_select(.x, .data)))
   }
 }
