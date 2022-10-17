@@ -129,7 +129,7 @@ to enforce them.</p></dd>
 <span class="r-in"><span><span class="co"># Note that only present levels of the factor variable `size` are retained.</span></span></span>
 <span class="r-in"><span><span class="va">fruits</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html" class="external-link">expand</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [2 x 1]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT8`[, CJ(type = type, unique = TRUE)]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT9`[, CJ(type = type, unique = TRUE)]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   type  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
@@ -139,7 +139,7 @@ to enforce them.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
 <span class="r-in"><span><span class="va">fruits</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html" class="external-link">expand</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">size</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [6 x 2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT8`[, CJ(type = type, size = size, unique = TRUE)]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT9`[, CJ(type = type, size = size, unique = TRUE)]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   type   size </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span></span>
@@ -169,7 +169,7 @@ to enforce them.</p></dd>
 <span class="r-in"><span><span class="co"># Other uses -------------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="va">fruits</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html" class="external-link">expand</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">size</span>, <span class="fl">2010</span><span class="op">:</span><span class="fl">2012</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [18 x 3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT8`[, CJ(type = type, size = size, V3 = 2010:2012, unique = TRUE)]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT9`[, CJ(type = type, size = size, V3 = 2010:2012, unique = TRUE)]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   type  size     V3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -187,7 +187,7 @@ to enforce them.</p></dd>
 <span class="r-in"><span><span class="va">all</span> <span class="op">&lt;-</span> <span class="va">fruits</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html" class="external-link">expand</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">size</span>, <span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">all</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [12 x 3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT8`[, CJ(type = type, size = size, year = year, unique = TRUE)]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT9`[, CJ(type = type, size = size, year = year, unique = TRUE)]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   type  size   year</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -203,7 +203,7 @@ to enforce them.</p></dd>
 <span class="r-in"><span><span class="va">all</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">anti_join</a></span><span class="op">(</span><span class="va">fruits</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("type", "size", "year")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [8 x 3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT8`[, CJ(type = type, size = size, year = year, unique = TRUE)][!`_DT8`, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT9`[, CJ(type = type, size = size, year = year, unique = TRUE)][!`_DT9`, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     on = .(type, size, year)]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   type   size   year</span>
@@ -222,17 +222,17 @@ to enforce them.</p></dd>
 <span class="r-in"><span><span class="va">fruits</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">right_join</a></span><span class="op">(</span><span class="va">all</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("type", "year", "size")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [14 x 4]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT8`[`_DT8`[, CJ(type = type, size = size, year = year, unique = TRUE)], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT9`[`_DT9`[, CJ(type = type, size = size, year = year, unique = TRUE)], </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     on = .(type, year, size), allow.cartesian = TRUE]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   type   year size  weights</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> apple  <span style="text-decoration: underline;">2</span>010 XS       2.80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> apple  <span style="text-decoration: underline;">2</span>010 XS       2.64</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> apple  <span style="text-decoration: underline;">2</span>012 XS      <span style="color: #BB0000;">NA</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> apple  <span style="text-decoration: underline;">2</span>010 S       <span style="color: #BB0000;">NA</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> apple  <span style="text-decoration: underline;">2</span>012 S       <span style="color: #BB0000;">NA</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> apple  <span style="text-decoration: underline;">2</span>010 M       <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> apple  <span style="text-decoration: underline;">2</span>012 M        5.87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> apple  <span style="text-decoration: underline;">2</span>012 M        4.49</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 8 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>

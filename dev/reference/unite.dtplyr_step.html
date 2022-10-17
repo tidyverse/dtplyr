@@ -80,7 +80,7 @@
 <p>This argument is passed by expression and supports
 <a href="https://rlang.r-lib.org/reference/topic-inject.html" class="external-link">quasiquotation</a> (you can unquote strings
 and symbols). The name is captured from the expression with
-<code><a href="https://rlang.r-lib.org/reference/topic-defuse.html" class="external-link">rlang::ensym()</a></code> (note that this kind of interface where
+<code><a href="https://rlang.r-lib.org/reference/defusing-advanced.html" class="external-link">rlang::ensym()</a></code> (note that this kind of interface where
 symbols do not represent actual objects is now discouraged in the
 tidyverse; we support it here for backward compatibility).</p></dd>
 
@@ -110,7 +110,7 @@ each value.</p></dd>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html" class="external-link">expand_grid</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="cn">NA</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">df</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [4 x 2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT37`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT41`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   x     y    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
@@ -123,7 +123,7 @@ each value.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unite.html" class="external-link">unite</a></span><span class="op">(</span><span class="st">"z"</span>, <span class="va">x</span><span class="op">:</span><span class="va">y</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [4 x 3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>setcolorder(copy(`_DT37`)[, `:=`(z = paste(x, y, sep = "_"))], </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>setcolorder(copy(`_DT41`)[, `:=`(z = paste(x, y, sep = "_"))], </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     c("z", "x", "y"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   z     x     y    </span>
@@ -140,7 +140,7 @@ each value.</p></dd>
 <span class="r-in"><span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unite.html" class="external-link">unite</a></span><span class="op">(</span><span class="st">"xy"</span>, <span class="va">x</span><span class="op">:</span><span class="va">y</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">xy</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [4 x 2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>copy(`_DT37`)[, `:=`(xy = paste(x, y, sep = "_"))][, `:=`(c("x", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>copy(`_DT41`)[, `:=`(xy = paste(x, y, sep = "_"))][, `:=`(c("x", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "y"), NULL)][, `:=`(c("x", "y"), tstrsplit(xy, split = "[^[:alnum:]]+"))][, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     `:=`("xy", NULL)]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

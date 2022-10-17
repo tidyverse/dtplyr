@@ -140,7 +140,7 @@ as_tibble() returns a tibble.
 <span class="r-in"><span><span class="co"># Show translation and temporarily compute result</span></span></span>
 <span class="r-in"><span><span class="va">avg_mpg</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [3 x 2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT2`[am == 1][, .(mpg = mean(mpg)), keyby = .(cyl)]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>`_DT3`[am == 1][, .(mpg = mean(mpg)), keyby = .(cyl)]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     cyl   mpg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -172,8 +172,8 @@ as_tibble() returns a tibble.
 <span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute</a></span><span class="op">(</span><span class="va">avg_mpg</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [3 x 2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   _DT3 &lt;- `_DT2`[am == 1][, .(mpg = mean(mpg)), keyby = .(cyl)]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `_DT3`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   _DT4 &lt;- `_DT3`[am == 1][, .(mpg = mean(mpg)), keyby = .(cyl)]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `_DT4`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     cyl   mpg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>

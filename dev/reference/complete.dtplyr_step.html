@@ -115,7 +115,7 @@ use instead of <code>NA</code> for missing combinations.</p></dd>
 <span class="r-in"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [4 x 3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>merge(`_DT4`[, CJ(x = x, y = y, unique = TRUE)], `_DT4`, all = TRUE, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>merge(`_DT5`[, CJ(x = x, y = y, unique = TRUE)], `_DT5`, all = TRUE, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     by.x = c("x", "y"), by.y = c("x", "y"), allow.cartesian = TRUE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       x     y     z</span>
@@ -130,7 +130,7 @@ use instead of <code>NA</code> for missing combinations.</p></dd>
 <span class="r-in"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>z <span class="op">=</span> <span class="fl">10L</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Source: </span>local data table [4 x 3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>merge(`_DT4`[, CJ(x = x, y = y, unique = TRUE)], `_DT4`, all = TRUE, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Call:   </span>merge(`_DT5`[, CJ(x = x, y = y, unique = TRUE)], `_DT5`, all = TRUE, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     by.x = c("x", "y"), by.y = c("x", "y"), allow.cartesian = TRUE)[, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     `:=`(z = fcoalesce(z, 10L))]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
