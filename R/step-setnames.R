@@ -43,13 +43,9 @@ step_setnames <- function(x, old, new, in_place, rename_groups = FALSE) {
 }
 
 # Replace character `NA` names with "NA"
-# Replace position `NA` with column position
 replace_setnames_na <- function(x) {
   if (is.character(x)) {
-    vctrs::vec_assign(x, is.na(x), "NA")
-  } else {
-    is_na <- is.na(x)
-    na_locs <- seq_along(x)[is_na]
-    vctrs::vec_assign(x, is_na, na_locs)
+    x <- vctrs::vec_assign(x, is.na(x), "NA")
   }
+  x
 }
