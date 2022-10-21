@@ -151,3 +151,19 @@ test_that("informative errors on unsupported features", {
 
 })
 
+test_that("can pivot all cols to long", {
+  tbl <- tibble(x = 1:2, y = 3:4)
+  dt <- lazy_dt(tbl, "DT")
+  step <- pivot_longer(dt, x:y)
+  out <- collect(step)
+
+  expect_equal(
+    show_query(step),
+    expr(melt(DT, measure.vars = !!c("x", "y"), variable.name = "name",
+              variable.factor = FALSE))
+  )
+  expect_equal(step$vars, c("name", "value"))
+  expect_equal(out$name, c("x", "x", "y", "y"))
+  expect_equal(out$value, c(1, 2, 3, 4))
+})
+

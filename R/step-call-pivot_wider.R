@@ -74,6 +74,8 @@ pivot_wider.dtplyr_step <- function(data,
     new_vars <- as.character(new_vars)
   }
 
+  new_vars <- vctrs::vec_assign(new_vars, is.na(new_vars), "NA")
+
   if (!is.null(names_glue)) {
     glue_df <- as.data.table(distinct(ungroup(data), !!!syms(names_from)))
     glue_df <- vctrs::vec_rep(glue_df, length(values_from))
