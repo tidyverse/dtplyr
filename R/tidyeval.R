@@ -212,6 +212,20 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, "row_number", n = 1)) {
     arg <- dt_squash(x[[2]], env, data, j = j)
     expr(frank(!!arg, ties.method = "first", na.last = "keep"))
+  } else if (is_call(x, "min_rank")) {
+    arg <- dt_squash(x[[2]], env, data, j = j)
+    expr(frank(!!arg, ties.method = "min", na.last = "keep"))
+  } else if (is_call(x, "dense_rank")) {
+    arg <- dt_squash(x[[2]], env, data, j = j)
+    expr(frank(!!arg, ties.method = "dense", na.last = "keep"))
+  } else if (is_call(x, "percent_rank")) {
+    arg <- dt_squash(x[[2]], env, data, j = j)
+    frank_expr <- expr((frank(!!arg, ties.method = "min", na.last = "keep") - 1))
+    expr(!!frank_expr / (sum(!is.na(!!arg)) - 1))
+  } else if (is_call(x, "cume_dist")) {
+    arg <- dt_squash(x[[2]], env, data, j = j)
+    frank_expr <- expr(frank(!!arg, ties.method = "max", na.last = "keep"))
+    expr(!!frank_expr / sum(!is.na(!!arg)))
   } else if (is.function(x[[1]]) || is_call(x, "function")) {
     simplify_function_call(x, env, data, j = j)
   } else if (is_call(x, c("glue", "str_glue")) && j) {
