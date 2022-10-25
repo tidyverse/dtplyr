@@ -265,7 +265,7 @@ test_that("n() is equivalent to .N", {
   )
 })
 
-test_that("row_number() is equivalent .I", {
+test_that("row_number() is equivalent seq_len(.N)", {
   dt <- lazy_dt(data.frame(g = c(1, 1, 2), x = 1:3))
 
   expect_equal(
@@ -284,6 +284,21 @@ test_that("row_number(x) is equivalent to rank", {
     dt %>% mutate(n = row_number(x)) %>% pull(),
     c(1L, 3L, 2L)
   )
+})
+
+test_that("ranking functions are translated", {
+  df <- lazy_dt(tibble(x = c(1, 2, NA, 1, 0, NaN)))
+
+  res <- df %>%
+    mutate(percent_rank = percent_rank(x),
+           min_rank = min_rank(x),
+           dense_rank = dense_rank(x),
+           cume_dist = cume_dist(x))
+
+  expect_equal(pull(res, percent_rank), c(1 / 3, 1, NA, 1 / 3, 0, NA))
+  expect_equal(pull(res, min_rank), c(2L, 4L, NA, 2L, 1L, NA))
+  expect_equal(pull(res, dense_rank), c(2L, 3L, NA, 2L, 1L, NA))
+  expect_equal(pull(res, cume_dist), c(.75, 1, NA, .75, .25, NA))
 })
 
 test_that("scoped verbs produce nice output", {
