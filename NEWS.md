@@ -1,5 +1,8 @@
 # dtplyr (development version)
 
+* `min_rank()`, `dense_rank()`, `percent_rank()`, & `cume_dist()` are now translated
+  to their `data.table` equivalents (#396)
+
 * `names_glue` now works in `pivot_wider()` when `names_from` contains `NA`s (#394)
 
 * `full_join()` now produces output with correctly named columns when a non-default 
