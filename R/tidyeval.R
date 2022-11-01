@@ -152,9 +152,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, "cur_group_rows")) {
     quote(.I)
   } else if (is_call(x, "desc")) {
-    if (!has_length(x, 2L)) {
-      abort("`desc()` expects exactly one argument.")
-    }
+    check_one_arg(x)
     x[[1]] <- sym("-")
     x[[2]] <- dt_squash(x[[2]], env, data, j)
     x
@@ -213,16 +211,20 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     arg <- dt_squash(x[[2]], env, data, j = j)
     expr(frank(!!arg, ties.method = "first", na.last = "keep"))
   } else if (is_call(x, "min_rank")) {
+    check_one_arg(x)
     arg <- dt_squash(x[[2]], env, data, j = j)
     expr(frank(!!arg, ties.method = "min", na.last = "keep"))
   } else if (is_call(x, "dense_rank")) {
+    check_one_arg(x)
     arg <- dt_squash(x[[2]], env, data, j = j)
     expr(frank(!!arg, ties.method = "dense", na.last = "keep"))
   } else if (is_call(x, "percent_rank")) {
+    check_one_arg(x)
     arg <- dt_squash(x[[2]], env, data, j = j)
     frank_expr <- expr((frank(!!arg, ties.method = "min", na.last = "keep") - 1))
     expr(!!frank_expr / (sum(!is.na(!!arg)) - 1))
   } else if (is_call(x, "cume_dist")) {
+    check_one_arg(x)
     arg <- dt_squash(x[[2]], env, data, j = j)
     frank_expr <- expr(frank(!!arg, ties.method = "max", na.last = "keep"))
     expr(!!frank_expr / sum(!is.na(!!arg)))
@@ -314,4 +316,11 @@ fun_name <- function(fun) {
   }
 
   NULL
+}
+
+check_one_arg <- function(x) {
+  fun <- as_name(x[[1]])
+  if (!has_length(x, 2L)) {
+    abort(glue("`{fun}()` expects exactly one argument."))
+  }
 }
