@@ -60,7 +60,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="dtplyr-development-version">dtplyr (development version)<a class="anchor" aria-label="anchor" href="#dtplyr-development-version"></a></h2>
-<ul><li><p><code>names_glue</code> now works in <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider()</a></code> when <code>names_from</code> contains <code>NA</code>s (<a href="https://github.com/tidyverse/dtplyr/issues/394" class="external-link">#394</a>)</p></li>
+<ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/ranking.html" class="external-link">min_rank()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/ranking.html" class="external-link">dense_rank()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/ranking.html" class="external-link">percent_rank()</a></code>, &amp; <code><a href="https://dplyr.tidyverse.org/reference/ranking.html" class="external-link">cume_dist()</a></code> are now translated to their <code>data.table</code> equivalents (<a href="https://github.com/tidyverse/dtplyr/issues/396" class="external-link">#396</a>)</p></li>
+<li><p><code>names_glue</code> now works in <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider()</a></code> when <code>names_from</code> contains <code>NA</code>s (<a href="https://github.com/tidyverse/dtplyr/issues/394" class="external-link">#394</a>)</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join()</a></code> now produces output with correctly named columns when a non-default value for <code>suffix</code> is supplied. Previously the <code>suffix</code> argument was ignored (<a href="https://github.com/tidyverse/dtplyr/issues/382" class="external-link">#382</a>).</p></li>
 <li><p>Chained operations properly prevent modify-by-reference (<a href="https://github.com/tidyverse/dtplyr/issues/210" class="external-link">#210</a>)</p></li>
 <li><p><code>dplyr</code> and <code>tidyr</code> verbs no longer dispatch to <code>dtplyr</code> translations when used directly on <code>data.table</code> objects. <code><a href="../reference/lazy_dt.html">lazy_dt()</a></code> must now explicitly be called by the user. (<a href="https://github.com/tidyverse/dtplyr/issues/312" class="external-link">#312</a>)</p></li>
@@ -87,10 +88,12 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.2" id="dtplyr-122">dtplyr 1.2.2<a class="anchor" aria-label="anchor" href="#dtplyr-122"></a></h2><p class="text-muted">CRAN release: 2022-08-20</p>
-<ul><li>Hot patch release to resolve R CMD check failures.</li></ul></div>
+<ul><li>Hot patch release to resolve R CMD check failures.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.1" id="dtplyr-121">dtplyr 1.2.1<a class="anchor" aria-label="anchor" href="#dtplyr-121"></a></h2><p class="text-muted">CRAN release: 2022-01-19</p>
-<ul><li>Fix for upcoming rlang release.</li></ul></div>
+<ul><li>Fix for upcoming rlang release.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.0" id="dtplyr-120">dtplyr 1.2.0<a class="anchor" aria-label="anchor" href="#dtplyr-120"></a></h2><p class="text-muted">CRAN release: 2021-12-05</p>
 <div class="section level3">
@@ -230,7 +233,8 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.2" id="dtplyr-002">dtplyr 0.0.2<a class="anchor" aria-label="anchor" href="#dtplyr-002"></a></h2><p class="text-muted">CRAN release: 2017-04-21</p>
-<ul><li>This is a compatibility release. It makes dtplyr compatible with dplyr 0.6.0 in addition to dplyr 0.5.0.</li></ul></div>
+<ul><li>This is a compatibility release. It makes dtplyr compatible with dplyr 0.6.0 in addition to dplyr 0.5.0.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.1" id="dtplyr-001">dtplyr 0.0.1<a class="anchor" aria-label="anchor" href="#dtplyr-001"></a></h2><p class="text-muted">CRAN release: 2016-06-27</p>
 <ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct()</a></code> gains <code>.keep_all</code> argument (<a href="https://github.com/tidyverse/dtplyr/issues/30" class="external-link">#30</a>, <a href="https://github.com/tidyverse/dtplyr/issues/31" class="external-link">#31</a>).</p></li>
