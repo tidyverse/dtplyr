@@ -30,7 +30,8 @@ globalVariables(dt_funs)
 
 capture_dots <- function(.data, ..., .j = TRUE) {
   dots <- enquos(..., .named = .j)
-  dots <- lapply(dots, dt_squash, data = .data, j = .j)
+  top_across <- map(dots, quo_is_call, "across")
+  dots <- map2(dots, top_across, ~ dt_squash(.x, data = .data, j = .j, is_top_across = .y))
 
   # Remove names from any list elements
   is_list <- map_lgl(dots, is.list)
@@ -44,7 +45,8 @@ capture_dots <- function(.data, ..., .j = TRUE) {
 capture_new_vars <- function(.data, ...) {
   dots <- as.list(enquos(..., .named = TRUE))
   for (i in seq_along(dots)) {
-    dot <- dt_squash(dots[[i]], data = .data)
+    dot <- dots[[i]]
+    dot <- dt_squash(dot, data = .data, is_top_across = quo_is_call(dot, "across"))
     if (is.null(dot)) {
       dots[i] <- list(NULL)
     } else {
@@ -67,7 +69,7 @@ capture_dot <- function(.data, x, j = TRUE) {
 }
 
 # squash quosures
-dt_squash <- function(x, env, data, j = TRUE) {
+dt_squash <- function(x, env, data, j = TRUE, is_top_across = TRUE) {
   if (is_atomic(x) || is_null(x)) {
     x
   } else if (is_symbol(x)) {
@@ -101,21 +103,30 @@ dt_squash <- function(x, env, data, j = TRUE) {
       }
     }
   } else if (is_quosure(x)) {
-    dt_squash(get_expr(x), get_env(x), data, j = j)
+    dt_squash(get_expr(x), get_env(x), data, j = j, is_top_across)
   } else if (is_call(x, "if_any")) {
     dt_squash_if(x, env, data, j = j, reduce = "|")
   } else if (is_call(x, "if_all")) {
     dt_squash_if(x, env, data, j = j, reduce = "&")
   } else if (is_call(x, "across")) {
-    dt_squash_across(x, env, data, j = j)
+    dt_squash_across(x, env, data, j = j, is_top_across)
+  } else if (is_call(x, "pick")) {
+    call <- call_match(x, pick, dots_expand = FALSE)
+    .cols <- call2("c", !!!call$...)
+    across_call <- call2("across", .cols)
+    dt_squash_across(across_call, env, data, j, is_top_across)
   } else if (is_call(x)) {
-    dt_squash_call(x, env, data, j = j)
+    dt_squash_call(x, env, data, j = j, is_top_across)
   } else {
     abort("Invalid input")
   }
 }
 
-dt_squash_call <- function(x, env, data, j = TRUE) {
+pick <- function(...) {
+  "yep"
+}
+
+dt_squash_call <- function(x, env, data, j = TRUE, is_top_across = TRUE) {
   if (is_mask_pronoun(x)) {
     var <- x[[3]]
     if (is_call(x, "[[")) {
@@ -127,7 +138,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
       sym(paste0("..", var))
     }
   } else if (is_call(x, c("coalesce", "replace_na"))) {
-    args <- lapply(x[-1], dt_squash, env = env, data = data, j = j)
+    args <- lapply(x[-1], dt_squash, env, data, j, is_top_across)
     call2("fcoalesce", !!!args)
   } else if (is_call(x, "case_when")) {
     # case_when(x ~ y) -> fcase(x, y)
@@ -139,7 +150,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
         x[[3]]
       )
     }))
-    args <- lapply(args, dt_squash, env = env, data = data, j = j)
+    args <- lapply(args, dt_squash, env = env, data = data, j = j, is_top_across)
     call2("fcase", !!!args)
   } else if (is_call(x, "cur_data")) {
     quote(.SD)
@@ -164,7 +175,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     }
 
     x[[1]] <- quote(fifelse)
-    x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
+    x[-1] <- lapply(x[-1], dt_squash, env, data, j = j, is_top_across)
     x
   } else if (is_call(x, c("lag", "lead"))) {
     if (is_call(x, "lag")) {
@@ -237,7 +248,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     }
     call
   } else {
-    x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
+    x[-1] <- lapply(x[-1], dt_squash, env, data, j = j, is_top_across)
     x
   }
 }
