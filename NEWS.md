@@ -2,6 +2,10 @@
 
 * `min_rank()`, `dense_rank()`, `percent_rank()`, & `cume_dist()` are now translated
   to their `data.table` equivalents (#396)
+  
+* `pick()` is now translated (#341)
+
+* `across()` output can now be used as a data frame (#341)
 
 * `names_glue` now works in `pivot_wider()` when `names_from` contains `NA`s (#394)
 
