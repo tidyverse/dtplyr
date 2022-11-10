@@ -158,6 +158,26 @@ test_that("across() .cols is evaluated in across()'s calling environment", {
   )
 })
 
+test_that("across() output can be used as a data frame", {
+  df <- lazy_dt(tibble(x = 1:3, y = 1:3, z = c("a", "a", "b")))
+  res <- df %>%
+    mutate(across_df = rowSums(across(c(x, y), ~ .x + 1))) %>%
+    collect()
+
+  expect_named(res, c("x", "y", "z", "across_df"))
+  expect_equal(res$across_df, c(4, 6, 8))
+})
+
+test_that("pick() works", {
+  df <- lazy_dt(tibble(x = 1:3, y = 1:3, z = c("a", "a", "b")))
+  res <- df %>%
+    mutate(row_sum = rowSums(pick(x, y))) %>%
+    collect()
+
+  expect_named(res, c("x", "y", "z", "row_sum"))
+  expect_equal(res$row_sum, c(2, 4, 6))
+})
+
 # if_all ------------------------------------------------------------------
 
 test_that("if_all collapses multiple expresions", {
@@ -268,7 +288,7 @@ test_that("if_all() can handle empty selection", {
   )
 })
 
-test_that("across() .cols is evaluated in across()'s calling environment", {
+test_that("if_all() .cols is evaluated in across()'s calling environment", {
   dt <- lazy_dt(data.frame(y = 1))
   fun <- function(x) capture_if_all(dt, if_all(all_of(x)))
   expect_equal(
