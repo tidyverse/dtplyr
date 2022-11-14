@@ -3,10 +3,10 @@ capture_across <- function(data, x, j = TRUE) {
   dt_squash_across(get_expr(x), get_env(x), data, j)
 }
 
-dt_squash_across <- function(call, env, data, j = j, is_top_across = TRUE) {
+dt_squash_across <- function(call, env, data, j = j, is_top = TRUE) {
   call <- match.call(dplyr::across, call, expand.dots = FALSE, envir = env)
   out <- across_setup(data, call, env, allow_rename = TRUE, j = j, fn = "across()")
-  if (is_false(is_top_across)) {
+  if (is_false(is_top)) {
     out <- call2("data.table", !!!out)
   }
   out
