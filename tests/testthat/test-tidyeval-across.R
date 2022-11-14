@@ -167,7 +167,7 @@ test_that("across() output can be used as a data frame", {
   expect_named(res, c("x", "y", "z", "across_df"))
   expect_equal(res$across_df, c(4, 6, 8))
 
-  expr <- dt_squash(expr(across(c(x, y), ~ .x + 1)), df$env, df, is_top_across = FALSE)
+  expr <- dt_squash(expr(across(c(x, y), ~ .x + 1)), df$env, df, is_top = FALSE)
   expect_equal(expr, expr(data.table(x = x + 1, y = y + 1)))
 })
 
@@ -180,8 +180,11 @@ test_that("pick() works", {
   expect_named(res, c("x", "y", "z", "row_sum"))
   expect_equal(res$row_sum, c(2, 4, 6))
 
-  expr <- dt_squash(expr(pick(x, y)), df$env, df, is_top_across = FALSE)
+  expr <- dt_squash(expr(pick(x, y)), df$env, df, is_top = FALSE)
   expect_equal(expr, expr(data.table(x = x, y = y)))
+
+  # Top level pick works
+  expect_equal(group_by(df, pick(x, y))$groups, c("x", "y"))
 })
 
 # if_all ------------------------------------------------------------------
