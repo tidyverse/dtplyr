@@ -1,3 +1,59 @@
+# slice_*() checks for empty ...
+
+    Code
+      slice_head(dt, 5)
+    Condition
+      Error in `slice_head()`:
+      ! `...` must be empty.
+      x Problematic argument:
+      * ..1 = 5
+      i Did you forget to name an argument?
+    Code
+      slice_tail(dt, 5)
+    Condition
+      Error in `slice_tail()`:
+      ! `...` must be empty.
+      x Problematic argument:
+      * ..1 = 5
+      i Did you forget to name an argument?
+    Code
+      slice_min(dt, x, 5)
+    Condition
+      Error in `slice_min_max()`:
+      ! `...` must be empty.
+      x Problematic argument:
+      * ..1 = 5
+      i Did you forget to name an argument?
+    Code
+      slice_max(dt, x, 5)
+    Condition
+      Error in `slice_min_max()`:
+      ! `...` must be empty.
+      x Problematic argument:
+      * ..1 = 5
+      i Did you forget to name an argument?
+    Code
+      slice_sample(dt, 5)
+    Condition
+      Error in `slice_sample()`:
+      ! `...` must be empty.
+      x Problematic argument:
+      * ..1 = 5
+      i Did you forget to name an argument?
+
+---
+
+    Code
+      slice_min(dt)
+    Condition
+      Error in `slice_min()`:
+      ! argument `order_by` is missing, with no default.
+    Code
+      slice_max(dt)
+    Condition
+      Error in `slice_max()`:
+      ! argument `order_by` is missing, with no default.
+
 # check_slice_catches common errors
 
     Code

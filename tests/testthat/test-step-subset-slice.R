@@ -127,14 +127,19 @@ test_that("arguments to sample are passed along", {
 
 test_that("slice_*() checks for empty ...", {
   dt <- lazy_dt(data.frame(x = 1:10))
-  expect_error(slice_head(dt, 5), class = "rlib_error_dots_nonempty")
-  expect_error(slice_tail(dt, 5), class = "rlib_error_dots_nonempty")
-  expect_error(slice_min(dt, x, 5), class = "rlib_error_dots_nonempty")
-  expect_error(slice_max(dt, x, 5), class = "rlib_error_dots_nonempty")
-  expect_error(slice_sample(dt, 5), class = "rlib_error_dots_nonempty")
 
-  expect_error(slice_min(dt), "missing")
-  expect_error(slice_max(dt), "missing")
+  expect_snapshot(error = TRUE, {
+    slice_head(dt, 5)
+    slice_tail(dt, 5)
+    slice_min(dt, x, 5)
+    slice_max(dt, x, 5)
+    slice_sample(dt, 5)
+  })
+
+  expect_snapshot(error = TRUE, {
+    slice_min(dt)
+    slice_max(dt)
+  })
 })
 
 test_that("slice_*() checks for constant n= and prop=", {
