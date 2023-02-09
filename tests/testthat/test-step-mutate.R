@@ -174,6 +174,15 @@ test_that("new columns take precedence over global variables", {
   )
 })
 
+test_that("works with `.by`", {
+  dt <- lazy_dt(data.table(x = 1:3, y = c("a", "a", "b")))
+  step <- dt %>%
+    mutate(row_num = row_number(), .by = y)
+
+  expect_equal(as_tibble(step), tibble(x = 1:3, y = c("a", "a", "b"), row_num = c(1, 2, 1)))
+  expect_true(length(step$groups) == 0)
+})
+
 # var = NULL -------------------------------------------------------------
 
 test_that("var = NULL works when var is in original data", {
