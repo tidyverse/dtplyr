@@ -37,24 +37,30 @@ summarise.dtplyr_step <- function(.data, ..., .by = NULL, .groups = NULL) {
   check_summarise_vars(dots)
 
   by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
+  if (by$uses_by) {
+    group_vars <- by$names
+    .groups <- "drop"
+  } else {
+    group_vars <- .data$groups
+  }
 
   if (length(dots) == 0) {
-    if (length(.data$groups) == 0) {
+    if (length(group_vars) == 0) {
       out <- step_subset_j(.data, vars = character(), j = 0L)
     } else {
       # Acts like distinct on grouping vars
-      out <- distinct(.data, !!!syms(.data$groups))
+      out <- distinct(.data, !!!syms(group_vars))
     }
   } else {
     out <- step_subset_j(
       .data,
-      vars = union(.data$groups, names(dots)),
+      vars = union(group_vars, names(dots)),
       j = call2(".", !!!dots),
       by = by
     )
   }
 
-  replaced_group_vars <- intersect(.data$groups, names(dots))
+  replaced_group_vars <- intersect(group_vars, names(dots))
   if (!is_empty(replaced_group_vars)) {
     out <- step_subset(
       out,
@@ -63,14 +69,8 @@ summarise.dtplyr_step <- function(.data, ..., .by = NULL, .groups = NULL) {
     )
   }
 
-  if (by$uses_by) {
-    out <- ungroup(out)
-  } else {
-    out_groups <- summarise_groups(.data, .groups, caller_env())
-    out <- step_group(out, groups = out_groups)
-  }
-
-  out
+  out_groups <- summarise_groups(.data, .groups, caller_env())
+  step_group(out, groups = out_groups)
 }
 
 
