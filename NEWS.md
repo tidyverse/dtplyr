@@ -1,11 +1,35 @@
 # dtplyr (development version)
 
-* `min_rank()`, `dense_rank()`, `percent_rank()`, & `cume_dist()` are now translated
+## New features
+
+* New translations:
+
+  * `add_count()`
+  * `unite()`
+
+* `.by`/`by` has been implemented for `mutate()`, `summarise()`, `filter()`,
+  and the `slice()` family (#399)
+
+* `min_rank()`, `dense_rank()`, `percent_rank()`, & `cume_dist()` are now mapped
   to their `data.table` equivalents (#396)
   
 * `pick()` is now translated (#341)
 
 * `across()` output can now be used as a data frame (#341)
+
+## Performance improvements
+
+* `select()` now drops columns by reference when possible for improved performance (#367)
+
+* `arrange()` now utilizes `setorder()` when possible for improved performance (#364)
+
+* `slice()` uses an intermediate variable to reduce computation time of row selection (#377)
+
+## Minor improvements and bug fixes
+
+* `dplyr` and `tidyr` verbs no longer dispatch to `dtplyr` translations when used
+  directly on `data.table` objects. `lazy_dt()` must now explicitly be called by
+  the user. (#312)
 
 * `names_glue` now works in `pivot_wider()` when `names_from` contains `NA`s (#394)
 
@@ -13,10 +37,6 @@
   value for `suffix` is supplied. Previously the `suffix` argument was ignored (#382).
 
 * Chained operations properly prevent modify-by-reference (#210)
-
-* `dplyr` and `tidyr` verbs no longer dispatch to `dtplyr` translations when used
-  directly on `data.table` objects. `lazy_dt()` must now explicitly be called by
-  the user. (#312)
 
 * An error now occurs when `where()` is used for selection (#271)
 
@@ -28,11 +48,6 @@
   to specify `.envir`
 
 * Can use `.data` pronoun inside `desc()` in `arrange()` (#346)
-
-* New translations:
-
-  * `add_count()`
-  * `unite()`
 
 * `if_any()` and `if_all()` now work for a list of functions specified in the
   `.fns` argument(@mgirlich, #335).
@@ -50,11 +65,6 @@
 * `dtplyr` no longer directly depends on `ellipsis`
 
 * `count()` properly handles grouping variables (#356)
-
-* `select()` now drops columns by reference when possible for improved performance (#367)
-* `arrange()` now utilizes `setorder()` when possible for improved performance (#364)
-
-* `slice()` uses an intermediate variable to reduce computation time of row selection (#377)
 
 # dtplyr 1.2.2
 
