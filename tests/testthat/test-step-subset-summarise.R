@@ -53,6 +53,15 @@ test_that("works with `.by`", {
   expect_true(length(step$groups) == 0)
 })
 
+test_that("works with `.by` and no dots", {
+  dt <- lazy_dt(data.table(x = 1:3, y = c("a", "a", "b"), z = c("a", "a", "b")))
+  step <- dt %>%
+    summarize(.by = c(y, z))
+
+  expect_equal(as_tibble(step), tibble(y = c("a", "b"), z = c("a", "b")))
+  expect_true(length(step$groups) == 0)
+})
+
 test_that("summarise sorts groups", {
   dt <- lazy_dt(data.table(x = 2:1))
   expect_equal(
