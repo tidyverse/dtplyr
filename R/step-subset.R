@@ -32,9 +32,13 @@ step_subset <- function(parent,
 }
 
 # Grouped i needs an intermediate assignment for maximum efficiency
-step_subset_i <- function(parent, i) {
+step_subset_i <- function(parent, i, by = default_by) {
   if (is_empty(i)) {
     return(parent)
+  }
+
+  if (by$uses_by) {
+    parent$groups <- by$names
   }
 
   if (length(parent$groups) > 0) {
@@ -46,6 +50,10 @@ step_subset_i <- function(parent, i) {
     i <- call("$", i, quote(V1))              # dt[, .I[], by = ()]$V1
   }
 
+  if (by$uses_by) {
+    parent <- ungroup(parent)
+  }
+
   step_subset(parent, i = i)
 }
 
@@ -55,7 +63,8 @@ step_subset_j <- function(parent,
                           vars = parent$vars,
                           groups = parent$groups,
                           arrange = parent$arrange,
-                          j = NULL) {
+                          j = NULL,
+                          by = default_by) {
   if (can_merge_subset(parent)) {
     i <- parent$i
     on <- parent$on
@@ -65,7 +74,11 @@ step_subset_j <- function(parent,
     on <- character()
   }
 
-  step_subset(
+  if (by$uses_by) {
+    parent$groups <- by$names
+  }
+
+  out <- step_subset(
     parent,
     vars = vars,
     groups = groups,
@@ -74,6 +87,12 @@ step_subset_j <- function(parent,
     j = j,
     on = on
   )
+
+  if (by$uses_by) {
+    out <- ungroup(out)
+  }
+
+  out
 }
 
 can_merge_subset <- function(x) {
