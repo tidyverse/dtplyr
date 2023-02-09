@@ -8,21 +8,27 @@
 \alias{slice_max.dtplyr_step}
 \title{Subset rows using their positions}
 \usage{
-\method{slice}{dtplyr_step}(.data, ...)
+\method{slice}{dtplyr_step}(.data, ..., .by = NULL)
 
-\method{slice_head}{dtplyr_step}(.data, ..., n, prop)
+\method{slice_head}{dtplyr_step}(.data, ..., n, prop, by = NULL)
 
-\method{slice_tail}{dtplyr_step}(.data, ..., n, prop)
+\method{slice_tail}{dtplyr_step}(.data, ..., n, prop, by = NULL)
 
-\method{slice_min}{dtplyr_step}(.data, order_by, ..., n, prop, with_ties = TRUE)
+\method{slice_min}{dtplyr_step}(.data, order_by, ..., n, prop, by = NULL, with_ties = TRUE)
 
-\method{slice_max}{dtplyr_step}(.data, order_by, ..., n, prop, with_ties = TRUE)
+\method{slice_max}{dtplyr_step}(.data, order_by, ..., n, prop, by = NULL, with_ties = TRUE)
 }
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
 
 \item{...}{Positive integers giving rows to select, or negative
 integers giving rows to drop.}
+
+\item{.by, by}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optionally, a selection of columns to
+group by for just this operation, functioning as an alternative to \code{\link[dplyr:group_by]{group_by()}}. For
+details and examples, see \link[dplyr:dplyr_by]{?dplyr_by}.}
 
 \item{n, prop}{Provide either \code{n}, the number of rows, or \code{prop}, the
 proportion of rows to select. If neither are supplied, \code{n = 1} will be
@@ -36,7 +42,9 @@ the result will be silently truncated to the group size. If the
 \code{prop}ortion of a group size does not yield an integer number of rows, the
 absolute value of \code{prop*n()} is rounded down.}
 
-\item{order_by}{Variable or function of variables to order by.}
+\item{order_by}{<\code{\link[dplyr:dplyr_data_masking]{data-masking}}> Variable or function
+of variables to order by. To order by multiple variables, wrap them in a
+data frame or tibble.}
 
 \item{with_ties}{Should ties be kept together? The default, \code{TRUE},
 may return more rows than you request. Use \code{FALSE} to ignore ties,

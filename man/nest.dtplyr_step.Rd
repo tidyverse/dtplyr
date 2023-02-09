@@ -13,16 +13,10 @@
 using name-variable pairs of the form \code{new_col = c(col1, col2, col3)}.
 The right hand side can be any valid tidy select expression.}
 
-\item{.names_sep}{If \code{NULL}, the default, the names will be left
-as is. In \code{nest()}, inner names will come from the former outer names;
-in \code{unnest()}, the new outer names will come from the inner names.
-
-If a string, the inner and outer names will be used together. In
-\code{unnest()}, the names of the new outer columns will be formed by pasting
-together the outer and the inner column names, separated by \code{names_sep}. In
-\code{nest()}, the new inner names will have the outer names + \code{names_sep}
-automatically stripped. This makes \code{names_sep} roughly symmetric between
-nesting and unnesting.}
+\item{.names_sep}{If \code{NULL}, the default, the inner names will come from
+the former outer names. If a string, the  new inner names will use the
+outer names with \code{names_sep} automatically stripped. This makes
+\code{names_sep} roughly symmetric between nesting and unnesting.}
 
 \item{.key}{Not supported.}
 

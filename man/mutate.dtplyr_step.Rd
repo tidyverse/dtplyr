@@ -7,6 +7,7 @@
 \method{mutate}{dtplyr_step}(
   .data,
   ...,
+  .by = NULL,
   .keep = c("all", "used", "unused", "none"),
   .before = NULL,
   .after = NULL
@@ -18,6 +19,12 @@
 \item{...}{<\link[dplyr:dplyr_data_masking]{data-masking}> Name-value pairs.
 The name gives the name of the column in the output, and the value should
 evaluate to a vector.}
+
+\item{.by}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+<\code{\link[=dplyr_tidy_select]{tidy-select}}> Optionally, a selection of columns to
+group by for just this operation, functioning as an alternative to \code{\link[=group_by]{group_by()}}. For
+details and examples, see \link[=dplyr_by]{?dplyr_by}.}
 
 \item{.keep}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Control which columns from \code{.data} are retained in the output. Grouping
