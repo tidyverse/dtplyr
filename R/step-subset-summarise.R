@@ -32,9 +32,11 @@
 #' dt %>%
 #'   group_by(cyl) %>%
 #'   summarise(across(disp:wt, mean))
-summarise.dtplyr_step <- function(.data, ..., .groups = NULL) {
+summarise.dtplyr_step <- function(.data, ..., .by = NULL, .groups = NULL) {
   dots <- capture_dots(.data, ...)
   check_summarise_vars(dots)
+
+  by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
 
   if (length(dots) == 0) {
     if (length(.data$groups) == 0) {
@@ -47,7 +49,8 @@ summarise.dtplyr_step <- function(.data, ..., .groups = NULL) {
     out <- step_subset_j(
       .data,
       vars = union(.data$groups, names(dots)),
-      j = call2(".", !!!dots)
+      j = call2(".", !!!dots),
+      by = by
     )
   }
 
@@ -60,8 +63,14 @@ summarise.dtplyr_step <- function(.data, ..., .groups = NULL) {
     )
   }
 
-  out_groups <- summarise_groups(.data, .groups, caller_env())
-  step_group(out, groups = out_groups)
+  if (by$uses_by) {
+    out <- ungroup(out)
+  } else {
+    out_groups <- summarise_groups(.data, .groups, caller_env())
+    out <- step_group(out, groups = out_groups)
+  }
+
+  out
 }
 
 

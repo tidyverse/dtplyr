@@ -19,9 +19,11 @@
 #'   filter(mpg > mean(mpg))
 #' @importFrom dplyr filter
 # exported onLoad
-filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
+filter.dtplyr_step <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   check_filter(...)
   dots <- capture_dots(.data, ..., .j = FALSE)
+
+  by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
 
   if (filter_by_lgl_col(dots)) {
     # Suppress data.table warning when filtering with a logical variable
@@ -30,7 +32,7 @@ filter.dtplyr_step <- function(.data, ..., .preserve = FALSE) {
     i <- Reduce(function(x, y) call2("&", x, y), dots)
   }
 
-  step_subset_i(.data, i)
+  step_subset_i(.data, i, by)
 }
 
 filter_by_lgl_col <- function(dots) {

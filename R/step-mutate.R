@@ -1,10 +1,14 @@
-step_mutate <- function(parent, new_vars = list(), use_braces = FALSE) {
+step_mutate <- function(parent, new_vars = list(), use_braces = FALSE, by = default_by) {
   vars <- union(parent$vars, names(new_vars))
   var_is_null <- map_lgl(new_vars, is_null)
   is_last <- !duplicated(names(new_vars), fromLast = TRUE)
   vars <- setdiff(vars, names(new_vars)[var_is_null & is_last])
 
-  new_step(
+  if (by$uses_by) {
+    parent$groups <- by$names
+  }
+
+  out <- new_step(
     parent,
     vars = vars,
     groups = parent$groups,
@@ -14,6 +18,12 @@ step_mutate <- function(parent, new_vars = list(), use_braces = FALSE) {
     use_braces = use_braces,
     class = "dtplyr_step_mutate"
   )
+
+  if (by$uses_by) {
+    out <- ungroup(out)
+  }
+
+  out
 }
 
 dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
@@ -76,6 +86,7 @@ mutate_with_braces <- function(mutate_vars) {
 #'   <[`tidy-select`][dplyr_tidy_select]> Optionally, control where new columns
 #'   should appear (the default is to add to the right hand side). See
 #'   [relocate()] for more details.
+#' @inheritParams args_by
 #' @importFrom dplyr mutate
 #' @export
 #' @examples
@@ -90,6 +101,7 @@ mutate_with_braces <- function(mutate_vars) {
 #' dt %>%
 #'   mutate(x1 = x + 1, x2 = x1 + 1)
 mutate.dtplyr_step <- function(.data, ...,
+                               .by = NULL,
                                .keep = c("all", "used", "unused", "none"),
                                .before = NULL, .after = NULL) {
   all_dots <- capture_new_vars(.data, ...)
@@ -98,10 +110,12 @@ mutate.dtplyr_step <- function(.data, ...,
   dots_list <- process_new_vars(.data, dots)
   dots <- dots_list$dots
 
+  by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
+
   if (is_null(dots) || is_empty(dots)) {
     out <- .data
   } else {
-    out <- step_mutate(.data, dots, dots_list$use_braces)
+    out <- step_mutate(.data, dots, dots_list$use_braces, by)
 
     .before <- enquo(.before)
     .after <- enquo(.after)
