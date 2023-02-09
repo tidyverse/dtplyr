@@ -1,5 +1,11 @@
 # dtplyr (development version)
 
+## Breaking changes
+
+* `dplyr` and `tidyr` verbs no longer dispatch to `dtplyr` translations when used
+  directly on `data.table` objects. `lazy_dt()` must now explicitly be called by
+  the user. (#312)
+
 ## New features
 
 * New translations:
@@ -26,10 +32,6 @@
 * `slice()` uses an intermediate variable to reduce computation time of row selection (#377)
 
 ## Minor improvements and bug fixes
-
-* `dplyr` and `tidyr` verbs no longer dispatch to `dtplyr` translations when used
-  directly on `data.table` objects. `lazy_dt()` must now explicitly be called by
-  the user. (#312)
 
 * `names_glue` now works in `pivot_wider()` when `names_from` contains `NA`s (#394)
 
