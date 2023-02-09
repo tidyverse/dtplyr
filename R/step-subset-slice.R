@@ -55,8 +55,9 @@
 #' # physical weight of the cars, so heavy cars are more likely to get
 #' # selected
 #' dt %>% slice_sample(weight_by = wt, n = 5)
-slice.dtplyr_step <- function(.data, ...) {
+slice.dtplyr_step <- function(.data, ..., .by = NULL) {
   dots <- capture_dots(.data, ..., .j = FALSE)
+  by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
 
   if (length(dots) == 0) {
     i <- NULL
@@ -73,35 +74,38 @@ slice.dtplyr_step <- function(.data, ...) {
     i <- call2("{", assign_rows_var, subset_valid_rows)
   }
 
-  step_subset_i(.data, i)
+  step_subset_i(.data, i, by)
 }
 
 #' @rdname slice.dtplyr_step
 #' @importFrom dplyr slice_head
 #' @inheritParams dplyr::slice
 #' @export
-slice_head.dtplyr_step <- function(.data, ..., n, prop) {
+slice_head.dtplyr_step <- function(.data, ..., n, prop, by = NULL) {
   check_dots_empty()
+  by <- compute_by({{ by }}, .data, by_arg = "by", data_arg = ".data")
   size <- get_slice_size(n, prop, "slice_head")
   i <- expr(rlang::seq2(1L, !!size))
-  step_subset_i(.data, i = i)
+  step_subset_i(.data, i = i, by)
 }
 
 #' @rdname slice.dtplyr_step
 #' @importFrom dplyr slice_tail
 #' @export
-slice_tail.dtplyr_step <- function(.data, ..., n, prop) {
+slice_tail.dtplyr_step <- function(.data, ..., n, prop, by = NULL) {
   check_dots_empty()
+  by <- compute_by({{ by }}, .data, by_arg = "by", data_arg = ".data")
   size <- get_slice_size(n, prop, "slice_tail")
   i <- expr(rlang::seq2(.N - !!size + 1L, .N))
-  step_subset_i(.data, i = i)
+  step_subset_i(.data, i = i, by)
 }
 
 #' @rdname slice.dtplyr_step
 #' @importFrom dplyr slice_min
 #' @inheritParams dplyr::slice
 #' @export
-slice_min.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRUE) {
+slice_min.dtplyr_step <- function(.data, order_by, ...,
+                                  n, prop, by = NULL, with_ties = TRUE) {
   if (missing(order_by)) {
     abort("argument `order_by` is missing, with no default.")
   }
@@ -113,6 +117,7 @@ slice_min.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
     ...,
     n =  n,
     prop = prop,
+    by = {{ by }},
     with_ties = with_ties,
     .slice_fn = "slice_min"
   )
@@ -121,7 +126,8 @@ slice_min.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
 #' @rdname slice.dtplyr_step
 #' @importFrom dplyr slice_max
 #' @export
-slice_max.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRUE) {
+slice_max.dtplyr_step <- function(.data, order_by, ...,
+                                  n, prop, by = NULL, with_ties = TRUE) {
   if (missing(order_by)) {
     abort("argument `order_by` is missing, with no default.")
   }
@@ -133,15 +139,19 @@ slice_max.dtplyr_step <- function(.data, order_by, ..., n, prop, with_ties = TRU
     ...,
     n =  n,
     prop = prop,
+    by = {{ by }},
     with_ties = with_ties,
     .slice_fn = "slice_max"
   )
 }
 
-slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties = TRUE,
+slice_min_max <- function(.data, order_by, decreasing, ...,
+                          n, prop, by = NULL, with_ties = TRUE,
                           .slice_fn = "slice_min_max") {
   check_dots_empty()
   size <- get_slice_size(n, prop, .slice_fn)
+
+  by <- compute_by({{ by }}, .data, by_arg = "by", data_arg = ".data")
 
   order_by <- capture_dot(.data, {{ order_by }}, j = FALSE)
 
@@ -157,7 +167,7 @@ slice_min_max <- function(.data, order_by, decreasing, ..., n, prop, with_ties =
 
   i <- expr(!!smaller_ranks(!!order_by, !!size, ties.method = ties.method))
 
-  out <- step_subset_i(.data, i)
+  out <- step_subset_i(.data, i, by)
   arrange(out, !!order_by, .by_group = TRUE)
 }
 
