@@ -92,8 +92,13 @@ slice_tail.dtplyr_step <- function(.data, ..., n, prop, by = NULL) {
 #' @importFrom dplyr slice_min
 #' @inheritParams dplyr::slice
 #' @export
-slice_min.dtplyr_step <- function(.data, order_by, ...,
-                                  n, prop, by = NULL, with_ties = TRUE) {
+slice_min.dtplyr_step <- function(.data,
+                                  order_by,
+                                  ...,
+                                  n,
+                                  prop,
+                                  by = NULL,
+                                  with_ties = TRUE) {
   if (missing(order_by)) {
     abort("argument `order_by` is missing, with no default.")
   }
@@ -114,8 +119,13 @@ slice_min.dtplyr_step <- function(.data, order_by, ...,
 #' @rdname slice.dtplyr_step
 #' @importFrom dplyr slice_max
 #' @export
-slice_max.dtplyr_step <- function(.data, order_by, ...,
-                                  n, prop, by = NULL, with_ties = TRUE) {
+slice_max.dtplyr_step <- function(.data,
+                                  order_by,
+                                  ...,
+                                  n,
+                                  prop,
+                                  by = NULL,
+                                  with_ties = TRUE) {
   if (missing(order_by)) {
     abort("argument `order_by` is missing, with no default.")
   }
@@ -133,8 +143,14 @@ slice_max.dtplyr_step <- function(.data, order_by, ...,
   )
 }
 
-slice_min_max <- function(.data, order_by, decreasing, ...,
-                          n, prop, by = NULL, with_ties = TRUE,
+slice_min_max <- function(.data,
+                          order_by,
+                          decreasing,
+                          ...,
+                          n,
+                          prop,
+                          by = NULL,
+                          with_ties = TRUE,
                           .slice_fn = "slice_min_max") {
   check_dots_empty()
   size <- get_slice_size(n, prop, .slice_fn)
