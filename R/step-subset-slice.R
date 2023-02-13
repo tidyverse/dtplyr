@@ -13,19 +13,7 @@
 #'
 #' @importFrom dplyr slice
 #' @param .data A [lazy_dt()].
-#' @param n,prop Provide either `n`, the number of rows, or `prop`, the
-#'   proportion of rows to select. If neither are supplied, `n = 1` will be
-#'   used.
-#'
-#'   If a negative value of `n` or `prop` is provided, the specified number or
-#'   proportion of rows will be removed.
-#'
-#'   If `n` is greater than the number of rows in the group (or `prop > 1`),
-#'   the result will be silently truncated to the group size. If the
-#'   `prop`ortion of a group size does not yield an integer number of rows, the
-#'   absolute value of `prop*n()` is rounded down.
-#' @param ... Positive integers giving rows to select, or negative
-#'   integers giving rows to drop.
+#' @inheritParams dplyr::slice
 #' @export
 #' @examples
 #' library(dplyr, warn.conflicts = FALSE)

@@ -1,17 +1,3 @@
-#' Helper for consistent documentation of `.by`
-#'
-#' Use `@inheritParams args_by` to consistently document `.by`.
-#'
-#' @param .by `r lifecycle::badge("experimental")`
-#'
-#'   <[`tidy-select`][dplyr_tidy_select]> Optionally, a selection of columns to
-#'   group by for just this operation, functioning as an alternative to [group_by()]. For
-#'   details and examples, see [?dplyr_by][dplyr_by].
-#'
-#' @name args_by
-#' @keywords internal
-NULL
-
 compute_by <- function(by,
                        data,
                        ...,

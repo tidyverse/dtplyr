@@ -63,30 +63,7 @@ mutate_with_braces <- function(mutate_vars) {
 #' to [data.table::setcolorder()].
 #'
 #' @param .data A [lazy_dt()].
-#' @param ... <[data-masking][dplyr::dplyr_data_masking]> Name-value pairs.
-#'   The name gives the name of the column in the output, and the value should
-#'   evaluate to a vector.
-#' @param .keep `r lifecycle::badge("experimental")`
-#'   Control which columns from `.data` are retained in the output. Grouping
-#'   columns and columns created by `...` are always kept.
-#'
-#'   * `"all"` retains all columns from `.data`. This is the default.
-#'   * `"used"` retains only the columns used in `...` to create new
-#'     columns. This is useful for checking your work, as it displays inputs
-#'     and outputs side-by-side.
-#'   * `"unused"` retains only the columns _not_ used in `...` to create new
-#'     columns. This is useful if you generate new columns, but no longer need
-#'     the columns used to generate them.
-#'   * `"none"` doesn't retain any extra columns from `.data`. Only the grouping
-#'     variables and columns created by `...` are kept.
-#'
-#'  Note: With dtplyr `.keep` will only work with column names passed as symbols, and won't
-#'  work with other workflows (e.g. `eval(parse(text = "x + 1"))`)
-#' @param .before,.after \Sexpr[results=rd]{lifecycle::badge("experimental")}
-#'   <[`tidy-select`][dplyr_tidy_select]> Optionally, control where new columns
-#'   should appear (the default is to add to the right hand side). See
-#'   [relocate()] for more details.
-#' @inheritParams args_by
+#' @inheritParams dplyr::mutate
 #' @importFrom dplyr mutate
 #' @export
 #' @examples

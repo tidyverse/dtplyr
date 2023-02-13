@@ -7,18 +7,6 @@
 #' @param .data A [lazy_dt()].
 #' @inheritParams dplyr::summarise
 #' @importFrom dplyr summarise
-#' @param .groups \Sexpr[results=rd]{lifecycle::badge("experimental")} Grouping structure of the result.
-#'
-#'   * "drop_last": dropping the last level of grouping. This was the
-#'   only supported option before version 1.0.0.
-#'   * "drop": All levels of grouping are dropped.
-#'   * "keep": Same grouping structure as `.data`.
-#'
-#'   When `.groups` is not specified, it defaults to "drop_last".
-#'
-#'   In addition, a message informs you of that choice, unless the result is ungrouped,
-#'   the option "dplyr.summarise.inform" is set to `FALSE`,
-#'   or when `summarise()` is called from a function in a package.
 #' @export
 #' @examples
 #' library(dplyr, warn.conflicts = FALSE)
