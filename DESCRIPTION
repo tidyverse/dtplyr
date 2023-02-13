@@ -21,7 +21,7 @@ Imports:
     cli (>= 3.4.0),
     crayon,
     data.table (>= 1.13.0),
-    dplyr (>= 1.0.3),
+    dplyr (>= 1.1.0),
     glue,
     lifecycle,
     rlang (>= 1.0.4),
