@@ -44,7 +44,25 @@ test_that("summarise peels off layer of grouping", {
   })
 })
 
-test_that("summarises sorts groups", {
+test_that("works with `.by`", {
+  dt <- lazy_dt(data.table(x = 1:3, y = c("a", "a", "b"), z = c("a", "a", "b")))
+  step <- dt %>%
+    summarize(first_x = first(x), .by = c(y, z))
+
+  expect_equal(as_tibble(step), tibble(y = c("a", "b"), z = c("a", "b"), first_x = c(1, 3)))
+  expect_true(length(step$groups) == 0)
+})
+
+test_that("works with `.by` and no dots", {
+  dt <- lazy_dt(data.table(x = 1:3, y = c("a", "a", "b"), z = c("a", "a", "b")))
+  step <- dt %>%
+    summarize(.by = c(y, z))
+
+  expect_equal(as_tibble(step), tibble(y = c("a", "b"), z = c("a", "b")))
+  expect_true(length(step$groups) == 0)
+})
+
+test_that("summarise sorts groups", {
   dt <- lazy_dt(data.table(x = 2:1))
   expect_equal(
     dt %>% group_by(x) %>% summarise(n = n()) %>% pull(x),

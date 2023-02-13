@@ -7,18 +7,6 @@
 #' @param .data A [lazy_dt()].
 #' @inheritParams dplyr::summarise
 #' @importFrom dplyr summarise
-#' @param .groups \Sexpr[results=rd]{lifecycle::badge("experimental")} Grouping structure of the result.
-#'
-#'   * "drop_last": dropping the last level of grouping. This was the
-#'   only supported option before version 1.0.0.
-#'   * "drop": All levels of grouping are dropped.
-#'   * "keep": Same grouping structure as `.data`.
-#'
-#'   When `.groups` is not specified, it defaults to "drop_last".
-#'
-#'   In addition, a message informs you of that choice, unless the result is ungrouped,
-#'   the option "dplyr.summarise.inform" is set to `FALSE`,
-#'   or when `summarise()` is called from a function in a package.
 #' @export
 #' @examples
 #' library(dplyr, warn.conflicts = FALSE)
@@ -32,26 +20,35 @@
 #' dt %>%
 #'   group_by(cyl) %>%
 #'   summarise(across(disp:wt, mean))
-summarise.dtplyr_step <- function(.data, ..., .groups = NULL) {
+summarise.dtplyr_step <- function(.data, ..., .by = NULL, .groups = NULL) {
   dots <- capture_dots(.data, ...)
   check_summarise_vars(dots)
 
+  by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
+  if (by$uses_by) {
+    group_vars <- by$names
+    .groups <- "drop"
+  } else {
+    group_vars <- .data$groups
+  }
+
   if (length(dots) == 0) {
-    if (length(.data$groups) == 0) {
+    if (length(group_vars) == 0) {
       out <- step_subset_j(.data, vars = character(), j = 0L)
     } else {
       # Acts like distinct on grouping vars
-      out <- distinct(.data, !!!syms(.data$groups))
+      out <- distinct(.data, !!!syms(group_vars))
     }
   } else {
     out <- step_subset_j(
       .data,
-      vars = union(.data$groups, names(dots)),
-      j = call2(".", !!!dots)
+      vars = union(group_vars, names(dots)),
+      j = call2(".", !!!dots),
+      by = by
     )
   }
 
-  replaced_group_vars <- intersect(.data$groups, names(dots))
+  replaced_group_vars <- intersect(group_vars, names(dots))
   if (!is_empty(replaced_group_vars)) {
     out <- step_subset(
       out,

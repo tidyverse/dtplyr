@@ -7,6 +7,7 @@
 \method{mutate}{dtplyr_step}(
   .data,
   ...,
+  .by = NULL,
   .keep = c("all", "used", "unused", "none"),
   .before = NULL,
   .after = NULL
@@ -15,12 +16,25 @@
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
 
-\item{...}{<\link[dplyr:dplyr_data_masking]{data-masking}> Name-value pairs.
-The name gives the name of the column in the output, and the value should
-evaluate to a vector.}
+\item{...}{<\code{\link[dplyr:dplyr_data_masking]{data-masking}}> Name-value pairs.
+The name gives the name of the column in the output.
 
-\item{.keep}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Control which columns from \code{.data} are retained in the output. Grouping
+The value can be:
+\itemize{
+\item A vector of length 1, which will be recycled to the correct length.
+\item A vector the same length as the current group (or the whole data frame
+if ungrouped).
+\item \code{NULL}, to remove the column.
+\item A data frame or tibble, to create multiple columns in the output.
+}}
+
+\item{.by}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optionally, a selection of columns to
+group by for just this operation, functioning as an alternative to \code{\link[dplyr:group_by]{group_by()}}. For
+details and examples, see \link[dplyr:dplyr_by]{?dplyr_by}.}
+
+\item{.keep}{Control which columns from \code{.data} are retained in the output. Grouping
 columns and columns created by \code{...} are always kept.
 \itemize{
 \item \code{"all"} retains all columns from \code{.data}. This is the default.
@@ -37,10 +51,9 @@ variables and columns created by \code{...} are kept.
 Note: With dtplyr \code{.keep} will only work with column names passed as symbols, and won't
 work with other workflows (e.g. \code{eval(parse(text = "x + 1"))})}
 
-\item{.before, .after}{\Sexpr[results=rd]{lifecycle::badge("experimental")}
-<\code{\link[=dplyr_tidy_select]{tidy-select}}> Optionally, control where new columns
+\item{.before, .after}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optionally, control where new columns
 should appear (the default is to add to the right hand side). See
-\code{\link[=relocate]{relocate()}} for more details.}
+\code{\link[dplyr:relocate]{relocate()}} for more details.}
 }
 \description{
 This is a method for the dplyr \code{\link[=mutate]{mutate()}} generic. It is translated to

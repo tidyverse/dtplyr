@@ -4,7 +4,7 @@
 \alias{filter.dtplyr_step}
 \title{Subset rows using column values}
 \usage{
-\method{filter}{dtplyr_step}(.data, ..., .preserve = FALSE)
+\method{filter}{dtplyr_step}(.data, ..., .by = NULL, .preserve = FALSE)
 }
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
@@ -13,6 +13,12 @@
 logical value, and are defined in terms of the variables in \code{.data}.
 If multiple expressions are included, they are combined with the \code{&} operator.
 Only rows for which all conditions evaluate to \code{TRUE} are kept.}
+
+\item{.by}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optionally, a selection of columns to
+group by for just this operation, functioning as an alternative to \code{\link[dplyr:group_by]{group_by()}}. For
+details and examples, see \link[dplyr:dplyr_by]{?dplyr_by}.}
 
 \item{.preserve}{Ignored}
 }

@@ -35,6 +35,20 @@ test_that("can slice when grouped", {
   expect_equal(as_tibble(dt2), tibble(x = c(1, 2), y = c(1, 3)))
 })
 
+test_that("can use `.by`", {
+  dt1 <- lazy_dt(data.table(x = c(1, 1, 2, 2), y = c(1, 2, 3, 4)), "DT")
+  dt2 <- dt1 %>% slice(1, .by = x)
+
+  expect_equal(
+    dt2 %>% show_query(),
+    expr(DT[DT[, .I[{
+      .rows <- 1
+      .rows[between(.rows, -.N, .N)]
+    }], by = .(x)]$V1])
+  )
+  expect_equal(collect(dt2), tibble(x = c(1, 2), y = c(1, 3)))
+})
+
 test_that("slicing doesn't sorts groups", {
   dt <- lazy_dt(data.table(x = 2:1))
   expect_equal(
@@ -211,6 +225,26 @@ test_that("Non-integer number of rows computed correctly", {
   expect_equal(eval_tidy(get_slice_size(prop = 0.16), list(.N = 10)), 1)
   expect_equal(eval_tidy(get_slice_size(n = -1.6), list(.N = 10)), 9)
   expect_equal(eval_tidy(get_slice_size(prop = -0.16), list(.N = 10)), 9)
+})
+
+test_that("variants work with `by`", {
+  df <- lazy_dt(data.table(x = 1:3, y = c("a", "a", "b")), "DT")
+  expect_equal(
+    df %>% slice_head(n = 1, by = y) %>% collect(),
+    tibble(x = c(1, 3), y = c("a", "b"))
+  )
+  expect_equal(
+    df %>% slice_tail(n = 1, by = y) %>% as_tibble(),
+    tibble(x = c(2, 3), y = c("a", "b"))
+  )
+  expect_equal(
+    df %>% slice_min(n = 1, x, by = y) %>% as_tibble(),
+    tibble(x = c(1, 3), y = c("a", "b"))
+  )
+  expect_equal(
+    df %>% slice_max(n = 1, x, by = y) %>% as_tibble(),
+    tibble(x = c(3, 2), y = c("b", "a"))
+  )
 })
 
 

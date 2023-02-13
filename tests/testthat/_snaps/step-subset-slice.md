@@ -4,42 +4,32 @@
       slice_head(dt, 5)
     Condition
       Error in `slice_head()`:
-      ! `...` must be empty.
-      x Problematic argument:
-      * ..1 = 5
-      i Did you forget to name an argument?
+      ! `n` must be explicitly named.
+      i Did you mean `slice_head(n = 5)`?
     Code
       slice_tail(dt, 5)
     Condition
       Error in `slice_tail()`:
-      ! `...` must be empty.
-      x Problematic argument:
-      * ..1 = 5
-      i Did you forget to name an argument?
+      ! `n` must be explicitly named.
+      i Did you mean `slice_tail(n = 5)`?
     Code
       slice_min(dt, x, 5)
     Condition
-      Error in `slice_min_max()`:
-      ! `...` must be empty.
-      x Problematic argument:
-      * ..1 = 5
-      i Did you forget to name an argument?
+      Error in `slice_min()`:
+      ! `n` must be explicitly named.
+      i Did you mean `slice_min(n = 5)`?
     Code
       slice_max(dt, x, 5)
     Condition
-      Error in `slice_min_max()`:
-      ! `...` must be empty.
-      x Problematic argument:
-      * ..1 = 5
-      i Did you forget to name an argument?
+      Error in `slice_max()`:
+      ! `n` must be explicitly named.
+      i Did you mean `slice_max(n = 5)`?
     Code
       slice_sample(dt, 5)
     Condition
       Error in `slice_sample()`:
-      ! `...` must be empty.
-      x Problematic argument:
-      * ..1 = 5
-      i Did you forget to name an argument?
+      ! `n` must be explicitly named.
+      i Did you mean `slice_sample(n = 5)`?
 
 ---
 
@@ -47,12 +37,12 @@
       slice_min(dt)
     Condition
       Error in `slice_min()`:
-      ! argument `order_by` is missing, with no default.
+      ! `order_by` is absent but must be supplied.
     Code
       slice_max(dt)
     Condition
       Error in `slice_max()`:
-      ! argument `order_by` is missing, with no default.
+      ! `order_by` is absent but must be supplied.
 
 # check_slice_catches common errors
 

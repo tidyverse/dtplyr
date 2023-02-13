@@ -9,11 +9,14 @@
 \arguments{
 \item{data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
 
-\item{replace}{If \code{data} is a data frame, \code{replace} takes a list of values,
-with one value for each column that has \code{NA} values to be replaced.
+\item{replace}{If \code{data} is a data frame, \code{replace} takes a named list of
+values, with one value for each column that has missing values to be
+replaced. Each value in \code{replace} will be cast to the type of the column
+in \code{data} that it being used as a replacement in.
 
 If \code{data} is a vector, \code{replace} takes a single value. This single value
-replaces all of the \code{NA} values in the vector.}
+replaces all of the missing values in the vector. \code{replace} will be cast
+to the type of \code{data}.}
 }
 \description{
 This is a method for the tidyr \code{replace_na()} generic. It is translated to
