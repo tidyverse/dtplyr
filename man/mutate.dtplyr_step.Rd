@@ -46,7 +46,10 @@ columns. This is useful if you generate new columns, but no longer need
 the columns used to generate them.
 \item \code{"none"} doesn't retain any extra columns from \code{.data}. Only the grouping
 variables and columns created by \code{...} are kept.
-}}
+}
+
+Note: With dtplyr \code{.keep} will only work with column names passed as symbols, and won't
+work with other workflows (e.g. \code{eval(parse(text = "x + 1"))})}
 
 \item{.before, .after}{<\code{\link[dplyr:dplyr_tidy_select]{tidy-select}}> Optionally, control where new columns
 should appear (the default is to add to the right hand side). See
