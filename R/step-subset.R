@@ -32,7 +32,7 @@ step_subset <- function(parent,
 }
 
 # Grouped i needs an intermediate assignment for maximum efficiency
-step_subset_i <- function(parent, i, by = default_by) {
+step_subset_i <- function(parent, i, by = new_by()) {
   if (is_empty(i)) {
     return(parent)
   }
@@ -64,7 +64,7 @@ step_subset_j <- function(parent,
                           groups = parent$groups,
                           arrange = parent$arrange,
                           j = NULL,
-                          by = default_by) {
+                          by = new_by()) {
   if (can_merge_subset(parent)) {
     i <- parent$i
     on <- parent$on

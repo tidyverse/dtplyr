@@ -1,4 +1,4 @@
-step_mutate <- function(parent, new_vars = list(), use_braces = FALSE, by = default_by) {
+step_mutate <- function(parent, new_vars = list(), use_braces = FALSE, by = new_by()) {
   vars <- union(parent$vars, names(new_vars))
   var_is_null <- map_lgl(new_vars, is_null)
   is_last <- !duplicated(names(new_vars), fromLast = TRUE)

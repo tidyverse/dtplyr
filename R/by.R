@@ -59,8 +59,9 @@ eval_select_by <- function(by,
   names(out)
 }
 
-new_by <- function(uses_by, names) {
+new_by <- function(uses_by = FALSE, names = character()) {
   structure(list(uses_by = uses_by, names = names), class = "dtplyr_by")
 }
 
-default_by <- new_by(uses_by = FALSE, names = character())
+
+
