@@ -116,22 +116,21 @@ mtcars2 %>%
 There are three primary reasons that dtplyr will always be somewhat
 slower than data.table:
 
--   Each dplyr verb must do some work to convert dplyr syntax to
-    data.table syntax. This takes time proportional to the complexity of
-    the input code, not the input *data*, so should be a negligible
-    overhead for large datasets. [Initial
-    benchmarks](https://dtplyr.tidyverse.org/articles/translation.html#performance)
-    suggest that the overhead should be under 1ms per dplyr call.
+- Each dplyr verb must do some work to convert dplyr syntax to
+  data.table syntax. This takes time proportional to the complexity of
+  the input code, not the input *data*, so should be a negligible
+  overhead for large datasets. [Initial
+  benchmarks](https://dtplyr.tidyverse.org/articles/translation.html#performance)
+  suggest that the overhead should be under 1ms per dplyr call.
 
--   Some data.table expressions have no direct dplyr equivalent. For
-    example, there’s no way to express cross- or rolling-joins with
-    dplyr.
+- Some data.table expressions have no direct dplyr equivalent. For
+  example, there’s no way to express cross- or rolling-joins with dplyr.
 
--   To match dplyr semantics, `mutate()` does not modify in place by
-    default. This means that most expressions involving `mutate()` must
-    make a copy that would not be necessary if you were using data.table
-    directly. (You can opt out of this behaviour in `lazy_dt()` with
-    `immutable = FALSE`).
+- To match dplyr semantics, `mutate()` does not modify in place by
+  default. This means that most expressions involving `mutate()` must
+  make a copy that would not be necessary if you were using data.table
+  directly. (You can opt out of this behaviour in `lazy_dt()` with
+  `immutable = FALSE`).
 
 ## Code of Conduct
 
