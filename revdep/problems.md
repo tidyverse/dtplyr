@@ -6,9 +6,9 @@
 * GitHub: https://github.com/hunter-stanke/rFIA
 * Source code: https://github.com/cran/rFIA
 * Date/Publication: 2021-12-15 18:10:02 UTC
-* Number of recursive dependencies: 82
+* Number of recursive dependencies: 84
 
-Run `cloud_details(, "rFIA")` for more info
+Run `revdepcheck::cloud_details(, "rFIA")` for more info
 
 </details>
 
@@ -27,15 +27,15 @@ Run `cloud_details(, "rFIA")` for more info
     > 
     > ## Load data from the rFIA package
     ...
-     21.               └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
-     22.                 └─tidyselect:::as_indices_sel_impl(...)
-     23.                   └─tidyselect:::as_indices_impl(x, vars, call = call, strict = strict)
-     24.                     └─tidyselect:::chr_as_locations(x, vars, call = call)
-     25.                       └─vctrs::vec_as_location(x, n = length(vars), names = vars)
-     26.                         └─vctrs (local) `<fn>`()
-     27.                           └─vctrs:::stop_subscript_oob(...)
-     28.                             └─vctrs:::stop_subscript(...)
-     29.                               └─rlang::abort(...)
+     14. │             └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+     15. │               └─tidyselect:::as_indices_sel_impl(...)
+     16. │                 └─tidyselect:::as_indices_impl(...)
+     17. │                   └─tidyselect:::chr_as_locations(x, vars, call = call, arg = arg)
+     18. │                     └─vctrs::vec_as_location(...)
+     19. └─vctrs (local) `<fn>`()
+     20.   └─vctrs:::stop_subscript_oob(...)
+     21.     └─vctrs:::stop_subscript(...)
+     22.       └─rlang::abort(...)
     Execution halted
     ```
 
