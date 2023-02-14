@@ -2,71 +2,69 @@
 
 ## Breaking changes
 
-* `dplyr` and `tidyr` verbs no longer dispatch to `dtplyr` translations when used
-  directly on `data.table` objects. `lazy_dt()` must now explicitly be called by
-  the user. (#312)
+* dplyr and tidyr verbs no longer dispatch to dtplyr translations when used
+  directly on data.table objects. `lazy_dt()` must now explicitly be called by
+  the user (#312).
 
 ## New features
 
-* New translations:
-
-  * `add_count()`
-  * `unite()`
+* `across()` output can now be used as a data frame (#341).
 
 * `.by`/`by` has been implemented for `mutate()`, `summarise()`, `filter()`,
-  and the `slice()` family (#399)
+  and the `slice()` family (#399).
+
+* New translations for `add_count()`, `pick()` (#341), and `unite()`.
 
 * `min_rank()`, `dense_rank()`, `percent_rank()`, & `cume_dist()` are now mapped
-  to their `data.table` equivalents (#396)
-  
-* `pick()` is now translated (#341)
-
-* `across()` output can now be used as a data frame (#341)
+  to their `data.table` equivalents (#396).
 
 ## Performance improvements
 
-* `select()` now drops columns by reference when possible for improved performance (#367)
+* `arrange()` now utilizes `setorder()` when possible for improved performance 
+  (#364).
 
-* `arrange()` now utilizes `setorder()` when possible for improved performance (#364)
+* `select()` now drops columns by reference when possible for improved 
+  performance (#367).
 
-* `slice()` uses an intermediate variable to reduce computation time of row selection (#377)
+* `slice()` uses an intermediate variable to reduce computation time of row 
+  selection (#377).
 
 ## Minor improvements and bug fixes
 
-* `names_glue` now works in `pivot_wider()` when `names_from` contains `NA`s (#394)
+* dtplyr no longer directly depends on `ellipsis`.
 
-* `full_join()` now produces output with correctly named columns when a non-default 
-  value for `suffix` is supplied. Previously the `suffix` argument was ignored (#382).
+* Chained operations properly prevent modify-by-reference (#210).
 
-* Chained operations properly prevent modify-by-reference (#210)
+* `across()`, `if_any()`, and `if_all()` evaluate the `.cols` argument
+  in the environment from which the function was called.
+ 
+* `count()` properly handles grouping variables (#356).
 
-* An error now occurs when `where()` is used for selection (#271)
+* `desc()` now supports use of `.data` pronoun inside in `arrange()` (#346).
 
-* Anonymous functions are translated correctly in `mutate`/`summarize` (#362)
+* `full_join()` now produces output with correctly named columns when a 
+  non-default value for `suffix` is supplied. Previously the `suffix` argument 
+  was ignored (#382).
 
-* Custom functions can pass a quosure to `col` arg in `separate()` (#359)
+* `if_any()` and `if_all()` now work without specifying the `.fns` argument 
+  (@mgirlich, #325) and for a list of functions specified in the 
+  (@mgirlich, #335).
 
-* `glue::glue()` and `stringr::str_glue()` now work inside `mutate()`/`transmute()` without needing
-  to specify `.envir`
+* `pivot_wider()`'s `names_glue` now works even when `names_from` contains 
+  `NA`s (#394).
 
-* Can use `.data` pronoun inside `desc()` in `arrange()` (#346)
+* In `semi_join()` the `y` table is again coerced to a lazy table if 
+  `copy = TRUE` (@mgirlich, #322).
 
-* `if_any()` and `if_all()` now work for a list of functions specified in the
-  `.fns` argument(@mgirlich, #335).
-  
-* In `semi_join()` the `y` table is again coerced to a lazy table if `copy = TRUE`
-  (@mgirlich, #322).
+* `mutate()` can now use `.keep`.
 
- * The `.cols` argument of `across()`, `if_any()`, and `if_all()` is evaluated in
-   the environment from which `across` was called.
-   
-* `if_any()` and `if_all()` now work without specifying the `.fns` argument (@mgirlich, #325).
+* `mutate()`/`summarize()` correctly translates anonymous functions (#362).
 
-* `mutate()` can now use `.keep`
+* `mutate()`/`transmute()` now supports `glue::glue()` and `stringr::str_glue()` 
+   without specifiying  `.envir`.
 
-* `dtplyr` no longer directly depends on `ellipsis`
-
-* `count()` properly handles grouping variables (#356)
+* `where()` now clearly errors because dtplyr doesn't support selection 
+  by predicate (#271).
 
 # dtplyr 1.2.2
 
