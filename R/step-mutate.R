@@ -97,13 +97,13 @@ mutate.dtplyr_step <- function(.data, ...,
                                .by = NULL,
                                .keep = c("all", "used", "unused", "none"),
                                .before = NULL, .after = NULL) {
-  all_dots <- capture_new_vars(.data, ...)
+  by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
+
+  all_dots <- capture_new_vars(.data, ..., .by = by)
   trivial_dot <- imap(all_dots, ~ is_symbol(.x) && sym(.y) == .x && .y %in% .data$vars)
   dots <- all_dots[!as.vector(trivial_dot, "logical")]
   dots_list <- process_new_vars(.data, dots)
   dots <- dots_list$dots
-
-  by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
 
   if (is_null(dots) || is_empty(dots)) {
     out <- .data

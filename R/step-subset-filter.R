@@ -21,9 +21,8 @@
 # exported onLoad
 filter.dtplyr_step <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   check_filter(...)
-  dots <- capture_dots(.data, ..., .j = FALSE)
-
   by <- compute_by({{ .by }}, .data, by_arg = ".by", data_arg = ".data")
+  dots <- capture_dots(.data, ..., .j = FALSE, .by = by)
 
   if (filter_by_lgl_col(dots)) {
     # Suppress data.table warning when filtering with a logical variable
