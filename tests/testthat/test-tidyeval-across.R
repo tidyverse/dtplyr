@@ -187,6 +187,20 @@ test_that("pick() works", {
   expect_equal(group_by(df, pick(x, y))$groups, c("x", "y"))
 })
 
+test_that("`across()` ignores variables in `.by`, #412", {
+  dt <- lazy_dt(data.table(x = 1:3, y = c("a", "a", "b")))
+  step <- dt %>%
+    mutate(across(everything(), ~ .x + 1), .by = y)
+
+  expect_equal(as_tibble(step), tibble(x = 2:4, y = c("a", "a", "b")))
+  expect_true(length(step$groups) == 0)
+
+  step <- dt %>%
+    summarize(across(everything(), sum), .by = y)
+
+  expect_equal(as_tibble(step), tibble(y = c("a", "b"), x = c(3, 3)))
+})
+
 # if_all ------------------------------------------------------------------
 
 test_that("if_all collapses multiple expresions", {

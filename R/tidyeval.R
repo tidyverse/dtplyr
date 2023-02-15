@@ -28,7 +28,11 @@ globalVariables(dt_funs)
 # data.table. The goal is to get the majority of real-world code to work,
 # without aiming for 100% compliance.
 
-capture_dots <- function(.data, ..., .j = TRUE) {
+capture_dots <- function(.data, ..., .j = TRUE, .by = new_by()) {
+  if (.by$uses_by) {
+    .data$groups <- .by$names
+  }
+
   dots <- enquos(..., .named = .j)
   dots <- map(dots, dt_squash, data = .data, j = .j, is_top = TRUE)
 
@@ -41,7 +45,11 @@ capture_dots <- function(.data, ..., .j = TRUE) {
   unlist(dots, recursive = FALSE)
 }
 
-capture_new_vars <- function(.data, ...) {
+capture_new_vars <- function(.data, ..., .by = new_by()) {
+  if (.by$uses_by) {
+    .data$groups <- .by$names
+  }
+
   dots <- as.list(enquos(..., .named = TRUE))
   for (i in seq_along(dots)) {
     dot <- dots[[i]]
