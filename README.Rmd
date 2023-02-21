@@ -25,8 +25,6 @@ knitr::opts_chunk$set(
 
 dtplyr provides a [data.table](http://r-datatable.com/) backend for dplyr. The goal of dtplyr is to allow you to write dplyr code that is automatically translated to the equivalent, but usually much faster, data.table code.
 
-Compared to the previous release, this version of dtplyr is a complete rewrite that focusses only on lazy evaluation triggered by use of `lazy_dt()`. This means that no computation is performed until you explicitly request it with `as.data.table()`, `as.data.frame()` or `as_tibble()`. This has a considerable advantage over the previous version (which eagerly evaluated each step) because it allows dtplyr to generate significantly more performant translations. This is a large change that breaks all existing uses of dtplyr. But frankly, dtplyr was pretty useless before because it did such a bad job of generating data.table code. Fortunately few people used it, so a major overhaul was possible.
-
 See `vignette("translation")` for details of the current translations, and  [table.express](https://github.com/asardaes/table.express) and [rqdatatable](https://github.com/WinVector/rqdatatable/) for related work.
 
 ## Installation
@@ -83,16 +81,13 @@ mtcars2 %>%
 
 ## Why is dtplyr slower than data.table?
 
-There are three primary reasons that dtplyr will always be somewhat slower than data.table:
+There are two primary reasons that dtplyr will always be somewhat slower than data.table:
 
 * Each dplyr verb must do some work to convert dplyr syntax to data.table 
   syntax. This takes time proportional to the complexity of the input code, 
   not the input _data_, so should be a negligible overhead for large datasets.
   [Initial benchmarks][benchmark] suggest that the overhead should be under 
   1ms per dplyr call.
-
-* Some data.table expressions have no direct dplyr equivalent. For example,
-  there's no way to express cross- or rolling-joins with dplyr.
 
 * To match dplyr semantics, `mutate()` does not modify in place by default. 
   This means that most expressions involving `mutate()` must make a copy
