@@ -1,4 +1,4 @@
-# dtplyr (development version)
+# dtplyr 1.3.0
 
 ## Breaking changes
 
