@@ -102,7 +102,6 @@
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
 <p>dtplyr provides a <a href="http://r-datatable.com/" class="external-link">data.table</a> backend for dplyr. The goal of dtplyr is to allow you to write dplyr code that is automatically translated to the equivalent, but usually much faster, data.table code.</p>
-<p>Compared to the previous release, this version of dtplyr is a complete rewrite that focusses only on lazy evaluation triggered by use of <code><a href="reference/lazy_dt.html">lazy_dt()</a></code>. This means that no computation is performed until you explicitly request it with <code><a href="https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table()</a></code>, <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> or <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble()</a></code>. This has a considerable advantage over the previous version (which eagerly evaluated each step) because it allows dtplyr to generate significantly more performant translations. This is a large change that breaks all existing uses of dtplyr. But frankly, dtplyr was pretty useless before because it did such a bad job of generating data.table code. Fortunately few people used it, so a major overhaul was possible.</p>
 <p>See <code><a href="articles/translation.html">vignette("translation")</a></code> for details of the current translations, and <a href="https://github.com/asardaes/table.express" class="external-link">table.express</a> and <a href="https://github.com/WinVector/rqdatatable/" class="external-link">rqdatatable</a> for related work.</p>
 </div>
 <div class="section level2">
@@ -163,10 +162,9 @@
 <div class="section level2">
 <h2 id="why-is-dtplyr-slower-than-datatable">Why is dtplyr slower than data.table?<a class="anchor" aria-label="anchor" href="#why-is-dtplyr-slower-than-datatable"></a>
 </h2>
-<p>There are three primary reasons that dtplyr will always be somewhat slower than data.table:</p>
+<p>There are two primary reasons that dtplyr will always be somewhat slower than data.table:</p>
 <ul>
 <li><p>Each dplyr verb must do some work to convert dplyr syntax to data.table syntax. This takes time proportional to the complexity of the input code, not the input <em>data</em>, so should be a negligible overhead for large datasets. <a href="https://dtplyr.tidyverse.org/articles/translation.html#performance">Initial benchmarks</a> suggest that the overhead should be under 1ms per dplyr call.</p></li>
-<li><p>Some data.table expressions have no direct dplyr equivalent. For example, there’s no way to express cross- or rolling-joins with dplyr.</p></li>
 <li><p>To match dplyr semantics, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> does not modify in place by default. This means that most expressions involving <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> must make a copy that would not be necessary if you were using data.table directly. (You can opt out of this behaviour in <code><a href="reference/lazy_dt.html">lazy_dt()</a></code> with <code>immutable = FALSE</code>).</p></li>
 </ul>
 </div>
