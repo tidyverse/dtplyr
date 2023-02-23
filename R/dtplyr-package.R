@@ -5,6 +5,9 @@
 #' @keywords internal
 "_PACKAGE"
 
+#' dtplyr is data.table aware
+#'
+#' @keywords internal
 #' @export
 .datatable.aware <- TRUE
 
