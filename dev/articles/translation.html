@@ -58,6 +58,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-news">News</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-news">
     <h6 class="dropdown-header" data-toc-skip>Releases</h6>
+    <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2023/02/dtplyr-1-3-0/">Version 1.3.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2021/12/dtplyr-1-2-0/">Version 1.2.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2021/02/dplyr-backends/">Version 1.1.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2019/11/dtplyr-1-0-0/">Version 1.0.0</a>
@@ -422,9 +423,9 @@ verbs, so we benchmark the whole process.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter       1.66ms   1.87ms      527.    4.91KB     16.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       2.15ms   2.44ms      405.   17.79KB     15.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    3.77ms   4.25ms      229.   28.14KB     15.9</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter       1.32ms   1.36ms      730.    4.91KB     20.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.69ms   1.75ms      570.   17.79KB     24.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    3.06ms   3.14ms      318.   28.14KB     20.1</span></span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that
 the performance overhead of dtplyr should be negligible for realistic
 data sizes. Note that dtplyr run-time scales with the complexity of the
