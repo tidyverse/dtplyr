@@ -49,6 +49,9 @@
     <loc>https://dtplyr.tidyverse.org/reference/distinct.dtplyr_step.html</loc>
   </url>
   <url>
+    <loc>https://dtplyr.tidyverse.org/reference/dot-datatable.aware.html</loc>
+  </url>
+  <url>
     <loc>https://dtplyr.tidyverse.org/reference/drop_na.dtplyr_step.html</loc>
   </url>
   <url>
@@ -119,5 +122,8 @@
   </url>
   <url>
     <loc>https://dtplyr.tidyverse.org/reference/transmute.dtplyr_step.html</loc>
+  </url>
+  <url>
+    <loc>https://dtplyr.tidyverse.org/reference/unite.dtplyr_step.html</loc>
   </url>
 </urlset>
