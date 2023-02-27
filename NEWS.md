@@ -63,7 +63,7 @@
 * `mutate()`/`summarize()` correctly translates anonymous functions (#362).
 
 * `mutate()`/`transmute()` now supports `glue::glue()` and `stringr::str_glue()` 
-   without specifiying  `.envir`.
+   without specifying  `.envir`.
 
 * `where()` now clearly errors because dtplyr doesn't support selection 
   by predicate (#271).

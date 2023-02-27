@@ -144,7 +144,7 @@ test_that("vars set correctly", {
   expect_equal(dt %>% mutate(x = NULL, z = 1) %>% .$vars, c("y", "z"))
 })
 
-test_that("emtpy mutate returns input", {
+test_that("empty mutate returns input", {
   dt <- lazy_dt(data.frame(x = 1))
   expect_equal(mutate(dt), dt)
   expect_equal(mutate(dt, !!!list()), dt)

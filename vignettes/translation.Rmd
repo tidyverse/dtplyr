@@ -271,7 +271,7 @@ dt_inplace %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
 
 There are two components to the performance of dtplyr: how long it takes to generate the translation, and how well the translation performs. Given my explorations so far, I'm reasonably confident that we're generating high-quality data.table code, so most of the cost should be in the translation itself. 
 
-The following code briefly explores the performance of a few different translations. A signficant amount of work is done by the dplyr verbs, so we benchmark the whole process. 
+The following code briefly explores the performance of a few different translations. A significant amount of work is done by the dplyr verbs, so we benchmark the whole process. 
 
 ```{r}
 bench::mark(
