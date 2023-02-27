@@ -203,7 +203,7 @@ test_that("`across()` ignores variables in `.by`, #412", {
 
 # if_all ------------------------------------------------------------------
 
-test_that("if_all collapses multiple expresions", {
+test_that("if_all collapses multiple expressions", {
   dt <- lazy_dt(data.frame(a = 1,  b = 2))
   expect_equal(capture_if_all(dt, if_all(everything(), is.na)), expr(is.na(a) & is.na(b)))
 })
