@@ -179,23 +179,23 @@ pull.dtplyr_step <- function(.data, var = -1, name = NULL) {
 print.dtplyr_step <- function(x, ...) {
   dt <- as.data.table(x)
 
-  cat_line(crayon::bold("Source: "), "local data table ", dplyr::dim_desc(dt))
+  cat_line(cli::style_bold("Source: "), "local data table ", dplyr::dim_desc(dt))
   if (length(x$groups) > 0) {
-    cat_line(crayon::bold("Groups: "), paste(x$groups, collapse = ", "))
+    cat_line(cli::style_bold("Groups: "), paste(x$groups, collapse = ", "))
   }
   if (length(x$locals) > 0) {
-    cat_line(crayon::bold("Call:"))
+    cat_line(cli::style_bold("Call:"))
     for (var in names(x$locals)) {
       cat_line("  ", var, " <- ", expr_deparse(x$locals[[var]]))
     }
     cat_line("  ", expr_text(dt_call(x)))
   } else {
-    cat_line(crayon::bold("Call:   "), expr_text(dt_call(x)))
+    cat_line(cli::style_bold("Call:   "), expr_text(dt_call(x)))
   }
   cat_line()
   cat_line(format(as_tibble(dt, .name_repair = "minimal"), n = 6)[-1]) # Hack to remove "A tibble" line
   cat_line()
-  cat_line(crayon::silver(
+  cat_line(cli::col_silver(
     "# Use as.data.table()/as.data.frame()/as_tibble() to access results"
   ))
 

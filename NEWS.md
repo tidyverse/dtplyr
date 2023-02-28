@@ -1,5 +1,9 @@
 # dtplyr (development version)
 
+## Minor improvements and bug fixes
+
+* `dtplyr` no longer directly depends on `crayon`.
+
 # dtplyr 1.3.0
 
 ## Breaking changes
