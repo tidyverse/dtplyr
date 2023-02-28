@@ -19,7 +19,6 @@ Depends:
     R (>= 3.3)
 Imports:
     cli (>= 3.4.0),
-    crayon,
     data.table (>= 1.13.0),
     dplyr (>= 1.1.0),
     glue,
