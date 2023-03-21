@@ -76,7 +76,7 @@ Grouping is translated to the either <code>keyby</code> and <code>by</code> argu
 <span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .add <span class="op">=</span> <span class="cn">FALSE</span>, arrange <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for dtplyr_step</span></span>
-<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -108,6 +108,10 @@ our naming conventions.</p></dd>
 subsequent grouped operations by group. If <code>FALSE</code>, output order will be
 left unchanged. In the generated data.table code this switches between
 using the <code>keyby</code> (<code>TRUE</code>) and <code>by</code> (<code>FALSE</code>) arguments.</p></dd>
+
+
+<dt>x</dt>
+<dd><p>A <code><a href="https://dplyr.tidyverse.org/reference/tbl.html" class="external-link">tbl()</a></code></p></dd>
 
 </dl></div>
 
@@ -156,7 +160,7 @@ using the <code>keyby</code> (<code>TRUE</code>) and <code>by</code> (<code>FALS
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, Maximilian Girlich, Mark Fairbanks, Ryan Dickerson, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
+  <p></p><p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, Maximilian Girlich, Mark Fairbanks, Ryan Dickerson, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
