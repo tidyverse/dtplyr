@@ -1,6 +1,6 @@
 # dtplyr (development version)
 
-## Minor improvements and bug fixes
+* Fix for failing R CMD check.
 
 * `dtplyr` no longer directly depends on `crayon`.
 
