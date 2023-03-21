@@ -25,7 +25,7 @@ dt_call.dtplyr_step_modify <- function(x, needs_copy = x$needs_copy) {
 #' These are methods for the dplyr [group_map()] and [group_modify()] generics.
 #' They are both translated to `[.data.table`.
 #'
-#' @param .tbl A [lazy_dt()]
+#' @param .data A [lazy_dt()]
 #' @param .f The name of a two argument function. The first argument is passed
 #'   `.SD`,the data.table representing the current group; the second argument
 #'   is passed `.BY`, a list giving the current values of the grouping
@@ -49,7 +49,7 @@ dt_call.dtplyr_step_modify <- function(x, needs_copy = x$needs_copy) {
 #' dt %>%
 #'   group_by(cyl) %>%
 #'   group_map(head, n = 2L)
-group_modify.dtplyr_step <- function(.tbl, .f, ..., keep = FALSE) {
+group_modify.dtplyr_step <- function(.data, .f, ..., keep = FALSE) {
   if (!missing(keep)) {
     abort("`keep` is not supported for lazy data tables")
   }
@@ -57,15 +57,15 @@ group_modify.dtplyr_step <- function(.tbl, .f, ..., keep = FALSE) {
   .f <- ensym(.f)
   args <- enquos(...)
 
-  step_modify(.tbl, fun = .f, args = args)
+  step_modify(.data, fun = .f, args = args)
 }
 
 #' @importFrom dplyr group_map
 #' @rdname group_modify.dtplyr_step
 #' @export
-group_map.dtplyr_step <- function(.tbl, .f, ..., keep = FALSE) {
+group_map.dtplyr_step <- function(.data, .f, ..., keep = FALSE) {
   .f <- as_function(.f, caller_env())
 
-  dt <- as.data.table(.tbl)
-  dt[, list(list(.f(.SD, .BY, ...))), by = eval(.tbl$groups)]$V1
+  dt <- as.data.table(.data)
+  dt[, list(list(.f(.SD, .BY, ...))), by = eval(.data$groups)]$V1
 }

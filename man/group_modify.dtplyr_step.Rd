@@ -5,12 +5,12 @@
 \alias{group_map.dtplyr_step}
 \title{Apply a function to each group}
 \usage{
-\method{group_modify}{dtplyr_step}(.tbl, .f, ..., keep = FALSE)
+\method{group_modify}{dtplyr_step}(.data, .f, ..., keep = FALSE)
 
-\method{group_map}{dtplyr_step}(.tbl, .f, ..., keep = FALSE)
+\method{group_map}{dtplyr_step}(.data, .f, ..., keep = FALSE)
 }
 \arguments{
-\item{.tbl}{A \code{\link[=lazy_dt]{lazy_dt()}}}
+\item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}}
 
 \item{.f}{The name of a two argument function. The first argument is passed
 \code{.SD},the data.table representing the current group; the second argument
