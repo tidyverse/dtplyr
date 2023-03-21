@@ -2,11 +2,11 @@ Package: dtplyr
 Title: Data Table Back-End for 'dplyr'
 Version: 1.3.0.9000
 Authors@R: c(
-    person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("cre", "aut")),
+    person("Hadley", "Wickham", , "hadley@posit.co", role = c("cre", "aut")),
     person("Maximilian", "Girlich", role = "aut"),
     person("Mark", "Fairbanks", role = "aut"),
     person("Ryan", "Dickerson", role = "aut"),
-    person("RStudio", role = c("cph", "fnd"))
+    person("Posit Software, PBC", role = c("cph", "fnd"))
   )
 Description: Provides a data.table backend for 'dplyr'. The goal of
     'dtplyr' is to allow you to write 'dplyr' code that is automatically

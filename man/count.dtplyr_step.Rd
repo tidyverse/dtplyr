@@ -4,10 +4,10 @@
 \alias{count.dtplyr_step}
 \title{Count observations by group}
 \usage{
-\method{count}{dtplyr_step}(.data, ..., wt = NULL, sort = FALSE, name = NULL)
+\method{count}{dtplyr_step}(x, ..., wt = NULL, sort = FALSE, name = NULL)
 }
 \arguments{
-\item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}}
+\item{x}{A \code{\link[=lazy_dt]{lazy_dt()}}}
 
 \item{...}{<\code{\link[dplyr:dplyr_data_masking]{data-masking}}> Variables to group by.}
 

@@ -7,7 +7,7 @@
 \usage{
 \method{group_by}{dtplyr_step}(.data, ..., .add = FALSE, arrange = TRUE)
 
-\method{ungroup}{dtplyr_step}(.data, ...)
+\method{ungroup}{dtplyr_step}(x, ...)
 }
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}}
@@ -31,6 +31,8 @@ our naming conventions.}
 subsequent grouped operations by group. If \code{FALSE}, output order will be
 left unchanged. In the generated data.table code this switches between
 using the \code{keyby} (\code{TRUE}) and \code{by} (\code{FALSE}) arguments.}
+
+\item{x}{A \code{\link[dplyr:tbl]{tbl()}}}
 }
 \description{
 These are methods for dplyr's \code{\link[=group_by]{group_by()}} and \code{\link[=ungroup]{ungroup()}} generics.

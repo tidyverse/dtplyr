@@ -157,7 +157,7 @@ as_tibble.dtplyr_step <- function(x, ..., .name_repair = "check_unique") {
 
 #' @export
 #' @importFrom dplyr pull
-pull.dtplyr_step <- function(.data, var = -1, name = NULL) {
+pull.dtplyr_step <- function(.data, var = -1, name = NULL, ...) {
   var <- sym(tidyselect::vars_pull(.data$vars, !!enquo(var)))
 
   .data <- ungroup(.data)
@@ -210,7 +210,7 @@ glimpse.dtplyr_step <- function(x, width = NULL, ...) {
 
 #' @importFrom dplyr show_query
 #' @export
-show_query.dtplyr_step <- function(x) {
+show_query.dtplyr_step <- function(x, ...) {
   dt_call(x)
 }
 
@@ -239,6 +239,6 @@ dt_has_computation <- function(x) {
   UseMethod("dt_has_computation")
 }
 #' @export
-dt_has_computation.dtplyr_step <- function(x, needs_copy = x$needs_copy) {
+dt_has_computation.dtplyr_step <- function(x) {
   TRUE
 }

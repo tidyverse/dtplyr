@@ -93,14 +93,14 @@ can_step_group_return_early <- function(parent, groups, arrange) {
 #' @importFrom dplyr ungroup
 #' @export
 #' @rdname group_by.dtplyr_step
-ungroup.dtplyr_step <- function(.data, ...) {
+ungroup.dtplyr_step <- function(x, ...) {
   if (missing(...)) {
-    step_group(.data, groups = character())
+    step_group(x, groups = character())
   } else {
-    old_groups <- group_vars(.data)
-    to_remove <- tidyselect::vars_select(.data$vars, ...)
+    old_groups <- group_vars(x)
+    to_remove <- tidyselect::vars_select(x$vars, ...)
     new_groups <- setdiff(old_groups, to_remove)
-    step_group(.data, groups = new_groups)
+    step_group(x, groups = new_groups)
   }
 }
 

@@ -224,7 +224,9 @@ sample_int <- function(n, size, replace = FALSE, wt = NULL) {
 sample_n.dtplyr_step <- function(tbl,
                                  size,
                                  replace = FALSE,
-                                 weight = NULL
+                                 weight = NULL,
+                                 .env = NULL,
+                                 ...
                                  ) {
   weight <- enexpr(weight)
   step_subset_i(tbl, i = sample_call(size, replace, weight))
@@ -235,7 +237,9 @@ sample_n.dtplyr_step <- function(tbl,
 sample_frac.dtplyr_step <- function(tbl,
                                     size = 1,
                                     replace = FALSE,
-                                    weight = NULL
+                                    weight = NULL,
+                                    .env = NULL,
+                                    ...
                                     ) {
   weight <- enexpr(weight)
   step_subset_i(tbl, i = sample_call(expr(.N * !!size), replace, weight))
