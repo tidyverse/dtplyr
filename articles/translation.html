@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">dtplyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-news">News</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-news">
     <h6 class="dropdown-header" data-toc-skip>Releases</h6>
+    <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2023/02/dtplyr-1-3-0/">Version 1.3.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2021/12/dtplyr-1-2-0/">Version 1.2.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2021/02/dplyr-backends/">Version 1.1.0</a>
     <a class="external-link dropdown-item" href="https://www.tidyverse.org/blog/2019/11/dtplyr-1-0-0/">Version 1.0.0</a>
@@ -409,8 +410,8 @@ performs. Given my explorations so far, I’m reasonably confident that
 we’re generating high-quality data.table code, so most of the cost
 should be in the translation itself.</p>
 <p>The following code briefly explores the performance of a few
-different translations. A signficant amount of work is done by the dplyr
-verbs, so we benchmark the whole process.</p>
+different translations. A significant amount of work is done by the
+dplyr verbs, so we benchmark the whole process.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html" class="external-link">mark</a></span><span class="op">(</span></span>
 <span>  filter <span class="op">=</span> <span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">a</span> <span class="op">==</span> <span class="va">b</span>, <span class="va">c</span> <span class="op">==</span> <span class="va">d</span><span class="op">)</span>,</span>
@@ -421,9 +422,9 @@ verbs, so we benchmark the whole process.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter       1.31ms   1.36ms      734.    4.91KB     22.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.68ms   1.74ms      574.   17.79KB     22.0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    3.06ms   3.13ms      318.   28.14KB     20.1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter       1.73ms   2.02ms      471.    4.91KB     13.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       2.28ms    2.5ms      383.   17.79KB     15.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    4.19ms   4.72ms      197.   28.14KB     13.5</span></span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that
 the performance overhead of dtplyr should be negligible for realistic
 data sizes. Note that dtplyr run-time scales with the complexity of the
@@ -441,7 +442,7 @@ regardless of the size of the underlying data<a class="footnote-ref" tabindex="0
   <footer><div class="container">
   <div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, Maximilian Girlich, Mark Fairbanks, Ryan Dickerson, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
+<p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, Maximilian Girlich, Mark Fairbanks, Ryan Dickerson, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
