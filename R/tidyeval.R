@@ -171,9 +171,9 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     x
   } else if (is_call(x, c("if_else", "ifelse"))) {
     if (is_call(x, "if_else")) {
-      x <- unname(match.call(dplyr::if_else, x))
+      x <- unname(call_match(x, dplyr::if_else))
     } else {
-      x <- unname(match.call(ifelse, x))
+      x <- unname(call_match(x, ifelse))
     }
 
     x[[1]] <- quote(fifelse)
@@ -182,10 +182,10 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, c("lag", "lead"))) {
     if (is_call(x, "lag")) {
       type <- "lag"
-      call <- match.call(dplyr::lag, x)
+      call <- call_match(x, dplyr::lag)
     } else {
       type <- "lead"
-      call <- match.call(dplyr::lead, x)
+      call <- call_match(x, dplyr::lead)
     }
     call[-1] <- lapply(call[-1], dt_squash, env = env, data = data, j = j)
 
@@ -206,7 +206,7 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, "n", n = 0)) {
     quote(.N)
   } else if (is_call(x, "n_distinct")) {
-    x <- match.call(dplyr::n_distinct, x, expand.dots = FALSE)
+    x <- call_match(x, dplyr::n_distinct, dots_expand = FALSE)
     dots <- x$...
     if (length(dots) == 1) {
       vec <- dots[[1]]
