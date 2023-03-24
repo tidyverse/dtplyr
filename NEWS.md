@@ -2,7 +2,8 @@
 
 ## New features
 
-* `consecutive_id()` is now mapped to `data.table::rleid()`
+* `consecutive_id()` is now mapped to `data.table::rleid()`.
+  Note: `rleid()` only accepts vector inputs and cannot be used with data frame inputs.
 
 # dtplyr 1.3.1
 
