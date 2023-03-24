@@ -1,5 +1,9 @@
 # dtplyr (development version)
 
+## New features
+
+* `consecutive_id()` is now mapped to `data.table::rleid()`
+
 # dtplyr 1.3.1
 
 * Fix for failing R CMD check.
