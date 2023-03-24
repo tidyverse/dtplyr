@@ -16,7 +16,7 @@ dt_eval <- function(x) {
 dt_funs <- c(
   "between", "CJ", "copy", "data.table", "dcast", "melt", "nafill",
   "fcase", "fcoalesce", "fifelse", "fintersect", "frank", "frankv", "fsetdiff", "funion",
-  "setcolorder", "setnames", "setorder", "shift", "tstrsplit", "uniqueN"
+  "rleid", "setcolorder", "setnames", "setorder", "shift", "tstrsplit", "uniqueN"
 )
 dt_symbols <- c(".SD", ".BY", ".N", ".I", ".GRP", ".NGRP")
 add_dt_wrappers <- function(env) {
@@ -249,6 +249,10 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
       call$.envir <- quote(.SD)
     }
     call
+  } else if (is_call(x, "consecutive_id")) {
+    x[[1]] <- expr(rleid)
+    x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
+    x
   } else {
     x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
     x
