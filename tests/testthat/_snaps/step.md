@@ -15,7 +15,7 @@
       4  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1
       5  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2
       6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1
-      # ... with 26 more rows
+      # i 26 more rows
       
       # Use as.data.table()/as.data.frame()/as_tibble() to access results
     Code
@@ -33,7 +33,7 @@
       4  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1
       5  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2
       6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1
-      # ... with 26 more rows
+      # i 26 more rows
       
       # Use as.data.table()/as.data.frame()/as_tibble() to access results
     Code
@@ -52,7 +52,7 @@
       4  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1    10
       5  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2    10
       6  18.1     6   225   105  2.76  3.46  20.2     1     0     3     1    10
-      # ... with 26 more rows
+      # i 26 more rows
       
       # Use as.data.table()/as.data.frame()/as_tibble() to access results
 

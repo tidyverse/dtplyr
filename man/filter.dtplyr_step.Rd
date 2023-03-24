@@ -9,10 +9,11 @@
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
 
-\item{...}{<\code{\link[dplyr:dplyr_data_masking]{data-masking}}> Expressions that return a
-logical value, and are defined in terms of the variables in \code{.data}.
-If multiple expressions are included, they are combined with the \code{&} operator.
-Only rows for which all conditions evaluate to \code{TRUE} are kept.}
+\item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}> Expressions that
+return a logical value, and are defined in terms of the variables in
+\code{.data}. If multiple expressions are included, they are combined with the
+\code{&} operator. Only rows for which all conditions evaluate to \code{TRUE} are
+kept.}
 
 \item{.by}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 

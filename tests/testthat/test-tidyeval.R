@@ -207,6 +207,14 @@ test_that("properly handles anonymous functions, #362", {
   )
 })
 
+test_that("translates `consecutive_id()`", {
+  df <- data.frame(x = 1:5, y = 1:5)
+  expect_equal(
+    capture_dot(df, consecutive_id(x, y)),
+    expr(rleid(x, y))
+  )
+})
+
 # evaluation --------------------------------------------------------------
 
 test_that("can access functions in local env", {

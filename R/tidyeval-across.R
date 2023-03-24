@@ -4,7 +4,7 @@ capture_across <- function(data, x, j = TRUE) {
 }
 
 dt_squash_across <- function(call, env, data, j = j, is_top = TRUE) {
-  call <- match.call(dplyr::across, call, expand.dots = FALSE, envir = env)
+  call <- call_match(call, dplyr::across, dots_expand = FALSE, dots_env = env)
   out <- across_setup(data, call, env, allow_rename = TRUE, j = j, fn = "across()")
   if (is_false(is_top)) {
     out <- call2("data.table", !!!out)
@@ -18,7 +18,7 @@ capture_if_all <- function(data, x, j = TRUE) {
 }
 
 dt_squash_if <- function(call, env, data, j = j, reduce = "&") {
-  call <- match.call(dplyr::if_any, call, expand.dots = FALSE, envir = env)
+  call <- call_match(call, dplyr::if_any, dots_expand = FALSE, dots_env = env)
   if (reduce == "&") {
     fn <- "if_all()"
   } else {
