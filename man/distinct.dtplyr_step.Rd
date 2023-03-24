@@ -9,8 +9,8 @@
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}}
 
-\item{...}{<\code{\link[dplyr:dplyr_data_masking]{data-masking}}> Optional variables to use
-when determining uniqueness. If there are multiple rows for a given
+\item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}> Optional variables to
+use when determining uniqueness. If there are multiple rows for a given
 combination of inputs, only the first row will be preserved. If omitted,
 will use all variables in the data frame.}
 

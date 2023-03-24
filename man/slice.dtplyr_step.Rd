@@ -21,8 +21,8 @@
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}.}
 
-\item{...}{For \code{slice()}: <\code{\link[dplyr:dplyr_data_masking]{data-masking}}> Integer row
-values.
+\item{...}{For \code{slice()}: <\code{\link[rlang:args_data_masking]{data-masking}}>
+Integer row values.
 
 Provide either positive values to keep, or negative values to drop.
 The values provided must be either all positive or all negative.
@@ -47,9 +47,9 @@ A negative value of \code{n} or \code{prop} will be subtracted from the group
 size. For example, \code{n = -2} with a group of 5 rows will select 5 - 2 = 3
 rows; \code{prop = -0.25} with 8 rows will select 8 * (1 - 0.25) = 6 rows.}
 
-\item{order_by}{<\code{\link[dplyr:dplyr_data_masking]{data-masking}}> Variable or function
-of variables to order by. To order by multiple variables, wrap them in a
-data frame or tibble.}
+\item{order_by}{<\code{\link[rlang:args_data_masking]{data-masking}}> Variable or
+function of variables to order by. To order by multiple variables, wrap
+them in a data frame or tibble.}
 
 \item{with_ties}{Should ties be kept together? The default, \code{TRUE},
 may return more rows than you request. Use \code{FALSE} to ignore ties,
