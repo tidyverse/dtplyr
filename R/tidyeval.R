@@ -336,8 +336,9 @@ fun_name <- function(fun) {
 }
 
 check_one_arg <- function(x) {
-  fun <- as_name(x[[1]])
-  if (!has_length(x, 2L)) {
+  fun <- call_name(x)
+  args <- call_args(x)
+  if (!has_length(args, 1L)) {
     abort(glue("`{fun}()` expects exactly one argument."))
   }
 }
