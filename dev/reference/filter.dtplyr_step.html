@@ -80,10 +80,11 @@ the <code>i</code> argument of <code>[.data.table</code></p>
 
 
 <dt>...</dt>
-<dd><p>&lt;<code><a href="https://dplyr.tidyverse.org/reference/dplyr_data_masking.html" class="external-link">data-masking</a></code>&gt; Expressions that return a
-logical value, and are defined in terms of the variables in <code>.data</code>.
-If multiple expressions are included, they are combined with the <code>&amp;</code> operator.
-Only rows for which all conditions evaluate to <code>TRUE</code> are kept.</p></dd>
+<dd><p>&lt;<code><a href="https://rlang.r-lib.org/reference/args_data_masking.html" class="external-link">data-masking</a></code>&gt; Expressions that
+return a logical value, and are defined in terms of the variables in
+<code>.data</code>. If multiple expressions are included, they are combined with the
+<code>&amp;</code> operator. Only rows for which all conditions evaluate to <code>TRUE</code> are
+kept.</p></dd>
 
 
 <dt>.by</dt>
@@ -115,7 +116,7 @@ details and examples, see <a href="https://dplyr.tidyverse.org/reference/dplyr_b
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 5 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
 <span class="r-in"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">vs</span>, <span class="va">am</span><span class="op">)</span></span></span>
@@ -130,7 +131,7 @@ details and examples, see <a href="https://dplyr.tidyverse.org/reference/dplyr_b
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>  27.3     4  79      66  4.08  1.94  18.9     1     1     4     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>  30.4     4  95.1   113  3.77  1.51  16.9     1     1     5     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 1 more row</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more row</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
 <span class="r-in"><span></span></span>
@@ -149,7 +150,7 @@ details and examples, see <a href="https://dplyr.tidyverse.org/reference/dplyr_b
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 10 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># Use as.data.table()/as.data.frame()/as_tibble() to access results</span></span>
 </code></pre></div>
