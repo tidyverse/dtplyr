@@ -346,6 +346,13 @@ test_that("`desc(col)` is translated to `-col` inside arrange", {
 
   expect_equal(show_query(step), expr(DT[order(-x)]))
   expect_equal(out$x, c("b", "a"))
+
+  # Can namespace `desc()`
+  step <- arrange(dt, dplyr::desc(x))
+  out <- collect(step)
+
+  expect_equal(show_query(step), expr(DT[order(-x)]))
+  expect_equal(out$x, c("b", "a"))
 })
 
 test_that("desc() checks the number of arguments", {
