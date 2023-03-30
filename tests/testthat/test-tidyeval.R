@@ -138,6 +138,16 @@ test_that("translates case_when()", {
     capture_dot(dt, case_when(x == 1 ~ n())),
     quote(fcase(x == 1, .N))
   )
+
+  # Errors on `.ptype`
+  expect_error(
+    capture_dot(dt, case_when(x1 ~ y1, .ptype = double()))
+  )
+
+  # Errors on `.size`
+  expect_error(
+    capture_dot(dt, case_when(x1 ~ y1, .size = 1))
+  )
 })
 
 test_that("translates lag()/lead()", {
