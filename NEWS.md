@@ -9,6 +9,8 @@
 
 * Can namespace calls to `desc()` (#427).
 
+* `case_when(.default = )` now works.
+
 # dtplyr 1.3.1
 
 * Fix for failing R CMD check.
