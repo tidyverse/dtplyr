@@ -32,6 +32,12 @@ library(dplyr, warn.conflicts = FALSE)
 dt <- lazy_dt(mtcars)
 
 dt \%>\%
+  reframe(qs = quantile(disp, c(0.25, 0.75)),
+          prob = c(0.25, 0.75),
+          .by = cyl)
+
+dt \%>\%
   group_by(cyl) \%>\%
-  reframe(qs = quantile(disp, c(0.25, 0.75)), prob = c(0.25, 0.75))
+  reframe(qs = quantile(disp, c(0.25, 0.75)),
+          prob = c(0.25, 0.75))
 }
