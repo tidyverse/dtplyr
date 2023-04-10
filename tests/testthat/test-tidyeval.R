@@ -127,10 +127,26 @@ test_that("translates case_when()", {
     quote(fcase(x1, y1, x2, y2, x3, TRUE, rep(TRUE, .N), y4))
   )
 
+  # can use `.default` and `.default` doesn't need to be in last position, #429
+  expect_equal(
+    capture_dot(dt, case_when(x1 ~ y1, x2 ~ y2, .default = y4, x3 ~ TRUE)),
+    quote(fcase(x1, y1, x2, y2, x3, TRUE, rep(TRUE, .N), y4))
+  )
+
   # translates recursively
   expect_equal(
     capture_dot(dt, case_when(x == 1 ~ n())),
     quote(fcase(x == 1, .N))
+  )
+
+  # Errors on `.ptype`
+  expect_error(
+    capture_dot(dt, case_when(x1 ~ y1, .ptype = double()))
+  )
+
+  # Errors on `.size`
+  expect_error(
+    capture_dot(dt, case_when(x1 ~ y1, .size = 1))
   )
 })
 

@@ -144,7 +144,16 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     call2("fcoalesce", !!!args)
   } else if (is_call(x, "case_when")) {
     # case_when(x ~ y) -> fcase(x, y)
-    args <- unlist(lapply(x[-1], function(x) {
+    call <- call_match(x, dplyr::case_when)
+    args <- call_args(call)
+    if (!is.null(args$.ptype) || !is.null(args$.size)) {
+      abort("`.ptype` and `.size` are not supported in dtplyr case_when")
+    }
+    if (!is.null(args$.default)) {
+      args$.default <- call2("~", quote(rep(TRUE, .N)), args$.default)
+      args <- unname(args)
+    }
+    args <- unlist(lapply(args, function(x) {
       list(
         # Get as "default" case as close as possible
         # https://github.com/Rdatatable/data.table/issues/4258
