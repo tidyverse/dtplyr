@@ -2,6 +2,8 @@
 
 ## New features
 
+* `reframe()` is now translated.
+
 * `consecutive_id()` is now mapped to `data.table::rleid()`.
   Note: `rleid()` only accepts vector inputs and cannot be used with data frame inputs.
   

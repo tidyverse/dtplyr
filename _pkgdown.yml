@@ -34,6 +34,7 @@ reference:
   - transmute.dtplyr_step
   - relocate.dtplyr_step
   - rename.dtplyr_step
+  - reframe.dtplyr_step
   - select.dtplyr_step
   - slice.dtplyr_step
   - summarise.dtplyr_step
