@@ -163,6 +163,14 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     }))
     args <- lapply(args, dt_squash, env = env, data = data, j = j)
     call2("fcase", !!!args)
+  } else if (is_call(x, "case_match")) {
+    x <- call_match(x, dplyr::case_match, dots_expand = FALSE)
+    args <- call_args(x)
+    .x <- args$.x
+    dots <- args$...
+    dots <- map(dots, prep_case_match_dot, .x)
+    call <- call2("case_when", !!!dots, .default = args$.default)
+    dt_squash_call(call, env, data, j = j)
   } else if (is_call(x, "cur_data")) {
     quote(.SD)
   } else if (is_call(x, "cur_data_all")) {
@@ -350,4 +358,11 @@ check_one_arg <- function(x) {
   if (!has_length(args, 1L)) {
     abort(glue("`{fun}()` expects exactly one argument."))
   }
+}
+
+prep_case_match_dot <- function(dot, .x) {
+  lhs <- f_lhs(dot)
+  lhs <- call2("%in%", .x, lhs)
+  f_lhs(dot) <- lhs
+  dot
 }
