@@ -362,7 +362,11 @@ check_one_arg <- function(x) {
 
 prep_case_match_dot <- function(dot, .x) {
   lhs <- f_lhs(dot)
-  lhs <- call2("%in%", .x, lhs)
+  if (is.character(lhs) || is.numeric(lhs)) {
+    lhs <- call2("==", .x, lhs)
+  } else {
+    lhs <- call2("%in%", .x, lhs)
+  }
   f_lhs(dot) <- lhs
   dot
 }
