@@ -150,6 +150,22 @@ test_that("translates case_when()", {
   )
 })
 
+test_that("translates case_match()", {
+  dt <- lazy_dt(data.frame(x = 1:5))
+
+  # Works without `.default`
+  expect_equal(
+    capture_dot(dt, case_match(x, c(1, 2) ~ 1, 3 ~ 2)),
+    quote(fcase(x %in% c(1, 2), 1, x == 3, 2))
+  )
+
+  # Works with `.default`
+  expect_equal(
+    capture_dot(dt, case_match(x, c(1, 2) ~ 1, 3 ~ 2, .default = 3)),
+    quote(fcase(x %in% c(1, 2), 1, x == 3, 2, rep(TRUE, .N), 3))
+  )
+})
+
 test_that("translates lag()/lead()", {
   df <- data.frame(x = 1:5, y = 1:5)
   expect_equal(

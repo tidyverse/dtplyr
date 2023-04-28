@@ -7,6 +7,8 @@
 * `consecutive_id()` is now mapped to `data.table::rleid()`.
   Note: `rleid()` only accepts vector inputs and cannot be used with data frame inputs.
   
+* `case_match()` is now translated to `fcase()`.
+  
 ## Minor improvements and bug fixes
 
 * Can namespace calls to `desc()` (#427).
