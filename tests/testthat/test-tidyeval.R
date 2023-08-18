@@ -169,7 +169,7 @@ test_that("translates case_match()", {
 test_that("translates lag()/lead()", {
   df <- data.frame(x = 1:5, y = 1:5)
   expect_equal(
-    capture_dot(df, lag(x)),
+    capture_dot(df, lag(.data$x)),
     expr(shift(x, type = "lag"))
   )
   expect_equal(
