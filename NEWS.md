@@ -11,6 +11,8 @@
   
 ## Minor improvements and bug fixes
 
+* Can use `.data` in `lead()`/`lag()` (#441)
+
 * Can namespace calls to `desc()` (#427).
 
 * `case_when(.default = )` now works.
