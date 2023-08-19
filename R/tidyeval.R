@@ -199,27 +199,27 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
   } else if (is_call(x, c("lag", "lead"))) {
     if (is_call(x, "lag")) {
       type <- "lag"
-      call <- call_match(x, dplyr::lag)
     } else {
       type <- "lead"
-      call <- call_match(x, dplyr::lead)
     }
-    call[-1] <- lapply(call[-1], dt_squash, env = env, data = data, j = j)
+    x <- call_match(x, dplyr::lag)
+    x[-1] <- lapply(x[-1], dt_squash, env = env, data = data, j = j)
 
-    shift_call <- call2("shift", x[[2]])
-    if (!is_null(call$n)) {
-      shift_call$n <- call$n
+    args <- call_args(x)
+    call <- call2("shift", args[[1]])
+    if (!is_null(args$n)) {
+      call$n <- args$n
     }
-    if (!is_null(call$default)) {
-      shift_call$fill <- call$default
+    if (!is_null(args$default)) {
+      call$fill <- args$default
     }
-    if (!is_null(call$order_by)) {
+    if (!is_null(args$order_by)) {
       abort(
         glue::glue("The `order_by` argument of `{type}()` is not supported by dtplyr")
       )
     }
-    shift_call$type <- type
-    shift_call
+    call$type <- type
+    call
   } else if (is_call(x, "n", n = 0)) {
     quote(.N)
   } else if (is_call(x, "n_distinct")) {
