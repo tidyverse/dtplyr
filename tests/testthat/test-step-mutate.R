@@ -183,6 +183,18 @@ test_that("works with `.by`", {
   expect_true(length(step$groups) == 0)
 })
 
+test_that("Using `.by` doesn't group prior step", {
+  dt <- lazy_dt(data.table(x = 1:3, y = c(1, 1, 2), z = 1), "DT")
+  step <- dt %>%
+    select(y, z) %>%
+    mutate(row_num = row_number(), .by = y)
+
+  expect_equal(as.data.frame(step), data.frame(y = c(1, 1, 2), z = c(1, 1, 1), row_num = c(1, 2, 1)))
+  expect_equal(
+    show_query(step),
+    expr(DT[, .(y, z)][, `:=`(row_num = seq_len(.N)), by = .(y)]))
+})
+
 # var = NULL -------------------------------------------------------------
 
 test_that("var = NULL works when var is in original data", {
