@@ -183,6 +183,18 @@ test_that("works with `.by`", {
   expect_true(length(step$groups) == 0)
 })
 
+test_that("Using `.by` doesn't group prior step, #439", {
+  dt <- lazy_dt(data.table(x = 1:3, y = c(1, 1, 2), z = 1), "DT")
+  res <- dt %>%
+    select(x, y) %>%
+    mutate(row_num = row_number(), .by = y) %>%
+    filter(row_num < 3, .by = y) %>%
+    as_tibble()
+
+  # Note: data.table would duplicate y name since it is in `by` and in `select(x, y)`
+  expect_equal(names(res), c("x", "y", "row_num"))
+})
+
 # var = NULL -------------------------------------------------------------
 
 test_that("var = NULL works when var is in original data", {
