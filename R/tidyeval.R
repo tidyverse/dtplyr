@@ -30,7 +30,7 @@ globalVariables(dt_funs)
 
 capture_dots <- function(.data, ..., .j = TRUE, .by = new_by()) {
   if (.by$uses_by) {
-    .data$groups <- .by$names
+    .data <- step_group(.data, .by$names)
   }
 
   dots <- enquos(..., .named = .j)
@@ -47,7 +47,7 @@ capture_dots <- function(.data, ..., .j = TRUE, .by = new_by()) {
 
 capture_new_vars <- function(.data, ..., .by = new_by()) {
   if (.by$uses_by) {
-    .data$groups <- .by$names
+    .data <- step_group(.data, .by$names)
   }
 
   dots <- as.list(enquos(..., .named = TRUE))
