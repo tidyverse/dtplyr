@@ -35,8 +35,8 @@ install.packages("dtplyr")
 Or try the development version from GitHub with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("tidyverse/dtplyr")
+# install.packages("pak")
+pak::pak("tidyverse/dtplyr")
 ```
 
 ## Usage
