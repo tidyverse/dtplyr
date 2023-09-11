@@ -38,7 +38,7 @@ step_subset_i <- function(parent, i, by = new_by()) {
   }
 
   if (by$uses_by) {
-    parent$groups <- by$names
+    parent <- step_group(parent, by$names)
   }
 
   if (length(parent$groups) > 0) {
@@ -75,7 +75,7 @@ step_subset_j <- function(parent,
   }
 
   if (by$uses_by) {
-    parent$groups <- by$names
+    parent <- step_group(parent, by$names)
   }
 
   out <- step_subset(

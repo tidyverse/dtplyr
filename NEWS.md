@@ -17,6 +17,8 @@
 
 * `case_when(.default = )` now works.
 
+* `.by` no longer alters grouping in prior steps (#439)
+
 # dtplyr 1.3.1
 
 * Fix for failing R CMD check.

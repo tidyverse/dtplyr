@@ -183,6 +183,21 @@ test_that("works with `.by`", {
   expect_true(length(step$groups) == 0)
 })
 
+test_that("Using `.by` doesn't group prior step, #439", {
+  dt <- lazy_dt(data.table(x = 1:3, y = c(1, 1, 2), z = 1), "DT")
+  res <- dt %>%
+    select(x, y) %>%
+    mutate(row_num = row_number(), .by = y) %>%
+    filter(row_num < 3, .by = y) %>%
+    as.data.frame()
+
+  # Note: Why this test catches the potential error...
+  # data.frames/data.tables allow duplicate column names.
+  # If using `.by` affected the `select` step, data.table would duplicate the "y" column.
+  # and there would therefore be two "y" columns in the result.
+  expect_equal(names(res), c("x", "y", "row_num"))
+})
+
 # var = NULL -------------------------------------------------------------
 
 test_that("var = NULL works when var is in original data", {
