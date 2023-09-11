@@ -192,8 +192,9 @@ test_that("Using `.by` doesn't group prior step, #439", {
     as.data.frame()
 
   # Note: Why this test catches the potential error...
-  # data.table allows duplicate column names. If using `.by` affected the `select` step,
-  # data.table would duplicate the "y" column. and there would therefore be two "y" columns.
+  # data.frames/data.tables allow duplicate column names.
+  # If using `.by` affected the `select` step, data.table would duplicate the "y" column.
+  # and there would therefore be two "y" columns in the result.
   expect_equal(names(res), c("x", "y", "row_num"))
 })
 
