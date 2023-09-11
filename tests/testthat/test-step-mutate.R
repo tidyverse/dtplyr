@@ -189,9 +189,11 @@ test_that("Using `.by` doesn't group prior step, #439", {
     select(x, y) %>%
     mutate(row_num = row_number(), .by = y) %>%
     filter(row_num < 3, .by = y) %>%
-    as_tibble()
+    as.data.frame()
 
-  # Note: data.table would duplicate y name since it is in `by` and in `select(x, y)`
+  # Note: Why this test catches the potential error...
+  # data.table allows duplicate column names. If using `.by` affected the `select` step,
+  # data.table would duplicate the "y" column. and there would therefore be two "y" columns.
   expect_equal(names(res), c("x", "y", "row_num"))
 })
 
