@@ -423,9 +423,9 @@ dplyr verbs, so we benchmark the whole process.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter       1.35ms   1.42ms      701.    4.94KB     18.0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.72ms   1.78ms      560.   18.52KB     19.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    3.13ms   3.23ms      309.   29.01KB     17.8</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter       1.75ms   1.81ms      551.    4.94KB     13.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       2.16ms   2.24ms      445.   18.52KB     15.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    3.95ms   4.06ms      246.   29.01KB     15.7</span></span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that
 the performance overhead of dtplyr should be negligible for realistic
 data sizes. Note that dtplyr run-time scales with the complexity of the
