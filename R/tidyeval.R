@@ -92,16 +92,7 @@ dt_squash <- function(x, env, data, j = TRUE, is_top = FALSE) {
         x
       } else if (!var %in% data$vars && env_has(env, var, inherit = TRUE)) {
         if (is_global(env)) {
-          # Slightly dangerous because the variable might be modified
-          # between creation and execution, but it seems like a reasonable
-          # tradeoff in order to get a more natural translation.
-          if (j) {
-            # use .. to avoid data mask
-            sym(paste0("..", var))
-          } else {
-            # i doesn't provide a data mask
-            x
-          }
+          x
         } else {
           eval(x, env)
         }
