@@ -33,13 +33,18 @@ test_that("unless we're operating in the global environment", {
   expect_equal(capture_dot(dt, !!quo, j = FALSE), quote(x + n))
 })
 
-test_that("ignores calls to `$`, #434", {
+test_that("ignores accessor calls, #434", {
   df <- tibble(length = 1)
 
   step <- lazy_dt(tibble(x = 1:3), "DT") %>%
     mutate(y = df$length)
 
   expect_equal(show_query(step), expr(copy(DT)[, `:=`(y = df$length)]))
+
+  step <- lazy_dt(tibble(x = 1:3), "DT") %>%
+    mutate(y = df[["length"]])
+
+  expect_equal(show_query(step), expr(copy(DT)[, `:=`(y = df[["length"]])]))
 })
 
 test_that("using environment of inlined quosures", {
