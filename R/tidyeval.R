@@ -270,6 +270,8 @@ dt_squash_call <- function(x, env, data, j = TRUE) {
     x[[1]] <- expr(rleid)
     x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
     x
+  } else if (is_call(x, c("$", "[["))) {
+    x
   } else {
     x[-1] <- lapply(x[-1], dt_squash, env, data, j = j)
     x
