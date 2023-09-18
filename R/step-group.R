@@ -77,7 +77,7 @@ group_by.dtplyr_step <- function(.data, ..., .add = FALSE, arrange = TRUE) {
   groups <- eval(expr(dplyr::group_by_prepare(.data, !!!dots, .add = .add)))
   arranged <- if (!is.null(.data$arrange)) .data$arrange && arrange else arrange
 
-  step_group(groups$data, as.character(groups$groups), arranged)
+  step_group(groups$data, as.character(groups$group_names), arranged)
 }
 
 can_step_group_return_early <- function(parent, groups, arrange) {
