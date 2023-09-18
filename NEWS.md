@@ -21,6 +21,8 @@
 
 * Arguments to `$` and `[[` calls are no longer prepended with `..`  (#434)
 
+* Grouping now works with non-standard column names (#451)
+
 # dtplyr 1.3.1
 
 * Fix for failing R CMD check.
