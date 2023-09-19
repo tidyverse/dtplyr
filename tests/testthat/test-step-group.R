@@ -99,3 +99,13 @@ test_that("only adds step if necessary", {
   expect_s3_class(out, "dtplyr_step_group")
   expect_equal(group_vars(out), character())
 })
+
+test_that("works with non-standard column names, #451", {
+  dt <- lazy_dt(tibble(`a a` = "a"))
+  res <- dt %>%
+    group_by(`a a`) %>%
+    count() %>%
+    as_tibble()
+  expect_named(res, c("a a", "n"))
+  expect_equal(res$`a a`, "a")
+})
