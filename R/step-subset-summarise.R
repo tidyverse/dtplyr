@@ -43,7 +43,7 @@ summarise.dtplyr_step <- function(.data, ..., .by = NULL, .groups = NULL) {
     out <- step_subset_j(
       .data,
       vars = union(group_vars, names(dots)),
-      j = call2(".", !!!dots),
+      j = get_j(dots),
       by = by
     )
   }

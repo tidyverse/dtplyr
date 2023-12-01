@@ -140,3 +140,45 @@ test_that("can change group vars", {
     dt %>% summarise(across(a, ~ 2)), "Column `a` doesn't exist"
   )
 })
+
+test_that("data.frame()-ish calls get spliced", {
+
+  df <- lazy_dt(data.frame(a = 'a'))
+
+  one_dot <- df %>%
+    summarise(tibble::as_tibble_row(c(x = 1, y = 2)))
+  expect_identical(
+    collect(one_dot),
+    tibble(x = 1, y = 2)
+  )
+
+  two_dots <- df %>%
+    summarise(tibble::as_tibble_row(c(x = 1, y = 2)), z = 3)
+  expect_identical(
+    collect(two_dots),
+    tibble(x = 1, y = 2, z = 3)
+  )
+
+})
+
+test_that("data.frame()-ish calls get spliced - with grouped input", {
+
+  df <- lazy_dt(data.frame(a = 'a')) %>%
+    group_by(a)
+
+  one_dot <- df %>%
+    summarise(tibble::as_tibble_row(c(x = 1, y = 2)))
+  expect_identical(
+    collect(one_dot),
+    tibble(x = 1, y = 2)
+  )
+
+  two_dots <- df %>%
+    summarise(tibble::as_tibble_row(c(x = 1, y = 2)), z = 3)
+  expect_identical(
+    collect(two_dots),
+    tibble(x = 1, y = 2, z = 3)
+  )
+
+})
+
