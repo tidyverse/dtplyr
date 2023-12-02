@@ -143,7 +143,7 @@ test_that("can change group vars", {
 
 test_that("data.frame()-ish calls get spliced", {
 
-  df <- lazy_dt(data.frame(a = 'a'))
+  df <- lazy_dt(data.frame(a = 0))
 
   one_dot <- df %>%
     summarise(tibble::as_tibble_row(c(x = 1, y = 2)))
@@ -163,21 +163,21 @@ test_that("data.frame()-ish calls get spliced", {
 
 test_that("data.frame()-ish calls get spliced - with grouped input", {
 
-  df <- lazy_dt(data.frame(a = 'a')) %>%
+  df <- lazy_dt(data.frame(a = 0)) %>%
     group_by(a)
 
   one_dot <- df %>%
     summarise(tibble::as_tibble_row(c(x = 1, y = 2)))
   expect_identical(
     collect(one_dot),
-    tibble(a = 'a', x = 1, y = 2)
+    tibble(a = 0, x = 1, y = 2)
   )
 
   two_dots <- df %>%
     summarise(tibble::as_tibble_row(c(x = 1, y = 2)), z = 3)
   expect_identical(
     collect(two_dots),
-    tibble(a = 'a', x = 1, y = 2, z = 3)
+    tibble(a = 0, x = 1, y = 2, z = 3)
   )
 
 })
