@@ -170,14 +170,14 @@ test_that("data.frame()-ish calls get spliced - with grouped input", {
     summarise(tibble::as_tibble_row(c(x = 1, y = 2)))
   expect_identical(
     collect(one_dot),
-    tibble(x = 1, y = 2)
+    tibble(a = 'a', x = 1, y = 2)
   )
 
   two_dots <- df %>%
     summarise(tibble::as_tibble_row(c(x = 1, y = 2)), z = 3)
   expect_identical(
     collect(two_dots),
-    tibble(x = 1, y = 2, z = 3)
+    tibble(a = 'a', x = 1, y = 2, z = 3)
   )
 
 })

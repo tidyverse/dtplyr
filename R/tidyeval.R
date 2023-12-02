@@ -86,9 +86,11 @@ get_j <- function(dots) {
   }
 
   names(dots)[dot_is_data_frame_call] <- ""
-  dots[!dot_is_data_frame_call] <- lapply(dots[!dot_is_data_frame_call], function(x) {
-    call2('list', x)
-  })
+  dots[!dot_is_data_frame_call] <- lapply(
+    dots[!dot_is_data_frame_call],
+    call2,
+    .fn = "list"
+  )
   j <- call2(".", !!!dots)
   call2("unlist", j, recursive = FALSE)
 }
