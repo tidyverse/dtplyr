@@ -85,6 +85,8 @@ get_j <- function(dots) {
     return(dots[[1]])
   }
 
+  # create an expression with base functions which gives the same value as
+  # purrr::list_flatten(list(<dots>)) when evaluated
   names(dots)[dot_is_data_frame_call] <- ""
   dots[!dot_is_data_frame_call] <- lapply(
     dots[!dot_is_data_frame_call],
