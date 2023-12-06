@@ -401,7 +401,9 @@ is_data_frame_call <- function(dot) {
   is_call(dot, "as.tibble") ||
   is_call(dot, "as_tibble_row") ||
   is_call(dot, "as.data.frame") ||
+  is_call(dot, "data.frame") ||
   is_call(dot, "as.data.table") ||
+  is_call(dot, "data.table") ||
   is_call(dot, "tibble")
 }
 
