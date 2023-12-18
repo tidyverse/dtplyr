@@ -28,21 +28,6 @@
 #' @examples
 #' library(dplyr, warn.conflicts = FALSE)
 #'
-#' # If you have a data.table, using it with any dplyr generic will
-#' # automatically convert it to a lazy_dt object
-#' dt <- data.table::data.table(x = 1:10, y = 10:1)
-#' dt %>% filter(x == y)
-#' dt %>% mutate(z = x + y)
-#'
-#' # Note that dtplyr will avoid mutating the input data.table, so the
-#' # previous translation includes an automatic copy(). You can avoid this
-#' # with a manual call to lazy_dt()
-#' dt %>%
-#'   lazy_dt(immutable = FALSE) %>%
-#'   mutate(z = x + y)
-#'
-#' # If you have a data frame, you can use lazy_dt() to convert it to
-#' # a data.table:
 #' mtcars2 <- lazy_dt(mtcars)
 #' mtcars2
 #' mtcars2 %>% select(mpg:cyl)
@@ -61,7 +46,7 @@
 #'   filter(mpg < mean(mpg)) %>%
 #'   summarise(hp = mean(hp))
 lazy_dt <- function(x, name = NULL, immutable = TRUE, key_by = NULL) {
-  # in case `x` has an `as.data.table()` method but not a `group_vars()` method 
+  # in case `x` has an `as.data.table()` method but not a `group_vars()` method
   groups <- tryCatch(group_vars(x), error = function(e) character())
 
   if (!is.data.table(x)) {
