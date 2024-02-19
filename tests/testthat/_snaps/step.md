@@ -56,3 +56,59 @@
       
       # Use as.data.table()/as.data.frame()/as_tibble() to access results
 
+# can print using n/max_extra_cols/max_footer_lines, #464, 
+
+    Code
+      dt <- letters %>% lapply(function(.x) tibble(!!.x := 1:10)) %>% bind_cols() %>%
+        lazy_dt("DT")
+      print(dt, n = 3)
+    Output
+      Source: local data table [10 x 26]
+      Call:   DT
+      
+            a     b     c     d     e     f     g     h     i     j     k     l     m
+        <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+      1     1     1     1     1     1     1     1     1     1     1     1     1     1
+      2     2     2     2     2     2     2     2     2     2     2     2     2     2
+      3     3     3     3     3     3     3     3     3     3     3     3     3     3
+      # i 7 more rows
+      # i 13 more variables: n <int>, o <int>, p <int>, q <int>, r <int>, s <int>,
+      #   t <int>, u <int>, v <int>, w <int>, x <int>, y <int>, z <int>
+      
+      # Use as.data.table()/as.data.frame()/as_tibble() to access results
+    Code
+      print(dt, max_extra_cols = 3)
+    Output
+      Source: local data table [10 x 26]
+      Call:   DT
+      
+            a     b     c     d     e     f     g     h     i     j     k     l     m
+        <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+      1     1     1     1     1     1     1     1     1     1     1     1     1     1
+      2     2     2     2     2     2     2     2     2     2     2     2     2     2
+      3     3     3     3     3     3     3     3     3     3     3     3     3     3
+      4     4     4     4     4     4     4     4     4     4     4     4     4     4
+      5     5     5     5     5     5     5     5     5     5     5     5     5     5
+      6     6     6     6     6     6     6     6     6     6     6     6     6     6
+      # i 4 more rows
+      # i 13 more variables: n <int>, o <int>, p <int>, ...
+      
+      # Use as.data.table()/as.data.frame()/as_tibble() to access results
+    Code
+      print(dt, max_footer_lines = 1)
+    Output
+      Source: local data table [10 x 26]
+      Call:   DT
+      
+            a     b     c     d     e     f     g     h     i     j     k     l     m
+        <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+      1     1     1     1     1     1     1     1     1     1     1     1     1     1
+      2     2     2     2     2     2     2     2     2     2     2     2     2     2
+      3     3     3     3     3     3     3     3     3     3     3     3     3     3
+      4     4     4     4     4     4     4     4     4     4     4     4     4     4
+      5     5     5     5     5     5     5     5     5     5     5     5     5     5
+      6     6     6     6     6     6     6     6     6     6     6     6     6     6
+      # i 4 more rows
+      
+      # Use as.data.table()/as.data.frame()/as_tibble() to access results
+

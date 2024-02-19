@@ -29,6 +29,18 @@ test_that("has useful display methods", {
   })
 })
 
+test_that("can print using n/max_extra_cols/max_footer_lines, #464, ", {
+  expect_snapshot({
+    dt <- letters %>%
+      lapply(function(.x) tibble(!!.x := 1:10)) %>%
+      bind_cols() %>%
+      lazy_dt("DT")
+    print(dt, n = 3)
+    print(dt, max_extra_cols = 3)
+    print(dt, max_footer_lines = 1)
+  })
+})
+
 test_that("can evaluate to any data frame type", {
   dt <- lazy_dt(mtcars, "DT")
 
