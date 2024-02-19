@@ -176,7 +176,11 @@ pull.dtplyr_step <- function(.data, var = -1, name = NULL, ...) {
 }
 
 #' @export
-print.dtplyr_step <- function(x, ...) {
+print.dtplyr_step <- function(x,
+                              ...,
+                              n = 6,
+                              max_extra_cols = NULL,
+                              max_footer_lines = NULL) {
   dt <- as.data.table(x)
 
   cat_line(cli::style_bold("Source: "), "local data table ", dplyr::dim_desc(dt))
@@ -193,7 +197,14 @@ print.dtplyr_step <- function(x, ...) {
     cat_line(cli::style_bold("Call:   "), expr_text(dt_call(x)))
   }
   cat_line()
-  cat_line(format(as_tibble(dt, .name_repair = "minimal"), n = 6)[-1]) # Hack to remove "A tibble" line
+  cat_line(
+    format(
+      as_tibble(dt, .name_repair = "minimal"),
+      n = n,
+      max_extra_cols = max_extra_cols,
+      max_footer_lines = max_footer_lines
+    )[-1] # Hack to remove "A tibble" line
+  )
   cat_line()
   cat_line(cli::col_silver(
     "# Use as.data.table()/as.data.frame()/as_tibble() to access results"
