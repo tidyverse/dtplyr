@@ -203,8 +203,8 @@ print.dtplyr_step <- function(x,
       n = n,
       max_extra_cols = max_extra_cols,
       max_footer_lines = max_footer_lines
-    )[-1]
-  ) # Hack to remove "A tibble" line
+    )[-1] # Hack to remove "A tibble" line
+  )
   cat_line()
   cat_line(cli::col_silver(
     "# Use as.data.table()/as.data.frame()/as_tibble() to access results"
