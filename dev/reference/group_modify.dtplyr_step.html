@@ -134,19 +134,22 @@ modified <code><a href="lazy_dt.html">lazy_dt()</a></code>.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_map.html" class="external-link">group_map</a></span><span class="op">(</span><span class="va">head</span>, n <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    mpg disp  hp drat    wt  qsec vs am gear carb</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  21  160 110  3.9 2.620 16.46  0  1    4    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  21  160 110  3.9 2.875 17.02  0  1    4    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mpg  disp    hp  drat    wt  qsec    vs    am  gear  carb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    21   160   110   3.9 2.620 16.46     0     1     4     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:    21   160   110   3.9 2.875 17.02     0     1     4     4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     mpg  disp hp drat   wt  qsec vs am gear carb</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 22.8 108.0 93 3.85 2.32 18.61  1  1    4    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: 24.4 146.7 62 3.69 3.19 20.00  1  0    4    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mpg  disp    hp  drat    wt  qsec    vs    am  gear  carb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  22.8 108.0    93  3.85  2.32 18.61     1     1     4     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  24.4 146.7    62  3.69  3.19 20.00     1     0     4     2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     mpg disp  hp drat   wt  qsec vs am gear carb</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: 18.7  360 175 3.15 3.44 17.02  0  0    3    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: 14.3  360 245 3.21 3.57 15.84  0  0    3    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      mpg  disp    hp  drat    wt  qsec    vs    am  gear  carb</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  18.7   360   175  3.15  3.44 17.02     0     0     3     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  14.3   360   245  3.21  3.57 15.84     0     0     3     4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
@@ -157,7 +160,7 @@ modified <code><a href="lazy_dt.html">lazy_dt()</a></code>.</p>
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, Maximilian Girlich, Mark Fairbanks, Ryan Dickerson, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
+  <p></p><p>Developed by <a href="https://hadley.nz" class="external-link">Hadley Wickham</a>, Maximilian Girlich, Mark Fairbanks, Ryan Dickerson, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

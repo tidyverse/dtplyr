@@ -164,10 +164,12 @@ as_tibble() returns a tibble.
 <span class="r-in"><span><span class="co"># compute and return data.table</span></span></span>
 <span class="r-in"><span><span class="va">avg_mpg_dt</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">avg_mpg</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">avg_mpg_dt</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    cyl      mpg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:   4 28.07500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   6 20.56667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   8 15.40000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;cyl&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      cyl      mpg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    &lt;num&gt;    &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     4 28.07500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:     6 20.56667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:     8 15.40000</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># modify translation to use intermediate assignment</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute</a></span><span class="op">(</span><span class="va">avg_mpg</span><span class="op">)</span></span></span>
@@ -193,7 +195,7 @@ as_tibble() returns a tibble.
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, Maximilian Girlich, Mark Fairbanks, Ryan Dickerson, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
+  <p></p><p>Developed by <a href="https://hadley.nz" class="external-link">Hadley Wickham</a>, Maximilian Girlich, Mark Fairbanks, Ryan Dickerson, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
