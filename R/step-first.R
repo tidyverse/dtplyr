@@ -1,7 +1,7 @@
 #' Create a "lazy" data.table for use with dplyr verbs
 #'
 #' @description
-#' A lazy data.table lazy captures the intent of dplyr verbs, only actually
+#' A lazy data.table captures the intent of dplyr verbs, only actually
 #' performing computation when requested (with [collect()], [pull()],
 #' [as.data.frame()], [data.table::as.data.table()], or [tibble::as_tibble()]).
 #' This allows dtplyr to convert dplyr verbs into as few data.table expressions

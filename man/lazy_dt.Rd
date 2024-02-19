@@ -28,7 +28,7 @@ joins that use the keys.
 See \code{vignette("datatable-keys-fast-subset")} for more details.}
 }
 \description{
-A lazy data.table lazy captures the intent of dplyr verbs, only actually
+A lazy data.table captures the intent of dplyr verbs, only actually
 performing computation when requested (with \code{\link[=collect]{collect()}}, \code{\link[=pull]{pull()}},
 \code{\link[=as.data.frame]{as.data.frame()}}, \code{\link[data.table:as.data.table]{data.table::as.data.table()}}, or \code{\link[tibble:as_tibble]{tibble::as_tibble()}}).
 This allows dtplyr to convert dplyr verbs into as few data.table expressions
