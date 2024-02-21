@@ -23,6 +23,8 @@
 
 * Grouping now works with non-standard column names (#451)
 
+* `print.dtplyr_step()` gains `n`, `max_extra_cols`, and `max_footer_lines` args (#464)
+
 # dtplyr 1.3.1
 
 * Fix for failing R CMD check.
