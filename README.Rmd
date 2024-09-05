@@ -17,8 +17,8 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/dtplyr)](https://cran.r-project.org/package=dtplyr)
-[![R-CMD-check](https://github.com/tidyverse/dtplyr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/dtplyr/actions)
-[![Codecov test coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dtplyr?branch=main)
+[![R-CMD-check](https://github.com/tidyverse/dtplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/dtplyr/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/tidyverse/dtplyr/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dtplyr)
 <!-- badges: end -->
 
 ## Overview
@@ -52,7 +52,7 @@ library(dtplyr)
 library(dplyr, warn.conflicts = FALSE)
 ```
 
-Then use `lazy_dt()` to create a "lazy" data table that tracks the operations performed on it. 
+Then use `lazy_dt()` to create a "lazy" data table that tracks the operations performed on it.
 
 ```{r}
 mtcars2 <- lazy_dt(mtcars)
@@ -61,21 +61,21 @@ mtcars2 <- lazy_dt(mtcars)
 You can preview the transformation (including the generated data.table code) by printing the result:
 
 ```{r}
-mtcars2 %>% 
-  filter(wt < 5) %>% 
+mtcars2 %>%
+  filter(wt < 5) %>%
   mutate(l100k = 235.21 / mpg) %>% # liters / 100 km
-  group_by(cyl) %>% 
+  group_by(cyl) %>%
   summarise(l100k = mean(l100k))
 ```
 
 But generally you should reserve this only for debugging, and use `as.data.table()`, `as.data.frame()`, or `as_tibble()` to indicate that you're done with the transformation and want to access the results:
 
 ```{r}
-mtcars2 %>% 
-  filter(wt < 5) %>% 
+mtcars2 %>%
+  filter(wt < 5) %>%
   mutate(l100k = 235.21 / mpg) %>% # liters / 100 km
-  group_by(cyl) %>% 
-  summarise(l100k = mean(l100k)) %>% 
+  group_by(cyl) %>%
+  summarise(l100k = mean(l100k)) %>%
   as_tibble()
 ```
 
@@ -83,13 +83,13 @@ mtcars2 %>%
 
 There are two primary reasons that dtplyr will always be somewhat slower than data.table:
 
-* Each dplyr verb must do some work to convert dplyr syntax to data.table 
-  syntax. This takes time proportional to the complexity of the input code, 
+* Each dplyr verb must do some work to convert dplyr syntax to data.table
+  syntax. This takes time proportional to the complexity of the input code,
   not the input _data_, so should be a negligible overhead for large datasets.
-  [Initial benchmarks][benchmark] suggest that the overhead should be under 
+  [Initial benchmarks][benchmark] suggest that the overhead should be under
   1ms per dplyr call.
 
-* To match dplyr semantics, `mutate()` does not modify in place by default. 
+* To match dplyr semantics, `mutate()` does not modify in place by default.
   This means that most expressions involving `mutate()` must make a copy
   that would not be necessary if you were using data.table directly.
   (You can opt out of this behaviour in `lazy_dt()` with `immutable = FALSE`).
