@@ -7,9 +7,9 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/dtplyr)](https://cran.r-project.org/package=dtplyr)
-[![R-CMD-check](https://github.com/tidyverse/dtplyr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/dtplyr/actions)
+[![R-CMD-check](https://github.com/tidyverse/dtplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/dtplyr/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dtplyr?branch=main)
+coverage](https://codecov.io/gh/tidyverse/dtplyr/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dtplyr)
 <!-- badges: end -->
 
 ## Overview
@@ -47,6 +47,7 @@ other goodies that it provides:
 
 ``` r
 library(data.table)
+#> Warning: package 'data.table' was built under R version 4.4.1
 library(dtplyr)
 library(dplyr, warn.conflicts = FALSE)
 ```

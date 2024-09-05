@@ -23,6 +23,6 @@
       collect(drop_na(dt, "z"))
     Condition
       Error in `drop_na()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `z` doesn't exist.
 
