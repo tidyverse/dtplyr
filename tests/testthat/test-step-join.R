@@ -346,10 +346,10 @@ test_that("performs cartesian joins as needed", {
 test_that("performs cross join", {
   df1 <- data.frame(x = 1:2, y = "a", stringsAsFactors = FALSE)
   df2 <- data.frame(x = 3:4)
+  expected <- dplyr::cross_join(df1, df2) %>% as_tibble()
 
   dt1 <- lazy_dt(df1, "dt1")
   dt2 <- lazy_dt(df2, "dt2")
-  expected <- left_join(df1, df2, by = character()) %>% as_tibble()
 
   expect_snapshot(left_join(dt1, dt2, by = character()))
   expect_equal(left_join(dt1, dt2, by = character()) %>% collect(), expected)
