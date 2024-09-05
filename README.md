@@ -14,10 +14,10 @@ coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/main/graph/badge.svg)](h
 
 ## Overview
 
-dtplyr provides a [data.table](http://r-datatable.com/) backend for
-dplyr. The goal of dtplyr is to allow you to write dplyr code that is
-automatically translated to the equivalent, but usually much faster,
-data.table code.
+<a href="https://rdatatable-community.github.io/The-Raft/posts/2024-08-01-seal_of_approval-dtplyr/"><img src='man/figures/dt-seal.png' align="right" width="200" height="157" alt="data.table seal of approval"/></a>dtplyr
+provides a [data.table](http://r-datatable.com/) backend for dplyr. The
+goal of dtplyr is to allow you to write dplyr code that is automatically
+translated to the equivalent, but usually much faster, data.table code.
 
 See `vignette("translation")` for details of the current translations,
 and [table.express](https://github.com/asardaes/table.express) and
@@ -62,10 +62,10 @@ You can preview the transformation (including the generated data.table
 code) by printing the result:
 
 ``` r
-mtcars2 %>% 
-  filter(wt < 5) %>% 
+mtcars2 %>%
+  filter(wt < 5) %>%
   mutate(l100k = 235.21 / mpg) %>% # liters / 100 km
-  group_by(cyl) %>% 
+  group_by(cyl) %>%
   summarise(l100k = mean(l100k))
 #> Source: local data table [3 x 2]
 #> Call:   `_DT1`[wt < 5][, `:=`(l100k = 235.21/mpg)][, .(l100k = mean(l100k)), 
@@ -85,11 +85,11 @@ But generally you should reserve this only for debugging, and use
 you’re done with the transformation and want to access the results:
 
 ``` r
-mtcars2 %>% 
-  filter(wt < 5) %>% 
+mtcars2 %>%
+  filter(wt < 5) %>%
   mutate(l100k = 235.21 / mpg) %>% # liters / 100 km
-  group_by(cyl) %>% 
-  summarise(l100k = mean(l100k)) %>% 
+  group_by(cyl) %>%
+  summarise(l100k = mean(l100k)) %>%
   as_tibble()
 #> # A tibble: 3 × 2
 #>     cyl l100k
