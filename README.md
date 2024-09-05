@@ -14,10 +14,10 @@ coverage](https://codecov.io/gh/tidyverse/dtplyr/graph/badge.svg)](https://app.c
 
 ## Overview
 
-dtplyr provides a [data.table](http://r-datatable.com/) backend for
-dplyr. The goal of dtplyr is to allow you to write dplyr code that is
-automatically translated to the equivalent, but usually much faster,
-data.table code.
+<a href="https://rdatatable-community.github.io/The-Raft/posts/2024-08-01-seal_of_approval-dtplyr/"><img src='man/figures/dt-seal.png' align="right" width="200" height="157" alt="data.table seal of approval"/></a>dtplyr
+provides a [data.table](http://r-datatable.com/) backend for dplyr. The
+goal of dtplyr is to allow you to write dplyr code that is automatically
+translated to the equivalent, but usually much faster, data.table code.
 
 See `vignette("translation")` for details of the current translations,
 and [table.express](https://github.com/asardaes/table.express) and
