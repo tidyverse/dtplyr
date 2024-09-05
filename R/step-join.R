@@ -82,7 +82,7 @@ dt_call.dtplyr_step_join <- function(x, needs_copy = x$needs_copy) {
     anti = call2("[", lhs, call2("!", rhs), on = on),
     semi = call2("[", lhs, call2("unique", call2("[", lhs, rhs, which = TRUE, nomatch = NULL, on = on)))
   )
-  
+
   if (x$style == "full") {
     default_suffix <- c(".x", ".y")
     if (!identical(x$suffix, default_suffix)) {
@@ -132,7 +132,6 @@ left_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c
 right_join.dtplyr_step <- function(x, y, ..., by = NULL, copy = FALSE, suffix = c(".x", ".y")) {
   step_join(x, y, by, style = "right", copy = copy, suffix = suffix)
 }
-
 
 #' @importFrom dplyr inner_join
 #' @export

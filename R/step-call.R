@@ -16,6 +16,7 @@ step_call <- function(parent, fun, args = list(), vars = parent$vars, in_place =
   )
 }
 
+#' @export
 dt_call.dtplyr_step_call <- function(x, needs_copy = x$needs_copy) {
   call2(x$fun, dt_call(x$parent, needs_copy), !!!x$args)
 }

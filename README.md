@@ -7,9 +7,9 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/dtplyr)](https://cran.r-project.org/package=dtplyr)
-[![R-CMD-check](https://github.com/tidyverse/dtplyr/workflows/R-CMD-check/badge.svg)](https://github.com/tidyverse/dtplyr/actions)
+[![R-CMD-check](https://github.com/tidyverse/dtplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidyverse/dtplyr/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/tidyverse/dtplyr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dtplyr?branch=main)
+coverage](https://codecov.io/gh/tidyverse/dtplyr/graph/badge.svg)](https://app.codecov.io/gh/tidyverse/dtplyr)
 <!-- badges: end -->
 
 ## Overview
@@ -47,6 +47,7 @@ other goodies that it provides:
 
 ``` r
 library(data.table)
+#> Warning: package 'data.table' was built under R version 4.4.1
 library(dtplyr)
 library(dplyr, warn.conflicts = FALSE)
 ```
@@ -62,10 +63,10 @@ You can preview the transformation (including the generated data.table
 code) by printing the result:
 
 ``` r
-mtcars2 %>% 
-  filter(wt < 5) %>% 
+mtcars2 %>%
+  filter(wt < 5) %>%
   mutate(l100k = 235.21 / mpg) %>% # liters / 100 km
-  group_by(cyl) %>% 
+  group_by(cyl) %>%
   summarise(l100k = mean(l100k))
 #> Source: local data table [3 x 2]
 #> Call:   `_DT1`[wt < 5][, `:=`(l100k = 235.21/mpg)][, .(l100k = mean(l100k)), 
@@ -85,11 +86,11 @@ But generally you should reserve this only for debugging, and use
 you’re done with the transformation and want to access the results:
 
 ``` r
-mtcars2 %>% 
-  filter(wt < 5) %>% 
+mtcars2 %>%
+  filter(wt < 5) %>%
   mutate(l100k = 235.21 / mpg) %>% # liters / 100 km
-  group_by(cyl) %>% 
-  summarise(l100k = mean(l100k)) %>% 
+  group_by(cyl) %>%
+  summarise(l100k = mean(l100k)) %>%
   as_tibble()
 #> # A tibble: 3 × 2
 #>     cyl l100k
