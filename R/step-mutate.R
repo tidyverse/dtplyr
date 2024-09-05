@@ -26,6 +26,7 @@ step_mutate <- function(parent, new_vars = list(), use_braces = FALSE, by = new_
   out
 }
 
+#' @export
 dt_call.dtplyr_step_mutate <- function(x, needs_copy = x$needs_copy) {
   # i is always empty because we never mutate a subset
   if (is_empty(x$new_vars)) {
