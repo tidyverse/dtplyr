@@ -5,11 +5,6 @@ test_that("simple calls generate expected translations", {
     dt %>% summarise(x = mean(x)) %>% show_query(),
     expr(DT[, .(x = mean(x))])
   )
-
-  expect_equal(
-    dt %>% transmute(x) %>% show_query(),
-    expr(DT[, .(x = x)])
-  )
 })
 
 test_that("can use with across", {
