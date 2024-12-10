@@ -17,6 +17,13 @@
     Output
       setnames(copy(DT), c("a", "b", "c"), toupper)
 
+# can compute distinct computed variables
+
+    Code
+      dt %>% distinct(z = x + y) %>% show_query()
+    Output
+      unique(copy(dt)[, `:=`(z = x + y)][, `:=`(c("x", "y"), NULL)])
+
 # errors are raised
 
     Code
