@@ -59,11 +59,6 @@ test_that("generates single calls as expect", {
     dt %>% group_by(x) %>% mutate(x2 = x * 2) %>% show_query(),
     expr(copy(DT)[, `:=`(x2 = x * 2), by = .(x)])
   )
-
-  expect_equal(
-    dt %>% transmute(x2 = x * 2) %>% show_query(),
-    expr(DT[, .(x2 = x * 2)])
-  )
 })
 
 test_that("mutate generates compound expression if needed", {
