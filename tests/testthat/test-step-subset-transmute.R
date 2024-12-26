@@ -21,6 +21,6 @@ test_that("preserves column order", {
 
   res <- dt %>% transmute(y, x) %>% collect()
 
-  expect_equal(names(res), c("x", "y"))
+  expect_equal(names(res), c("y", "x"))
 })
 
