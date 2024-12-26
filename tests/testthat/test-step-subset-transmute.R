@@ -16,3 +16,11 @@ test_that("empty dots preserves groups", {
   expect_equal(names(res), "y")
 })
 
+test_that("preserves column order", {
+  dt <- lazy_dt(data.table(x = 1, y = 1), "DT")
+
+  res <- dt %>% transmute(y, x) %>% collect()
+
+  expect_equal(names(res), c("x", "y"))
+})
+
