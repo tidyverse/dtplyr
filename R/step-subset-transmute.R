@@ -13,5 +13,9 @@
 #' dt <- lazy_dt(dplyr::starwars)
 #' dt %>% transmute(name, sh = paste0(species, "/", homeworld))
 transmute.dtplyr_step <- function(.data, ...) {
-  mutate(.data, ..., .keep = "none")
+  out <- mutate(.data, ..., .keep = "none")
+  old_vars <- intersect(.data$vars, out$vars)
+  new_vars <- setdiff(out$vars, .data$vars)
+  vars <- c(old_vars, new_vars)
+  select(out, all_of(vars))
 }
