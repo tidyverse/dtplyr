@@ -14,8 +14,9 @@
 #' dt %>% transmute(name, sh = paste0(species, "/", homeworld))
 transmute.dtplyr_step <- function(.data, ...) {
   out <- mutate(.data, ..., .keep = "none")
-  old_vars <- intersect(.data$vars, out$vars)
-  new_vars <- setdiff(out$vars, .data$vars)
-  vars <- c(old_vars, new_vars)
-  select(out, all_of(vars))
+  cols_expr <- names(capture_new_vars(.data, ...))
+  cols_group <- group_vars(.data)
+  cols_group <- setdiff(cols_group, cols_expr)
+  cols_retain <- c(cols_group, cols_expr)
+  select(out, all_of(cols_retain))
 }
