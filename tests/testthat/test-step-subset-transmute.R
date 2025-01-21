@@ -24,3 +24,11 @@ test_that("preserves column order", {
   expect_equal(names(res), c("y", "x"))
 })
 
+test_that("works correctly when column is both added and removed in the same call", {
+  dt <- lazy_dt(data.table(x = 1, y = 2), "DT")
+
+  res <- dt %>% transmute(y, z = 3, z = NULL) %>% collect()
+
+  expect_equal(names(res), "y")
+})
+
