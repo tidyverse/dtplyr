@@ -18,5 +18,5 @@ transmute.dtplyr_step <- function(.data, ...) {
   cols_group <- group_vars(.data)
   cols_group <- setdiff(cols_group, cols_expr)
   cols_retain <- c(cols_group, cols_expr)
-  select(out, all_of(cols_retain))
+  select(out, any_of(cols_retain))
 }
