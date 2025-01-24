@@ -25,6 +25,8 @@
 
 * `print.dtplyr_step()` gains `n`, `max_extra_cols`, and `max_footer_lines` args (#464)
 
+* `transmute()` preserves row count and avoids unnecessary copies (#470)
+
 # dtplyr 1.3.1
 
 * Fix for failing R CMD check.

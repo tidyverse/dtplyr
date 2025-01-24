@@ -13,41 +13,10 @@
 #' dt <- lazy_dt(dplyr::starwars)
 #' dt %>% transmute(name, sh = paste0(species, "/", homeworld))
 transmute.dtplyr_step <- function(.data, ...) {
-  dots <- capture_new_vars(.data, ...)
-  dots_list <- process_new_vars(.data, dots)
-  dots <- dots_list$dots
-
-  groups <- group_vars(.data)
-  if (!is_empty(groups)) {
-    # TODO could check if there is actually anything mutated, e.g. to avoid
-    # DT[, .(x = x)]
-    is_group_var <- names(dots) %in% groups
-    group_dots <- dots[is_group_var]
-
-    .data <- mutate(ungroup(.data), !!!group_dots)
-    .data <- group_by(.data, !!!syms(groups))
-
-    dots <- dots[!is_group_var]
-  }
-
-  if (is_empty(dots)) {
-    # grouping variables have been removed from `dots` so `select()` would
-    # produce a message "Adding grouping vars".
-    # As `dplyr::transmute()` doesn't generate a message when adding group vars
-    # we can also leave it away here
-    return(select(.data, !!!group_vars(.data)))
-  }
-
-  if (!dots_list$use_braces) {
-    j <- call2(".", !!!dots)
-  } else {
-    j <- mutate_with_braces(dots)$expr
-  }
-  vars <- union(group_vars(.data), names(dots))
-  out <- step_subset_j(.data, vars = vars, j = j)
-  if (dots_list$need_removal_step) {
-    out <- select(out, -tidyselect::all_of(dots_list$vars_removed))
-  }
-
-  out
+  out <- mutate(.data, ..., .keep = "none")
+  cols_expr <- names(capture_new_vars(.data, ...))
+  cols_group <- group_vars(.data)
+  cols_group <- setdiff(cols_group, cols_expr)
+  cols_retain <- c(cols_group, cols_expr)
+  select(out, any_of(cols_retain))
 }

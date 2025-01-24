@@ -136,9 +136,8 @@ test_that("keeps all variables if requested", {
 test_that("can compute distinct computed variables", {
   dt <- lazy_dt(data.table(x = c(1, 1), y = c(1, 2)), "dt")
 
-  expect_equal(
-    dt %>% distinct(z = x + y) %>% show_query(),
-    expr(unique(dt[, .(z = x + y)]))
+  expect_snapshot(
+    dt %>% distinct(z = x + y) %>% show_query()
   )
 
   expect_equal(
