@@ -75,6 +75,28 @@ capture_dot <- function(.data, x, j = TRUE) {
   dt_squash(enquo(x), data = .data, j = j)
 }
 
+get_j <- function(dots) {
+  dot_is_data_frame_call <- map_lgl(dots, is_data_frame_call)
+
+  if (!any(dot_is_data_frame_call)) {
+    return(call2('.', !!!dots))
+  }
+  if (length(dots) == 1) {
+    return(dots[[1]])
+  }
+
+  # create an expression with base functions which gives the same value as
+  # purrr::list_flatten(list(<dots>)) when evaluated
+  names(dots)[dot_is_data_frame_call] <- ""
+  dots[!dot_is_data_frame_call] <- lapply(
+    dots[!dot_is_data_frame_call],
+    call2,
+    .fn = "list"
+  )
+  j <- call2(".", !!!dots)
+  call2("unlist", j, recursive = FALSE)
+}
+
 # squash quosures
 dt_squash <- function(x, env, data, j = TRUE, is_top = FALSE) {
   if (is_atomic(x) || is_null(x)) {
@@ -372,3 +394,18 @@ prep_case_match_dot <- function(dot, .x) {
   f_lhs(dot) <- lhs
   dot
 }
+
+is_data_frame_call <- function(dot) {
+  if (!is_call(dot)) {
+    return(FALSE)
+  }
+  is_call(dot, "as_tibble") ||
+  is_call(dot, "as.tibble") ||
+  is_call(dot, "as_tibble_row") ||
+  is_call(dot, "as.data.frame") ||
+  is_call(dot, "data.frame") ||
+  is_call(dot, "as.data.table") ||
+  is_call(dot, "data.table") ||
+  is_call(dot, "tibble")
+}
+
