@@ -47,7 +47,6 @@ other goodies that it provides:
 
 ``` r
 library(data.table)
-#> Warning: package 'data.table' was built under R version 4.4.1
 library(dtplyr)
 library(dplyr, warn.conflicts = FALSE)
 ```
