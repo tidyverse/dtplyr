@@ -1,5 +1,7 @@
 # dtplyr (development version)
 
+* `R CMD check` fixes
+
 ## New features
 
 * `reframe()` is now translated.
