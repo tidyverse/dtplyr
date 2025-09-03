@@ -24,7 +24,7 @@ return a character vector the same length as the input.}
 defaults to all columns.}
 }
 \description{
-These are methods for the dplyr generics \code{\link[=rename]{rename()}} and \code{\link[=rename_with]{rename_with()}}.
+These are methods for the dplyr generics \code{\link[dplyr:rename]{dplyr::rename()}} and \code{\link[dplyr:rename]{dplyr::rename_with()}}.
 They are both translated to \code{\link[data.table:setattr]{data.table::setnames()}}.
 }
 \examples{

@@ -19,7 +19,7 @@ If a combination of \code{...} is not distinct, this keeps the
 first row of values.}
 }
 \description{
-This is a method for the dplyr \code{\link[=distinct]{distinct()}} generic. It is translated to
+This is a method for the dplyr \code{\link[dplyr:distinct]{dplyr::distinct()}} generic. It is translated to
 \code{\link[data.table:duplicated]{data.table::unique.data.table()}}.
 }
 \examples{

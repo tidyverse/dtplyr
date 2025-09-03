@@ -16,7 +16,7 @@ columns selected by \code{...}. Supplying neither will move columns to the
 left-hand side; specifying both is an error.}
 }
 \description{
-This is a method for the dplyr \code{\link[=relocate]{relocate()}} generic. It is translated to
+This is a method for the dplyr \code{\link[dplyr:relocate]{dplyr::relocate()}} generic. It is translated to
 the \code{j} argument of \verb{[.data.table}.
 }
 \examples{

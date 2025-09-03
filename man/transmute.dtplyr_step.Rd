@@ -22,7 +22,7 @@ if ungrouped).
 }}
 }
 \description{
-This is a method for the dplyr \code{\link[=transmute]{transmute()}} generic. It is translated to
+This is a method for the dplyr \code{\link[dplyr:transmute]{dplyr::transmute()}} generic. It is translated to
 the \code{j} argument of \verb{[.data.table}.
 }
 \examples{

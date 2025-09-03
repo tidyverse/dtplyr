@@ -36,9 +36,9 @@ dt_call.dtplyr_step_set <- function(x, needs_copy = x$needs_copy) {
 
 #' Set operations
 #'
-#' These are methods for the dplyr generics [intersect()], [union()],
-#' [union_all()], and [setdiff()]. They are translated to
-#' [data.table::fintersect()], [data.table::funion()], and
+#' These are methods for the dplyr generics [generics::intersect()], 
+#' [generics::union()], [union_all()], and [generics::setdiff()]. They are 
+#' translated to [data.table::fintersect()], [data.table::funion()], and
 #' [data.table::fsetdiff()].
 #'
 #' @importFrom dplyr intersect

@@ -23,7 +23,7 @@ group by for just this operation, functioning as an alternative to \code{\link[d
 details and examples, see \link[dplyr:dplyr_by]{?dplyr_by}.}
 }
 \description{
-This is a method for the dplyr \code{\link[=reframe]{reframe()}} generic. It is translated to
+This is a method for the dplyr \code{\link[dplyr:reframe]{dplyr::reframe()}} generic. It is translated to
 the \code{j} argument of \verb{[.data.table}.
 }
 \examples{

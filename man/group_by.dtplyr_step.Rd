@@ -35,7 +35,7 @@ using the \code{keyby} (\code{TRUE}) and \code{by} (\code{FALSE}) arguments.}
 \item{x}{A \code{\link[dplyr:tbl]{tbl()}}}
 }
 \description{
-These are methods for dplyr's \code{\link[=group_by]{group_by()}} and \code{\link[=ungroup]{ungroup()}} generics.
+These are methods for dplyr's \code{\link[dplyr:group_by]{dplyr::group_by()}} and \code{\link[dplyr:group_by]{dplyr::ungroup()}} generics.
 Grouping is translated to the either \code{keyby} and \code{by} argument of
 \verb{[.data.table} depending on the value of the \code{arrange} argument.
 }

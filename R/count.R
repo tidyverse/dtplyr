@@ -1,6 +1,6 @@
 #' Count observations by group
 #'
-#' This is a method for the dplyr [count()] generic. It is translated using
+#' This is a method for the dplyr [dplyr::count()] generic. It is translated using
 #' `.N` in the `j` argument, and supplying groups to `keyby` as appropriate.
 #'
 #' @param x A [lazy_dt()]
@@ -92,4 +92,3 @@ n_name <- function(x) {
 
   name
 }
-

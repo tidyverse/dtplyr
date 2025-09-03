@@ -51,7 +51,7 @@ the option "dplyr.summarise.inform" is set to \code{FALSE},
 or when \code{summarise()} is called from a function in a package.}
 }
 \description{
-This is a method for the dplyr \code{\link[=summarise]{summarise()}} generic. It is translated to
+This is a method for the dplyr \code{\link[dplyr:summarise]{dplyr::summarise()}} generic. It is translated to
 the \code{j} argument of \verb{[.data.table}.
 }
 \examples{

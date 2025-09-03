@@ -21,9 +21,9 @@
 \item{...}{Ignored}
 }
 \description{
-These are methods for the dplyr generics \code{\link[=intersect]{intersect()}}, \code{\link[=union]{union()}},
-\code{\link[=union_all]{union_all()}}, and \code{\link[=setdiff]{setdiff()}}. They are translated to
-\code{\link[data.table:setops]{data.table::fintersect()}}, \code{\link[data.table:setops]{data.table::funion()}}, and
+These are methods for the dplyr generics \code{\link[generics:setops]{generics::intersect()}},
+\code{\link[generics:setops]{generics::union()}}, \code{\link[dplyr:setops]{dplyr::union_all()}}, and \code{\link[generics:setops]{generics::setdiff()}}. They are
+translated to \code{\link[data.table:setops]{data.table::fintersect()}}, \code{\link[data.table:setops]{data.table::funion()}}, and
 \code{\link[data.table:setops]{data.table::fsetdiff()}}.
 }
 \examples{
