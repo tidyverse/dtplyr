@@ -17,7 +17,7 @@ order.}
 grouped data frames only.}
 }
 \description{
-This is a method for dplyr generic \code{\link[=arrange]{arrange()}}. It is translated to
+This is a method for dplyr generic \code{\link[dplyr:arrange]{dplyr::arrange()}}. It is translated to
 an \code{\link[=order]{order()}} call in the \code{i} argument of \verb{[.data.table}.
 }
 \examples{

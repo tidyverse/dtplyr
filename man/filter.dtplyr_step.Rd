@@ -24,7 +24,7 @@ details and examples, see \link[dplyr:dplyr_by]{?dplyr_by}.}
 \item{.preserve}{Ignored}
 }
 \description{
-This is a method for the dplyr \code{\link[=arrange]{arrange()}} generic. It is translated to
+This is a method for the dplyr \code{\link[dplyr:arrange]{dplyr::arrange()}} generic. It is translated to
 the \code{i} argument of \verb{[.data.table}
 }
 \examples{

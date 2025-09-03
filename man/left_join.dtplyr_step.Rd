@@ -50,8 +50,8 @@ it is a potentially expensive operation so you must opt into it.}
 Should be a character vector of length 2.}
 }
 \description{
-These are methods for the dplyr generics \code{\link[=left_join]{left_join()}}, \code{\link[=right_join]{right_join()}},
-\code{\link[=inner_join]{inner_join()}}, \code{\link[=full_join]{full_join()}}, \code{\link[=anti_join]{anti_join()}}, and \code{\link[=semi_join]{semi_join()}}. Left, right,
+These are methods for the dplyr generics \code{\link[dplyr:mutate-joins]{dplyr::left_join()}}, \code{\link[dplyr:mutate-joins]{dplyr::right_join()}},
+\code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}, \code{\link[dplyr:mutate-joins]{dplyr::full_join()}}, \code{\link[dplyr:filter-joins]{dplyr::anti_join()}}, and \code{\link[dplyr:filter-joins]{dplyr::semi_join()}}. Left, right,
 inner, and anti join are translated to the \verb{[.data.table} equivalent,
 full joins to \code{\link[data.table:merge]{data.table::merge.data.table()}}.
 Left, right, and full joins are in some cases followed by calls to

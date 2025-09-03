@@ -5,7 +5,7 @@
 #'
 #' @param .data A [lazy_dt()].
 #' @inheritParams mutate.dtplyr_step
-#' @importFrom dplyr transmute
+#' @importFrom dplyr transmute any_of
 #' @export
 #' @examples
 #' library(dplyr, warn.conflicts = FALSE)

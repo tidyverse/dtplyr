@@ -56,7 +56,7 @@ may return more rows than you request. Use \code{FALSE} to ignore ties,
 and return the first \code{n} rows.}
 }
 \description{
-These are methods for the dplyr \code{\link[=slice]{slice()}}, \code{slice_head()}, \code{slice_tail()},
+These are methods for the dplyr \code{\link[dplyr:slice]{dplyr::slice()}}, \code{slice_head()}, \code{slice_tail()},
 \code{slice_min()}, \code{slice_max()} and \code{slice_sample()} generics. They are
 translated to the \code{i} argument of \verb{[.data.table}.
 

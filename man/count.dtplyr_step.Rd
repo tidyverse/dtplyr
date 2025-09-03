@@ -28,7 +28,7 @@ it will use \code{nn}. If there's a column called \code{n} and \code{nn}, it'll 
 \code{nnn}, and so on, adding \code{n}s until it gets a new name.}
 }
 \description{
-This is a method for the dplyr \code{\link[=count]{count()}} generic. It is translated using
+This is a method for the dplyr \code{\link[dplyr:count]{dplyr::count()}} generic. It is translated using
 \code{.N} in the \code{j} argument, and supplying groups to \code{keyby} as appropriate.
 }
 \examples{

@@ -27,7 +27,7 @@ variables. The function should return a list or data.table.}
 modified \code{\link[=lazy_dt]{lazy_dt()}}.
 }
 \description{
-These are methods for the dplyr \code{\link[=group_map]{group_map()}} and \code{\link[=group_modify]{group_modify()}} generics.
+These are methods for the dplyr \code{\link[dplyr:group_map]{dplyr::group_map()}} and \code{\link[dplyr:group_map]{dplyr::group_modify()}} generics.
 They are both translated to \verb{[.data.table}.
 }
 \examples{

@@ -15,7 +15,7 @@ were positions in the data frame, so expressions like \code{x:y} can
 be used to select a range of variables.}
 }
 \description{
-This is a method for the dplyr \code{\link[=select]{select()}} generic. It is translated to
+This is a method for the dplyr \code{\link[dplyr:select]{dplyr::select()}} generic. It is translated to
 the \code{j} argument of \verb{[.data.table}.
 }
 \examples{
