@@ -104,7 +104,6 @@
 <p>To use dtplyr, you must at least load dtplyr and dplyr. You may also want to load <a href="http://r-datatable.com/" class="external-link">data.table</a> so you can access the other goodies that it provides:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: package 'data.table' was built under R version 4.4.1</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dtplyr.tidyverse.org">dtplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Then use <code><a href="reference/lazy_dt.html">lazy_dt()</a></code> to create a “lazy” data table that tracks the operations performed on it.</p>
