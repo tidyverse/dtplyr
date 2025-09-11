@@ -1,129 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://dtplyr.tidyverse.org/404.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/SUPPORT.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/articles/translation.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/index.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/arrange.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/collect.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/complete.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/count.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/distinct.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/dot-datatable.aware.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/drop_na.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/dtplyr-package.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/expand.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/fill.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/filter.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/group_by.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/group_modify.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/head.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/intersect.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/lazy_dt.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/left_join.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/mutate.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/nest.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/pivot_longer.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/pivot_wider.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/relocate.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/rename.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/replace_na.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/select.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/separate.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/slice.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/summarise.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/transmute.dtplyr_step.html</loc>
-  </url>
-  <url>
-    <loc>https://dtplyr.tidyverse.org/reference/unite.dtplyr_step.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://dtplyr.tidyverse.org/404.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/CONTRIBUTING.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/LICENSE-text.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/LICENSE.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/SUPPORT.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/articles/index.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/articles/translation.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/authors.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/index.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/news/index.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/arrange.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/collect.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/complete.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/count.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/distinct.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/dot-datatable.aware.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/drop_na.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/dtplyr-package.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/expand.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/fill.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/filter.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/group_by.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/group_modify.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/head.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/index.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/intersect.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/lazy_dt.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/left_join.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/mutate.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/nest.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/pivot_longer.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/pivot_wider.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/reframe.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/relocate.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/rename.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/replace_na.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/select.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/separate.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/slice.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/summarise.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/transmute.dtplyr_step.html</loc></url>
+<url><loc>https://dtplyr.tidyverse.org/reference/unite.dtplyr_step.html</loc></url>
 </urlset>
+
