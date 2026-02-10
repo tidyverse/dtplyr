@@ -12,10 +12,10 @@
 \arguments{
 \item{.data}{A \code{\link[=lazy_dt]{lazy_dt()}}}
 
-\item{...}{In \code{group_by()}, variables or computations to group by.
-Computations are always done on the ungrouped data frame.
-To perform computations on the grouped data, you need to use
-a separate \code{mutate()} step before the \code{group_by()}.
+\item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}> In \code{group_by()},
+variables or computations to group by. Computations are always done on the
+ungrouped data frame. To perform computations on the grouped data, you need
+to use a separate \code{mutate()} step before the \code{group_by()}.
 Computations are not allowed in \code{nest_by()}.
 In \code{ungroup()}, variables to remove from the grouping.}
 
