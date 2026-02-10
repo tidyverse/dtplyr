@@ -144,7 +144,7 @@ Other verbs require calls to other functions:
 ### `rename()`
 
 [`rename()`](https://dplyr.tidyverse.org/reference/rename.html) uses
-[`setnames()`](https://rdatatable.gitlab.io/data.table/reference/setattr.html):
+[`setnames()`](https://rdrr.io/pkg/data.table/man/setattr.html):
 
 ``` r
 dt %>% rename(x = a, y = b) %>% show_query()
@@ -203,9 +203,9 @@ dt %>% full_join(dt2, by = "a") %>% show_query()
 ```
 
 In some case extra calls to
-[`data.table::setcolorder()`](https://rdatatable.gitlab.io/data.table/reference/setcolorder.html)
+[`data.table::setcolorder()`](https://rdrr.io/pkg/data.table/man/setcolorder.html)
 and
-[`data.table::setnames()`](https://rdatatable.gitlab.io/data.table/reference/setattr.html)
+[`data.table::setnames()`](https://rdrr.io/pkg/data.table/man/setattr.html)
 are required to ensure correct column order and names in:
 
 ``` r
@@ -350,9 +350,7 @@ dt %>%
 ## Copies
 
 By default dtplyr avoids mutating the input data, automatically creating
-a
-[`copy()`](https://rdatatable.gitlab.io/data.table/reference/copy.html)
-if needed:
+a [`copy()`](https://rdrr.io/pkg/data.table/man/copy.html) if needed:
 
 ``` r
 dt %>% mutate(a2 = a * 2, b2 = b * 2) %>% show_query()
@@ -374,7 +372,7 @@ dt %>%
 
 You can choose to opt out of this copy, and take advantage of
 data.table’s reference semantics (see
-[`vignette("datatable-reference-semantics")`](https://rdatatable.gitlab.io/data.table/articles/datatable-reference-semantics.html)
+[`vignette("datatable-reference-semantics")`](https://cran.rstudio.com/web/packages/data.table/vignettes/datatable-reference-semantics.html)
 for more details). Do this by setting `immutable = FALSE` on
 construction:
 
@@ -408,9 +406,9 @@ bench::mark(
 #> # A tibble: 3 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 filter     732.17µs  779.2µs     1275.    3.25KB     22.3
-#> 2 mutate       1.15ms   1.18ms      843.   20.51KB     25.9
-#> 3 summarise    1.88ms   1.93ms      515.   29.61KB     21.7
+#> 1 filter     665.06µs  719.6µs     1375.    3.25KB     25.4
+#> 2 mutate       1.06ms   1.12ms      888.    21.3KB     26.6
+#> 3 summarise    1.75ms   1.84ms      535.   30.51KB     22.1
 ```
 
 These translations all take less than a millisecond, suggesting that the

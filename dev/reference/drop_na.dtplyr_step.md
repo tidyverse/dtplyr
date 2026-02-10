@@ -3,7 +3,7 @@
 This is a method for the tidyr
 [`drop_na()`](https://tidyr.tidyverse.org/reference/drop_na.html)
 generic. It is translated to
-[`data.table::na.omit()`](https://rdatatable.gitlab.io/data.table/reference/na.omit.data.table.html)
+[`data.table::na.omit()`](https://rdrr.io/pkg/data.table/man/na.omit.data.table.html)
 
 ## Usage
 

@@ -5,7 +5,7 @@ This is a method for the dplyr
 generic. It is translated to the `j` argument of `[.data.table`, using
 `:=` to modify "in place". If `.before` or `.after` is provided, the new
 columns are relocated with a call to
-[`data.table::setcolorder()`](https://rdatatable.gitlab.io/data.table/reference/setcolorder.html).
+[`data.table::setcolorder()`](https://rdrr.io/pkg/data.table/man/setcolorder.html).
 
 ## Usage
 

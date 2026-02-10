@@ -63,9 +63,9 @@ Semi-joins don't have a direct data.table equivalent."><meta property="og:image"
     <p>These are methods for the dplyr generics <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::right_join()</a></code>,
 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::inner_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::full_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">dplyr::anti_join()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">dplyr::semi_join()</a></code>. Left, right,
 inner, and anti join are translated to the <code>[.data.table</code> equivalent,
-full joins to <code><a href="https://rdatatable.gitlab.io/data.table/reference/merge.html" class="external-link">data.table::merge.data.table()</a></code>.
+full joins to <code><a href="https://rdrr.io/pkg/data.table/man/merge.html" class="external-link">data.table::merge.data.table()</a></code>.
 Left, right, and full joins are in some cases followed by calls to
-<code><a href="https://rdatatable.gitlab.io/data.table/reference/setcolorder.html" class="external-link">data.table::setcolorder()</a></code> and <code><a href="https://rdatatable.gitlab.io/data.table/reference/setattr.html" class="external-link">data.table::setnames()</a></code> to ensure that column
+<code><a href="https://rdrr.io/pkg/data.table/man/setcolorder.html" class="external-link">data.table::setcolorder()</a></code> and <code><a href="https://rdrr.io/pkg/data.table/man/setattr.html" class="external-link">data.table::setnames()</a></code> to ensure that column
 order and names match dplyr conventions.
 Semi-joins don't have a direct data.table equivalent.</p>
     </div>

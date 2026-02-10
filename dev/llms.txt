@@ -73,7 +73,7 @@ mtcars2 %>%
 ```
 
 But generally you should reserve this only for debugging, and use
-[`as.data.table()`](https://rdatatable.gitlab.io/data.table/reference/as.data.table.html),
+[`as.data.table()`](https://rdrr.io/pkg/data.table/man/as.data.table.html),
 [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html), or
 [`as_tibble()`](https://tibble.tidyverse.org/reference/as_tibble.html)
 to indicate that you’re done with the transformation and want to access

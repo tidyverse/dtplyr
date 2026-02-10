@@ -6,7 +6,7 @@
 - [`compute()`](https://dplyr.tidyverse.org/reference/compute.html)
   generates an intermediate assignment in the translation.
 
-- [`as.data.table()`](https://rdatatable.gitlab.io/data.table/reference/as.data.table.html)
+- [`as.data.table()`](https://rdrr.io/pkg/data.table/man/as.data.table.html)
   returns a data.table.
 
 - [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html) returns

@@ -3,7 +3,7 @@
 This is a method for the tidyr
 [`expand()`](https://tidyr.tidyverse.org/reference/expand.html) generic.
 It is translated to
-[`data.table::CJ()`](https://rdatatable.gitlab.io/data.table/reference/J.html).
+[`data.table::CJ()`](https://rdrr.io/pkg/data.table/man/J.html).
 
 ## Usage
 

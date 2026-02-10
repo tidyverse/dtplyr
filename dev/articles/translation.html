@@ -203,7 +203,7 @@ created using an “extended <code>j</code>” expression:</p>
 <h3 id="rename">
 <code>rename()</code><a class="anchor" aria-label="anchor" href="#rename"></a>
 </h3>
-<p><code><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename()</a></code> uses <code><a href="https://rdatatable.gitlab.io/data.table/reference/setattr.html" class="external-link">setnames()</a></code>:</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename()</a></code> uses <code><a href="https://rdrr.io/pkg/data.table/man/setattr.html" class="external-link">setnames()</a></code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">a</span>, y <span class="op">=</span> <span class="va">b</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; setnames(copy(`_DT1`), c("a", "b"), c("x", "y"))</span></span></code></pre></div>
@@ -248,8 +248,8 @@ mutate:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">dt2</span>, by <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; merge(`_DT1`, `_DT2`, all = TRUE, by.x = "a", by.y = "a", allow.cartesian = TRUE)</span></span></code></pre></div>
-<p>In some case extra calls to <code><a href="https://rdatatable.gitlab.io/data.table/reference/setcolorder.html" class="external-link">data.table::setcolorder()</a></code>
-and <code><a href="https://rdatatable.gitlab.io/data.table/reference/setattr.html" class="external-link">data.table::setnames()</a></code> are required to ensure correct
+<p>In some case extra calls to <code><a href="https://rdrr.io/pkg/data.table/man/setcolorder.html" class="external-link">data.table::setcolorder()</a></code>
+and <code><a href="https://rdrr.io/pkg/data.table/man/setattr.html" class="external-link">data.table::setnames()</a></code> are required to ensure correct
 column order and names in:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dt3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fl">1</span>, a <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
@@ -363,7 +363,7 @@ the selected rows in place:</p>
 <h2 id="copies">Copies<a class="anchor" aria-label="anchor" href="#copies"></a>
 </h2>
 <p>By default dtplyr avoids mutating the input data, automatically
-creating a <code><a href="https://rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy()</a></code> if needed:</p>
+creating a <code><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy()</a></code> if needed:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>a2 <span class="op">=</span> <span class="va">a</span> <span class="op">*</span> <span class="fl">2</span>, b2 <span class="op">=</span> <span class="va">b</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; copy(`_DT1`)[, `:=`(a2 = a * 2, b2 = b * 2)]</span></span></code></pre></div>
@@ -379,11 +379,11 @@ similar:</p>
 <span><span class="co">#&gt; `_DT1`[x == 1][, `:=`(a2 = a * 2, b2 = b * 2)]</span></span></code></pre></div>
 <p>You can choose to opt out of this copy, and take advantage of
 data.table’s reference semantics (see
-<code><a href="https://rdatatable.gitlab.io/data.table/articles/datatable-reference-semantics.html" class="external-link">vignette("datatable-reference-semantics")</a></code> for more
+<code><a href="https://cran.rstudio.com/web/packages/data.table/vignettes/datatable-reference-semantics.html" class="external-link">vignette("datatable-reference-semantics")</a></code> for more
 details). Do this by setting <code>immutable = FALSE</code> on
 construction:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dt2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">dt2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dt_inplace</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lazy_dt.html">lazy_dt</a></span><span class="op">(</span><span class="va">dt2</span>, immutable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">dt_inplace</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>a2 <span class="op">=</span> <span class="va">a</span> <span class="op">*</span> <span class="fl">2</span>, b2 <span class="op">=</span> <span class="va">b</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html" class="external-link">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -410,9 +410,9 @@ dplyr verbs, so we benchmark the whole process.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     732.17µs  779.2µs     <span style="text-decoration: underline;">1</span>275.    3.25KB     22.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.15ms   1.18ms      843.   20.51KB     25.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.88ms   1.93ms      515.   29.61KB     21.7</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     665.06µs  719.6µs     <span style="text-decoration: underline;">1</span>375.    3.25KB     25.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.06ms   1.12ms      888.    21.3KB     26.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.75ms   1.84ms      535.   30.51KB     22.1</span></span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that
 the performance overhead of dtplyr should be negligible for realistic
 data sizes. Note that dtplyr run-time scales with the complexity of the

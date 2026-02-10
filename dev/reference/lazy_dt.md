@@ -5,7 +5,7 @@ performing computation when requested (with
 [`dplyr::collect()`](https://dplyr.tidyverse.org/reference/compute.html),
 [`dplyr::pull()`](https://dplyr.tidyverse.org/reference/pull.html),
 [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html),
-[`data.table::as.data.table()`](https://rdatatable.gitlab.io/data.table/reference/as.data.table.html),
+[`data.table::as.data.table()`](https://rdrr.io/pkg/data.table/man/as.data.table.html),
 or
 [`tibble::as_tibble()`](https://tibble.tidyverse.org/reference/as_tibble.html)).
 This allows dtplyr to convert dplyr verbs into as few data.table
@@ -45,12 +45,12 @@ lazy_dt(x, name = NULL, immutable = TRUE, key_by = NULL)
   semantics (e.g. `key_by = c(key1, key2)`.
 
   This uses
-  [`data.table::setkey()`](https://rdatatable.gitlab.io/data.table/reference/setkey.html)
+  [`data.table::setkey()`](https://rdrr.io/pkg/data.table/man/setkey.html)
   to sort the table and build an index. This will considerably improve
   performance for subsets, summaries, and joins that use the keys.
 
   See
-  [`vignette("datatable-keys-fast-subset")`](https://rdatatable.gitlab.io/data.table/articles/datatable-keys-fast-subset.html)
+  [`vignette("datatable-keys-fast-subset")`](https://cran.rstudio.com/web/packages/data.table/vignettes/datatable-keys-fast-subset.html)
   for more details.
 
 ## Examples

@@ -3,7 +3,7 @@
 This is a method for the tidyr
 [`pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html)
 generic. It is translated to
-[`data.table::dcast()`](https://rdatatable.gitlab.io/data.table/reference/dcast.data.table.html)
+[`data.table::dcast()`](https://rdrr.io/pkg/data.table/man/dcast.data.table.html)
 
 ## Usage
 

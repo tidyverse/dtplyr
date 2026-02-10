@@ -5,7 +5,7 @@ These are methods for the dplyr generics
 and
 [`dplyr::rename_with()`](https://dplyr.tidyverse.org/reference/rename.html).
 They are both translated to
-[`data.table::setnames()`](https://rdatatable.gitlab.io/data.table/reference/setattr.html).
+[`data.table::setnames()`](https://rdrr.io/pkg/data.table/man/setattr.html).
 
 ## Usage
 

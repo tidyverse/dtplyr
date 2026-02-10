@@ -3,11 +3,11 @@
 This is a method for the tidyr
 [`replace_na()`](https://tidyr.tidyverse.org/reference/replace_na.html)
 generic. It is translated to
-[`data.table::fcoalesce()`](https://rdatatable.gitlab.io/data.table/reference/coalesce.html).
+[`data.table::fcoalesce()`](https://rdrr.io/pkg/data.table/man/coalesce.html).
 
 Note that unlike
 [`tidyr::replace_na()`](https://tidyr.tidyverse.org/reference/replace_na.html),
-[`data.table::fcoalesce()`](https://rdatatable.gitlab.io/data.table/reference/coalesce.html)
+[`data.table::fcoalesce()`](https://rdrr.io/pkg/data.table/man/coalesce.html)
 cannot replace `NULL` values in lists.
 
 ## Usage

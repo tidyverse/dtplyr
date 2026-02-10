@@ -3,8 +3,8 @@
 This is a method for dplyr generic
 [`dplyr::arrange()`](https://dplyr.tidyverse.org/reference/arrange.html).
 It is translated to an
-[`order()`](https://rdatatable.gitlab.io/data.table/reference/setorder.html)
-call in the `i` argument of `[.data.table`.
+[`order()`](https://rdrr.io/pkg/data.table/man/setorder.html) call in
+the `i` argument of `[.data.table`.
 
 ## Usage
 

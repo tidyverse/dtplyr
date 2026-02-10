@@ -3,7 +3,7 @@
 This is a method for the dplyr
 [`dplyr::distinct()`](https://dplyr.tidyverse.org/reference/distinct.html)
 generic. It is translated to
-[`data.table::unique.data.table()`](https://rdatatable.gitlab.io/data.table/reference/duplicated.html).
+[`data.table::unique.data.table()`](https://rdrr.io/pkg/data.table/man/duplicated.html).
 
 ## Usage
 

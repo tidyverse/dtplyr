@@ -7,10 +7,10 @@ These are methods for the dplyr generics
 and
 [`generics::setdiff()`](https://generics.r-lib.org/reference/setops.html).
 They are translated to
-[`data.table::fintersect()`](https://rdatatable.gitlab.io/data.table/reference/setops.html),
-[`data.table::funion()`](https://rdatatable.gitlab.io/data.table/reference/setops.html),
+[`data.table::fintersect()`](https://rdrr.io/pkg/data.table/man/setops.html),
+[`data.table::funion()`](https://rdrr.io/pkg/data.table/man/setops.html),
 and
-[`data.table::fsetdiff()`](https://rdatatable.gitlab.io/data.table/reference/setops.html).
+[`data.table::fsetdiff()`](https://rdrr.io/pkg/data.table/man/setops.html).
 
 ## Usage
 

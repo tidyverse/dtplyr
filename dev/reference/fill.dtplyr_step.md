@@ -3,9 +3,9 @@
 This is a method for the tidyr
 [`fill()`](https://tidyr.tidyverse.org/reference/fill.html) generic. It
 is translated to
-[`data.table::nafill()`](https://rdatatable.gitlab.io/data.table/reference/nafill.html).
+[`data.table::nafill()`](https://rdrr.io/pkg/data.table/man/nafill.html).
 Note that
-[`data.table::nafill()`](https://rdatatable.gitlab.io/data.table/reference/nafill.html)
+[`data.table::nafill()`](https://rdrr.io/pkg/data.table/man/nafill.html)
 currently only works for integer and double columns.
 
 ## Usage

@@ -3,7 +3,7 @@
 This is a method for the
 [`tidyr::separate()`](https://tidyr.tidyverse.org/reference/separate.html)
 generic. It is translated to
-[`data.table::tstrsplit()`](https://rdatatable.gitlab.io/data.table/reference/tstrsplit.html)
+[`data.table::tstrsplit()`](https://rdrr.io/pkg/data.table/man/tstrsplit.html)
 in the `j` argument of `[.data.table`.
 
 ## Usage
@@ -126,7 +126,7 @@ df %>% separate(x, c("key","value"), ":") %>% str
 #>   .. ..$ locals       : list()
 #>   .. ..$ implicit_copy: logi FALSE
 #>   .. ..$ needs_copy   : logi FALSE
-#>   .. ..$ env          :<environment: 0x562feee17578> 
+#>   .. ..$ env          :<environment: 0x5624629edc78> 
 #>   .. ..$ name         : symbol DT
 #>   .. ..- attr(*, "class")= chr [1:2] "dtplyr_step_first" "dtplyr_step"
 #>   ..$ vars           : chr [1:3] "x" "key" "value"
@@ -134,7 +134,7 @@ df %>% separate(x, c("key","value"), ":") %>% str
 #>   ..$ locals         : list()
 #>   ..$ implicit_copy  : logi TRUE
 #>   ..$ needs_copy     : logi TRUE
-#>   ..$ env            :<environment: 0x562feee17578> 
+#>   ..$ env            :<environment: 0x5624629edc78> 
 #>   ..$ arrange        : NULL
 #>   ..$ i              : NULL
 #>   ..$ j              : language `:=`(c("key", "value"), tstrsplit(x, split = ":"))
@@ -146,7 +146,7 @@ df %>% separate(x, c("key","value"), ":") %>% str
 #>  $ locals         : list()
 #>  $ implicit_copy  : logi TRUE
 #>  $ needs_copy     : logi TRUE
-#>  $ env            :<environment: 0x562feee17578> 
+#>  $ env            :<environment: 0x5624629edc78> 
 #>  $ arrange        : NULL
 #>  $ i              : NULL
 #>  $ j              : language `:=`("x", NULL)
@@ -165,7 +165,7 @@ df %>% separate(x, c("key","value"), ":", convert = TRUE) %>% str
 #>   .. ..$ locals       : list()
 #>   .. ..$ implicit_copy: logi FALSE
 #>   .. ..$ needs_copy   : logi FALSE
-#>   .. ..$ env          :<environment: 0x562feee17578> 
+#>   .. ..$ env          :<environment: 0x5624629edc78> 
 #>   .. ..$ name         : symbol DT
 #>   .. ..- attr(*, "class")= chr [1:2] "dtplyr_step_first" "dtplyr_step"
 #>   ..$ vars           : chr [1:3] "x" "key" "value"
@@ -173,7 +173,7 @@ df %>% separate(x, c("key","value"), ":", convert = TRUE) %>% str
 #>   ..$ locals         : list()
 #>   ..$ implicit_copy  : logi TRUE
 #>   ..$ needs_copy     : logi TRUE
-#>   ..$ env            :<environment: 0x562feee17578> 
+#>   ..$ env            :<environment: 0x5624629edc78> 
 #>   ..$ arrange        : NULL
 #>   ..$ i              : NULL
 #>   ..$ j              : language `:=`(c("key", "value"), tstrsplit(x, split = ":", type.convert = TRUE))
@@ -185,7 +185,7 @@ df %>% separate(x, c("key","value"), ":", convert = TRUE) %>% str
 #>  $ locals         : list()
 #>  $ implicit_copy  : logi TRUE
 #>  $ needs_copy     : logi TRUE
-#>  $ env            :<environment: 0x562feee17578> 
+#>  $ env            :<environment: 0x5624629edc78> 
 #>  $ arrange        : NULL
 #>  $ i              : NULL
 #>  $ j              : language `:=`("x", NULL)

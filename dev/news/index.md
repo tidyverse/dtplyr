@@ -15,14 +15,13 @@ CRAN release: 2025-09-10
 
 - [`consecutive_id()`](https://dplyr.tidyverse.org/reference/consecutive_id.html)
   is now mapped to
-  [`data.table::rleid()`](https://rdatatable.gitlab.io/data.table/reference/rleid.html).
-  Note:
-  [`rleid()`](https://rdatatable.gitlab.io/data.table/reference/rleid.html)
-  only accepts vector inputs and cannot be used with data frame inputs.
+  [`data.table::rleid()`](https://rdrr.io/pkg/data.table/man/rleid.html).
+  Note: [`rleid()`](https://rdrr.io/pkg/data.table/man/rleid.html) only
+  accepts vector inputs and cannot be used with data frame inputs.
 
 - [`case_match()`](https://dplyr.tidyverse.org/reference/case_match.html)
   is now translated to
-  [`fcase()`](https://rdatatable.gitlab.io/data.table/reference/fcase.html).
+  [`fcase()`](https://rdrr.io/pkg/data.table/man/fcase.html).
 
 ### Minor improvements and bug fixes
 
@@ -104,8 +103,8 @@ CRAN release: 2023-02-24
 
 - [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html) now
   utilizes
-  [`setorder()`](https://rdatatable.gitlab.io/data.table/reference/setorder.html)
-  when possible for improved performance
+  [`setorder()`](https://rdrr.io/pkg/data.table/man/setorder.html) when
+  possible for improved performance
   ([\#364](https://github.com/tidyverse/dtplyr/issues/364)).
 
 - [`select()`](https://dplyr.tidyverse.org/reference/select.html) now
@@ -238,7 +237,7 @@ improvements in this release!
   [\#201](https://github.com/tidyverse/dtplyr/issues/201)).
 
 - [`ifelse()`](https://rdrr.io/r/base/ifelse.html) is mapped to
-  [`fifelse()`](https://rdatatable.gitlab.io/data.table/reference/fifelse.html)
+  [`fifelse()`](https://rdrr.io/pkg/data.table/man/fifelse.html)
   ([@markfairbanks](https://github.com/markfairbanks),
   [\#220](https://github.com/tidyverse/dtplyr/issues/220)).
 
@@ -277,7 +276,7 @@ improvements in this release!
   ([@mgirlich](https://github.com/mgirlich),
   [\#201](https://github.com/tidyverse/dtplyr/issues/201)).
 
-- [`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html)
+- [`case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html)
   supports use of `T` to specify the default
   ([\#272](https://github.com/tidyverse/dtplyr/issues/272)).
 
@@ -298,7 +297,7 @@ improvements in this release!
 
 - [`if_else()`](https://dplyr.tidyverse.org/reference/if_else.html)
   named arguments are translated to the correct arguments in
-  [`data.table::fifelse()`](https://rdatatable.gitlab.io/data.table/reference/fifelse.html)
+  [`data.table::fifelse()`](https://rdrr.io/pkg/data.table/man/fifelse.html)
   ([@markfairbanks](https://github.com/markfairbanks),
   [\#234](https://github.com/tidyverse/dtplyr/issues/234)).
   [`if_else()`](https://dplyr.tidyverse.org/reference/if_else.html)
@@ -320,7 +319,7 @@ improvements in this release!
 
 - [`lag()`](https://dplyr.tidyverse.org/reference/lead-lag.html)/[`lead()`](https://dplyr.tidyverse.org/reference/lead-lag.html)
   are translated to
-  [`shift()`](https://rdatatable.gitlab.io/data.table/reference/shift.html).
+  [`shift()`](https://rdrr.io/pkg/data.table/man/shift.html).
 
 - [`lazy_dt()`](https://dtplyr.tidyverse.org/dev/reference/lazy_dt.md)
   keeps groups ([@mgirlich](https://github.com/mgirlich),
@@ -370,7 +369,7 @@ improvements in this release!
 
 - [`n_distinct()`](https://dplyr.tidyverse.org/reference/n_distinct.html)
   is translated to
-  [`uniqueN()`](https://rdatatable.gitlab.io/data.table/reference/duplicated.html).
+  [`uniqueN()`](https://rdrr.io/pkg/data.table/man/duplicated.html).
 
 - [`tally()`](https://dplyr.tidyverse.org/reference/count.html) and
   [`count()`](https://dplyr.tidyverse.org/reference/count.html) follow
@@ -484,9 +483,9 @@ CRAN release: 2021-02-20
   generally have little impact on performance but it allows you to use
   intermediate variables to simplify complex translations.
 
-- [`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html)
+- [`case_when()`](https://dplyr.tidyverse.org/reference/case-and-replace-when.html)
   is now translated to
-  [`fcase()`](https://rdatatable.gitlab.io/data.table/reference/fcase.html)
+  [`fcase()`](https://rdrr.io/pkg/data.table/man/fcase.html)
   ([\#190](https://github.com/tidyverse/dtplyr/issues/190)).
 
 - [`cur_data()`](https://dplyr.tidyverse.org/reference/deprec-context.html)
@@ -529,7 +528,7 @@ CRAN release: 2021-02-20
   gains a `.name_repair` argument
   ([@markfairbanks](https://github.com/markfairbanks)).
 
-- [`as.data.table()`](https://rdatatable.gitlab.io/data.table/reference/as.data.table.html)
+- [`as.data.table()`](https://rdrr.io/pkg/data.table/man/as.data.table.html)
   always calls `[]` so that the result will print
   ([\#146](https://github.com/tidyverse/dtplyr/issues/146)).
 
@@ -584,7 +583,7 @@ CRAN release: 2019-11-12
   [`lazy_dt()`](https://dtplyr.tidyverse.org/dev/reference/lazy_dt.md)
   to begin a translation pipeline, and must use
   [`collect()`](https://dplyr.tidyverse.org/reference/compute.html),
-  [`as.data.table()`](https://rdatatable.gitlab.io/data.table/reference/as.data.table.html),
+  [`as.data.table()`](https://rdrr.io/pkg/data.table/man/as.data.table.html),
   [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html), or
   [`as_tibble()`](https://tibble.tidyverse.org/reference/as_tibble.html)
   to finish the translation and actually perform the computation
@@ -615,9 +614,8 @@ CRAN release: 2019-11-12
 - [`if_else()`](https://dplyr.tidyverse.org/reference/if_else.html) and
   [`coalesce()`](https://dplyr.tidyverse.org/reference/coalesce.html)
   are mapped to data.table’s
-  [`fifelse()`](https://rdatatable.gitlab.io/data.table/reference/fifelse.html)
-  and
-  [`fcoalesce()`](https://rdatatable.gitlab.io/data.table/reference/coalesce.html)
+  [`fifelse()`](https://rdrr.io/pkg/data.table/man/fifelse.html) and
+  [`fcoalesce()`](https://rdrr.io/pkg/data.table/man/coalesce.html)
   respectively ([@michaelchirico](https://github.com/michaelchirico),
   [\#112](https://github.com/tidyverse/dtplyr/issues/112)).
 
@@ -638,7 +636,7 @@ CRAN release: 2019-02-25
   [@christophsax](https://github.com/christophsax)).
 
 - Joins use extended
-  [`merge.data.table()`](https://rdatatable.gitlab.io/data.table/reference/merge.html)
+  [`merge.data.table()`](https://rdrr.io/pkg/data.table/man/merge.html)
   and the `on` argument, introduced in data.table 1.9.6. Avoids copy and
   allows joins by different keys
   ([\#20](https://github.com/tidyverse/dtplyr/issues/20),

@@ -10,11 +10,11 @@ and
 [`dplyr::semi_join()`](https://dplyr.tidyverse.org/reference/filter-joins.html).
 Left, right, inner, and anti join are translated to the `[.data.table`
 equivalent, full joins to
-[`data.table::merge.data.table()`](https://rdatatable.gitlab.io/data.table/reference/merge.html).
+[`data.table::merge.data.table()`](https://rdrr.io/pkg/data.table/man/merge.html).
 Left, right, and full joins are in some cases followed by calls to
-[`data.table::setcolorder()`](https://rdatatable.gitlab.io/data.table/reference/setcolorder.html)
+[`data.table::setcolorder()`](https://rdrr.io/pkg/data.table/man/setcolorder.html)
 and
-[`data.table::setnames()`](https://rdatatable.gitlab.io/data.table/reference/setattr.html)
+[`data.table::setnames()`](https://rdrr.io/pkg/data.table/man/setattr.html)
 to ensure that column order and names match dplyr conventions.
 Semi-joins don't have a direct data.table equivalent.
 
