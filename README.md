@@ -15,7 +15,7 @@ coverage](https://codecov.io/gh/tidyverse/dtplyr/graph/badge.svg)](https://app.c
 ## Overview
 
 <a href="https://rdatatable-community.github.io/The-Raft/posts/2024-08-01-seal_of_approval-dtplyr/"><img src='man/figures/dt-seal.png' align="right" width="200" height="157" alt="data.table seal of approval"/></a>dtplyr
-provides a [data.table](http://r-datatable.com/) backend for dplyr. The
+provides a [data.table](https://r-datatable.com/) backend for dplyr. The
 goal of dtplyr is to allow you to write dplyr code that is automatically
 translated to the equivalent, but usually much faster, data.table code.
 
@@ -42,7 +42,7 @@ pak::pak("tidyverse/dtplyr")
 ## Usage
 
 To use dtplyr, you must at least load dtplyr and dplyr. You may also
-want to load [data.table](http://r-datatable.com/) so you can access the
+want to load [data.table](https://r-datatable.com/) so you can access the
 other goodies that it provides:
 
 ``` r

@@ -1,12 +1,6 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 1 notes
-
-*  Found the following (possibly) invalid URLs:
-   URL: http://r-datatable.com/
-
-   The data.table team is aware of this problem and are working to fix it.
-
+0 errors | 0 warnings | 0 notes
 
 ## revdepcheck results
 

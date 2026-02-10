@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-This vignette shows the details of how dtplyr translates dplyr expressions into the equivalent [data.table](http://r-datatable.com/) code. If you see places where you think I could generate better data.table code, please [let me know](https://github.com/tidyverse/dtplyr/issues)!
+This vignette shows the details of how dtplyr translates dplyr expressions into the equivalent [data.table](https://r-datatable.com/) code. If you see places where you think I could generate better data.table code, please [let me know](https://github.com/tidyverse/dtplyr/issues)!
 
 This document assumes that you're familiar with the basics of data.table; if you're not, I recommend starting at `vignette("datatable-intro.html")`.
 
