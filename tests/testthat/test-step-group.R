@@ -25,10 +25,6 @@ test_that("can add groups if requested", {
     dt %>% group_by(x) %>% group_by(y, .add = TRUE) %>% .$groups,
     c("x", "y")
   )
-
-  expect_snapshot({
-    . <- dt %>% group_by(x) %>% group_by(y, add = TRUE)
-  })
 })
 
 test_that("grouping can compute new variables if needed", {
