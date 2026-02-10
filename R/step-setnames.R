@@ -27,7 +27,7 @@ step_setnames <- function(x, old, new, in_place, rename_groups = FALSE) {
     "setnames",
     args = list(old, new),
     vars = new_vars,
-    in_place = in_place
+    in_place = in_place && !x$implicit_copy
   )
 
   if (rename_groups) {

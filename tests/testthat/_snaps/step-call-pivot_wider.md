@@ -40,8 +40,8 @@
       * `x` -> `x...2`
     Output
       Source: local data table [1 x 2]
-      Call:   setnames(dcast(copy(DT), formula = x ~ lab, value.var = "val"), 
-          1:2, c("x...1", "x...2"))
+      Call:   setnames(dcast(DT, formula = x ~ lab, value.var = "val"), 1:2, 
+          c("x...1", "x...2"))
       
         x...1 x...2
         <dbl> <dbl>

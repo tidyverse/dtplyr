@@ -31,6 +31,15 @@ test_that("simple calls generate expected translations", {
   )
 })
 
+test_that("mutable object is not copied", {
+  dt <- lazy_dt(data.table(x = 1, y = 1, z = 1), "DT", immutable = FALSE)
+
+  expect_equal(
+    dt %>% rename(b = y) %>% show_query(),
+    expr(setnames(DT, "y", "b"))
+  )
+})
+
 test_that("vars set correctly", {
   dt <- lazy_dt(data.frame(x = 1:3, y = 1:3))
   expect_equal(dt %>% rename(a = x) %>% .$vars, c("a", "y"))
