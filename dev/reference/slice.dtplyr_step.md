@@ -55,8 +55,6 @@ slice_max(.data, order_by, ..., n, prop, by = NULL, with_ties = TRUE)
 
 - .by, by:
 
-  **\[experimental\]**
-
   \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
   Optionally, a selection of columns to group by for just this
   operation, functioning as an alternative to

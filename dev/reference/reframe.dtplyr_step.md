@@ -30,8 +30,6 @@ reframe(.data, ..., .by = NULL)
 
 - .by:
 
-  **\[experimental\]**
-
   \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
   Optionally, a selection of columns to group by for just this
   operation, functioning as an alternative to

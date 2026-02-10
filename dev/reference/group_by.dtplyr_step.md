@@ -25,6 +25,7 @@ ungroup(x, ...)
 
 - ...:
 
+  \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>
   In
   [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html),
   variables or computations to group by. Computations are always done on

@@ -4,7 +4,7 @@
 
 [![data.table seal of
 approval](reference/figures/dt-seal.png)](https://rdatatable-community.github.io/The-Raft/posts/2024-08-01-seal_of_approval-dtplyr/)dtplyr
-provides a [data.table](http://r-datatable.com/) backend for dplyr. The
+provides a [data.table](https://r-datatable.com/) backend for dplyr. The
 goal of dtplyr is to allow you to write dplyr code that is automatically
 translated to the equivalent, but usually much faster, data.table code.
 
@@ -33,8 +33,8 @@ pak::pak("tidyverse/dtplyr")
 ## Usage
 
 To use dtplyr, you must at least load dtplyr and dplyr. You may also
-want to load [data.table](http://r-datatable.com/) so you can access the
-other goodies that it provides:
+want to load [data.table](https://r-datatable.com/) so you can access
+the other goodies that it provides:
 
 ``` r
 library(data.table)

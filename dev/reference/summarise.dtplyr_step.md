@@ -30,16 +30,10 @@ summarise(.data, ..., .by = NULL, .groups = NULL)
     [`n()`](https://dplyr.tidyverse.org/reference/context.html), or
     `sum(is.na(y))`.
 
-  - A data frame, to add multiple columns from a single expression.
-
-  **\[deprecated\]** Returning values with size 0 or \>1 was deprecated
-  as of 1.1.0. Please use
-  [`reframe()`](https://dplyr.tidyverse.org/reference/reframe.html) for
-  this instead.
+  - A data frame with 1 row, to add multiple columns from a single
+    expression.
 
 - .by:
-
-  **\[experimental\]**
 
   \<[`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html)\>
   Optionally, a selection of columns to group by for just this
@@ -52,28 +46,20 @@ summarise(.data, ..., .by = NULL, .groups = NULL)
 
   **\[experimental\]** Grouping structure of the result.
 
-  - "drop_last": dropping the last level of grouping. This was the only
+  - `"drop_last"`: drops the last level of grouping. This was the only
     supported option before version 1.0.0.
 
-  - "drop": All levels of grouping are dropped.
+  - `"drop"`: All levels of grouping are dropped.
 
-  - "keep": Same grouping structure as `.data`.
+  - `"keep"`: Same grouping structure as `.data`.
 
-  - "rowwise": Each row is its own group.
+  - `"rowwise"`: Each row is its own group.
 
-  When `.groups` is not specified, it is chosen based on the number of
-  rows of the results:
-
-  - If all the results have 1 row, you get "drop_last".
-
-  - If the number of rows varies, you get "keep" (note that returning a
-    variable number of rows was deprecated in favor of
-    [`reframe()`](https://dplyr.tidyverse.org/reference/reframe.html),
-    which also unconditionally drops all levels of grouping).
-
-  In addition, a message informs you of that choice, unless the result
-  is ungrouped, the option "dplyr.summarise.inform" is set to `FALSE`,
-  or when
+  When `.groups` is not specified, it is set to `"drop_last"` for a
+  grouped data frame, and `"keep"` for a rowwise data frame. In
+  addition, a message informs you of how the result will be grouped
+  unless the result is ungrouped, the option `"dplyr.summarise.inform"`
+  is set to `FALSE`, or when
   [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)
   is called from a function in a package.
 

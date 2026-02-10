@@ -70,33 +70,28 @@ the <code>j</code> argument of <code>[.data.table</code>.</p>
 <dd><p>&lt;<code><a href="https://rlang.r-lib.org/reference/args_data_masking.html" class="external-link">data-masking</a></code>&gt; Name-value pairs of
 summary functions. The name will be the name of the variable in the result.</p>
 <p>The value can be:</p><ul><li><p>A vector of length 1, e.g. <code>min(x)</code>, <code><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n()</a></code>, or <code>sum(is.na(y))</code>.</p></li>
-<li><p>A data frame, to add multiple columns from a single expression.</p></li>
-</ul><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Returning values with size 0 or &gt;1 was
-deprecated as of 1.1.0. Please use <code><a href="https://dplyr.tidyverse.org/reference/reframe.html" class="external-link">reframe()</a></code> for this instead.</p></dd>
+<li><p>A data frame with 1 row, to add multiple columns from a single expression.</p></li>
+</ul></dd>
 
 
 <dt id="arg--by">.by<a class="anchor" aria-label="anchor" href="#arg--by"></a></dt>
-<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></p>
-<p>&lt;<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; Optionally, a selection of columns to
+<dd><p>&lt;<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>&gt; Optionally, a selection of columns to
 group by for just this operation, functioning as an alternative to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code>. For
 details and examples, see <a href="https://dplyr.tidyverse.org/reference/dplyr_by.html" class="external-link">?dplyr_by</a>.</p></dd>
 
 
 <dt id="arg--groups">.groups<a class="anchor" aria-label="anchor" href="#arg--groups"></a></dt>
 <dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a> Grouping structure of the
-result.</p><ul><li><p>"drop_last": dropping the last level of grouping. This was the
+result.</p><ul><li><p><code>"drop_last"</code>: drops the last level of grouping. This was the
 only supported option before version 1.0.0.</p></li>
-<li><p>"drop": All levels of grouping are dropped.</p></li>
-<li><p>"keep": Same grouping structure as <code>.data</code>.</p></li>
-<li><p>"rowwise": Each row is its own group.</p></li>
-</ul><p>When <code>.groups</code> is not specified, it is chosen
-based on the number of rows of the results:</p><ul><li><p>If all the results have 1 row, you get "drop_last".</p></li>
-<li><p>If the number of rows varies, you get "keep" (note that returning a
-variable number of rows was deprecated in favor of <code><a href="https://dplyr.tidyverse.org/reference/reframe.html" class="external-link">reframe()</a></code>, which
-also unconditionally drops all levels of grouping).</p></li>
-</ul><p>In addition, a message informs you of that choice, unless the result is ungrouped,
-the option "dplyr.summarise.inform" is set to <code>FALSE</code>,
-or when <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> is called from a function in a package.</p></dd>
+<li><p><code>"drop"</code>: All levels of grouping are dropped.</p></li>
+<li><p><code>"keep"</code>: Same grouping structure as <code>.data</code>.</p></li>
+<li><p><code>"rowwise"</code>: Each row is its own group.</p></li>
+</ul><p>When <code>.groups</code> is not specified, it is set to <code>"drop_last"</code> for a grouped
+data frame, and <code>"keep"</code> for a rowwise data frame. In addition, a message
+informs you of how the result will be grouped unless the result is
+ungrouped, the option <code>"dplyr.summarise.inform"</code> is set to <code>FALSE</code>, or when
+<code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> is called from a function in a package.</p></dd>
 
 </dl></div>
 

@@ -3,7 +3,7 @@
 ## Introduction
 
 This vignette shows the details of how dtplyr translates dplyr
-expressions into the equivalent [data.table](http://r-datatable.com/)
+expressions into the equivalent [data.table](https://r-datatable.com/)
 code. If you see places where you think I could generate better
 data.table code, please [let me
 know](https://github.com/tidyverse/dtplyr/issues)!
@@ -406,9 +406,9 @@ bench::mark(
 #> # A tibble: 3 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 filter     665.06µs  719.6µs     1375.    3.25KB     25.4
-#> 2 mutate       1.06ms   1.12ms      888.    21.3KB     26.6
-#> 3 summarise    1.75ms   1.84ms      535.   30.51KB     22.1
+#> 1 filter     741.93µs 792.71µs     1254.    3.25KB     22.8
+#> 2 mutate       1.17ms   1.24ms      802.    21.3KB     24.6
+#> 3 summarise    1.96ms   2.04ms      484.   30.51KB     20.0
 ```
 
 These translations all take less than a millisecond, suggesting that the

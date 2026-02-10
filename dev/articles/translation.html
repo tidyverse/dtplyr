@@ -88,7 +88,7 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This vignette shows the details of how dtplyr translates dplyr
-expressions into the equivalent <a href="http://r-datatable.com/" class="external-link">data.table</a> code. If you see places
+expressions into the equivalent <a href="https://r-datatable.com/" class="external-link">data.table</a> code. If you see places
 where you think I could generate better data.table code, please <a href="https://github.com/tidyverse/dtplyr/issues" class="external-link">let me know</a>!</p>
 <p>This document assumes that you’re familiar with the basics of
 data.table; if you’re not, I recommend starting at
@@ -410,9 +410,9 @@ dplyr verbs, so we benchmark the whole process.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     665.06µs  719.6µs     <span style="text-decoration: underline;">1</span>375.    3.25KB     25.4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.06ms   1.12ms      888.    21.3KB     26.6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.75ms   1.84ms      535.   30.51KB     22.1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> filter     741.93µs 792.71µs     <span style="text-decoration: underline;">1</span>254.    3.25KB     22.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mutate       1.17ms   1.24ms      802.    21.3KB     24.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> summarise    1.96ms   2.04ms      484.   30.51KB     20.0</span></span></code></pre></div>
 <p>These translations all take less than a millisecond, suggesting that
 the performance overhead of dtplyr should be negligible for realistic
 data sizes. Note that dtplyr run-time scales with the complexity of the

@@ -45,27 +45,10 @@ expand(data, ..., .name_repair = "check_unique")
 
 - .name_repair:
 
-  Treatment of problematic column names:
-
-  - `"minimal"`: No name repair or checks, beyond basic existence,
-
-  - `"unique"`: Make sure names are unique and not empty,
-
-  - `"check_unique"`: (default value), no name repair, but check they
-    are `unique`,
-
-  - `"universal"`: Make the names `unique` and syntactic
-
-  - a function: apply custom name repair (e.g.,
-    `.name_repair = make.names` for names in the style of base R).
-
-  - A purrr-style anonymous function, see
-    [`rlang::as_function()`](https://rlang.r-lib.org/reference/as_function.html)
-
-  This argument is passed on as `repair` to
-  [`vctrs::vec_as_names()`](https://vctrs.r-lib.org/reference/vec_as_names.html).
-  See there for more details on these terms and the strategies used to
-  enforce them.
+  One of `"check_unique"`, `"unique"`, `"universal"`, `"minimal"`,
+  `"unique_quiet"`, or `"universal_quiet"`. See
+  [`vec_as_names()`](https://vctrs.r-lib.org/reference/vec_as_names.html)
+  for the meaning of these options.
 
 ## Examples
 
