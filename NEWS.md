@@ -1,4 +1,4 @@
-# dtplyr (development version)
+# dtplyr 1.3.3
 
 * Fix for latest dplyr
 
