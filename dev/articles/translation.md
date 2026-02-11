@@ -406,9 +406,9 @@ bench::mark(
 #> # A tibble: 3 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 filter     741.93µs 792.71µs     1254.    3.25KB     22.8
-#> 2 mutate       1.17ms   1.24ms      802.    21.3KB     24.6
-#> 3 summarise    1.96ms   2.04ms      484.   30.51KB     20.0
+#> 1 filter     757.42µs 801.13µs     1241.    3.25KB     22.3
+#> 2 mutate       1.17ms   1.22ms      811.    21.3KB     24.0
+#> 3 summarise    1.93ms   2.01ms      496.   30.51KB     22.1
 ```
 
 These translations all take less than a millisecond, suggesting that the

@@ -126,7 +126,7 @@ df %>% separate(x, c("key","value"), ":") %>% str
 #>   .. ..$ locals       : list()
 #>   .. ..$ implicit_copy: logi FALSE
 #>   .. ..$ needs_copy   : logi FALSE
-#>   .. ..$ env          :<environment: 0x55a2e3a8b0d0> 
+#>   .. ..$ env          :<environment: 0x556aba90b2d8> 
 #>   .. ..$ name         : symbol DT
 #>   .. ..- attr(*, "class")= chr [1:2] "dtplyr_step_first" "dtplyr_step"
 #>   ..$ vars           : chr [1:3] "x" "key" "value"
@@ -134,7 +134,7 @@ df %>% separate(x, c("key","value"), ":") %>% str
 #>   ..$ locals         : list()
 #>   ..$ implicit_copy  : logi TRUE
 #>   ..$ needs_copy     : logi TRUE
-#>   ..$ env            :<environment: 0x55a2e3a8b0d0> 
+#>   ..$ env            :<environment: 0x556aba90b2d8> 
 #>   ..$ arrange        : NULL
 #>   ..$ i              : NULL
 #>   ..$ j              : language `:=`(c("key", "value"), tstrsplit(x, split = ":"))
@@ -146,7 +146,7 @@ df %>% separate(x, c("key","value"), ":") %>% str
 #>  $ locals         : list()
 #>  $ implicit_copy  : logi TRUE
 #>  $ needs_copy     : logi TRUE
-#>  $ env            :<environment: 0x55a2e3a8b0d0> 
+#>  $ env            :<environment: 0x556aba90b2d8> 
 #>  $ arrange        : NULL
 #>  $ i              : NULL
 #>  $ j              : language `:=`("x", NULL)
@@ -165,7 +165,7 @@ df %>% separate(x, c("key","value"), ":", convert = TRUE) %>% str
 #>   .. ..$ locals       : list()
 #>   .. ..$ implicit_copy: logi FALSE
 #>   .. ..$ needs_copy   : logi FALSE
-#>   .. ..$ env          :<environment: 0x55a2e3a8b0d0> 
+#>   .. ..$ env          :<environment: 0x556aba90b2d8> 
 #>   .. ..$ name         : symbol DT
 #>   .. ..- attr(*, "class")= chr [1:2] "dtplyr_step_first" "dtplyr_step"
 #>   ..$ vars           : chr [1:3] "x" "key" "value"
@@ -173,7 +173,7 @@ df %>% separate(x, c("key","value"), ":", convert = TRUE) %>% str
 #>   ..$ locals         : list()
 #>   ..$ implicit_copy  : logi TRUE
 #>   ..$ needs_copy     : logi TRUE
-#>   ..$ env            :<environment: 0x55a2e3a8b0d0> 
+#>   ..$ env            :<environment: 0x556aba90b2d8> 
 #>   ..$ arrange        : NULL
 #>   ..$ i              : NULL
 #>   ..$ j              : language `:=`(c("key", "value"), tstrsplit(x, split = ":", type.convert = TRUE))
@@ -185,7 +185,7 @@ df %>% separate(x, c("key","value"), ":", convert = TRUE) %>% str
 #>  $ locals         : list()
 #>  $ implicit_copy  : logi TRUE
 #>  $ needs_copy     : logi TRUE
-#>  $ env            :<environment: 0x55a2e3a8b0d0> 
+#>  $ env            :<environment: 0x556aba90b2d8> 
 #>  $ arrange        : NULL
 #>  $ i              : NULL
 #>  $ j              : language `:=`("x", NULL)
