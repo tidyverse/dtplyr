@@ -121,14 +121,14 @@ rename_with.dtplyr_step <- function(.data, .fn, .cols = everything(), ...) {
       "setnames",
       args = list(fn),
       vars = vars,
-      in_place = TRUE
+      in_place = !.data$implicit_copy
     )
   } else {
     out <- step_call(.data,
       "setnames",
       args = list(old_vars, fn),
       vars = vars,
-      in_place = TRUE
+      in_place = !.data$implicit_copy
     )
   }
 
